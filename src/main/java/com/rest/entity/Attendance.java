@@ -2,7 +2,7 @@ package com.rest.entity;
 
 import java.math.BigInteger;
 
-public class attendance {
+public class Attendance {
     private BigInteger id;
     private BigInteger klass_seminar_id;
     private BigInteger team_id;
@@ -13,7 +13,7 @@ public class attendance {
     private String ppt_name;
     private String ppt_url;
 
-    public attendance() {
+    public Attendance() {
     }
 
     public BigInteger getId() {

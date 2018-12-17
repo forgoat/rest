@@ -2,7 +2,7 @@ package com.rest.entity;
 
 import java.math.BigInteger;
 
-public class klass {
+public class Klass {
     private BigInteger id;
     private BigInteger course_id;
     private Integer grade;
@@ -10,7 +10,7 @@ public class klass {
     private String klass_time;
     private String klass_location;
 
-    public klass() {
+    public Klass() {
     }
 
     public BigInteger getId() {

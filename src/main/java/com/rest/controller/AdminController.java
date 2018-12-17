@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "admin")
-public class AdminController {
+public class   AdminController {
     @Autowired
     private AdminService adminService;
     @GetMapping(value = "adminlist")

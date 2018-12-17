@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.CourseDao">
+    <select id="queryCourseByStudentId" resultType="com.rest.entity.Course">
+        SELECT *
+        FROM course
+        WHERE
+        course.id IN(
+        SELECT course_id
+        FROM klass_student
+        WHERE
+        klass_student.student_id=#{student_id}
+        )
+
+    </select>
+
+</mapper>

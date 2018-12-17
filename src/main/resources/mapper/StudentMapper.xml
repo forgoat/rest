@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.StudentDao">
+    <select id="queryAllStudent" resultType="com.rest.entity.Student">
+        SELECT * FROM standard_seminar_system.student
+    </select>
+
+    <select id="queryStudent" resultType="com.rest.entity.Student">
+    SELECT *
+    FROM standard_seminar_system.student
+    WHERE 1=1
+        <if test="id !=null">
+            AND id = #{id}
+        </if>
+        <if test="account !=null">
+            AND account = #{account}
+        </if>
+        <if test="password !=null">
+            AND password = #{password}
+        </if>
+        <if test="is_active !=null">
+            AND is_active = #{is_active}
+        </if>
+        <if test="student_name !=null">
+            AND student_name = #{student_name}
+        </if>
+        <if test="email !=null">
+            AND email = #{email}
+        </if>
+
+    </select>
+
+
+    <insert id="insertStudent" parameterType="com.rest.entity.Student">
+        INSERT INTO standard_seminar_system.student(
+        id,
+        account,
+        password,
+        is_active,
+        student_name,
+        email
+        )VALUE
+        (
+        #{id},
+        #{account},
+        #{password},
+        #{is_active},
+        #{student_name},
+        #{email}
+        )
+    </insert>
+
+</mapper>

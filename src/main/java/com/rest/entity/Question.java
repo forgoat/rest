@@ -2,7 +2,7 @@ package com.rest.entity;
 
 import java.math.BigInteger;
 
-public class question {
+public class Question {
     private BigInteger id;
     private BigInteger klass_seminar_id;
     private BigInteger attendance_id;
@@ -11,7 +11,7 @@ public class question {
     private Integer is_selected;
     private float score;
 
-    public question() {
+    public Question() {
     }
 
     public BigInteger getId() {

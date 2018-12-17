@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.TeamDao">
+    <select id="queryAllTeam" resultType="com.rest.entity.Team">
+        SELECT *
+        FROM team
+        WHERE
+        course_id=#{course_id}
+        GROUP BY klass_id
+    </select>
+
+    <select id="queryStudentNoTeam" resultType="com.rest.entity.Student">
+        SELECT *
+        FROM student,klass_student
+        WHERE
+        klass_student.team_id IS NULL
+        AND
+        student.id=klass_student.student_id
+    </select>
+    
+    <insert id="createTeam" parameterType="com.rest.entity.Team">
+        INSERT INTO team(
+        klass_id,
+        course_id,
+        leader_id,
+        team_name,
+        team_serial
+        )VALUE
+        (
+        #{klass_id},
+        #{course_id},
+        #{leader_id},
+        #{team_name},
+        #{team_serial}
+        )
+
+    </insert>
+
+    <insert id="updateTeamValidApplication" parameterType="BigInteger">
+        INSERT INTO team_valid_application(
+        team_id,
+        teacher_id,
+        status
+        )VALUE
+        (
+        #{team_id},
+        #{teacher_id},
+        #{status}
+        )ON DULPLICATE KEY UPDATE
+        status=values(status)
+    </insert>
+
+    <insert id="updateKlassStudent" parameterType="BigInteger">
+         INSERT INTO klass_student(
+        team_id,
+        klass_id,
+        student_id,
+        course_id
+        )VALUE
+        (
+        #{team_id},
+        #{klass_id}
+        #{student_id},
+        #{course_id}
+        )ON DULPLICATE KEY UPDATE
+        team_id=values(team_id)
+    </insert>
+
+
+
+
+</mapper>
