@@ -17,62 +17,65 @@ import java.math.BigInteger;
 import java.util.List;
 
 @RestController
-@RequestMapping("/course")
+@RequestMapping(value = "course")
 public class StudentCourseContrlloer {
     @Autowired
     private CourseService courseService;
+    @Autowired
     private ScoreService scoreService;
+    @Autowired
     private TeamService teamService;
 
     //5-3
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping(value = "queryCourseByStudentId")
     public List<Course> queryCourseByStudentId(BigInteger student_id){
         return courseService.queryCourseByStudentId(student_id);
     }
 
     //5-3-1
-    @RequestMapping(value = "/score", method = RequestMethod.GET)
-    public List<Score> queryScore(BigInteger course_id,BigInteger student_id,BigInteger seminar_id,BigInteger round_id){
-    //public List<Score> queryScore(@PathVariable("courseId") BigInteger course_id,BigInteger student_id,BigInteger seminar_id,BigInteger round_id) {
-
+    @RequestMapping(value = "score", method = RequestMethod.GET)
+    public List<Score> queryScore(BigInteger course_id,
+                                  BigInteger student_id,
+                                  BigInteger round_id,
+                                  BigInteger seminar_id){
+    //public String courseScore(@PathVariable("courseId") BigInteger course_id,BigInteger student_id,BigInteger round_id,BigInteger seminar_id) {
         return scoreService.queryScore(course_id,student_id,round_id,seminar_id);
+        //return "【ECHO】" + course_id;
     }
 
 
 
   //5-3-2
     // 5-3-2-1
-  @RequestMapping(value = "/{courseId}/team", method = RequestMethod.GET)
-   public List<Team> queryAllTeam(@PathVariable("courseId") BigInteger course_id){
+  @RequestMapping(value = "team", method = RequestMethod.GET)
+   public List<Team> queryAllTeam(BigInteger course_id){
        return teamService.queryAllTeam(course_id);
    }
 
-   @RequestMapping(value = "/{courseId}/noTeam", method = RequestMethod.GET)
-   public  List<Student> queryStudentNoTeam(@PathVariable("courseId") BigInteger course_id){
+   @RequestMapping(value = "noTeam", method = RequestMethod.GET)
+   public  List<Student> queryStudentNoTeam( BigInteger course_id){
        return teamService.queryStudentNoTeam();
     }
 
-    //5-3-2-3
-//    @GetMapping(value = "/course/{courseId}/team")
+//    //5-3-2-3
+//    @GetMapping(value = "course/team")
 //    public int createTeamWithUpdate(Team team,
 //                                    BigInteger team_id,
 //                                    BigInteger teacher_id,
-//                                    BigInteger status,
 //                                    BigInteger klass_id,
 //                                    BigInteger student_id,
 //                                    BigInteger course_id){
 //        return teamService.createTeamWithUpdate(team,
 //                 team_id,
 //                 teacher_id,
-//                 status,
 //                 klass_id,
 //                 student_id,
 //                 course_id
 //                );
 //    }
-//
-//    //
-//
+
+
+
 
 
 }
