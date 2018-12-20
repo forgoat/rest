@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <link href="css/child.css" rel="stylesheet" type="text/css">
+
+    <link type="text/css" rel="stylesheet" href="css/base.css">
+    <link type="text/css" rel="stylesheet" href="css/home.css">
+    <script type="text/javascript" src="js/slider.js"></script>
+    <script type="text/javascript" src="js/tab.js"></script>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/gooey.min.js"></script>
+
+</head>
+
+<body>
+
+<header class="aui-navBar aui-navBar-fixed b-line">
+
+
+
+
+</header>
+
+<section class="aui-scrollView">
+    <a href="/index/StuClass" class="aui-topic-item aui-flex">
+        <div class="aui-flex-box">
+            <h4>我的课程</h4>
+        </div>
+        <div class="aui-topic-arrow"></div>
+    </a>
+    <a href="javascript:;" class="aui-topic-item aui-flex">
+        <div class="aui-flex-box">
+            <h4>账户与设置</h4>
+        </div>
+        <div class="aui-topic-arrow"></div>
+    </a>
+
+
+</section>
+
+<div class="header">
+    <a class="return" onclick="javascript:history.back(-1);"></a>
+
+    <div class="icon">
+        <img class="menu-img" src="img/menu.png">
+    </div>
+    <div class="aui-center">
+        <span class="aui-center-title">我</span>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        var z = true;
+        $(".menu-img").mousedown(function(event){
+            if(z == true){
+                $(".menu-box").show(500);
+                z = false;
+            }
+            else{
+                $(".menu-box").hide(500);
+                z = true;
+            }
+            event.stopPropagation();
+        });
+        $(".menu-box").mousedown(function(event){
+            $(".menu-box").show();
+            event.stopPropagation();
+        })
+        $("html").mousedown(function(){
+            $(".menu-box").hide(500);
+        });
+    })
+</script>
+
+<div class="menu-box">
+    <img class="arrow" src="img/jian-2.png">
+    <ul>
+
+        <li class="selected">
+            <a href="s_Inf.html">
+                <i>
+                    <img src="img/index-1.png">
+                    <img src="img/index-2.png">
+                </i>
+                <span>个人页</span>
+            </a>
+        </li>
+        <li>
+            <a href="s_SemCourse.html">
+                <i>
+                    <img src="img/about.png">
+                    <img src="img/about-1.png">
+                </i>
+                <span>讨论课</span>
+            </a>
+        </li>
+
+
+    </ul>
+</div>
+
+
+<script>
+    $(function($) {
+        $("#gooey-v").gooeymenu({
+            bgColor: "#e1f1fc",
+            style: "vertical",
+            horizontal: {
+                menuItemPosition: "glue"
+            },
+            vertical: {
+                menuItemPosition: "spaced",
+                direction: "up"
+            },
+            /*circle: {
+                radius: 90
+            },*/
+            margin: "small",
+            bounce: true,
+            bounceLength: "small",
+            transitionStep: 100,
+        });
+
+        $("#gooey-v a").mousedown(
+                function(){
+                    $(this).css("backgroundColor","#e1f1fc");
+                }
+        )
+    });
+</script>
+
+</body>
+</html>

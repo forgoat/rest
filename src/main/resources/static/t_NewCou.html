@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>新建课程</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="css/custom.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="css/chosen.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
+</head>
+<body>
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="javascript:;" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <span class="aui-center-title">新建课程</span>
+        </div>
+
+    </header>
+    <section class="aui-scrollView">
+        <div class="aui-code-box">
+            <form action="/login" method="post">
+
+
+                <div class="col-md-12">
+                    <p class="aui-code-line">
+                        <input  class="aui-code-line-input"  type="text" placeholder="课程名称" name="userid"/>
+                    </p>
+
+                    <p class="aui-code-line">
+                        <input  class="aui-code-line-input"  type="text" placeholder="课程要求" name="userid"/>
+                    </p>
+                    <br>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">成绩计算规则：</label>
+                        <br>
+                        <label class="col-sm-2 control-label">课堂展示：</label>
+
+                        <input type="text" class="form-control" placeholder="50%">
+
+                        <br>
+                        <label class="col-sm-2 control-label">课堂提问：</label>
+
+                        <input type="text" class="form-control" placeholder="20%">
+                        <br>
+                        <label class="col-sm-2 control-label">书面报告：</label>
+
+                        <input type="text" class="form-control" placeholder="30%">
+                    </div>
+                    <hr>
+                    <br>
+                    <div class="form-group">
+                    <label class="col-sm-2 control-label">小组人数：</label>
+
+                        <br>
+                    <input type="text" class="form-control" placeholder="上限">
+                    <input type="text" class="form-control" placeholder="下限">
+                        <br>
+                        <br>
+                        <label class="col-sm-2 control-label">小组性别要求：</label>
+
+                        <br>
+                        <label class="col-sm-2 control-label">男：</label>
+
+                        <br>
+                        <input type="text" class="form-control" placeholder="上限">
+                        <input type="text" class="form-control" placeholder="下限">
+                        <br>
+                        <label class="col-sm-2 control-label">女：</label>
+
+                        <br>
+                        <input type="text" class="form-control" placeholder="上限">
+                        <input type="text" class="form-control" placeholder="下限">
+
+
+                    </div>
+
+
+                    <hr>
+                    <div>
+                        <label class="col-sm-2 control-label">冲突课程1：</label>
+                        <select name="dept" data-placeholder="冲突课程" style="width:200px;height:25px" id="dept" class="dept_select">
+
+                            <option value="课程名称+老师">课程名称+老师</option>
+                            <option value="课程名称+老师">课程名称+老师</option>
+                            <option value="课程名称+老师">课程名称+老师</option>
+
+                        </select>
+                    </div>
+                    <div>
+                        <label class="col-sm-2 control-label">冲突课程2：</label>
+                        <select name="dept" data-placeholder="冲突课程" style="width:200px;height:25px" id="dept" class="dept_select">
+
+                            <option value="课程名称+老师">课程名称+老师</option>
+                            <option value="课程名称+老师">课程名称+老师</option>
+                            <option value="课程名称+老师">课程名称+老师</option>
+
+                        </select>
+                    </div>
+
+                </div>
+                <div class="aui-code-box">
+                    <button >
+                        发布
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+</section>
+
+</body>
+

@@ -296,8 +296,6 @@ a {
     font-size: 0.98rem;
 }
 
-
-
 .aui-code-box p {
     color: #cccccc;
     font-size: 0.85rem;
@@ -638,4 +636,9 @@ a {
     width: 100%;
     font-size: 0.98rem;
 
+}
+.button-auto2 {
+    border: #0c85b9a3 !important;
+    font-size: 10px !important;
+    width: 50px !important;
 }

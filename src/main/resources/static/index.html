@@ -14,6 +14,7 @@
     function login() {
         var account = $("#account").val();
         var password = $("#password").val();
+        var isActive =$("#isActive").val();
         if(account==''|| password == '')
         {
             $("#account").focus();
@@ -22,7 +23,7 @@
         }
         $.ajax({
             url: "/admin/login",
-            data:{account:account,password:password},
+            data:{account:account,password:password,isActive:isActive},
             type: "GET",
             dataType:'text',
             success:function(data) {
@@ -56,11 +57,11 @@
         <div class="aui-code-box">
             <form>
                 <p class="aui-code-line">
-                    <input  class="aui-code-line-input"  type="text" placeholder="账号" id="account"/>
+                    <input  class="aui-code-line-input"  type="text" placeholder="账号" id="account">
                 </p>
                 <p class="aui-code-line aui-code-line-clear">
                     <i class="aui-show  operate-eye-open"></i>
-                    <input type="password"  placeholder="密码" id="password" class="aui-code-line-input password" >
+                    <input type="password"  placeholder="密码" id="password" class="aui-code-line-input password">
                 </p>
                 <div class="aui-flex-links">
                     <a href="javascript:;">

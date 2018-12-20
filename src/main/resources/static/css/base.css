@@ -360,12 +360,18 @@ a {
     padding:16px 12px 5px;
     font-family: "微软雅黑";
 }
+.div-auto2 a{
+    color: #0c85b9a3;
+}
 .div-auto3{
     padding:1px 100px 2px;
     background:#ffffff;
-    color: #000000;
+    color: red;
     height:20px;
     font-size: 8px;
     font-family: "微软雅黑";
 
+}
+.div-auto3 a{
+    color: #0c85b9a3;
 }

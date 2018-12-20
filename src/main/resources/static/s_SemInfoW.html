@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>讨论课（预）</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link type="text/css" rel="stylesheet" href="css/base.css">
+    <link type="text/css" rel="stylesheet" href="css/home.css">
+    <link href="/static/css/custom.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/tab.js"></script>
+    <script type="text/javascript" src="js/slider.js"></script>
+</head>
+
+<body>
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="javascript:history.back(-1)" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <span class="aui-center-title">讨论课</span>
+        </div>
+        <a href="javascript:;" class="aui-navBar-item">
+            <i class="icon icon-sys"></i>
+        </a>
+    </header>
+    <body>
+    <div class="div-auto1" >
+        轮次：${round}
+    </div>
+    <div class="div-auto2" >
+        主题：${theme}
+    </div>
+    <div class="div-auto1" >
+        课次序号：${number}
+    </div>
+    <div class="div-auto2" >
+        要求：${require}
+    </div>
+    <div class="div-auto1" >
+        课程情况：未开始
+        <a href="s_SemRegister.html">查看情况</a>
+    </div>
+    <div class="div-auto2">
+        报名开始时间：${starttime}
+    </div>
+    <div class="div-auto2">
+        报名截止时间：${endtime}
+    </div>
+    <div class="aui-code-btn">
+        <button>
+            <a href="/test/jump">报名</a>
+        </button>
+    </div>
+    </body>
+</section>
+<div class="header">
+    <a class="return" onclick="javascript:history.back(-1);"></a>
+
+    <div class="icon">
+        <img class="menu-img" src="img/menu.png">
+    </div>
+    <div class="aui-center">
+        <span class="aui-center-title">讨论课</span>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        var z = true;
+        $(".menu-img").mousedown(function(event){
+            if(z == true){
+                $(".menu-box").show(500);
+                z = false;
+            }
+            else{
+                $(".menu-box").hide(500);
+                z = true;
+            }
+            event.stopPropagation();
+        });
+        $(".menu-box").mousedown(function(event){
+            $(".menu-box").show();
+            event.stopPropagation();
+        })
+        $("html").mousedown(function(){
+            $(".menu-box").hide(500);
+        });
+    })
+</script>
+
+<div class="menu-box">
+    <img class="arrow" src="/static/img/jian-2.png">
+    <ul>
+
+        <li class="selected">
+            <a href="s_Inf.html">
+                <i>
+                    <img src="img/index-1.png">
+                    <img src="img/index-2.png">
+                </i>
+                <span>个人页</span>
+            </a>
+        </li>
+        <li>
+            <a href="s_SemCourse.html">
+                <i>
+                    <img src="img/about.png">
+                    <img src="img/about-1.png">
+                </i>
+                <span>讨论课</span>
+            </a>
+        </li>
+
+
+    </ul>
+</div>
+
+
+<script>
+    $(function($) {
+        $("#gooey-v").gooeymenu({
+            bgColor: "#e1f1fc",
+            style: "vertical",
+            horizontal: {
+                menuItemPosition: "glue"
+            },
+            vertical: {
+                menuItemPosition: "spaced",
+                direction: "up"
+            },
+            /*circle: {
+                radius: 90
+            },*/
+            margin: "small",
+            bounce: true,
+            bounceLength: "small",
+            transitionStep: 100,
+        });
+
+        $("#gooey-v a").mousedown(
+            function(){
+                $(this).css("backgroundColor","#e1f1fc");
+            }
+        )
+    });
+</script>
+
+</body>
+</html>
