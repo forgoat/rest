@@ -25,14 +25,13 @@ public class TeamService {
     public int createTeamWithUpdate(Team team,
                                     BigInteger team_id,
                                     BigInteger teacher_id,
-                                    BigInteger status,
                                     BigInteger klass_id,
                                     BigInteger student_id,
                                     BigInteger course_id)
     {
         int count=teamDao.createTeam(team);
         teamDao.updateKlassStudent( team_id,klass_id,student_id,course_id);
-        teamDao.updateTeamValidApplication(team_id, teacher_id, status);
+        teamDao.updateTeamValidApplication(team_id, teacher_id);
 
         return count;
     }

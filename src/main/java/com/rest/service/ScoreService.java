@@ -13,7 +13,11 @@ public class ScoreService {
     @Autowired
     private ScoreDao scoreDao;
 
-    public List<Score>queryScore(BigInteger course_id,BigInteger student_id,BigInteger seminar_id,BigInteger round_id){
-        return scoreDao.queryScore(course_id,student_id,seminar_id,round_id);
+    public List<Score>queryScore(BigInteger course_id,
+                                 BigInteger student_id,
+                                 BigInteger round_id,
+                                 BigInteger seminar_id){
+        System.out.println("List<Score>queryScore");
+        return scoreDao.queryScore(course_id,student_id,round_id,seminar_id);
     }
 }

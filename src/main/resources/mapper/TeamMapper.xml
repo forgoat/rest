@@ -47,7 +47,7 @@
         (
         #{team_id},
         #{teacher_id},
-        #{status}
+        0
         )ON DULPLICATE KEY UPDATE
         status=values(status)
     </insert>

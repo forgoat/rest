@@ -9,8 +9,10 @@ import java.util.List;
 public interface StudentDao {
 
     List<Student> queryAllStudent();
+
     List<Student> queryStudent(Student student);
+
     int insertStudent(Student student);
 
-
+    public Student findByAccount(String account);
 }

@@ -51,5 +51,8 @@
         #{email}
         )
     </insert>
+    <select id="findByAccount" parameterType="String" resultType="com.rest.entity.Student">
+        SELECT * FROM standard_seminar_system.student WHERE account=#{account}
+    </select>
 
 </mapper>
