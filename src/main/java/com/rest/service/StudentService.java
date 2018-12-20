@@ -21,6 +21,10 @@ public class StudentService {
         return studentDao.queryStudent(student);
     }
 
+    public Student findByAccount(String account){
+        return studentDao.findByAccount(account);
+    }
+
     @Transactional
     public int insertStudent(Student student){
         return studentDao.insertStudent(student);

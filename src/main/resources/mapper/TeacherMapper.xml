@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.TeacherDao">
+    <select id="teacherlist" resultType="com.rest.entity.Teacher">
+        SELECT * FROM standard_seminar_system.teacher;
+    </select>
+    <insert id="createTeacher" parameterType="com.rest.entity.Teacher" useGeneratedKeys="true">
+        INSERT INTO standard_seminar_system.teacher(account,password,is_active,teacher_name,email) VALUE
+        (#{account},#{password},#{is_active},#{teacher_name},#{email});
+    </insert>
+    <select id="findByAccount" parameterType="String" resultType="com.rest.entity.Teacher">
+        SELECT * FROM standard_seminar_system.teacher WHERE account=#{account};
+    </select>
+</mapper>
