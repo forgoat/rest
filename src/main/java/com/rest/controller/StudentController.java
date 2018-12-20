@@ -7,11 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
-@RequestMapping(value = "/")
+@RestController
 public class StudentController {
     @Autowired
     private StudentService studentService;
@@ -30,7 +30,5 @@ public class StudentController {
     public int insertStudent(Student student){
         return studentService.insertStudent(student);
     }
-
-
 
 }
