@@ -16,11 +16,9 @@ public class StudentService {
     public List<Student> findAllStudent(){
         return studentDao.findAllStudent();
     }
-
-    public List<Student> queryStudent(Student student){
-        return studentDao.queryStudent(student);
+    public List<Student> search(String account,String student_name){
+        return studentDao.findByAccountOrStudent_name(account,student_name);
     }
-
     public Student findByAccount(String account){
         return studentDao.findByAccount(account);
     }
