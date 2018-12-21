@@ -19,7 +19,7 @@ public class TeacherService {
 
     public int createTeacher(Teacher teacher)
     {
-        return teacherDao.createTeacher(teacher);
+        return teacherDao.add(teacher);
     }
     public Teacher findByAccount(String account)
     {

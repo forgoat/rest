@@ -6,7 +6,7 @@
     <select id="teacherlist" resultType="com.rest.entity.Teacher">
         SELECT * FROM standard_seminar_system.teacher;
     </select>
-    <insert id="createTeacher" parameterType="com.rest.entity.Teacher" useGeneratedKeys="true">
+    <insert id="add" parameterType="com.rest.entity.Teacher" useGeneratedKeys="true">
         INSERT INTO standard_seminar_system.teacher(account,password,is_active,teacher_name,email) VALUE
         (#{account},#{password},#{is_active},#{teacher_name},#{email})
     </insert>

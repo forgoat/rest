@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface TeacherDao {
     public List<Teacher> teacherlist();
-    public int createTeacher(Teacher teacher);
+    public int add(Teacher teacher);
     public Teacher findByAccount(String account);
     public Teacher findById(Long id);
     public int updatePassword(@Param(value = "id") Long id, @Param(value = "password") String password);

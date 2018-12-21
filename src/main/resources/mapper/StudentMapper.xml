@@ -33,14 +33,15 @@
     </select>
 
 
-    <insert id="insertStudent" parameterType="com.rest.entity.Student">
+    <insert id="add" parameterType="com.rest.entity.Student" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO standard_seminar_system.student(
         id,
         account,
         password,
         is_active,
         student_name,
-        email
+        email,
+        sex
         )VALUE
         (
         #{id},
@@ -48,7 +49,8 @@
         #{password},
         #{is_active},
         #{student_name},
-        #{email}
+        #{email},
+        #{sex}
         )
     </insert>
     <select id="findByAccount" parameterType="String" resultType="com.rest.entity.Student">

@@ -24,7 +24,7 @@ public class User {
         id=student.getId();
         account=student.getAccount();
         password=student.getPassword();
-        is_active=student.isIs_active();
+        is_active=student.getIs_active();
         name=student.getStudent_name();
         email=student.getEmail();
         role="student";

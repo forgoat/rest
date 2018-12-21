@@ -17,8 +17,13 @@ public class TeacherController {
     }
 
     @PostMapping(value = "")
-    public int createTeacher(Teacher teacher) {
-        return teacherService.createTeacher(teacher);
+    public String createTeacher(Teacher teacher) {
+        if(teacherService.createTeacher(teacher)==1){
+            return "200";
+        }
+        else {
+            return "400";
+        }
     }
     @PutMapping(value = "active")
     public String actival(Long id,String password){

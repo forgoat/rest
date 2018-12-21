@@ -10,7 +10,7 @@ import java.util.List;
 public interface StudentDao {
     List<Student> findAllStudent();
     List<Student> queryStudent(Student student);
-    int insertStudent(Student student);
+    int add(Student student);
     public Student findByAccount(String account);
     public Student findById(Long id);
     public int updatePassword(@Param("id") Long id, @Param("password") String password);

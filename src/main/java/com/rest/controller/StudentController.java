@@ -34,10 +34,15 @@ public class StudentController {
         return studentService.queryStudent(student);
     }
 
-    @PostMapping(value = "insertStudent")
-    public int insertStudent(Student student)
+    @PostMapping(value = "")
+    public String add(Student student)
     {
-        return studentService.insertStudent(student);
+        if(studentService.add(student)==1){
+            return "200";
+        }
+        else {
+            return "400";
+        }
     }
     @DeleteMapping(value = "/{studentId}")
     public String delete(@PathVariable("studentId")Long studentId){

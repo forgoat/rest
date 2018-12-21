@@ -9,7 +9,7 @@ public class Student {
     private Integer is_active;
     private String student_name;
     private String email;
-
+    private Integer sex;
     public Student() {
     }
 
@@ -37,14 +37,6 @@ public class Student {
         this.password = password;
     }
 
-    public Integer isIs_active() {
-        return is_active;
-    }
-
-    public void setIs_active(Integer is_active) {
-        this.is_active = is_active;
-    }
-
     public String getStudent_name() {
         return student_name;
     }
@@ -57,7 +49,24 @@ public class Student {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email)
+    {
         this.email = email;
+    }
+
+    public Integer getIs_active() {
+        return is_active;
+    }
+
+    public void setIs_active(Integer is_active) {
+        this.is_active = is_active;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 }

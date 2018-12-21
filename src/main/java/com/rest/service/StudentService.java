@@ -43,8 +43,7 @@ public class StudentService {
     public int delete(Long id){
         return studentDao.delete(id);
     }
-    @Transactional
-    public int insertStudent(Student student){
-        return studentDao.insertStudent(student);
+    public int add(Student student){
+        return studentDao.add(student);
     }
 }
