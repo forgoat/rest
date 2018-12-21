@@ -55,6 +55,12 @@
         SELECT * FROM standard_seminar_system.student WHERE account=#{account}
     </select>
     <select id="findById" parameterType="long" resultType="com.rest.entity.Student">
-        SELECT * FROM standard_seminar_system.student WHERE id=#{id};
+        SELECT * FROM standard_seminar_system.student WHERE id=#{id}
     </select>
+    <update id="updatePassword">
+        UPDATE standard_seminar_system.student SET password=#{param2} WHERE id=#{param1}
+    </update>
+    <update id="updateEmail">
+        UPDATE standard_seminar_system.student SET email=#{param2} where id=#{param1}
+    </update>
 </mapper>

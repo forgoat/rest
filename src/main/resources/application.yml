@@ -1,10 +1,10 @@
 spring:
   datasource:
-    username: cylin
-    password: Abcd1234!
+    username: root
+    password: 12345678
     url: jdbc:mysql://127.0.0.1:3306/standard_seminar_system?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 server:
-  port: 8001
+  port: 8080

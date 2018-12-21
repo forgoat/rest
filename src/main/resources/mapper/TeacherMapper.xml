@@ -16,4 +16,10 @@
     <select id="findById" parameterType="long" resultType="com.rest.entity.Teacher">
         SELECT * FROM standard_seminar_system.teacher WHERE id=#{id};
     </select>
+    <update id="updatePassword">
+        UPDATE standard_seminar_system.teacher SET password=#{param2} WHERE id=#{param1};
+    </update>
+    <update id="updateEmail">
+        UPDATE standard_seminar_system.teacher SET email=#{param2} WHERE id=#{param1};
+    </update>
 </mapper>

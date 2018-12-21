@@ -27,4 +27,10 @@ public class TeacherService {
     public Teacher findById(Long id){
         return teacherDao.findById(id);
     }
+    public int updatePassword(Long id,String password){
+        return teacherDao.updatePassword(id,password);
+    }
+    public int updateEmail(Long id,String email){
+        return teacherDao.updateEmail(id,email);
+    }
 }

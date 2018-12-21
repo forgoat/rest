@@ -31,6 +31,12 @@ public class StudentService {
         String password=studentDao.findById(id).getPassword();
         return password;
     }
+    public int updatePassword(Long id,String password){
+        return studentDao.updatePassword(id,password);
+    }
+    public int updateEmail(Long id,String email){
+        return studentDao.updateEmail(id,email);
+    }
     @Transactional
     public int insertStudent(Student student){
         return studentDao.insertStudent(student);
