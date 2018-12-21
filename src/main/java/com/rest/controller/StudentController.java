@@ -53,4 +53,13 @@ public class StudentController {
             return "404";
         }
     }
+    @PutMapping(value = "{studentId}/password")
+    public String changePassword(@PathVariable("studentId")Long studentId,String password){
+        if(studentService.updatePassword(studentId,password)==1){
+            return "200";
+        }
+        else {
+            return "404";
+        }
+    }
 }
