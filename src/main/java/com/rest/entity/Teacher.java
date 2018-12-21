@@ -6,7 +6,7 @@ public class Teacher {
     private Long id;
     private String account;
     private String password;
-    private boolean is_active;
+    private Integer is_active;
     private String teacher_name;
     private String email;
 
@@ -37,11 +37,11 @@ public class Teacher {
         this.password = password;
     }
 
-    public boolean isIs_active() {
+    public Integer isIs_active() {
         return is_active;
     }
 
-    public void setIs_active(boolean is_active) {
+    public void setIs_active(Integer is_active) {
         this.is_active = is_active;
     }
 

@@ -11,4 +11,5 @@ public interface TeacherDao {
     public List<Teacher> teacherlist();
     public int createTeacher(Teacher teacher);
     public Teacher findByAccount(String account);
+    public Teacher findById(Long id);
 }

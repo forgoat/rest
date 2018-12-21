@@ -5,3 +5,5 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/standard_seminar_system?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+server:
+  port: 8080

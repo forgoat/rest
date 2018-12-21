@@ -24,6 +24,9 @@ public class StudentService {
     public Student findByAccount(String account){
         return studentDao.findByAccount(account);
     }
+    public Student findById(Long id){
+        return studentDao.findById(id);
+    }
 
     @Transactional
     public int insertStudent(Student student){

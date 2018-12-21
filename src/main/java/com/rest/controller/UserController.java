@@ -6,10 +6,11 @@ import com.rest.service.StudentService;
 import com.rest.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.rest.entity.User;
 @RestController
 @RequestMapping(value = "user")
 public class UserController {
@@ -18,19 +19,34 @@ public class UserController {
     @Autowired
     private StudentService studentService;
     @PostMapping(value = "login")
-    public String Login(String account,String password){
+    public User Login(String account,String password){
         Teacher teacher=teacherService.findByAccount(account);
         if(teacher!=null&&teacher.getPassword().equals(password)){
-            return "teacher";
+            User user=new User(teacher);
+            return user;
         }
         else{
             Student student=studentService.findByAccount(account);
             if(student!=null&&student.getPassword().equals(password)){
-                return "student";
+                User user=new User(student);
+                return user;
             }
             else{
-                return "false";
+                return null;
             }
+        }
+    }
+    @GetMapping(value = "information")
+    public User information(Long id,String roleName){
+        if (roleName.equals("student")){
+            Student student=studentService.findById(id);
+            User user=new User(student);
+            return user;
+        }
+        else{
+            Teacher teacher=teacherService.findById(id);
+            User user=new User(teacher);
+            return user;
         }
     }
 }

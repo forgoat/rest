@@ -20,7 +20,11 @@ public class TeacherService {
     {
         return teacherDao.createTeacher(teacher);
     }
-    public Teacher findByAccount(String account){
+    public Teacher findByAccount(String account)
+    {
         return teacherDao.findByAccount(account);
+    }
+    public Teacher findById(Long id){
+        return teacherDao.findById(id);
     }
 }

@@ -15,4 +15,5 @@ public interface StudentDao {
     int insertStudent(Student student);
 
     public Student findByAccount(String account);
+    public Student findById(Long id);
 }
