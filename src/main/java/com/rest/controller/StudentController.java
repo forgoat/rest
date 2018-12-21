@@ -29,10 +29,7 @@ public class StudentController {
             return "400";
         }
     }
-    @GetMapping(value = "queryStudent")
-    public List<Student> queryStudent(Student student){
-        return studentService.queryStudent(student);
-    }
+
 
     @PostMapping(value = "")
     public String add(Student student)
@@ -61,5 +58,9 @@ public class StudentController {
         else {
             return "404";
         }
+    }
+    @GetMapping(value = "searchstudent")
+    public List<Student> search(String account,String student_name){
+        return studentService.search(account,student_name);
     }
 }

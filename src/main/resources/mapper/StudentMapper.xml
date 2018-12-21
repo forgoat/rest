@@ -6,33 +6,19 @@
     <select id="findAllStudent" resultType="com.rest.entity.Student">
         SELECT * FROM standard_seminar_system.student
     </select>
-
-    <select id="queryStudent" resultType="com.rest.entity.Student">
-    SELECT *
-    FROM standard_seminar_system.student
-    WHERE 1=1
-        <if test="id !=null">
-            AND id = #{id}
+    <select id="findByAccountOrStudent_name" resultType="com.rest.entity.Student">
+        SELECT * FROM standard_seminar_system.student
+        WHERE
+        <if test="param1!=null and param2==null ">
+            account=#{param1}
         </if>
-        <if test="account !=null">
-            AND account = #{account}
+        <if test="param2!=null and param1==null ">
+            student_name=#{param2}
         </if>
-        <if test="password !=null">
-            AND password = #{password}
+        <if test="param1!=null and param2!=null ">
+            account=#{param1} AND student_name=#{param2}
         </if>
-        <if test="is_active !=null">
-            AND is_active = #{is_active}
-        </if>
-        <if test="student_name !=null">
-            AND student_name = #{student_name}
-        </if>
-        <if test="email !=null">
-            AND email = #{email}
-        </if>
-
     </select>
-
-
     <insert id="add" parameterType="com.rest.entity.Student" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO standard_seminar_system.student(
         id,

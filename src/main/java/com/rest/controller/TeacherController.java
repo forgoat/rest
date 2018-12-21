@@ -52,4 +52,8 @@ public class TeacherController {
             return "404";
         }
     }
+    @GetMapping(value = "searchteacher")
+    public List<Teacher> search(String account,String teacher_name){
+        return teacherService.search(account,teacher_name);
+    }
 }
