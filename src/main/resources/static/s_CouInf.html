@@ -65,4 +65,33 @@
 
 
     </body>
+    <script>
+        var myModel = {courseList:[]};
+        var studentid=100;
+
+        myViewModel = new Vue({
+            el: '#myView',//所在位置的id
+            data:myModel
+        })
+
+        //写成函数的目的，为了【复用】
+        function getData(){
+            $.ajax({
+                url: "/course",                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                data: {studentid:studentid},                            //指客户端提交给后台的参数
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(result){
+                    myModel.courseList = result;
+                },
+                error: function(){
+                    alert('服务器忙，请稍候');
+                }
+            });
+        }
+        getData();
+    </script>
+</section>
+</body>
 </html>

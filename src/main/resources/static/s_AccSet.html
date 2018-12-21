@@ -28,11 +28,11 @@
             <i class="icon icon-sys"></i>
         </a>
     </header>
-    <body>
-    <div class="div-auto1" >
+    <body >
+    <div class="div-auto1"  id="myView1">
         姓名：
     </div>
-    <div class="div-auto2" >
+    <div class="div-auto2"id="myView2" >
         学号：
     </div>
     <div class="div-auto1" >
@@ -45,11 +45,11 @@
 
     </div>
 
-    <div class="div-auto1" >
+    <div class="div-auto1" id="myView4">
          联系方式（邮箱）：
     </div>
 
-    <div class="div-auto2" >
+    <div class="div-auto2"id="myView3" >
         账户密码：
     </div>
 
@@ -65,6 +65,27 @@
     </div>
 
     </body>
+
 </section>
 </body>
 </html>
+<script type="text/javascript" src="js/vue.js"></script>
+<script>
+    function emm() {
+        $.ajax({
+            url: "/user/information",
+            type: "POST",
+            dataType:'text',
+            success:function(data) {
+                var json=eval("("+data+")");
+                $("#myView1").html("姓名： "+json.name);
+                $("#myView2").html("学号:"+json.id);
+                $("#myView3").html("密码:"+json.password);
+                $("#myView4").html("email:"+json.email);
+            },error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+    emm();
+</script>
