@@ -40,6 +40,9 @@ public class StudentService {
     public int actival(Long id,String password,String email){
         return studentDao.actival(id,password,email);
     }
+    public int delete(Long id){
+        return studentDao.delete(id);
+    }
     @Transactional
     public int insertStudent(Student student){
         return studentDao.insertStudent(student);

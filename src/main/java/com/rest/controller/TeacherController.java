@@ -29,4 +29,13 @@ public class TeacherController {
             return "400";
         }
     }
+    @DeleteMapping(value = "{teacherId}")
+    public String delete(@PathVariable("teacherId")Long teacherId){
+        if(teacherService.delete(teacherId)==1){
+            return "200";
+        }
+        else {
+            return "404";
+        }
+    }
 }

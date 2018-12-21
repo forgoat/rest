@@ -37,4 +37,7 @@ public class TeacherService {
     public int actival(Long id,String password){
         return teacherDao.actival(password,id);
     }
+    public int delete(Long id){
+        return teacherDao.delete(id);
+    }
 }

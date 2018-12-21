@@ -4,6 +4,7 @@ import com.rest.entity.Student;
 import com.rest.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,5 +38,14 @@ public class StudentController {
     public int insertStudent(Student student)
     {
         return studentService.insertStudent(student);
+    }
+    @DeleteMapping(value = "/{studentId}")
+    public String delete(@PathVariable("studentId")Long studentId){
+        if(studentService.delete(studentId)==1){
+            return "200";
+        }
+        else {
+            return "404";
+        }
     }
 }

@@ -8,21 +8,24 @@
     </select>
     <insert id="createTeacher" parameterType="com.rest.entity.Teacher" useGeneratedKeys="true">
         INSERT INTO standard_seminar_system.teacher(account,password,is_active,teacher_name,email) VALUE
-        (#{account},#{password},#{is_active},#{teacher_name},#{email});
+        (#{account},#{password},#{is_active},#{teacher_name},#{email})
     </insert>
     <select id="findByAccount" parameterType="String" resultType="com.rest.entity.Teacher">
-        SELECT * FROM standard_seminar_system.teacher WHERE account=#{account};
+        SELECT * FROM standard_seminar_system.teacher WHERE account=#{account}
     </select>
     <select id="findById" parameterType="long" resultType="com.rest.entity.Teacher">
-        SELECT * FROM standard_seminar_system.teacher WHERE id=#{id};
+        SELECT * FROM standard_seminar_system.teacher WHERE id=#{id}
     </select>
     <update id="updatePassword">
-        UPDATE standard_seminar_system.teacher SET password=#{param2} WHERE id=#{param1};
+        UPDATE standard_seminar_system.teacher SET password=#{param2} WHERE id=#{param1}
     </update>
     <update id="updateEmail">
-        UPDATE standard_seminar_system.teacher SET email=#{param2} WHERE id=#{param1};
+        UPDATE standard_seminar_system.teacher SET email=#{param2} WHERE id=#{param1}
     </update>
     <update id="actival">
         UPDATE standard_seminar_system.teacher SET is_active=1 WHERE id=#{param2} AND password=#{param1}
     </update>
+    <delete id="delete" parameterType="long">
+        DELETE FROM standard_seminar_system.teacher WHERE id=#{id}
+    </delete>
 </mapper>

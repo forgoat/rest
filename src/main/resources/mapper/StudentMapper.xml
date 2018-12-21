@@ -66,4 +66,7 @@
     <update id="actival">
         UPDATE standard_seminar_system.student SET is_active=1 WHERE id=#{param1} AND password=#{param2} AND email=#{param3}
     </update>
+    <delete id="delete" parameterType="long">
+        DELETE FROM standard_seminar_system.student WHERE id=#{id}
+    </delete>
 </mapper>
