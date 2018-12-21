@@ -50,7 +50,7 @@ public class UserController {
         }
     }
     @PostMapping(value = "information")
-    public Object information(HttpServletRequest request){
+    public Object information(){
 //        HttpSession session=request.getSession();//这就是session的创建
 //        Object sid=session.getAttribute("id");
 //        String strid=String.valueOf(sid);
