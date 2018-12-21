@@ -66,12 +66,20 @@
             type: "POST",
             dataType:'text',
             success:function(data) {
-                alert(data);
-                if (data == 'teacher') {
+                var json=eval("("+data+")");
+                alert(json.roleName);
+                if (json.roleName == 'teacher') {
+                    if(json.isActive==0)
                     window.location.href="t_Inf.html";
+                    else
+                        window.location.href="t_FstLogin.html";
                 }
-                else if(data=='student'){
-                    window.location.href="s_Inf.html";
+                else if(json.roleName=='student'){
+                    if(json.isActive==0)
+                        window.location.href="s_Inf.html";
+                    else
+                        window.location.href="s_FstLogin.html";
+
                 }else{
                     alert("sorry!");
                 }
