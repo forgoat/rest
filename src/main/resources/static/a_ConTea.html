@@ -64,7 +64,7 @@
                         </button>
                     </div>
                     <hr>
-                    <table class="layui-table" lay-data="{width: 892, height:332, url:'/demo/table/user/', page:true, id:'idTest'}" lay-filter="demo">
+                    <table class="layui-table" lay-filter="demo">
                         <thead>
                         <tr>
                             <th lay-data="{field:'id', width:200, sort: true, fixed: true}">教工号</th>
@@ -130,5 +130,31 @@
         </div>
     </div>
 </div>
+<script>
+    var myModel = {courseList:[]};
+    var studentid=100;
+
+    myViewModel = new Vue({
+        el: '#demo',//所在位置的id
+        data:myModel
+    })
+
+    //写成函数的目的，为了【复用】
+    function getData(){
+        $.ajax({
+            url: "/queryAllStudent",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(result){
+                myModel.courseList = result;
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+    getData();
+</script>
 </body>
 </html>
