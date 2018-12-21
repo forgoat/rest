@@ -9,15 +9,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "student")
 public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @GetMapping(value ="queryAllStudent" )
-    public List<Student> queryAllStudent(){
-        return studentService.queryAllStudent();
+    @GetMapping(value ="" )
+    public List<Student> findAllStudent(){
+        return studentService.findAllStudent();
     }
 
+    @PutMapping(value = "active")
+    public String active(Long id,String password,String email){
+        if(studentService.actival(id,password,email)==1){
+            return "200";
+        }
+        else {
+            return "400";
+        }
+    }
     @GetMapping(value = "queryStudent")
     public List<Student> queryStudent(Student student){
         return studentService.queryStudent(student);

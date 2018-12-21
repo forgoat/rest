@@ -13,8 +13,8 @@ public class StudentService {
     @Autowired
     private StudentDao studentDao;
 
-    public List<Student> queryAllStudent(){
-        return studentDao.queryAllStudent();
+    public List<Student> findAllStudent(){
+        return studentDao.findAllStudent();
     }
 
     public List<Student> queryStudent(Student student){
@@ -36,6 +36,9 @@ public class StudentService {
     }
     public int updateEmail(Long id,String email){
         return studentDao.updateEmail(id,email);
+    }
+    public int actival(Long id,String password,String email){
+        return studentDao.actival(id,password,email);
     }
     @Transactional
     public int insertStudent(Student student){

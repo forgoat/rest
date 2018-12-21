@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.StudentDao">
-    <select id="queryAllStudent" resultType="com.rest.entity.Student">
+    <select id="findAllStudent" resultType="com.rest.entity.Student">
         SELECT * FROM standard_seminar_system.student
     </select>
 
@@ -62,5 +62,8 @@
     </update>
     <update id="updateEmail">
         UPDATE standard_seminar_system.student SET email=#{param2} where id=#{param1}
+    </update>
+    <update id="actival">
+        UPDATE standard_seminar_system.student SET is_active=1 WHERE id=#{param1} AND password=#{param2} AND email=#{param3}
     </update>
 </mapper>

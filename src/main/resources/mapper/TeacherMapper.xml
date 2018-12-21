@@ -22,4 +22,7 @@
     <update id="updateEmail">
         UPDATE standard_seminar_system.teacher SET email=#{param2} WHERE id=#{param1};
     </update>
+    <update id="actival">
+        UPDATE standard_seminar_system.teacher SET is_active=1 WHERE id=#{param2} AND password=#{param1}
+    </update>
 </mapper>

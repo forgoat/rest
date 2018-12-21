@@ -15,4 +15,5 @@ public interface TeacherDao {
     public Teacher findById(Long id);
     public int updatePassword(@Param(value = "id") Long id, @Param(value = "password") String password);
     public int updateEmail(@Param(value = "id")Long id,@Param(value = "email")String email);
+    public int actival(@Param("password") String password,@Param("id") Long id);
 }
