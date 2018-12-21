@@ -57,5 +57,4 @@
     <select id="findById" parameterType="long" resultType="com.rest.entity.Student">
         SELECT * FROM standard_seminar_system.student WHERE id=#{id};
     </select>
-
 </mapper>

@@ -25,8 +25,4 @@ public class TeacherController {
     public int createTeacher(Teacher teacher) {
         return teacherService.createTeacher(teacher);
     }
-    @GetMapping(value = "information")
-    public Teacher findById(Long id){
-        return teacherService.findById(id);
-    }
 }

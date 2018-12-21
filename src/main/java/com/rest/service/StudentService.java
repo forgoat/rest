@@ -27,7 +27,10 @@ public class StudentService {
     public Student findById(Long id){
         return studentDao.findById(id);
     }
-
+    public String findPassword(Long id){
+        String password=studentDao.findById(id).getPassword();
+        return password;
+    }
     @Transactional
     public int insertStudent(Student student){
         return studentDao.insertStudent(student);

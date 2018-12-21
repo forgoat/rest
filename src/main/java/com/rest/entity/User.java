@@ -8,7 +8,7 @@ public class User {
     private Integer is_active;
     private String name;
     private String email;
-    private String roleName;
+    private String role;
     public User() {
     }
     public User(Teacher teacher){
@@ -18,7 +18,7 @@ public class User {
         is_active=teacher.isIs_active();
         name=teacher.getTeacher_name();
         email=teacher.getEmail();
-        roleName="teacher";
+        role="teacher";
     }
     public User(Student student){
         id=student.getId();
@@ -27,7 +27,7 @@ public class User {
         is_active=student.isIs_active();
         name=student.getStudent_name();
         email=student.getEmail();
-        roleName="student";
+        role="student";
     }
     public Long getId() {
         return id;
@@ -78,10 +78,10 @@ public class User {
     }
 
     public String getRoleName() {
-        return roleName;
+        return role;
     }
 
     public void setRoleName(String roleName) {
-        this.roleName = roleName;
+        this.role = roleName;
     }
 }
