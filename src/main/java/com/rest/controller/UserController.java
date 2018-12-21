@@ -5,6 +5,7 @@ import com.rest.entity.Teacher;
 import com.rest.service.StudentService;
 import com.rest.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.rest.entity.User;
@@ -48,14 +49,16 @@ public class UserController {
             }
         }
     }
-    @GetMapping(value = "information")
-    public User information(HttpServletRequest request){
-        HttpSession session=request.getSession();//这就是session的创建
-        Object sid=session.getAttribute("id");
-        String strid=String.valueOf(sid);
-        Long id=Long.valueOf(strid);
-        Object orole=session.getAttribute("rolename");
-        String role=String.valueOf(orole);
+    @PostMapping(value = "information")
+    public Object information(HttpServletRequest request){
+//        HttpSession session=request.getSession();//这就是session的创建
+//        Object sid=session.getAttribute("id");
+//        String strid=String.valueOf(sid);
+//        Long id=Long.valueOf(strid);
+//        Object orole=session.getAttribute("rolename");
+//        String role=String.valueOf(orole);
+        String role="student";
+        Long id=Long.valueOf("1");
         if (role.equals("student")){
             Student student=studentService.findById(id);
             User user=new User(student);

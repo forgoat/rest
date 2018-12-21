@@ -28,9 +28,9 @@
             <i class="icon icon-sys"></i>
         </a>
     </header>
-    <body>
-    <div class="div-auto1" >
-        姓名：
+    <body id="myView">
+    <div class="div-auto1"  >
+        姓名：{{id}}
     </div>
     <div class="div-auto2" >
         学号：
@@ -65,6 +65,20 @@
     </div>
 
     </body>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script>
+        function login() {
+            $.ajax({
+                url: "/user/information",
+                type: "POST",
+                dataType:'text',
+                success:function(data) {
+                    var json=eval("("+data+")");
+                    alert(json.roleName);
+                }
+            });
+        }
+    </script>
 </section>
 </body>
 </html>
