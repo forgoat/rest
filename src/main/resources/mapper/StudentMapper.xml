@@ -57,4 +57,22 @@
     <delete id="delete" parameterType="long">
         DELETE FROM standard_seminar_system.student WHERE id=#{id}
     </delete>
+    <update id="updateInfo">
+        UPDATE standard_seminar_system.student
+        <set>
+            <if test="param2!=null ">
+                account=#{param2},
+            </if>
+            <if test="param3!=null ">
+                email=#{param3},
+            </if>
+            <if test="param4!=null ">
+                student_name=#{param4},
+            </if>
+            <if test="param5!=null ">
+                sex=#{param5}
+            </if>
+        </set>
+        WHERE id=#{param1}
+    </update>
 </mapper>

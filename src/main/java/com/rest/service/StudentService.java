@@ -44,4 +44,7 @@ public class StudentService {
     public int add(Student student){
         return studentDao.add(student);
     }
+    public int updateInfo(Long id,String account,String email,String student_name,Integer sex){
+        return studentDao.updateInfo(id,account,email,student_name,sex);
+    }
 }

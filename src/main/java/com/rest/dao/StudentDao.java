@@ -17,4 +17,5 @@ public interface StudentDao {
     public int updateEmail(@Param("id")Long id,@Param("email")String email);
     public int actival(@Param("id")Long id,@Param("password")String password,@Param("email")String email);
     public int delete(Long id);
+    public int updateInfo(@Param("id")Long id,@Param("account")String account,@Param("email")String email,@Param("student_name")String student_name,@Param("sex")Integer sex);
 }

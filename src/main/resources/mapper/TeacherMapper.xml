@@ -41,4 +41,19 @@
             account=#{param1} AND teacher_name=#{param2}
         </if>
     </select>
+    <update id="updateInfo">
+        UPDATE standard_seminar_system.teacher
+        <set>
+        <if test="param2!=null">
+            account=#{param2},
+        </if>
+        <if test="param3!=null ">
+            email=#{param3},
+        </if>
+        <if test="param4!=null ">
+            teacher_name=#{param4}
+        </if>
+        </set>
+        WHERE id=#{param1}
+    </update>
 </mapper>

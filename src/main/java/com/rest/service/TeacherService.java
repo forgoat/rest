@@ -44,4 +44,7 @@ public class TeacherService {
     public List<Teacher> search(String account,String teacher_name){
         return teacherDao.search(account,teacher_name);
     }
+    public int updateInfo(Long id,String account,String email,String teacher_name){
+        return teacherDao.updateInfo(id,account,email,teacher_name);
+    }
 }

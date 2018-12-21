@@ -18,4 +18,5 @@ public interface TeacherDao {
     public int actival(@Param("password") String password,@Param("id") Long id);
     public int delete(Long id);
     public List<Teacher> search(@Param("account") String account,@Param("teacher_name") String teacher_name);
+    public int updateInfo(@Param("id")Long id, @Param("account") String account, @Param("email") String email, @Param("teacher_name") String teacher_name);
 }

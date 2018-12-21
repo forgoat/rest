@@ -56,4 +56,13 @@ public class TeacherController {
     public List<Teacher> search(String account,String teacher_name){
         return teacherService.search(account,teacher_name);
     }
+    @PutMapping(value = "{teacherId}/information")
+    public String updateInfo(@PathVariable("teacherId")Long teacherId,String account,String email,String teacher_name){
+        if(teacherService.updateInfo(teacherId,account,email,teacher_name)==1){
+            return "200";
+        }
+        else {
+            return "404";
+        }
+    }
 }
