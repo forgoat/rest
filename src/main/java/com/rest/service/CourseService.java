@@ -23,4 +23,7 @@ public class CourseService {
     public int saveCourse(Course course){
         return courseDao.saveCourse(course);
     }
+    public Course findById(Long id){
+        return courseDao.findById(id);
+    }
 }
