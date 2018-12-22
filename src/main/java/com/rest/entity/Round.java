@@ -3,8 +3,8 @@ package com.rest.entity;
 import java.math.BigInteger;
 
 public class Round {
-    private BigInteger id;
-    private BigInteger course_id;
+    private Long id;
+    private Long course_id;
     private Integer round_serial;
     private Integer presentation_score_method;
     private Integer report_score_method;
@@ -13,19 +13,19 @@ public class Round {
     public Round() {
     }
 
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public BigInteger getCourse_id() {
+    public Long getCourse_id() {
         return course_id;
     }
 
-    public void setCourse_id(BigInteger course_id) {
+    public void setCourse_id(Long course_id) {
         this.course_id = course_id;
     }
 
