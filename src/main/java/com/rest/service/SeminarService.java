@@ -23,4 +23,7 @@ public class SeminarService {
     public List<Klass_seminar> findClass(Long seminarId){
         return klassSeminarDao.findBySeminar(seminarId);
     }
+    public int saveKlassSeminar(Klass_seminar klass_seminar){
+        return klassSeminarDao.save(klass_seminar);
+    }
 }

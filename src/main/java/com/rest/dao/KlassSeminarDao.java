@@ -7,4 +7,5 @@ import java.util.List;
 @Mapper
 public interface KlassSeminarDao {
     public List<Klass_seminar> findBySeminar(Long seminar_id);
+    public int save(Klass_seminar klass_seminar);
 }
