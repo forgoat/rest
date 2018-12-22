@@ -77,4 +77,32 @@ public class SeminarController {
 //    public int deleteKlassSeminar(Long id){
 //        return seminarService.deleteKlassSeminar(id);
 //    }
+    @PutMapping(value = "{seminarId}/round")
+    public HttpStatus setRound(@PathVariable("seminarId")Long id,Long round_id){
+        Seminar seminar=seminarService.findById(id);
+        if(seminarService.updateInfo(id,seminar.getCourse_id(),round_id,seminar.getSeminar_name(),seminar.getIntroducation(),seminar.getMax_team(),seminar.getIs_visible(),seminar.getSeminar_serial(),seminar.getEnroll_start_time(),seminar.getEnroll_end_time())==1){
+            return HttpStatus.OK;
+        }
+        else {
+            return HttpStatus.FORBIDDEN;
+        }
+    }
+    @PutMapping(value = "{seminarId}/class/{class_id}/status")
+    public HttpStatus setStatus(@PathVariable("seminarId")Long id,@PathVariable("class_id")Long class_id,Integer status){
+        if(seminarService.changeStatus(id,class_id,status)==1){
+            return HttpStatus.OK;
+        }
+        else {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
+    @PutMapping(value = "{seminarId}/class/{classId}/reportddl")
+    public HttpStatus setReportDDL(@PathVariable("seminarId")Long id,@PathVariable("classId")Long class_id,Date reportddl){
+        if(seminarService.changeddl(id,class_id,reportddl)==1){
+            return HttpStatus.OK;
+        }
+        else {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
 }

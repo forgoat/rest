@@ -12,4 +12,10 @@
     <delete id="delete" parameterType="long">
         DELETE FROM standard_seminar_system.klass_seminar WHERE id=#{id}
     </delete>
+    <update id="changeStatus">
+        UPDATE standard_seminar_system.klass_seminar SET seminar_status=#{param3} WHERE seminar_id=#{param1} AND klass_id=#{param2}
+    </update>
+    <update id="changeddl">
+        UPDATE standard_seminar_system.klass_seminar SET report_ddl=#{param3} WHERE seminar_id=#{param1} AND klass_id=#{param2}
+    </update>
 </mapper>

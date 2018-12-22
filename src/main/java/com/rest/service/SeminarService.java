@@ -39,4 +39,10 @@ public class SeminarService {
     public int deleteKlassSeminar(Long id){
         return klassSeminarDao.delete(id);
     }
+    public int changeStatus(Long seminar_id,Long class_id,Integer status){
+        return klassSeminarDao.changeStatus(seminar_id,class_id,status);
+    }
+    public int changeddl(Long seminar_id,Long class_id,Date report_ddl){
+        return klassSeminarDao.changeddl(seminar_id,class_id,report_ddl);
+    }
 }
