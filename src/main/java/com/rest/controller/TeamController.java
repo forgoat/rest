@@ -9,10 +9,7 @@ import com.rest.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.rest.entity.Student;
 
 import java.util.ArrayList;
@@ -56,5 +53,25 @@ public class TeamController {
         }
         teamInfo.setMember(member);
         return new ResponseEntity<TeamInfo>(teamInfo, HttpStatus.OK);
+    }
+    @PutMapping(value = "{teamId}/approve")
+    public HttpStatus setValid(@PathVariable("teamId") Long teamId){
+        Team team=teamService.findTeamByTeamId(teamId);
+        if(team==null){
+            return HttpStatus.NOT_FOUND;
+        }
+        else {
+            if (team.getStatus().equals(1)) {
+                return HttpStatus.CONFLICT;
+            } else {
+                if (teamService.setValid(teamId) == 1) {
+                    return HttpStatus.OK;
+                }
+                return HttpStatus.FORBIDDEN;
+            }
+        }
+    }
+    public HttpStatus updateInfo(Long teamId,String team_name,Integer team_serial){
+        
     }
 }

@@ -44,5 +44,11 @@ public class TeamService {
     public Team findTeamByTeamId(Long teamId){
         return teamDao.findById(teamId);
     }
+    public int setValid(Long teamId){
+        return teamDao.setValid(teamId);
+    }
+    public int updateInfo(Long teamId,String team_name,Integer team_serial){
+        return teamDao.updateInfo(teamId,team_name,team_serial);
+    }
 
 }

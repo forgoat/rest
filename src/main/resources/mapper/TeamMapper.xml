@@ -70,4 +70,19 @@
     <select id="findById" parameterType="long" resultType="com.rest.entity.Team">
         SELECT * FROM standard_seminar_system.team WHERE id=#{id}
     </select>
+    <update id="setValid" parameterType="long">
+        UPDATE standard_seminar_system.team SET status=1 WHERE id=#{teamId}
+    </update>
+    <update id="updateInfo">
+        UPDATE standard_seminar_system.team
+        <set>
+            <if test="param2!=null ">
+                team_name=#{param2},
+            </if>
+            <if test="param3!=null ">
+                team_serial=#{param3}
+            </if>
+        </set>
+        WHERE id=#{param1}
+    </update>
 </mapper>
