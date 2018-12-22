@@ -17,4 +17,10 @@ public class CourseService {
         return courseDao.queryCourseByStudentId(id);
     }
 
+    public List<Course> findAllCourse(){
+        return courseDao.findAllCourse();
+    }
+    public int saveCourse(Course course){
+        return courseDao.saveCourse(course);
+    }
 }

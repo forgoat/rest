@@ -11,7 +11,6 @@ import java.util.List;
 public interface CourseDao {
 
     List<Course> queryCourseByStudentId(BigInteger id); //我的课程 所有课程
-
-
-
+    List<Course> findAllCourse();
+    int saveCourse(Course course);
 }
