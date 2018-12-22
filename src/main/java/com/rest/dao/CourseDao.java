@@ -14,4 +14,5 @@ public interface CourseDao {
     List<Course> findAllCourse();
     int saveCourse(Course course);
     Course findById(Long id);
+    int deleteById(Long id);
 }

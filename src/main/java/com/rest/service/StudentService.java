@@ -16,7 +16,7 @@ public class StudentService {
     public List<Student> findAllStudent(){
         return studentDao.findAllStudent();
     }
-    public List<Student> search(String account,String student_name){
+    public Student search(String account,String student_name){
         return studentDao.findByAccountOrStudent_name(account,student_name);
     }
     public Student findByAccount(String account){
