@@ -1,12 +1,12 @@
 package com.rest.controller;
 
+import com.rest.entity.Klass;
 import com.rest.service.KlassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "class")
@@ -21,5 +21,9 @@ public class KlassController {
         else {
             return HttpStatus.NOT_FOUND;
         }
+    }
+    @GetMapping(value = "findByCourseId")
+    public List<Klass> findByCourseId(Long courseId){
+        return klassService.findByCourseId(courseId);
     }
 }

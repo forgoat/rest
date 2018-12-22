@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.SeminarDao">
+    <insert id="save" parameterType="com.rest.entity.Seminar" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO standard_seminar_system.seminar(course_id,round_id,seminar_name,introduction,max_team,is_visible,seminar_serial,enroll_start_time,enroll_end_time) VALUE(#{course_id},#{round_id},#{seminar_name},#{introducation},#{max_team},#{is_visible},#{seminar_serial},#{enroll_start_time},#{enroll_end_time})
+    </insert>
+</mapper>
