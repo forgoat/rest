@@ -6,6 +6,8 @@ import com.rest.service.StudentService;
 import com.rest.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.rest.entity.User;
@@ -23,15 +25,15 @@ public class UserController {
     private StudentService studentService;
     @PostMapping(value = "login",produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object Login(String account, String password,HttpServletRequest request,HttpServletResponse response){
+    public ResponseEntity<Object> Login(String account, String password, HttpServletRequest request){
         Teacher teacher=teacherService.findByAccount(account);
         if(teacher!=null&&teacher.getPassword().equals(password)){
             User user=new User(teacher);
             HttpSession session=request.getSession();//这就是session的创建
             session.setAttribute("id",user.getId());
             session.setAttribute("rolename",user.getRoleName());
-            response.setStatus(200);
-            return user;
+            HttpStatus httpStatus=HttpStatus.OK;
+            return new ResponseEntity<Object>(user,httpStatus);
         }
         else{
             Student student=studentService.findByAccount(account);
@@ -40,34 +42,34 @@ public class UserController {
                 HttpSession session=request.getSession();//这就是session的创建
                 session.setAttribute("id",user.getId());
                 session.setAttribute("rolename",user.getRoleName());
-                response.setStatus(200);
-                return user;
+                HttpStatus httpStatus=HttpStatus.OK;
+                return new ResponseEntity<Object>(user,httpStatus);
             }
             else{
-                response.setStatus(400);
-                return response;
+                HttpStatus httpStatus=HttpStatus.NOT_FOUND;
+                return new ResponseEntity<Object>(null,httpStatus);
             }
         }
     }
-    @PostMapping(value = "information")
-    public Object information(){
+    @GetMapping(value = "information")
+    public ResponseEntity<Object> information(Long id,String role){
 //        HttpSession session=request.getSession();//这就是session的创建
 //        Object sid=session.getAttribute("id");
 //        String strid=String.valueOf(sid);
 //        Long id=Long.valueOf(strid);
 //        Object orole=session.getAttribute("rolename");
 //        String role=String.valueOf(orole);
-        String role="student";
-        Long id=Long.valueOf("1");
         if (role.equals("student")){
             Student student=studentService.findById(id);
             User user=new User(student);
-            return user;
+            HttpStatus httpStatus=HttpStatus.OK;
+            return new ResponseEntity<Object>(user,httpStatus);
         }
         else{
             Teacher teacher=teacherService.findById(id);
             User user=new User(teacher);
-            return user;
+            HttpStatus httpStatus=HttpStatus.OK;
+            return new ResponseEntity<Object>(user,httpStatus);
         }
     }
     @GetMapping(value = "password")
@@ -84,40 +86,40 @@ public class UserController {
         }
     }
     @PutMapping(value = "password")
-    public String updatePassword(Long id, String password, String role){
+    public HttpStatus updatePassword(Long id, String password, String role){
         if(role.equals("student")){
             if(studentService.updatePassword(id,password)==1){
-                return "200";
+                return HttpStatus.OK;
             }
             else{
-                return "400";
+                return HttpStatus.BAD_REQUEST;
             }
         }
         else{
             if(teacherService.updatePassword(id,password)==1){
-                return "200";
+                return HttpStatus.OK;
             }
             else {
-                return "400";
+                return HttpStatus.BAD_REQUEST;
             }
         }
     }
     @PutMapping(value = "email")
-    public String updateEmail(Long id,String email,String role){
+    public HttpStatus updateEmail(Long id,String email,String role){
         if(role.equals("student")){
             if(studentService.updateEmail(id,email)==1){
-                return "200";
+                return HttpStatus.OK;
             }
             else {
-                return "400";
+                return HttpStatus.BAD_REQUEST;
             }
         }
         else {
             if(teacherService.updateEmail(id,email)==1){
-                return "200";
+                return HttpStatus.OK;
             }
             else {
-                return "400";
+                return HttpStatus.BAD_REQUEST;
             }
         }
     }

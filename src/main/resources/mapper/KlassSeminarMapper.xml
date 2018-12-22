@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.KlassSeminarDao">
+    <select id="findBySeminar" parameterType="long" resultType="com.rest.entity.Klass_seminar">
+        SELECT * FROM standard_seminar_system.klass_seminar WHERE seminar_id=#{seminar_id}
+    </select>
+    <insert id="save" parameterType="com.rest.entity.Klass_seminar" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO standard_seminar_system.klass_seminar(klass_id,seminar_id,seminar_status) VALUE(#{klass_id},#{seminar_id},0)
+    </insert>
+    <delete id="delete" parameterType="long">
+        DELETE FROM standard_seminar_system.klass_seminar WHERE id=#{id}
+    </delete>
+    <update id="changeStatus">
+        UPDATE standard_seminar_system.klass_seminar SET seminar_status=#{param3} WHERE seminar_id=#{param1} AND klass_id=#{param2}
+    </update>
+    <update id="changeddl">
+        UPDATE standard_seminar_system.klass_seminar SET report_ddl=#{param3} WHERE seminar_id=#{param1} AND klass_id=#{param2}
+    </update>
+</mapper>

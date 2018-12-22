@@ -1,10 +1,18 @@
 package com.rest.controller;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.rest.entity.Course;
+import com.rest.entity.Klass;
 import com.rest.service.CourseService;
+import com.rest.service.KlassService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.parser.Entity;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -12,21 +20,45 @@ import java.util.List;
 public class CourseController {
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private KlassService klassService;
     @GetMapping(value = "")
-    public List<Course> findAllCourse(){
-        return courseService.findAllCourse();
+    public ResponseEntity<List<Course>> findAllCourse(){
+        List<Course> courseList=courseService.findAllCourse();
+        HttpStatus httpStatus=(courseList.isEmpty())?HttpStatus.NOT_FOUND:HttpStatus.OK;
+        return new ResponseEntity<List<Course>>(courseList,httpStatus);
     }
     @PostMapping(value = "")
-    public String saveCourse(Course course){
+    public ResponseEntity<Long> saveCourse(Course course){
         if(courseService.saveCourse(course)==1){
-            return "201";
+            return new ResponseEntity<Long>(course.getId(),HttpStatus.ACCEPTED);
         }
         else {
-            return "403";
+            Long id=new Long(0);
+            return new ResponseEntity<Long>(id,HttpStatus.FORBIDDEN);
         }
     }
     @GetMapping(value = "{courseId}")
-    public Course findById(@PathVariable("courseId") Long courseId){
-        return courseService.findById(courseId);
+    public ResponseEntity<Course> findById(@PathVariable("courseId") Long courseId){
+        Course course=courseService.findById(courseId);
+        HttpStatus httpStatus=(course!=null)?HttpStatus.OK:HttpStatus.NOT_FOUND;
+        ResponseEntity<Course> courseResponseEntity=new ResponseEntity<Course>(course,httpStatus);
+        System.out.println(courseResponseEntity.getStatusCode());
+        return courseResponseEntity;
+    }
+    @DeleteMapping(value = "{courseId}")
+    public HttpStatus deleteById(@PathVariable("courseId")Long courseId){
+        if(courseService.deleteById(courseId)==1){
+            return HttpStatus.OK;
+        }
+        else {
+            return HttpStatus.NOT_FOUND;
+        }
+    }
+    @GetMapping(value = "{courseId}/class")
+    public ResponseEntity<List<Klass>> findClass(@PathVariable("courseId") Long courseId){
+        List<Klass> klassList=klassService.findByCourseId(courseId);
+        HttpStatus httpStatus=(klassList.isEmpty())?HttpStatus.NOT_FOUND:HttpStatus.OK;
+        return new ResponseEntity<List<Klass>>(klassList,httpStatus);
     }
 }

@@ -4,9 +4,9 @@ import java.math.BigInteger;
 import java.sql.Date;
 
 public class Seminar {
-    private BigInteger id;
-    private BigInteger course_id;
-    private BigInteger round_id;
+    private Long id;
+    private Long course_id;
+    private Long round_id;
     private String seminar_name;
     private String introducation;
     private Integer max_team;
@@ -18,27 +18,27 @@ public class Seminar {
     public Seminar() {
     }
 
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public BigInteger getCourse_id() {
+    public Long getCourse_id() {
         return course_id;
     }
 
-    public void setCourse_id(BigInteger course_id) {
+    public void setCourse_id(Long course_id) {
         this.course_id = course_id;
     }
 
-    public BigInteger getRound_id() {
+    public Long getRound_id() {
         return round_id;
     }
 
-    public void setRound_id(BigInteger round_id) {
+    public void setRound_id(Long round_id) {
         this.round_id = round_id;
     }
 

@@ -24,6 +24,7 @@ public interface TeamDao {
                            @Param("klass_id") BigInteger klass_id,
                            @Param("student_id") BigInteger student_id,
                            @Param("course_id") BigInteger course_id);//小组更新表
+    public Team findById(Long id);
 
 
 }/*

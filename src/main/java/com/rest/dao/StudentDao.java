@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface StudentDao {
     List<Student> findAllStudent();
-    List<Student> findByAccountOrStudent_name(@Param("account")String account,@Param("student_name") String student_name);
+    Student findByAccountOrStudent_name(@Param("account")String account,@Param("student_name") String student_name);
     int add(Student student);
     public Student findByAccount(String account);
     public Student findById(Long id);

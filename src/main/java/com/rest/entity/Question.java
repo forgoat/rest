@@ -3,54 +3,54 @@ package com.rest.entity;
 import java.math.BigInteger;
 
 public class Question {
-    private BigInteger id;
-    private BigInteger klass_seminar_id;
-    private BigInteger attendance_id;
-    private BigInteger team_id;
-    private BigInteger student_id;
+    private Long id;
+    private Long klass_seminar_id;
+    private Long attendance_id;
+    private Long team_id;
+    private Long student_id;
     private Integer is_selected;
     private float score;
 
     public Question() {
     }
 
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public BigInteger getKlass_seminar_id() {
+    public Long getKlass_seminar_id() {
         return klass_seminar_id;
     }
 
-    public void setKlass_seminar_id(BigInteger klass_seminar_id) {
+    public void setKlass_seminar_id(Long klass_seminar_id) {
         this.klass_seminar_id = klass_seminar_id;
     }
 
-    public BigInteger getAttendance_id() {
+    public Long getAttendance_id() {
         return attendance_id;
     }
 
-    public void setAttendance_id(BigInteger attendance_id) {
+    public void setAttendance_id(Long attendance_id) {
         this.attendance_id = attendance_id;
     }
 
-    public BigInteger getTeam_id() {
+    public Long getTeam_id() {
         return team_id;
     }
 
-    public void setTeam_id(BigInteger team_id) {
+    public void setTeam_id(Long team_id) {
         this.team_id = team_id;
     }
 
-    public BigInteger getStudent_id() {
+    public Long getStudent_id() {
         return student_id;
     }
 
-    public void setStudent_id(BigInteger student_id) {
+    public void setStudent_id(Long student_id) {
         this.student_id = student_id;
     }
 

@@ -3,6 +3,8 @@ package com.rest.controller;
 import com.rest.entity.Student;
 import com.rest.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,60 +18,59 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping(value ="" )
-    public List<Student> findAllStudent(){
-        return studentService.findAllStudent();
+    public ResponseEntity<List<Student>> findAllStudent(){
+        List<Student> studentList=studentService.findAllStudent();
+        HttpStatus httpStatus=HttpStatus.OK;
+        return new ResponseEntity<List<Student>>(studentList,httpStatus);
     }
 
     @PutMapping(value = "active")
-    public String active(Long id,String password,String email){
+    public ResponseEntity<Object> active(Long id,String password,String email){
         if(studentService.actival(id,password,email)==1){
-            return "200";
+            Student student=studentService.findById(id);
+            HttpStatus httpStatus=HttpStatus.OK;
+            return new ResponseEntity<Object>(student,httpStatus);
         }
         else {
-            return "400";
+            HttpStatus httpStatus=HttpStatus.NOT_FOUND;
+            return new ResponseEntity<Object>(null,httpStatus);
         }
     }
 
-
-    @PostMapping(value = "")
-    public String add(Student student)
-    {
-        if(studentService.add(student)==1){
-            return "200";
-        }
-        else {
-            return "400";
-        }
-    }
     @DeleteMapping(value = "/{studentId}")
-    public String delete(@PathVariable("studentId")Long studentId){
+    public HttpStatus delete(@PathVariable("studentId")Long studentId){
         if(studentService.delete(studentId)==1){
-            return "200";
+            return HttpStatus.OK;
         }
         else {
-            return "404";
+            return HttpStatus.BAD_REQUEST;
         }
     }
     @PutMapping(value = "{studentId}/password")
-    public String changePassword(@PathVariable("studentId")Long studentId,String password){
+    public ResponseEntity<Object> changePassword(@PathVariable("studentId")Long studentId,String password){
         if(studentService.updatePassword(studentId,password)==1){
-            return "200";
+            Student student=studentService.findById(studentId);
+            HttpStatus httpStatus=HttpStatus.OK;
+            return new ResponseEntity<Object>(student,httpStatus);
         }
         else {
-            return "404";
+            HttpStatus httpStatus=HttpStatus.NOT_FOUND;
+            return new ResponseEntity<Object>(null,httpStatus);
         }
     }
     @GetMapping(value = "searchstudent")
-    public List<Student> search(String account,String student_name){
-        return studentService.search(account,student_name);
+    public ResponseEntity<Object> search(String account,String student_name){
+        Student student=studentService.search(account,student_name);
+        HttpStatus httpStatus= (student!=null)?HttpStatus.OK:HttpStatus.NOT_FOUND;
+        return new ResponseEntity<Object>(student,httpStatus);
     }
     @PutMapping(value = "{studentId}/information")
-    public String updateInfo(@PathVariable("studentId")Long studentId,String account,String email,String student_name,Integer sex){
+    public HttpStatus updateInfo(@PathVariable("studentId")Long studentId,String account,String email,String student_name,Integer sex){
         if(studentService.updateInfo(studentId,account,email,student_name,sex)==1){
-            return "200";
+            return HttpStatus.OK;
         }
         else {
-            return "404";
+            return HttpStatus.NOT_FOUND;
         }
     }
 }

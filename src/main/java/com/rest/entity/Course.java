@@ -4,8 +4,8 @@ import java.math.BigInteger;
 import java.sql.Date;
 
 public class Course {
-    private BigInteger id;
-    private BigInteger teacher_id;
+    private Long id;
+    private Long teacher_id;
     private String course_name;
     private String introducation;
     private Integer presentation_percentage;
@@ -13,25 +13,25 @@ public class Course {
     private Integer report_percentage;
     private Date team_start_time;
     private Date team_end_time;
-    private BigInteger team_main_course_id;
-    private BigInteger seminar_main_course_id;
+    private Long team_main_course_id;
+    private Long seminar_main_course_id;
 
     public Course() {
     }
 
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public BigInteger getTeacher_id() {
+    public Long getTeacher_id() {
         return teacher_id;
     }
 
-    public void setTeacher_id(BigInteger teacher_id) {
+    public void setTeacher_id(Long teacher_id) {
         this.teacher_id = teacher_id;
     }
 
@@ -91,19 +91,19 @@ public class Course {
         this.team_end_time = team_end_time;
     }
 
-    public BigInteger getTeam_main_course_id() {
+    public Long getTeam_main_course_id() {
         return team_main_course_id;
     }
 
-    public void setTeam_main_course_id(BigInteger team_main_course_id) {
+    public void setTeam_main_course_id(Long team_main_course_id) {
         this.team_main_course_id = team_main_course_id;
     }
 
-    public BigInteger getSeminar_main_course_id() {
+    public Long getSeminar_main_course_id() {
         return seminar_main_course_id;
     }
 
-    public void setSeminar_main_course_id(BigInteger seminar_main_course_id) {
+    public void setSeminar_main_course_id(Long seminar_main_course_id) {
         this.seminar_main_course_id = seminar_main_course_id;
     }
 }
