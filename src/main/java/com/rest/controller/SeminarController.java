@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -41,9 +42,31 @@ public class SeminarController {
     {
         return new ResponseEntity<List<Klass_seminar>>(seminarService.findClass(seminarId),HttpStatus.OK);
     }
-    @PostMapping(value = "create")
-    public int save(Klass_seminar klass_seminar){
-        return seminarService.saveKlassSeminar(klass_seminar);
-    }
+//    @PostMapping(value = "create")
+//    public int save(Klass_seminar klass_seminar){
+//        return seminarService.saveKlassSeminar(klass_seminar);
+//    }
 
+    @GetMapping(value = "{seminarId}")
+    public ResponseEntity<Seminar> findSeminar(@PathVariable(value = "seminarId") Long id){
+        return new ResponseEntity<Seminar>(seminarService.findById(id),HttpStatus.OK);
+    }
+    @DeleteMapping(value = "{seminarId}")
+    public HttpStatus deleteById(@PathVariable("seminarId") Long id){
+        if(seminarService.deleteSeminar(id)==1){
+            return HttpStatus.OK;
+        }
+        else {
+            return HttpStatus.NOT_FOUND;
+        }
+    }
+    @PutMapping(value = "{seminarId}")
+    public HttpStatus updateInfo(@PathVariable("seminarId") Long seminarId,Long course_id,Long round_id,String seminar_name,String introducation,Integer max_team,Integer is_visible,Integer seminar_serial,Date enroll_start_time,Date enroll_end_time){
+        if(seminarService.updateInfo(seminarId,course_id,round_id,seminar_name,introducation,max_team,is_visible,seminar_serial,enroll_end_time,enroll_end_time)==1){
+            return HttpStatus.OK;
+        }
+        else {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
 }

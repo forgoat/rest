@@ -6,4 +6,43 @@
     <insert id="save" parameterType="com.rest.entity.Seminar" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO standard_seminar_system.seminar(course_id,round_id,seminar_name,introduction,max_team,is_visible,seminar_serial,enroll_start_time,enroll_end_time) VALUE(#{course_id},#{round_id},#{seminar_name},#{introducation},#{max_team},#{is_visible},#{seminar_serial},#{enroll_start_time},#{enroll_end_time})
     </insert>
+    <select id="findById" parameterType="long" resultType="com.rest.entity.Seminar">
+        SELECT * FROM standard_seminar_system.seminar WHERE id=#{id}
+    </select>
+    <delete id="delete" parameterType="long">
+        DELETE FROM standard_seminar_system.seminar WHERE id=#{id}
+    </delete>
+    <update id="updateSelective">
+        UPDATE standard_seminar_system.seminar
+        <set>
+            <if test="param2!=null ">
+                course_id=#{param2},
+            </if>
+            <if test="param3!=null ">
+                round_id=#{param3},
+            </if>
+            <if test="param4!=null ">
+                seminar_name=#{param4},
+            </if>
+            <if test="param5!=null ">
+                introducation=#{param5},
+            </if>
+            <if test="param6!=null ">
+                max_team=#{param6},
+            </if>
+            <if test="param7!=null ">
+                is_visible=#{param7},
+            </if>
+            <if test="param8!=null ">
+                seminar_serial=#{param8},
+            </if>
+            <if test="param9">
+                enroll_start_time=#{param9},
+            </if>
+            <if test="param10!=null ">
+                enroll_end_time=#{param10}
+            </if>
+        </set>
+        WHERE id=#{param1}
+    </update>
 </mapper>
