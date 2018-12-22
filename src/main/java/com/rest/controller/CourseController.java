@@ -2,7 +2,9 @@ package com.rest.controller;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.rest.entity.Course;
+import com.rest.entity.Klass;
 import com.rest.service.CourseService;
+import com.rest.service.KlassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +20,8 @@ import java.util.List;
 public class CourseController {
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private KlassService klassService;
     @GetMapping(value = "")
     public ResponseEntity<List<Course>> findAllCourse(){
         List<Course> courseList=courseService.findAllCourse();
@@ -50,5 +54,11 @@ public class CourseController {
         else {
             return HttpStatus.NOT_FOUND;
         }
+    }
+    @GetMapping(value = "{courseId}/class")
+    public ResponseEntity<List<Klass>> findClass(@PathVariable("courseId") Long courseId){
+        List<Klass> klassList=klassService.findByCourseId(courseId);
+        HttpStatus httpStatus=(klassList.isEmpty())?HttpStatus.NOT_FOUND:HttpStatus.OK;
+        return new ResponseEntity<List<Klass>>(klassList,httpStatus);
     }
 }

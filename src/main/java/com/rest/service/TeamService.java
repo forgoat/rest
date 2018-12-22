@@ -1,6 +1,8 @@
 package com.rest.service;
 
+import com.rest.dao.KlassStudentDao;
 import com.rest.dao.TeamDao;
+import com.rest.entity.KlassStudent;
 import com.rest.entity.Student;
 import com.rest.entity.Team;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,8 @@ import java.util.List;
 public class TeamService {
     @Autowired
     private TeamDao teamDao;
-
+    @Autowired
+    private KlassStudentDao klassStudentDao;
     public List<Team> queryAllTeam(BigInteger course_id){
         return teamDao.queryAllTeam(course_id);
     }
@@ -35,6 +38,11 @@ public class TeamService {
 
         return count;
     }
-
+    public List<KlassStudent> findStuByTeamId(Long teamId){
+        return klassStudentDao.findByTeam_id(teamId);
+    }
+    public Team findTeamByTeamId(Long teamId){
+        return teamDao.findById(teamId);
+    }
 
 }

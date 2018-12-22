@@ -3,9 +3,9 @@ package com.rest.entity;
 import java.math.BigInteger;
 
 public class Attendance {
-    private BigInteger id;
-    private BigInteger klass_seminar_id;
-    private BigInteger team_id;
+    private Long id;
+    private Long klass_seminar_id;
+    private Long team_id;
     private Integer team_order;
     private Integer is_present;
     private String report_name;
@@ -16,27 +16,27 @@ public class Attendance {
     public Attendance() {
     }
 
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public BigInteger getKlass_seminar_id() {
+    public Long getKlass_seminar_id() {
         return klass_seminar_id;
     }
 
-    public void setKlass_seminar_id(BigInteger klass_seminar_id) {
+    public void setKlass_seminar_id(Long klass_seminar_id) {
         this.klass_seminar_id = klass_seminar_id;
     }
 
-    public BigInteger getTeam_id() {
+    public Long getTeam_id() {
         return team_id;
     }
 
-    public void setTeam_id(BigInteger team_id) {
+    public void setTeam_id(Long team_id) {
         this.team_id = team_id;
     }
 

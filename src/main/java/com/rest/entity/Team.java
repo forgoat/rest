@@ -3,10 +3,10 @@ package com.rest.entity;
 import java.math.BigInteger;
 
 public class Team {
-    private BigInteger id;
-    private BigInteger klass_id;
-    private BigInteger course_id;
-    private BigInteger leader_id;
+    private Long id;
+    private Long klass_id;
+    private Long course_id;
+    private Long leader_id;
     private String team_name;
     private Integer team_serial;
     private Integer status;
@@ -14,35 +14,35 @@ public class Team {
     public Team() {
     }
 
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public BigInteger getKlass_id() {
+    public Long getKlass_id() {
         return klass_id;
     }
 
-    public void setKlass_id(BigInteger klass_id) {
+    public void setKlass_id(Long klass_id) {
         this.klass_id = klass_id;
     }
 
-    public BigInteger getCourse_id() {
+    public Long getCourse_id() {
         return course_id;
     }
 
-    public void setCourse_id(BigInteger course_id) {
+    public void setCourse_id(Long course_id) {
         this.course_id = course_id;
     }
 
-    public BigInteger getLeader_id() {
+    public Long getLeader_id() {
         return leader_id;
     }
 
-    public void setLeader_id(BigInteger leader_id) {
+    public void setLeader_id(Long leader_id) {
         this.leader_id = leader_id;
     }
 
