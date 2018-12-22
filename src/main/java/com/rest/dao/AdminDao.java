@@ -2,6 +2,7 @@ package com.rest.dao;
 
 import com.rest.entity.Admin;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -12,7 +13,7 @@ public interface AdminDao {
      * 返回所有admin
      * @return
      */
-    public List<Admin> adminlist();
-    public Admin findAdminById(BigInteger id);
-    public Admin findByName(String account);
+     List<Admin> adminlist();
+     Admin findAdminById(BigInteger id);
+     Admin findByName(@Param("account") String account);
 }
