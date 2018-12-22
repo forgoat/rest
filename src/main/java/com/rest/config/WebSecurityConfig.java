@@ -1,5 +1,8 @@
 package com.rest.config;
 
+import com.rest.config.AJAX.AjaxAuthFailHandler;
+import com.rest.config.AJAX.AjaxAuthSuccessHandler;
+import com.rest.config.AJAX.UnauthorizedEntryPoint;
 import com.rest.security.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -27,11 +30,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/index/**").hasRole("ADMIN")
+                .exceptionHandling().authenticationEntryPoint(new UnauthorizedEntryPoint())
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/index")
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/login","/css/**", "/js/**","/fonts/**").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/admin").hasRole("ADMIN")
+                .and()
+                .formLogin().loginPage("/login").loginProcessingUrl("/login")
+                .usernameParameter("account")
+                .passwordParameter("password")
+                .successHandler(new AjaxAuthSuccessHandler())
+                .failureHandler(new AjaxAuthFailHandler())
+                .defaultSuccessUrl("/admin")
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/login");
     }

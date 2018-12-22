@@ -29,7 +29,7 @@ public class MyUserDetailsService implements UserDetailsService {
         if (admin == null){
             throw new UsernameNotFoundException("用户不存在！");
         }
-        List<SimpleGrantedAuthority> simpleGrantedAuthorities = createAuthorities("ADMIN");
+        List<SimpleGrantedAuthority> simpleGrantedAuthorities = createAuthorities("USER,ADMIN");
         return new User(admin.getAccount(), admin.getPassword(), simpleGrantedAuthorities);
     }
 

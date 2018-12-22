@@ -3,15 +3,21 @@ package com.rest.controller;
 import com.rest.entity.Admin;
 import com.rest.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigInteger;
+import java.security.Principal;
 import java.util.List;
 
-@RestController
-@RequestMapping(value = "admin")
+@Controller
+//@RequestMapping(value = "/admin")
 public class   AdminController {
     @Autowired
     private AdminService adminService;
@@ -23,12 +29,23 @@ public class   AdminController {
     public Admin findAdminById(BigInteger id){
         return adminService.findAdminById(id);
     }
-    @GetMapping(value = "findByName")
-    public Admin findByName(String account)
+
+    @RequestMapping(value = "/login")
+    public String login()
     {
-        return adminService.findByName(account);
+        return "a_Login.html";
     }
-    @GetMapping(value = "login")
+
+
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @GetMapping("/admin")
+    @ResponseBody
+    public String user(){
+        return "a_ConStu.html";
+    }
+
+
+    @GetMapping(value = "/findByAccount")
     public String login(String account,String password){
         System.out.print(account+password);
         Admin admin=adminService.findByName(account);
