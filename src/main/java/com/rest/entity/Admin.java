@@ -1,7 +1,9 @@
 package com.rest.entity;
 
-import java.math.BigInteger;
+import lombok.Data;
 
+import java.math.BigInteger;
+@Data
 public class Admin {
     private BigInteger id;
     private String account;

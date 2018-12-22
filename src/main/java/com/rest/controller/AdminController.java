@@ -2,26 +2,26 @@ package com.rest.controller;
 
 import com.rest.entity.Admin;
 import com.rest.service.AdminService;
+import lombok.AllArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 //@RequestMapping(value = "/admin")
 public class   AdminController {
     @Autowired
     private AdminService adminService;
-    @GetMapping(value = "adminlist")
+    @GetMapping(value = "/adminlist")
     public List<Admin> adminList(){
         return adminService.adminList();
     }
@@ -30,30 +30,45 @@ public class   AdminController {
         return adminService.findAdminById(id);
     }
 
-    @RequestMapping(value = "/login")
+    @GetMapping(value = "/login")
     public String login()
     {
         return "a_Login.html";
     }
 
-
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+//    @PostMapping(value = "/login")
+//    public String logins(String account,String password){
+//        System.out.print(account+password);
+//        Admin admin=adminService.findByName(account);
+//        if(admin.getPassword().equals(password)){
+//            return "success";
+//        }
+//        else {
+//            return "error";
+//        }
+//    }
     @GetMapping("/admin")
-    @ResponseBody
-    public String user(){
+    public String user(@AuthenticationPrincipal Principal principal, Model model){
+        model.addAttribute("account", principal.getName());
         return "a_ConStu.html";
     }
 
+//
+//    @GetMapping("/admin")
+//    public String user(){
+//        return "a_ConStu.html";
+//    }
 
-    @GetMapping(value = "/findByAccount")
-    public String login(String account,String password){
-        System.out.print(account+password);
-        Admin admin=adminService.findByName(account);
-        if(admin.getPassword().equals(password)){
-            return "success";
-        }
-        else {
-            return "error";
-        }
-    }
+//
+//    @GetMapping(value = "/findByAccount")
+//    public String login(String account,String password){
+//        System.out.print(account+password);
+//        Admin admin=adminService.findByName(account);
+//        if(admin.getPassword().equals(password)){
+//            return "success";
+//        }
+//        else {
+//            return "error";
+//        }
+//    }
 }

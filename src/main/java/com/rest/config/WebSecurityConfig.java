@@ -1,14 +1,14 @@
 package com.rest.config;
 
-import com.rest.config.AJAX.AjaxAuthFailHandler;
-import com.rest.config.AJAX.AjaxAuthSuccessHandler;
-import com.rest.config.AJAX.UnauthorizedEntryPoint;
 import com.rest.security.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
@@ -16,7 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     private MyUserDetailsService myUserDetailsService;
 
     @Autowired
-    public void setAnyUserDetailsService(MyUserDetailsService myUserDetailsService){
+    public void setMyUserDetailsService(MyUserDetailsService myUserDetailsService){
         this.myUserDetailsService = myUserDetailsService;
     }
 
@@ -30,22 +30,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .exceptionHandling().authenticationEntryPoint(new UnauthorizedEntryPoint())
-                .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login","/css/**", "/js/**","/fonts/**").permitAll()
+               // .antMatchers("/login","/css/**", "/js/**","/fonts/**").permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasRole("USER")
                 .and()
-                .formLogin().loginPage("/login").loginProcessingUrl("/login")
-                .usernameParameter("account")
-                .passwordParameter("password")
-                .successHandler(new AjaxAuthSuccessHandler())
-                .failureHandler(new AjaxAuthFailHandler())
+                .formLogin().loginPage("/login")
                 .defaultSuccessUrl("/admin")
                 .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/a_ConStu.html");
     }
 
     /**
@@ -53,6 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
      */
     @Override
     protected void configure(AuthenticationManagerBuilder builder) throws Exception{
-        builder.userDetailsService(myUserDetailsService);
+        builder.userDetailsService(myUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
+
 }

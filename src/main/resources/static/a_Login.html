@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html >
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,34 +7,22 @@
     <title>管理员登录</title>
     <link rel="stylesheet" type="text/css" href="layui/css/layui.css" media="all" />
     <link rel="stylesheet" type="text/css" href="css/login.css" />
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="layui/layui.js"></script>
-    <script type="text/javascript" src="js/login.js"></script>
+    <!--<script type="text/javascript" src="js/jquery.min.js"></script>-->
+    <!--<script type="text/javascript" src="layui/layui.js"></script>-->
+    <!--<script type="text/javascript" src="js/login.js"></script>-->
 </head>
-<script>
-    function login() {
-        var account = $("#account").val();
-        var password = $("#password").val();
-        if(account==''|| password == '')
-        {
-            $("#account").focus();
-            alert("用户名或密码不能为空");
-            return false;
-        }
-        $.ajax({
-            url: "/login",
-            data:"account="+account+"&password="+password,
-            type: "POST",
-            dataType:'text',
-            success: function (res, status) {
-                window.location.href='/a_ConStu.html'
-            },
-            error: function (res, status) {
-                dangerDialog(res.statusText);
-            }
-        });
-    }
-    </script>
+<!--<script>-->
+    <!--function login() {-->
+        <!--var account = $("#account").val();-->
+        <!--var password = $("#password").val();-->
+        <!--if(account==''|| password == '')-->
+        <!--{-->
+            <!--$("#account").focus();-->
+            <!--alert("用户名或密码不能为空");-->
+            <!--return false;-->
+        <!--}-->
+    <!--}-->
+<!--</script>-->
 <body class="beg-login-bg">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
@@ -46,22 +34,23 @@
         <h1>管理员登录</h1>
     </header>
     <div class="beg-login-main">
-        <form class="layui-form" >
+        <form class="layui-form" method="post" action="/login">
             <div class="layui-form-item">
-                <label class="beg-login-icon">
+                <label class="beg-login-icon" for="username">
                     <i class="layui-icon">&#xe612;</i>
                 </label>
-                <input id="account" type="text" lay-verify="required" name="name" autocomplete="off" placeholder="这里输入账号" class="layui-input" lay-verType="tips">
+                <input id="username" type="text" lay-verify="required" name="username" autocomplete="off" placeholder="这里输入账号" class="layui-input" lay-verType="tips" >
             </div>
             <div class="layui-form-item">
-                <label class="beg-login-icon">
+                <label class="beg-login-icon" for="password">
                     <i class="layui-icon">&#xe642;</i>
                 </label>
-                <input id="password"type="password" lay-verify="required" name="password" autocomplete="off" placeholder="这里输入密码" class="layui-input" lay-verType="tips">
+                <input id="password"type="password" lay-verify="required" name="password" autocomplete="off" placeholder="这里输入密码" class="layui-input" lay-verType="tips" >
             </div>
+
             <div class="layui-form-item">
                 <div class="beg-pull">
-                    <button type="button" class="layui-btn layui-btn-normal" style="width:100%;" lay-submit lay-filter="formDemo" onclick="login()">
+                    <button type="submit" class="layui-btn layui-btn-normal" style="width:100%;" lay-submit lay-filter="formDemo" >
                         登　　录
                     </button>
                 </div>

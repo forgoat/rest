@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,13 +25,21 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Admin admin = adminService.findByName(username);
+    public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
+        System.out.println("+++++++++++++++++public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException");
+
+        Admin admin = adminService.findByName(account);
+        System.out.println("account:"+account+"  password:"+admin.getPassword());
+
+        //密码加密
+        BCryptPasswordEncoder util = new BCryptPasswordEncoder();
+        String password = util.encode(admin.getPassword());
+
         if (admin == null){
             throw new UsernameNotFoundException("用户不存在！");
         }
-        List<SimpleGrantedAuthority> simpleGrantedAuthorities = createAuthorities("USER,ADMIN");
-        return new User(admin.getAccount(), admin.getPassword(), simpleGrantedAuthorities);
+        List<SimpleGrantedAuthority> simpleGrantedAuthorities = createAuthorities("ROLE_USER");
+        return new User(admin.getAccount(), password, simpleGrantedAuthorities);
     }
 
     /**
