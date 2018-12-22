@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.KlassDao">
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM standard_seminar_system.klass WHERE id=#{id}
+    </delete>
+</mapper>
