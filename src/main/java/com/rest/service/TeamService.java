@@ -2,6 +2,7 @@ package com.rest.service;
 
 import com.rest.dao.KlassStudentDao;
 import com.rest.dao.TeamDao;
+import com.rest.entity.Klass;
 import com.rest.entity.KlassStudent;
 import com.rest.entity.Student;
 import com.rest.entity.Team;
@@ -50,5 +51,16 @@ public class TeamService {
     public int updateInfo(Long teamId,String team_name,Integer team_serial){
         return teamDao.updateInfo(teamId,team_name,team_serial);
     }
-
+    public int deleteTeam(Long teamId){
+        return teamDao.deleteTeam(teamId);
+    }
+    public KlassStudent findByStudentId(Long studentId){
+        return klassStudentDao.findByStudent_id(studentId);
+    }
+    public int quitTeam(Long studentId){
+        return klassStudentDao.quitTeam(studentId);
+    }
+    public int updateTeam(Long studentId,Long teamId){
+        return klassStudentDao.updateTeam(studentId,teamId);
+    }
 }

@@ -85,4 +85,7 @@
         </set>
         WHERE id=#{param1}
     </update>
+    <delete id="deleteTeam" parameterType="long">
+        DELETE FROM standard_seminar_system.team WHERE id=#{id}
+    </delete>
 </mapper>

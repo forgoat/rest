@@ -71,7 +71,66 @@ public class TeamController {
             }
         }
     }
-    public HttpStatus updateInfo(Long teamId,String team_name,Integer team_serial){
-        
+    @PutMapping(value = "{teamId}")
+    public HttpStatus updateInfo(@PathVariable("teamId") Long teamId,String team_name,Integer team_serial) {
+        if (teamService.updateInfo(teamId, team_name, team_serial) == 1) {
+            return HttpStatus.OK;
+        } else {
+            return HttpStatus.FORBIDDEN;
+        }
+    }
+    @DeleteMapping(value = "{teamId}")
+    public HttpStatus deleteTeam(@PathVariable("teamId") Long teamId){
+        Team team=teamService.findTeamByTeamId(teamId);
+        if (team==null){
+            return HttpStatus.NOT_FOUND;
+        }
+        else {
+            if(teamService.deleteTeam(teamId)==1){
+                return HttpStatus.OK;
+            }
+            else {
+                return HttpStatus.FORBIDDEN;
+            }
+        }
+    }
+    @PutMapping(value = "{teamId}/remove")
+    public HttpStatus removeMember(@PathVariable("teamId") Long teamId,Long studentId){
+        Team team=teamService.findTeamByTeamId(teamId);
+        Student student=studentService.findById(studentId);
+        if (team==null){
+            return HttpStatus.NOT_FOUND;
+        }
+        if (student==null){
+            return HttpStatus.BAD_REQUEST;
+        }
+        KlassStudent klassStudent=teamService.findByStudentId(studentId);
+        if (klassStudent.getTeam_id().equals(teamId)){
+            if(teamService.quitTeam(studentId)==1){
+                return HttpStatus.OK;
+            }
+        }
+        return HttpStatus.CONFLICT;
+    }
+    @PutMapping(value = "{teamId}/add")
+    public HttpStatus addMember(@PathVariable("teamId") Long teamId,Long studentId){
+        Team team=teamService.findTeamByTeamId(teamId);
+        Student student=studentService.findById(studentId);
+        if(team==null){
+            return HttpStatus.NOT_FOUND;
+        }
+        if (student==null){
+            return HttpStatus.BAD_REQUEST;
+        }
+        KlassStudent klassStudent=teamService.findByStudentId(studentId);
+        if (klassStudent.getTeam_id().equals(teamId)){
+            return HttpStatus.CONFLICT;
+        }
+        else {
+            if (teamService.updateTeam(studentId,teamId)==1){
+                return HttpStatus.OK;
+            }
+        }
+        return HttpStatus.FORBIDDEN;
     }
 }

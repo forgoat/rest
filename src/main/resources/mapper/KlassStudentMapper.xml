@@ -6,4 +6,13 @@
     <select id="findByTeam_id" parameterType="long" resultType="com.rest.entity.KlassStudent">
         SELECT * FROM standard_seminar_system.klass_student_table WHERE team_id=#{teamId}
     </select>
+    <update id="quitTeam" parameterType="long">
+        UPDATE standard_seminar_system.klass_student_table SET team_id=0 WHERE student_id=#{studentId}
+    </update>
+    <select id="findByStudent_id" resultType="com.rest.entity.KlassStudent">
+        SELECT * FROM standard_seminar_system.klass_student_table WHERE student_id=#{studentId}
+    </select>
+    <update id="updateTeam">
+        UPDATE standard_seminar_system.klass_student_table SET team_id=#{param2} WHERE student_id=#{param1}
+    </update>
 </mapper>
