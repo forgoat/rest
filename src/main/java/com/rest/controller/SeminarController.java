@@ -54,6 +54,10 @@ public class SeminarController {
     @DeleteMapping(value = "{seminarId}")
     public HttpStatus deleteById(@PathVariable("seminarId") Long id){
         if(seminarService.deleteSeminar(id)==1){
+            List<Klass_seminar> klass_seminarList=seminarService.findClass(id);
+            for(Klass_seminar klass_seminar:klass_seminarList){
+                seminarService.deleteKlassSeminar(klass_seminar.getId());
+            }
             return HttpStatus.OK;
         }
         else {
@@ -69,4 +73,8 @@ public class SeminarController {
             return HttpStatus.BAD_REQUEST;
         }
     }
+//    @DeleteMapping(value = "delete")
+//    public int deleteKlassSeminar(Long id){
+//        return seminarService.deleteKlassSeminar(id);
+//    }
 }

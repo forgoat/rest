@@ -9,4 +9,7 @@
     <insert id="save" parameterType="com.rest.entity.Klass_seminar" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO standard_seminar_system.klass_seminar(klass_id,seminar_id,seminar_status) VALUE(#{klass_id},#{seminar_id},0)
     </insert>
+    <delete id="delete" parameterType="long">
+        DELETE FROM standard_seminar_system.klass_seminar WHERE id=#{id}
+    </delete>
 </mapper>

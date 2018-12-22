@@ -36,4 +36,7 @@ public class SeminarService {
     public int updateInfo(Long seminarId, Long course_id, Long round_id, String seminar_name, String introducation, Integer max_team, Integer is_visible, Integer seminar_serial, Date enroll_start_time, Date enroll_end_time){
         return seminarDao.updateSelective(seminarId,course_id,round_id,seminar_name,introducation,max_team,is_visible,seminar_serial,enroll_start_time,enroll_end_time);
     }
+    public int deleteKlassSeminar(Long id){
+        return klassSeminarDao.delete(id);
+    }
 }
