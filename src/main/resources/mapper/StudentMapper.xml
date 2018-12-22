@@ -3,44 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.StudentDao">
-    <select id="queryAllStudent" resultType="com.rest.entity.Student">
+    <select id="findAllStudent" resultType="com.rest.entity.Student">
         SELECT * FROM standard_seminar_system.student
     </select>
-
-    <select id="queryStudent" resultType="com.rest.entity.Student">
-    SELECT *
-    FROM standard_seminar_system.student
-    WHERE 1=1
-        <if test="id !=null">
-            AND id = #{id}
+    <select id="findByAccountOrStudent_name" resultType="com.rest.entity.Student">
+        SELECT * FROM standard_seminar_system.student
+        WHERE
+        <if test="param1!=null and param2==null ">
+            account=#{param1}
         </if>
-        <if test="account !=null">
-            AND account = #{account}
+        <if test="param2!=null and param1==null ">
+            student_name=#{param2}
         </if>
-        <if test="password !=null">
-            AND password = #{password}
+        <if test="param1!=null and param2!=null ">
+            account=#{param1} AND student_name=#{param2}
         </if>
-        <if test="is_active !=null">
-            AND is_active = #{is_active}
-        </if>
-        <if test="student_name !=null">
-            AND student_name = #{student_name}
-        </if>
-        <if test="email !=null">
-            AND email = #{email}
-        </if>
-
     </select>
-
-
-    <insert id="insertStudent" parameterType="com.rest.entity.Student">
+    <insert id="add" parameterType="com.rest.entity.Student" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO standard_seminar_system.student(
         id,
         account,
         password,
         is_active,
         student_name,
-        email
+        email,
+        sex
         )VALUE
         (
         #{id},
@@ -48,13 +35,44 @@
         #{password},
         #{is_active},
         #{student_name},
-        #{email}
+        #{email},
+        #{sex}
         )
     </insert>
     <select id="findByAccount" parameterType="String" resultType="com.rest.entity.Student">
         SELECT * FROM standard_seminar_system.student WHERE account=#{account}
     </select>
     <select id="findById" parameterType="long" resultType="com.rest.entity.Student">
-        SELECT * FROM standard_seminar_system.student WHERE id=#{id};
+        SELECT * FROM standard_seminar_system.student WHERE id=#{id}
     </select>
+    <update id="updatePassword">
+        UPDATE standard_seminar_system.student SET password=#{param2} WHERE id=#{param1}
+    </update>
+    <update id="updateEmail">
+        UPDATE standard_seminar_system.student SET email=#{param2} where id=#{param1}
+    </update>
+    <update id="actival">
+        UPDATE standard_seminar_system.student SET is_active=1 WHERE id=#{param1} AND password=#{param2} AND email=#{param3}
+    </update>
+    <delete id="delete" parameterType="long">
+        DELETE FROM standard_seminar_system.student WHERE id=#{id}
+    </delete>
+    <update id="updateInfo">
+        UPDATE standard_seminar_system.student
+        <set>
+            <if test="param2!=null ">
+                account=#{param2},
+            </if>
+            <if test="param3!=null ">
+                email=#{param3},
+            </if>
+            <if test="param4!=null ">
+                student_name=#{param4},
+            </if>
+            <if test="param5!=null ">
+                sex=#{param5}
+            </if>
+        </set>
+        WHERE id=#{param1}
+    </update>
 </mapper>

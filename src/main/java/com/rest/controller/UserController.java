@@ -50,7 +50,7 @@ public class UserController {
         }
     }
     @PostMapping(value = "information")
-    public Object information(HttpServletRequest request){
+    public Object information(){
 //        HttpSession session=request.getSession();//这就是session的创建
 //        Object sid=session.getAttribute("id");
 //        String strid=String.valueOf(sid);
@@ -70,5 +70,55 @@ public class UserController {
             return user;
         }
     }
-
+    @GetMapping(value = "password")
+    public User password(Long id,String role){
+        if(role.equals("student")){
+            Student student=studentService.findById(id);
+            User user=new User(student);
+            return user;
+        }
+        else {
+            Teacher teacher=teacherService.findById(id);
+            User user=new User(teacher);
+            return user;
+        }
+    }
+    @PutMapping(value = "password")
+    public String updatePassword(Long id, String password, String role){
+        if(role.equals("student")){
+            if(studentService.updatePassword(id,password)==1){
+                return "200";
+            }
+            else{
+                return "400";
+            }
+        }
+        else{
+            if(teacherService.updatePassword(id,password)==1){
+                return "200";
+            }
+            else {
+                return "400";
+            }
+        }
+    }
+    @PutMapping(value = "email")
+    public String updateEmail(Long id,String email,String role){
+        if(role.equals("student")){
+            if(studentService.updateEmail(id,email)==1){
+                return "200";
+            }
+            else {
+                return "400";
+            }
+        }
+        else {
+            if(teacherService.updateEmail(id,email)==1){
+                return "200";
+            }
+            else {
+                return "400";
+            }
+        }
+    }
 }

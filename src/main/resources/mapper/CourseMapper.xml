@@ -15,5 +15,13 @@
         )
 
     </select>
-
+    <select id="findAllCourse" resultType="com.rest.entity.Course">
+        SELECT * FROM standard_seminar_system.course
+    </select>
+    <insert id="saveCourse" useGeneratedKeys="true">
+        INSERT INTO standard_seminar_system.course(teacher_id,course_name,introduction,presentation_percentage,question_percentage,report_percentage,team_start_time,team_end_time,team_main_course_id,seminar_main_course_id) VALUE(#{teacher_id},#{course_name},#{introducation},#{presentation_percentage},#{question_percentage},#{report_percentage},#{team_start_time},#{team_end_time},#{team_main_course_id},#{seminar_main_course_id})
+    </insert>
+    <select id="findById" parameterType="long" resultType="com.rest.entity.Course">
+        SELECT * FROM standard_seminar_system.course WHERE id=#{id}
+    </select>
 </mapper>

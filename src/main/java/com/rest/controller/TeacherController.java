@@ -2,12 +2,7 @@ package com.rest.controller;
 import com.rest.entity.Teacher;
 import com.rest.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.math.BigInteger;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
@@ -16,13 +11,58 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "")
     public List<Teacher> teacherList() {
         return teacherService.teacherList();
     }
 
-    @PostMapping(value = "/")
-    public int createTeacher(Teacher teacher) {
-        return teacherService.createTeacher(teacher);
+    @PostMapping(value = "")
+    public String createTeacher(Teacher teacher) {
+        if(teacherService.createTeacher(teacher)==1){
+            return "200";
+        }
+        else {
+            return "400";
+        }
+    }
+    @PutMapping(value = "active")
+    public String actival(Long id,String password){
+        if(teacherService.actival(id,password)==1){
+            return "200";
+        }
+        else {
+            return "400";
+        }
+    }
+    @DeleteMapping(value = "{teacherId}")
+    public String delete(@PathVariable("teacherId")Long teacherId){
+        if(teacherService.delete(teacherId)==1){
+            return "200";
+        }
+        else {
+            return "404";
+        }
+    }
+    @PutMapping(value = "{teacherId}/password")
+    public String changePassword(@PathVariable("teacherId")Long teacherId,String password){
+        if(teacherService.updatePassword(teacherId,password)==1){
+            return "200";
+        }
+        else {
+            return "404";
+        }
+    }
+    @GetMapping(value = "searchteacher")
+    public List<Teacher> search(String account,String teacher_name){
+        return teacherService.search(account,teacher_name);
+    }
+    @PutMapping(value = "{teacherId}/information")
+    public String updateInfo(@PathVariable("teacherId")Long teacherId,String account,String email,String teacher_name){
+        if(teacherService.updateInfo(teacherId,account,email,teacher_name)==1){
+            return "200";
+        }
+        else {
+            return "404";
+        }
     }
 }

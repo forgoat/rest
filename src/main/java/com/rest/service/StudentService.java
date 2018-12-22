@@ -13,14 +13,12 @@ public class StudentService {
     @Autowired
     private StudentDao studentDao;
 
-    public List<Student> queryAllStudent(){
-        return studentDao.queryAllStudent();
+    public List<Student> findAllStudent(){
+        return studentDao.findAllStudent();
     }
-
-    public List<Student> queryStudent(Student student){
-        return studentDao.queryStudent(student);
+    public List<Student> search(String account,String student_name){
+        return studentDao.findByAccountOrStudent_name(account,student_name);
     }
-
     public Student findByAccount(String account){
         return studentDao.findByAccount(account);
     }
@@ -31,8 +29,22 @@ public class StudentService {
         String password=studentDao.findById(id).getPassword();
         return password;
     }
-    @Transactional
-    public int insertStudent(Student student){
-        return studentDao.insertStudent(student);
+    public int updatePassword(Long id,String password){
+        return studentDao.updatePassword(id,password);
+    }
+    public int updateEmail(Long id,String email){
+        return studentDao.updateEmail(id,email);
+    }
+    public int actival(Long id,String password,String email){
+        return studentDao.actival(id,password,email);
+    }
+    public int delete(Long id){
+        return studentDao.delete(id);
+    }
+    public int add(Student student){
+        return studentDao.add(student);
+    }
+    public int updateInfo(Long id,String account,String email,String student_name,Integer sex){
+        return studentDao.updateInfo(id,account,email,student_name,sex);
     }
 }
