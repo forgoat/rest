@@ -7,7 +7,7 @@ public class Klass_seminar {
     private Long klass_id;
     private Long seminar_id;
     private Date report_ddl;
-    private Integer status;
+    private Integer seminar_status;
 
     public Klass_seminar() {
     }
@@ -44,11 +44,11 @@ public class Klass_seminar {
         this.report_ddl = report_ddl;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getSeminar_status() {
+        return seminar_status;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setSeminar_status(Integer seminar_status) {
+        this.seminar_status = seminar_status;
     }
 }

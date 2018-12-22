@@ -8,10 +8,7 @@ import com.rest.service.SeminarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,13 +36,14 @@ public class SeminarController {
             return new ResponseEntity<Long>(id,HttpStatus.FORBIDDEN);
         }
     }
-    @GetMapping(value = "findClass")
-    public List<Klass_seminar> findClass(Long seminarId)
+    @GetMapping(value = "{seminarId}/class")
+    public ResponseEntity<List<Klass_seminar>> findClass(@PathVariable("seminarId") Long seminarId)
     {
-        return seminarService.findClass(seminarId);
+        return new ResponseEntity<List<Klass_seminar>>(seminarService.findClass(seminarId),HttpStatus.OK);
     }
     @PostMapping(value = "create")
     public int save(Klass_seminar klass_seminar){
         return seminarService.saveKlassSeminar(klass_seminar);
     }
+
 }
