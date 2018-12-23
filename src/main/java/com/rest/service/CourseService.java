@@ -1,7 +1,11 @@
 package com.rest.service;
 
 import com.rest.dao.CourseDao;
+import com.rest.dao.ShareSeminarApplicationDao;
+import com.rest.dao.ShareTeamApplicationDao;
 import com.rest.entity.Course;
+import com.rest.entity.ShareSeminarApplication;
+import com.rest.entity.ShareTeamApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +16,10 @@ import java.util.List;
 public class CourseService {
     @Autowired
     private CourseDao courseDao;
+    @Autowired
+    private ShareSeminarApplicationDao shareSeminarApplicationDao;
+    @Autowired
+    private ShareTeamApplicationDao shareTeamApplicationDao;
 
     public List<Course> queryCourseByStudentId(BigInteger id){
         return courseDao.queryCourseByStudentId(id);
@@ -28,5 +36,11 @@ public class CourseService {
     }
     public int deleteById(Long id){
         return courseDao.deleteById(id);
+    }
+    public int sendSeminarShare(ShareSeminarApplication shareSeminarApplication){
+        return shareSeminarApplicationDao.save(shareSeminarApplication);
+    }
+    public int sendTeamShare(ShareTeamApplication shareTeamApplication){
+        return shareTeamApplicationDao.save(shareTeamApplication);
     }
 }
