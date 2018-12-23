@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>管理教师信息</title>
+    <title>管理学生信息</title>
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/red.css">
@@ -11,7 +11,6 @@
     <script type="text/javascript" src="layui/layui.js"></script>
     <script type="text/javascript" src="js/icheck.js"></script>
     <script type="text/javascript" src="js/dw.js"></script>
-</head>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -36,7 +35,7 @@
     <div class="layui-body">
         <div style="padding: 15px;">
             <fieldset class="layui-elem-field">
-                <legend>教师管理信息</legend>
+                <legend>学生管理信息</legend>
                 <div class="layui-field-box">
                     <form class="layui-form" action="">
                         <div class="layui-form-item" style="text-align:center;">
@@ -54,26 +53,15 @@
                     </form>
                     <hr>
                     <div class="layui-btn-group">
-                        <button class="layui-btn layui-btn-xs layui-btn-normal dw-dailog" dw-url="a_CreTea.html" dw-title="新增用户" dw-width="100%" dw-height="100%">
-                            <a href="a_CreTea.html" style="color:white">
-                                <i class="layui-icon">&#xe654;</i>新增
-                            </a>
+                        <button class="layui-btn layui-btn-xs layui-btn-normal dw-dailog" dw-url="create.html" dw-title="新增用户" dw-width="100%" dw-height="100%">
+                            <i class="layui-icon">&#xe654;</i>新增
                         </button>
                         <button class="layui-btn layui-btn-xs dw-refresh">
                             <i class="layui-icon">&#x1002;</i>刷新
                         </button>
                     </div>
                     <hr>
-                    <table class="layui-table" lay-filter="demo">
-                        <thead>
-                        <tr>
-                            <th lay-data="{field:'id', width:200, sort: true, fixed: true}">教工号</th>
-                            <th lay-data="{field:'username', width:200}">姓名</th>
-                            <th lay-data="{field:'email', width:200}">邮箱</th>
-                            <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}"></th>
-                        </tr>
-                        </thead>
-                    </table>
+                    <table id="demo" lay-filter="test"></table>
                     <script type="text/html" id="barDemo">
                         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">重置</a>
                         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -81,49 +69,6 @@
                     </script>
                     <script src="layui/layui.js" charset="utf-8"></script>
                     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-                    <script>
-                        layui.use('table', function(){
-                            var table = layui.table;
-                            //监听表格复选框选择
-                            table.on('checkbox(demo)', function(obj){
-                                console.log(obj)
-                            });
-                            //监听工具条
-                            table.on('tool(demo)', function(obj){
-                                var data = obj.data;
-                                if(obj.event === 'del'){
-                                    layer.confirm('真的删除行么', function(index){
-                                        obj.del();
-                                        layer.close(index);
-                                    });
-                                } else if(obj.event === 'edit'){
-                                    layer.alert('编辑行：<br>'+ JSON.stringify(data))
-                                }
-                            });
-
-                            var $ = layui.$, active = {
-                                getCheckData: function(){ //获取选中数据
-                                    var checkStatus = table.checkStatus('idTest')
-                                            ,data = checkStatus.data;
-                                    layer.alert(JSON.stringify(data));
-                                }
-                                ,getCheckLength: function(){ //获取选中数目
-                                    var checkStatus = table.checkStatus('idTest')
-                                            ,data = checkStatus.data;
-                                    layer.msg('选中了：'+ data.length + ' 个');
-                                }
-                                ,isAll: function(){ //验证是否全选
-                                    var checkStatus = table.checkStatus('idTest');
-                                    layer.msg(checkStatus.isAll ? '全选': '未全选')
-                                }
-                            };
-
-                            $('.demoTable .layui-btn').on('click', function(){
-                                var type = $(this).data('type');
-                                active[type] ? active[type].call(this) : '';
-                            });
-                        });
-                    </script>
                     </table>
                 </div>
             </fieldset>
@@ -131,18 +76,9 @@
     </div>
 </div>
 <script>
-    var myModel = {courseList:[]};
-    var studentid=100;
-
-    myViewModel = new Vue({
-        el: '#demo',//所在位置的id
-        data:myModel
-    })
-
-    //写成函数的目的，为了【复用】
-    function getData(){
+    layui.use('table', function(){
         $.ajax({
-            url: "/queryAllStudent",                //后端的API地址
+            url: "/teacher",                //后端的API地址
             type: 'GET',                                //http:POST/GET
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
@@ -153,8 +89,43 @@
                 alert('服务器忙，请稍候');
             }
         });
-    }
-    getData();
+        var table = layui.table;
+        var myModel = {courseList:[]};
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,url:'/teacher'
+            ,height: 312
+            ,page: true //开启分页
+            ,parseData: function(res){ //res 即为原始返回的数据
+                return {
+                    "code": 0, //解析接口状态
+                    "msg": null, //解析提示文本
+                    "count": myModel.courseList.length, //解析数据长度
+                    "data": myModel.courseList //解析数据列表
+                };
+            }
+            ,cols: [[ //表头
+                {field: 'id', title: 'ID', width:200, sort: true, fixed: 'left'}
+                ,{field: 'student_name', title: '学生名', width:200}
+                ,{field: 'email', title: '邮箱', width:200}
+                ,{fixed: 'right', width:200, align:'center', toolbar: '#barDemo'}
+            ]]
+        });
+        table.on('tool(test)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            if (layEvent === 'detail') { //查看
+                alert("detail");
+            } else if (layEvent === 'del') { //删除
+                alert("delete");
+            } else if (layEvent === 'edit') { //编辑
+                alert("edit");
+            }
+        });
+    });
 </script>
 </body>
 </html>

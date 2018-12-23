@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>教师登录</title>
+    <link rel="stylesheet" type="text/css" href=" layui/css/layui.css" media="all" />
+    <link rel="stylesheet" type="text/css" href=" css/login.css" />
+    <script type="text/javascript" src=" js/jquery.min.js"></script>
+    <script type="text/javascript" src=" layui/layui.js"></script>
+    <script type="text/javascript" src=" js/login.js"></script>
+</head>
+<body class="beg-login-bg">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">翻转课堂管理平台</div>
+    </div>
+</div>
+<div class="beg-login-box">
+    <header>
+        <h1>教师登录</h1>
+    </header>
+    <div class="beg-login-main">
+        <form action="login.html" class="layui-form" method="post">
+            <div c  lass="layui-form-item">
+                <label class="beg-login-icon">
+                    <i class="layui-icon">&#xe612;</i>
+                </label>
+                <input type="text" lay-verify="required" name="name" autocomplete="off" placeholder="这里输入账号" class="layui-input" lay-verType="tips">
+            </div>
+            <div class="layui-form-item">
+                <label class="beg-login-icon">
+                    <i class="layui-icon">&#xe642;</i>
+                </label>
+                <input type="password" lay-verify="required" name="password" autocomplete="off" placeholder="这里输入密码" class="layui-input" lay-verType="tips">
+            </div>
+            <div class="layui-form-item">
+                <div class="beg-pull">
+                    <a href="/teacher/pcafterindex"  type="button" class="layui-btn layui-btn-normal" style="width:100%;" lay-submit lay-filter="formDemo">
+                        登　　录
+                    </a>
+
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

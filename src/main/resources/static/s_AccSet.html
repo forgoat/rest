@@ -74,7 +74,7 @@
     function emm() {
         $.ajax({
             url: "/user/information",
-            type: "POST",
+            type: "GET",
             dataType:'text',
             success:function(data) {
                 var json=eval("("+data+")");

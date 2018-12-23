@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.rest.entity.User;
@@ -122,5 +123,15 @@ public class UserController {
                 return HttpStatus.BAD_REQUEST;
             }
         }
+    }
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @RequestMapping("/test1")
+    public String test1() {
+        return "test1";
+    }
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @RequestMapping("/test2")
+    public String test2() {
+        return "test2";
     }
 }
