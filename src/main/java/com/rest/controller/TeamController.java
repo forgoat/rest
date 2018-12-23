@@ -22,14 +22,14 @@ public class TeamController {
     private TeamService teamService;
     @Autowired
     private StudentService studentService;
-    @GetMapping(value = "findStu")
-    public List<KlassStudent> findByTeamId(Long teamId){
-        return teamService.findStuByTeamId(teamId);
-    }
-    @GetMapping(value = "findTeam")
-    public Team findById(Long teamId){
-        return teamService.findTeamByTeamId(teamId);
-    }
+//    @GetMapping(value = "findStu")
+//    public List<KlassStudent> findByTeamId(Long teamId){
+//        return teamService.findStuByTeamId(teamId);
+//    }
+//    @GetMapping(value = "findTeam")
+//    public Team findById(Long teamId){
+//        return teamService.findTeamByTeamId(teamId);
+//    }
     @GetMapping(value = "{teamId}")
     public ResponseEntity<TeamInfo> teamInfo(@PathVariable("teamId") Long teamId){
         TeamInfo teamInfo=new TeamInfo();
