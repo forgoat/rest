@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,8 @@ public class UserController {
     private TeacherService teacherService;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private JavaMailSender javaMailSender;
     @PostMapping(value = "login",produces = "application/json;charset=UTF-8")
     @ResponseBody
     public ResponseEntity<Object> Login(String account, String password, HttpServletRequest request){
@@ -131,7 +135,30 @@ public class UserController {
     }
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping("/test2")
-    public String test2() {
+    public String test2()
+    {
         return "test2";
+    }
+    @GetMapping(value = "/password")
+    public HttpStatus userPassword(String account){
+        Teacher teacher=teacherService.findByAccount(account);
+        Student student=studentService.findByAccount(account);
+        SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
+        simpleMailMessage.setFrom("1010410164@qq.com");
+        if(student!=null){
+            simpleMailMessage.setTo(student.getEmail());
+            simpleMailMessage.setText(student.getPassword());
+            simpleMailMessage.setSubject("This is your password");
+            javaMailSender.send(simpleMailMessage);
+            return HttpStatus.OK;
+        }
+        if (teacher!=null){
+            simpleMailMessage.setTo(teacher.getEmail());
+            simpleMailMessage.setText(teacher.getPassword());
+            simpleMailMessage.setSubject("This is your password");
+            javaMailSender.send(simpleMailMessage);
+            return HttpStatus.OK;
+        }
+        return HttpStatus.NOT_FOUND;
     }
 }
