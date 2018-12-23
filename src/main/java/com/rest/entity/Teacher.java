@@ -13,6 +13,15 @@ public class Teacher {
     public Teacher() {
     }
 
+    public Teacher(Long id,String account,String password,Integer is_active,String teacher_name,String email) {
+        this.id = id;
+        this.account = account;
+        this.password = password;
+        this.email = email;
+        this.teacher_name = teacher_name;
+        this.is_active=is_active;
+    }
+
     public Long getId() {
         return id;
     }
