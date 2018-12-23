@@ -78,7 +78,7 @@
 <script>
     layui.use('table', function(){
         $.ajax({
-            url: "/queryAllStudent",                //后端的API地址
+            url: "/student",                //后端的API地址
             type: 'GET',                                //http:POST/GET
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
@@ -95,7 +95,7 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,url:'/queryAllStudent'
+            ,url:'/student'
             ,height: 312
             ,page: true //开启分页
             ,parseData: function(res){ //res 即为原始返回的数据

@@ -8,7 +8,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+<<<<<<< Updated upstream
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+=======
+>>>>>>> Stashed changes
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     @Override
+<<<<<<< Updated upstream
     public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
         System.out.println("+++++++++++++++++public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException");
 
@@ -40,6 +44,15 @@ public class MyUserDetailsService implements UserDetailsService {
         }
         List<SimpleGrantedAuthority> simpleGrantedAuthorities = createAuthorities("ROLE_USER");
         return new User(admin.getAccount(), password, simpleGrantedAuthorities);
+=======
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Admin admin = adminService.findByName(username);
+        if (admin == null){
+            throw new UsernameNotFoundException("用户不存在！");
+        }
+        List<SimpleGrantedAuthority> simpleGrantedAuthorities = createAuthorities("ADMIN");
+        return new User(admin.getAccount(), admin.getPassword(), simpleGrantedAuthorities);
+>>>>>>> Stashed changes
     }
 
     /**
