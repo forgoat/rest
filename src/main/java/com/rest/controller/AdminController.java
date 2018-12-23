@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-//@RequestMapping(value = "/admin")
+//@RequestMapping(value = "/")
 public class   AdminController {
     @Autowired
     private AdminService adminService;
@@ -30,26 +30,14 @@ public class   AdminController {
         return adminService.findAdminById(id);
     }
 
-    @GetMapping(value = "/login")
+    @GetMapping(value = "/login" )
     public String login()
     {
         return "a_Login.html";
     }
 
-//    @PostMapping(value = "/login")
-//    public String logins(String account,String password){
-//        System.out.print(account+password);
-//        Admin admin=adminService.findByName(account);
-//        if(admin.getPassword().equals(password)){
-//            return "success";
-//        }
-//        else {
-//            return "error";
-//        }
-//    }
-    @GetMapping("/admin")
-    public String user(@AuthenticationPrincipal Principal principal, Model model){
-        model.addAttribute("account", principal.getName());
+    @GetMapping("/studentListPage")
+    public String admin(){
         return "a_ConStu.html";
     }
 

@@ -3,6 +3,7 @@ package com.rest.config;
 import com.rest.security.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,14 +33,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http
                 .csrf().disable()
                 .authorizeRequests()
-               // .antMatchers("/login","/css/**", "/js/**","/fonts/**").permitAll()
+                // .antMatchers("/login","/css/**", "/js/**","/fonts/**").permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers("/admin/**").hasRole("USER")
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/*.html",
+                        "/favicon.ico",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js"
+                ).permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/[^login]/**]").hasRole("ADMIN")
+                .antMatchers("/index").hasRole("USER")
                 .and()
                 .formLogin().loginPage("/login")
-                .defaultSuccessUrl("/admin")
+                .defaultSuccessUrl("/studentListPage")
                 .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/a_ConStu.html");
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/login");
     }
 
     /**
