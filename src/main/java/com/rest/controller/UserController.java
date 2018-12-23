@@ -77,19 +77,19 @@ public class UserController {
             return new ResponseEntity<Object>(user,httpStatus);
         }
     }
-    @GetMapping(value = "password")
-    public User password(Long id,String role){
-        if(role.equals("student")){
-            Student student=studentService.findById(id);
-            User user=new User(student);
-            return user;
-        }
-        else {
-            Teacher teacher=teacherService.findById(id);
-            User user=new User(teacher);
-            return user;
-        }
-    }
+//    @GetMapping(value = "password")
+//    public User password(Long id,String role){
+//        if(role.equals("student")){
+//            Student student=studentService.findById(id);
+//            User user=new User(student);
+//            return user;
+//        }
+//        else {
+//            Teacher teacher=teacherService.findById(id);
+//            User user=new User(teacher);
+//            return user;
+//        }
+//    }
     @PutMapping(value = "password")
     public HttpStatus updatePassword(Long id, String password, String role){
         if(role.equals("student")){
