@@ -1,6 +1,5 @@
 spring:
-  thymeleaf:
-    cache: false
+
   datasource:
     username: root
     password: 123456
