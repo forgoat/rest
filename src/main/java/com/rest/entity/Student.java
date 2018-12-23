@@ -12,6 +12,15 @@ public class Student {
     private Integer sex;
     public Student() {
     }
+    public Student(Long id,String account,String password,Integer is_active,String student_name,String email) {
+        this.id = id;
+        this.account = account;
+        this.password = password;
+        this.email = email;
+        this.student_name = student_name;
+        this.is_active=is_active;
+    }
+
 
     public Long getId() {
         return id;
