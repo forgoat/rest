@@ -30,7 +30,7 @@ public class   AdminController {
         return adminService.findAdminById(id);
     }
 
-    @GetMapping(value = "/login")
+    @RequestMapping(value = "/login")
     public String login()
     {
         return "a_Login.html";
@@ -48,8 +48,8 @@ public class   AdminController {
 //        }
 //    }
     @GetMapping("/admin")
-    public String user(@AuthenticationPrincipal Principal principal, Model model){
-        model.addAttribute("account", principal.getName());
+    public String user(){
+
         return "a_ConStu.html";
     }
 
