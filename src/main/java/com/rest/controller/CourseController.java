@@ -1,16 +1,14 @@
 package com.rest.controller;
 
 import com.rest.entity.*;
-import com.rest.service.CourseService;
-import com.rest.service.KlassService;
-import com.rest.service.SeminarService;
-import com.rest.service.TeacherService;
+import com.rest.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,6 +23,8 @@ public class CourseController {
     private JavaMailSender javaMailSender;
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private ImportExcelService importExcelService;
 
     /**
      * 查找所有课程
@@ -95,6 +95,32 @@ public class CourseController {
     }
 
     /**
+     * 创建班级 导入学生名单
+     * @param courseId
+     * @Param klass
+     * @Param myFile
+     * @return
+     */
+    @PostMapping(value = "{courseId}/class")
+    public ResponseEntity<Long> saveKlass(@PathVariable("courseId")Long courseId,
+                                          Klass klass,
+                                          @RequestParam("myFile") MultipartFile myFile){
+
+        if(klassService.saveKlass(klass)==1){
+            //  Excel导入数据到数据库
+            Integer nums = importExcelService.importExcel(myFile);
+
+            return new ResponseEntity<Long>(klass.getId(),HttpStatus.ACCEPTED);
+        }
+        else {
+            Long id=new Long(0);
+            return new ResponseEntity<Long>(id,HttpStatus.FORBIDDEN);
+        }
+    }
+
+
+
+    /**
      *发出讨论课共享申请
      * @param mainCourseId
      * @param subCourseId
@@ -163,4 +189,13 @@ public class CourseController {
             }
         }
     }
+
+
+    /**
+     *发出讨论课共享申请
+     * @param mainCourseId
+     * @param subCourseId
+     * @return
+     */
+
 }

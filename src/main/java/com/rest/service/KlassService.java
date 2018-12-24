@@ -11,10 +11,14 @@ import java.util.List;
 public class KlassService {
     @Autowired
     private KlassDao klassDao;
+
     public int deleteById(Long id){
         return klassDao.deleteById(id);
     }
     public List<Klass> findByCourseId(Long courseId){
         return klassDao.findByCourseId(courseId);
+    }
+    public int saveKlass(Klass klass){
+        return klassDao.saveKlass(klass);
     }
 }

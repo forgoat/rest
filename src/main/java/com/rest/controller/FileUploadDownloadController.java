@@ -1,5 +1,7 @@
 package com.rest.controller;
 
+import com.rest.service.ImportExcelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +15,20 @@ import java.net.URLEncoder;
 
 @Controller
 public class FileUploadDownloadController {
+//    @Autowired
+//    ImportExcelService importExcelService;
+//
+//    //  Excel导入数据到数据库
+//    @RequestMapping("/PPTUpload")
+//    @ResponseBody
+//    public String importExcel(@RequestParam("fileName1") MultipartFile myFile){
+//
+//        Integer nums = importExcelService.importExcel(myFile);
+//
+//        return "导入成功";
+//    }
+
+
     /*
      * 获取s_SemSubmit.html页面
      */

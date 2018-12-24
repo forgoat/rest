@@ -9,4 +9,20 @@
     <select id="findByCourseId" resultType="com.rest.entity.Klass">
         SELECT * FROM standard_seminar_system.klass WHERE course_id=#{courseId}
     </select>
+    <insert id="saveKlass" parameterType="com.rest.entity.Klass">
+        INSERT INTO klass(
+        course_id,
+        grade,
+        klass_serial,
+        klass_time,
+        klass_location
+        )
+        VALUE(
+        #{courseId},
+        #{grade},
+        #{klassSerial},
+        #{klassTime},
+        #{klassLocation}
+        )
+    </insert>
 </mapper>
