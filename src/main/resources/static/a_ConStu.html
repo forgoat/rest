@@ -41,25 +41,17 @@
                         <div class="layui-form-item" style="text-align:center;">
                             <div class="layui-inline">
                                 <div class="layui-input-inline">
-                                    <input autocomplete="off" class="layui-input" placeholder="请输入名称" type="text" name="name" value="">
+                                    <input autocomplete="off" class="layui-input" placeholder="请输入名称" type="text" name="student_name" value=""id="demoReload">
                                 </div>
                             </div>
                             <div class="layui-inline" style="text-align:left;">
                                 <div class="layui-input-inline">
-                                    <button class="layui-btn"><i class="layui-icon">&#xe615;</i>查询</button>
+                                    <div class="layui-btn" data-type="reload"  lay-filter="rechar_btn" id="reloadiv" >搜索</div>
                                 </div>
                             </div>
                         </div>
                     </form>
                     <hr>
-                    <div class="layui-btn-group">
-                        <button class="layui-btn layui-btn-xs layui-btn-normal dw-dailog" dw-url="create.html" dw-title="新增用户" dw-width="100%" dw-height="100%">
-                            <i class="layui-icon">&#xe654;</i>新增
-                        </button>
-                        <button class="layui-btn layui-btn-xs dw-refresh">
-                            <i class="layui-icon">&#x1002;</i>刷新
-                        </button>
-                    </div>
                     <hr>
                     <table id="demo" lay-filter="test"></table>
                     <script type="text/html" id="barDemo">
@@ -67,7 +59,6 @@
                         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                     </script>
-                    <script src="layui/layui.js" charset="utf-8"></script>
                     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
                     </table>
                 </div>
@@ -76,6 +67,35 @@
     </div>
 </div>
 <script>
+    function detail(id)
+    {
+        $.ajax({
+            url:"/user/password",
+            data:{id:id,password:123456,role:"student"},
+            type: "PUT",
+            dataType:'text',
+            success:function() {
+                alert("success!");
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+    function delet(id)
+    {
+        $.ajax({
+            url:"/student/"+id,
+            type: "DELETE",
+            dataType:'text',
+            success:function() {
+                alert("success!");
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
     layui.use('table', function(){
         $.ajax({
             url: "/student",                //后端的API地址
@@ -98,6 +118,7 @@
             ,url:'/student'
             ,height: 312
             ,page: true //开启分页
+            ,id:'Reload'
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
                     "code": 0, //解析接口状态
@@ -113,16 +134,40 @@
                 ,{fixed: 'right', width:200, align:'center', toolbar: '#barDemo'}
             ]]
         });
+        // var active= {
+        //     reload: function(){
+        //         var demoReload = $('#demoReload').val();
+        //         alert(demoReload);
+        //
+        //         //执行重载
+        //         table.reload('Reload',{
+        //             elem: '#demo'
+        //             ,where: {
+        //                 id:demoReload
+        //             }
+        //         });
+        //     }
+        // };
+        //
+        // $('#reloadiv').on('click', function(){
+        //     var type = $(this).data('type');
+        //     active[type] ? active[type].call(this) : '';
+        // });
+
+
         table.on('tool(test)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             if (layEvent === 'detail') { //查看
-                alert("detail");
+                alert("重置密码为123456！");
+                detail(data.id);
             } else if (layEvent === 'del') { //删除
-                alert("delete");
+                alert("确认删除吗？");
+                delet(data.id);
+                window.location.href="a_ConStu.html";
             } else if (layEvent === 'edit') { //编辑
-                alert("edit");
+                window.location.href="a_ModStu.html";
             }
         });
     });

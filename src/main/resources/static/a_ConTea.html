@@ -35,7 +35,7 @@
     <div class="layui-body">
         <div style="padding: 15px;">
             <fieldset class="layui-elem-field">
-                <legend>学生管理信息</legend>
+                <legend>教师管理信息</legend>
                 <div class="layui-field-box">
                     <form class="layui-form" action="">
                         <div class="layui-form-item" style="text-align:center;">
@@ -54,10 +54,9 @@
                     <hr>
                     <div class="layui-btn-group">
                         <button class="layui-btn layui-btn-xs layui-btn-normal dw-dailog" dw-url="create.html" dw-title="新增用户" dw-width="100%" dw-height="100%">
-                            <i class="layui-icon">&#xe654;</i>新增
-                        </button>
-                        <button class="layui-btn layui-btn-xs dw-refresh">
-                            <i class="layui-icon">&#x1002;</i>刷新
+                            <a href="a_CreTea.html" style="color: white">
+                                <i class="layui-icon">&#xe654;</i>新增
+                            </a>
                         </button>
                     </div>
                     <hr>
@@ -76,6 +75,38 @@
     </div>
 </div>
 <script>
+    function newit() {
+        window.location.href="a_ConTea.html";
+    }
+    function detail(id)
+    {
+        $.ajax({
+            url:"/user/password",
+            data:{id:id,password:123456,role:"teacher"},
+            type: "PUT",
+            dataType:'text',
+            success:function() {
+                alert("success!");
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+    function delet(id)
+    {
+        $.ajax({
+            url:"/teacher/"+id,
+            type: "DELETE",
+            dataType:'text',
+            success:function() {
+                alert("success!");
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
     layui.use('table', function(){
         $.ajax({
             url: "/teacher",                //后端的API地址
@@ -108,7 +139,7 @@
             }
             ,cols: [[ //表头
                 {field: 'id', title: 'ID', width:200, sort: true, fixed: 'left'}
-                ,{field: 'student_name', title: '学生名', width:200}
+                ,{field: 'teacher_name', title: '教师名', width:200}
                 ,{field: 'email', title: '邮箱', width:200}
                 ,{fixed: 'right', width:200, align:'center', toolbar: '#barDemo'}
             ]]
@@ -118,11 +149,14 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             if (layEvent === 'detail') { //查看
-                alert("detail");
+                alert("重置密码为123456！");
+                detail(data.id);
             } else if (layEvent === 'del') { //删除
-                alert("delete");
+                alert("确认删除吗？");
+                delet(data.id);
+                window.location.href="a_ConTea.html";
             } else if (layEvent === 'edit') { //编辑
-                alert("edit");
+                window.location.href="a_ModTea.html";
             }
         });
     });

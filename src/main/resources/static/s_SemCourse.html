@@ -29,7 +29,9 @@
 <section class="aui-scrollView" id="myView">
     <a  class="aui-topic-item aui-flex" v-for="course in courseList" >
         <div class="aui-flex-box">
-            <h4><a href='s_SemList.html?"+{{course.id}}"'>{{course.course_name}}</a></h4>
+            <a href="s_SemList.html">
+                <h4>{{course.course_name}}</h4>
+            </a>
         </div>
         <div class="aui-topic-arrow"></div>
     </a>
@@ -126,7 +128,6 @@
 </script>
 <script>
     var myModel = {courseList:[]};
-    var studentid=100;
 
     myViewModel = new Vue({
         el: '#myView',//所在位置的id
@@ -138,7 +139,7 @@
         $.ajax({
             url: "/course",                //后端的API地址
             type: 'GET',                                //http:POST/GET
-            data: {studentid:studentid},                            //指客户端提交给后台的参数
+            //data: postData,                            //指客户端提交给后台的参数
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success: function(result){
