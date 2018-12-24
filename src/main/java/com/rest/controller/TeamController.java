@@ -1,9 +1,7 @@
 package com.rest.controller;
 
-import com.rest.entity.KlassStudent;
-import com.rest.entity.Student;
-import com.rest.entity.Team;
-import com.rest.entity.TeamInfo;
+import com.rest.entity.*;
+import com.rest.service.ScoreService;
 import com.rest.service.StudentService;
 import com.rest.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,8 @@ public class TeamController {
     private TeamService teamService;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private ScoreService scoreService;
 //    @GetMapping(value = "findStu")
 //    public List<KlassStudent> findByTeamId(Long teamId){
 //        return teamService.findStuByTeamId(teamId);
@@ -132,5 +132,11 @@ public class TeamController {
             }
         }
         return HttpStatus.FORBIDDEN;
+    }
+    @GetMapping(value = "{teamId}/seminar/{seminarId}/seminarscore",produces = "application/json;charset=UTF-8")
+    public ResponseEntity<SeminarScore> seeScore(@PathVariable("teamId") Long teamId,@PathVariable("seminarId") Long klassSeminarId){
+        SeminarScore seminarScore=scoreService.findByTeamIdAndSeminarId(teamId,klassSeminarId);
+        HttpStatus httpStatus=(seminarScore!=null)?HttpStatus.OK:HttpStatus.NOT_FOUND;
+        return new ResponseEntity<SeminarScore>(seminarScore,httpStatus);
     }
 }
