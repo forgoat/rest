@@ -13,11 +13,20 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
+    /**
+     * 获取老师
+     * @return
+     */
     @GetMapping(value = "")
     public List<Teacher> teacherList() {
         return teacherService.teacherList();
     }
 
+    /**
+     * 创建老师
+     * @param teacher
+     * @return
+     */
     @PostMapping(value = "")
     public ResponseEntity<Object> createTeacher(Teacher teacher) {
         if(teacherService.createTeacher(teacher)==1){
@@ -27,6 +36,13 @@ public class TeacherController {
             return new ResponseEntity<Object>(null,HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * 激活老师账号(未成功)
+     * @param id
+     * @param password
+     * @return
+     */
     @PutMapping(value = "active")
     public ResponseEntity<Object> actival(Long id,String password){
         if(teacherService.actival(id,password)==1){
@@ -46,6 +62,7 @@ public class TeacherController {
             return HttpStatus.NOT_FOUND;
         }
     }
+    
     @PutMapping(value = "{teacherId}/password")
     public ResponseEntity<Object> changePassword(@PathVariable("teacherId")Long teacherId,String password){
         if(teacherService.updatePassword(teacherId,password)==1){

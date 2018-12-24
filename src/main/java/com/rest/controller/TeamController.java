@@ -35,19 +35,19 @@ public class TeamController {
         TeamInfo teamInfo=new TeamInfo();
         Team team=teamService.findTeamByTeamId(teamId);
         teamInfo.setTeamId(team.getId());
-        teamInfo.setClassId(team.getKlass_id());
-        teamInfo.setCourseId(team.getCourse_id());
-        teamInfo.setTeam_name(team.getTeam_name());
-        teamInfo.setTeam_serial(team.getTeam_serial());
-        Student leader=studentService.findById(team.getLeader_id());
+        teamInfo.setClassId(team.getKlassId());
+        teamInfo.setCourseId(team.getCourseId());
+        teamInfo.setTeamName(team.getTeamName());
+        teamInfo.setTeamSerial(team.getTeamSerial());
+        Student leader=studentService.findById(team.getLeaderId());
         teamInfo.setLeader(leader);
         List<KlassStudent> klassStudentList=teamService.findStuByTeamId(teamId);
         List<Student> member=new ArrayList<Student>();
         for(KlassStudent klassStudent:klassStudentList){
-            if(klassStudent.getStudent_id().equals(team.getLeader_id())){
+            if(klassStudent.getStudentId().equals(team.getLeaderId())){
             }
             else {
-                Student student = studentService.findById(klassStudent.getStudent_id());
+                Student student = studentService.findById(klassStudent.getStudentId());
                 member.add(student);
             }
         }
@@ -105,7 +105,7 @@ public class TeamController {
             return HttpStatus.BAD_REQUEST;
         }
         KlassStudent klassStudent=teamService.findByStudentId(studentId);
-        if (klassStudent.getTeam_id().equals(teamId)){
+        if (klassStudent.getTeamId().equals(teamId)){
             if(teamService.quitTeam(studentId)==1){
                 return HttpStatus.OK;
             }
@@ -123,7 +123,7 @@ public class TeamController {
             return HttpStatus.BAD_REQUEST;
         }
         KlassStudent klassStudent=teamService.findByStudentId(studentId);
-        if (klassStudent.getTeam_id().equals(teamId)){
+        if (klassStudent.getTeamId().equals(teamId)){
             return HttpStatus.CONFLICT;
         }
         else {

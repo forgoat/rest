@@ -40,7 +40,7 @@ public class TeamService {
         return count;
     }
     public List<KlassStudent> findStuByTeamId(Long teamId){
-        return klassStudentDao.findByTeam_id(teamId);
+        return klassStudentDao.findByTeamId(teamId);
     }
     public Team findTeamByTeamId(Long teamId){
         return teamDao.findById(teamId);
@@ -55,7 +55,7 @@ public class TeamService {
         return teamDao.deleteTeam(teamId);
     }
     public KlassStudent findByStudentId(Long studentId){
-        return klassStudentDao.findByStudent_id(studentId);
+        return klassStudentDao.findByStudentId(studentId);
     }
     public int quitTeam(Long studentId){
         return klassStudentDao.quitTeam(studentId);

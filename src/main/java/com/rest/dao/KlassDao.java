@@ -8,5 +8,5 @@ import java.util.List;
 @Mapper
 public interface KlassDao {
     public int deleteById(Long id);
-    public List<Klass> findByCourse_id(Long courseId);
+    public List<Klass> findByCourseId(Long courseId);
 }

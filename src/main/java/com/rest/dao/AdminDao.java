@@ -14,6 +14,6 @@ public interface AdminDao {
      * @return
      */
      List<Admin> adminlist();
-     Admin findAdminById(BigInteger id);
+     Admin findAdminById(Long id);
      Admin findByName(@Param("account") String account);
 }

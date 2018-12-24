@@ -15,6 +15,6 @@ public class KlassService {
         return klassDao.deleteById(id);
     }
     public List<Klass> findByCourseId(Long courseId){
-        return klassDao.findByCourse_id(courseId);
+        return klassDao.findByCourseId(courseId);
     }
 }

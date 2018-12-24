@@ -6,8 +6,8 @@ public class TeamInfo {
     private Long teamId;
     private Long courseId;
     private Long classId;
-    private Integer team_serial;
-    private String team_name;
+    private Integer teamSerial;
+    private String teamName;
     private Student leader;
     private List<Student> member;
 
@@ -38,20 +38,20 @@ public class TeamInfo {
         this.classId = classId;
     }
 
-    public Integer getTeam_serial() {
-        return team_serial;
+    public Integer getTeamSerial() {
+        return teamSerial;
     }
 
-    public void setTeam_serial(Integer team_serial) {
-        this.team_serial = team_serial;
+    public void setTeamSerial(Integer teamSerial) {
+        this.teamSerial = teamSerial;
     }
 
-    public String getTeam_name() {
-        return team_name;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setTeam_name(String team_name) {
-        this.team_name = team_name;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     public Student getLeader() {

@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Param;
 public interface RoundDao {
     public int saveRound(Round round);
     public Round find(Long id);
-    public int updateRoundSelective(@Param("id")Long id,@Param("presentation_score_method")Integer presentation_score_method,@Param("report_score_method")Integer report_score_method,@Param("question_score_method")Integer question_score_method);
+    public int updateRoundSelective(@Param("id")Long id,@Param("presentationScoreMethod")Integer presentationScoreMethod,@Param("reportScoreMethod")Integer reportScoreMethod,@Param("questionScoreMethod")Integer questionScoreMethod);
 }

@@ -4,11 +4,11 @@ import java.math.BigInteger;
 
 public class Klass {
     private Long id;
-    private Long course_id;
+    private Long courseId;
     private Integer grade;
-    private Integer klass_serial;
-    private String klass_time;
-    private String klass_location;
+    private Integer klassSerial;
+    private String klassTime;
+    private String klassLocation;
 
     public Klass() {
     }
@@ -21,13 +21,7 @@ public class Klass {
         this.id = id;
     }
 
-    public Long getCourse_id() {
-        return course_id;
-    }
 
-    public void setCourse_id(Long course_id) {
-        this.course_id = course_id;
-    }
 
     public Integer getGrade() {
         return grade;
@@ -37,27 +31,35 @@ public class Klass {
         this.grade = grade;
     }
 
-    public Integer getKlass_serial() {
-        return klass_serial;
+    public Long getCourseId() {
+        return courseId;
     }
 
-    public void setKlass_serial(Integer klass_serial) {
-        this.klass_serial = klass_serial;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
-    public String getKlass_time() {
-        return klass_time;
+    public Integer getKlassSerial() {
+        return klassSerial;
     }
 
-    public void setKlass_time(String klass_time) {
-        this.klass_time = klass_time;
+    public void setKlassSerial(Integer klassSerial) {
+        this.klassSerial = klassSerial;
     }
 
-    public String getKlass_location() {
-        return klass_location;
+    public String getKlassTime() {
+        return klassTime;
     }
 
-    public void setKlass_location(String klass_location) {
-        this.klass_location = klass_location;
+    public void setKlassTime(String klassTime) {
+        this.klassTime = klassTime;
+    }
+
+    public String getKlassLocation() {
+        return klassLocation;
+    }
+
+    public void setKlassLocation(String klassLocation) {
+        this.klassLocation = klassLocation;
     }
 }

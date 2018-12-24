@@ -15,7 +15,7 @@ public class RoundService {
     public Round find(Long id){
         return roundDao.find(id);
     }
-    public int updateInfo(Long id,Integer presentation_score_method,Integer report_score_method,Integer question_score_method){
-        return roundDao.updateRoundSelective(id,presentation_score_method,report_score_method,question_score_method);
+    public int updateInfo(Long id,Integer presentationScoreMethod,Integer reportScoreMethod,Integer questionScoreMethod){
+        return roundDao.updateRoundSelective(id,presentationScoreMethod,reportScoreMethod,questionScoreMethod);
     }
 }

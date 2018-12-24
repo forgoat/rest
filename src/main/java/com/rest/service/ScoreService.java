@@ -27,7 +27,10 @@ public class ScoreService {
     public int saveSeminarScore(SeminarScore seminarScore){
         return  seminarScoreDao.save(seminarScore);
     }
-    public SeminarScore findByTeamIdAndSeminarId(Long seminarId,Long teamId){
+    public SeminarScore findByTeamIdAndSeminarId(Long teamId,Long seminarId){
         return seminarScoreDao.findByTeamIdAndSeminarId(teamId,seminarId);
+    }
+    public List<SeminarScore> findByKlassSeminarId(Long classSeminarId){
+        return seminarScoreDao.findAllByKlassSeminarId(classSeminarId);
     }
 }

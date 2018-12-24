@@ -22,7 +22,7 @@
         SELECT klass_id
         FROM klass_student
         WHERE
-        student_id=#{student_id}
+        student_id=#{studentId}
         AND course_id=#{course_id}
         )
         )

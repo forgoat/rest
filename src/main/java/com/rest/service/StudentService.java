@@ -16,8 +16,8 @@ public class StudentService {
     public List<Student> findAllStudent(){
         return studentDao.findAllStudent();
     }
-    public Student search(String account,String student_name){
-        return studentDao.findByAccountOrStudent_name(account,student_name);
+    public Student search(String account,String studentName){
+        return studentDao.findByAccountOrStudentName(account,studentName);
     }
     public Student findByAccount(String account){
         return studentDao.findByAccount(account);
@@ -36,15 +36,22 @@ public class StudentService {
         return studentDao.updateEmail(id,email);
     }
     public int actival(Long id,String password,String email){
-        return studentDao.actival(id,password,email);
+        if (studentDao.updateEmail(id,email)==1&&studentDao.updatePassword(id,password)==1) {
+            return studentDao.actival(id);
+        }
+        else{
+            return -1;
+        }
     }
     public int delete(Long id){
         return studentDao.delete(id);
     }
     public int add(Student student){
+        student.setIsActive(0);
+        student.setPassword("123456");
         return studentDao.add(student);
     }
-    public int updateInfo(Long id,String account,String email,String student_name,Integer sex){
-        return studentDao.updateInfo(id,account,email,student_name,sex);
+    public int updateInfo(Long id,String account,String email,String studentName){
+        return studentDao.updateInfo(id,account,email,studentName);
     }
 }

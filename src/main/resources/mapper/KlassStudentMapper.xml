@@ -3,13 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.KlassStudentDao">
-    <select id="findByTeam_id" parameterType="long" resultType="com.rest.entity.KlassStudent">
+    <select id="findByTeamId" parameterType="long" resultType="com.rest.entity.KlassStudent">
         SELECT * FROM standard_seminar_system.klass_student_table WHERE team_id=#{teamId}
     </select>
     <update id="quitTeam" parameterType="long">
         UPDATE standard_seminar_system.klass_student_table SET team_id=0 WHERE student_id=#{studentId}
     </update>
-    <select id="findByStudent_id" resultType="com.rest.entity.KlassStudent">
+    <select id="findByStudentId" resultType="com.rest.entity.KlassStudent">
         SELECT * FROM standard_seminar_system.klass_student_table WHERE student_id=#{studentId}
     </select>
     <update id="updateTeam">

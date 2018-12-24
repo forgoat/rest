@@ -5,11 +5,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.sql.Date;
+import java.util.List;
 
 @Mapper
 public interface SeminarDao {
     public int save(Seminar seminar);
+    public List<Seminar> findByRoundId(Long roundId);
     public Seminar findById(Long id);
     public int delete(Long id);
-    public int updateSelective(@Param("id") Long id, @Param("course_id") Long course_id, @Param("round_id") Long round_id, @Param("seminar_name") String seminar_name, @Param("introducation") String introducation, @Param("max_team") Integer max_team,@Param("is_visible") Integer is_visible, @Param("seminar_serial") Integer seminar_serial, @Param("enroll_start_time") Date enroll_start_time,@Param("enroll_end_time") Date enroll_end_time);
+    public int updateSelective(@Param("id") Long id, @Param("courseId") Long courseId, @Param("roundId") Long roundId, @Param("seminarName") String seminarName, @Param("introduction") String introduction, @Param("maxTeam") Integer maxTeam,@Param("isVisible") Integer isVisible, @Param("seminarSerial") Integer seminarSerial, @Param("enrollStartTime") Date enrollStartTime,@Param("enrollEndTime") Date enrollEndTime);
 }

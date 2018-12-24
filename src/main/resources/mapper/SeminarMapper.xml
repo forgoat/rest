@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.SeminarDao">
     <insert id="save" parameterType="com.rest.entity.Seminar" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO standard_seminar_system.seminar(course_id,round_id,seminar_name,introduction,max_team,is_visible,seminar_serial,enroll_start_time,enroll_end_time) VALUE(#{course_id},#{round_id},#{seminar_name},#{introducation},#{max_team},#{is_visible},#{seminar_serial},#{enroll_start_time},#{enroll_end_time})
+        INSERT INTO standard_seminar_system.seminar(course_id,round_id,seminar_name,introduction,max_team,is_visible,seminar_serial,enroll_start_time,enroll_end_time) VALUE(#{courseId},#{roundId},#{seminarName},#{introduction},#{maxTeam},#{isVisible},#{seminarSerial},#{enrollStartTime},#{enrollEndTime})
     </insert>
     <select id="findById" parameterType="long" resultType="com.rest.entity.Seminar">
         SELECT * FROM standard_seminar_system.seminar WHERE id=#{id}
@@ -25,7 +25,7 @@
                 seminar_name=#{param4},
             </if>
             <if test="param5!=null ">
-                introducation=#{param5},
+                introduction=#{param5},
             </if>
             <if test="param6!=null ">
                 max_team=#{param6},
@@ -45,4 +45,7 @@
         </set>
         WHERE id=#{param1}
     </update>
+    <select id="findByRoundId" parameterType="long" resultType="com.rest.entity.Seminar">
+        SELECT * FROM standard_seminar_system.seminar WHERE round_id=#{roundId}
+    </select>
 </mapper>

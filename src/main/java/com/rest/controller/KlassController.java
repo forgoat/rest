@@ -13,6 +13,12 @@ import java.util.List;
 public class KlassController {
     @Autowired
     private KlassService klassService;
+
+    /**
+     * 删除班级
+     * @param id
+     * @return
+     */
     @DeleteMapping(value = "{classId}")
     public HttpStatus deleteById(@PathVariable("classId") Long id){
         if(klassService.deleteById(id)==1){

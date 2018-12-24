@@ -6,8 +6,8 @@ public class Student {
     private Long id;
     private String account;
     private String password;
-    private Integer is_active;
-    private String student_name;
+    private Integer isActive;
+    private String studentName;
     private String email;
     private Integer sex;
     public Student() {
@@ -37,12 +37,20 @@ public class Student {
         this.password = password;
     }
 
-    public String getStudent_name() {
-        return student_name;
+    public Integer getIsActive() {
+        return isActive;
     }
 
-    public void setStudent_name(String student_name) {
-        this.student_name = student_name;
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public String getEmail() {
@@ -54,13 +62,7 @@ public class Student {
         this.email = email;
     }
 
-    public Integer getIs_active() {
-        return is_active;
-    }
 
-    public void setIs_active(Integer is_active) {
-        this.is_active = is_active;
-    }
 
     public Integer getSex() {
         return sex;

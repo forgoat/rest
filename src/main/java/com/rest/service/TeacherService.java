@@ -19,7 +19,9 @@ public class TeacherService {
 
     public int createTeacher(Teacher teacher)
     {
-        return teacherDao.add(teacher);
+        teacher.setIsActive(0);
+        teacher.setPassword("123456");
+        return teacherDao.save(teacher);
     }
     public Teacher findByAccount(String account)
     {
@@ -34,17 +36,24 @@ public class TeacherService {
     public int updateEmail(Long id, String email) {
         return teacherDao.updateEmail(id, email);
     }
-    public int actival(Long id,String password){
-        return teacherDao.actival(password,id);
+    public int actival(Long id,String password)
+    {
+        if(teacherDao.updatePassword(id,password)==1&&teacherDao.actival(id)==1) {
+            return 1;
+        }
+        else {
+            return -1;
+        }
     }
     public int delete(Long id)
     {
         return teacherDao.delete(id);
     }
-    public List<Teacher> search(String account,String teacher_name){
-        return teacherDao.search(account,teacher_name);
+    public List<Teacher> search(String account,String teacherName)
+    {
+        return teacherDao.search(account,teacherName);
     }
-    public int updateInfo(Long id,String account,String email,String teacher_name){
-        return teacherDao.updateInfo(id,account,email,teacher_name);
+    public int updateInfo(Long id,String account,String email,String teacherName){
+        return teacherDao.updateInfo(id,account,email,teacherName);
     }
 }

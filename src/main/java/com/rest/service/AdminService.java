@@ -11,18 +11,14 @@ import java.math.BigInteger;
 import java.util.List;
 
 @Service
-@Primary
 public class AdminService {
+    @Autowired
+    private AdminDao adminDao;
 
-    private final AdminDao adminDao;
-
-    public AdminService(AdminDao adminDao){
-        this.adminDao=adminDao;
-    }
     public List<Admin> adminList(){
         return adminDao.adminlist();
     }
-    public Admin findAdminById(BigInteger id){
+    public Admin findAdminById(Long id){
         return adminDao.findAdminById(id);
     }
     public Admin findByName(String account){
