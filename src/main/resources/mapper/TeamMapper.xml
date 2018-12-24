@@ -88,4 +88,7 @@
     <delete id="deleteTeam" parameterType="long">
         DELETE FROM standard_seminar_system.team WHERE id=#{id}
     </delete>
+    <insert id="save" parameterType="com.rest.entity.Team" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO standard_seminar_system.team(klass_id,course_id,leader_id,team_name,team_serial)
+    </insert>
 </mapper>
