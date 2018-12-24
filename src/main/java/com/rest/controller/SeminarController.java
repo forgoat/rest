@@ -1,7 +1,7 @@
 package com.rest.controller;
 
 import com.rest.entity.Klass;
-import com.rest.entity.Klass_seminar;
+import com.rest.entity.KlassSeminar;
 import com.rest.entity.Seminar;
 import com.rest.service.KlassService;
 import com.rest.service.SeminarService;
@@ -20,14 +20,20 @@ public class SeminarController {
     private SeminarService seminarService;
     @Autowired
     private KlassService klassService;
+
+    /**
+     * 保存讨论课
+     * @param seminar
+     * @return
+     */
     @PostMapping(value = "")
     public ResponseEntity<Long> saveSeminar(Seminar seminar){
         if(seminarService.save(seminar)==1){
-            List<Klass> klassList=klassService.findByCourseId(seminar.getCourse_id());
+            List<Klass> klassList=klassService.findByCourseId(seminar.getCourseId());
             for(Klass klass:klassList){
-                Klass_seminar klass_seminar=new Klass_seminar();
-                klass_seminar.setKlass_id(klass.getId());
-                klass_seminar.setSeminar_id(seminar.getId());
+                KlassSeminar klass_seminar=new KlassSeminar();
+                klass_seminar.setKlassId(klass.getId());
+                klass_seminar.setSeminarId(seminar.getId());
                 seminarService.saveKlassSeminar(klass_seminar);
             }
             return new ResponseEntity<Long>(seminar.getId(), HttpStatus.ACCEPTED);
@@ -37,25 +43,43 @@ public class SeminarController {
             return new ResponseEntity<Long>(id,HttpStatus.FORBIDDEN);
         }
     }
-    @GetMapping(value = "{seminarId}/class")
-    public ResponseEntity<List<Klass_seminar>> findClass(@PathVariable("seminarId") Long seminarId)
-    {
-        return new ResponseEntity<List<Klass_seminar>>(seminarService.findClass(seminarId),HttpStatus.OK);
-    }
-//    @PostMapping(value = "create")
-//    public int save(Klass_seminar klass_seminar){
-//        return seminarService.saveKlassSeminar(klass_seminar);
-//    }
 
+    /**
+     * 获取讨论课所属的班级讨论课
+     * @param seminarId
+     * @return
+     */
+    @GetMapping(value = "{seminarId}/class")
+    public ResponseEntity<List<KlassSeminar>> findClass(@PathVariable("seminarId") Long seminarId)
+    {
+        return new ResponseEntity<List<KlassSeminar>>(seminarService.findClass(seminarId),HttpStatus.OK);
+    }
+
+    @PostMapping(value = "create")
+    public int save(KlassSeminar klassSeminar){
+        return seminarService.saveKlassSeminar(klassSeminar);
+    }
+
+    /**
+     * 获取讨论课
+     * @param id
+     * @return
+     */
     @GetMapping(value = "{seminarId}")
     public ResponseEntity<Seminar> findSeminar(@PathVariable(value = "seminarId") Long id){
         return new ResponseEntity<Seminar>(seminarService.findById(id),HttpStatus.OK);
     }
+
+    /**
+     * 删除讨论课
+     * @param id
+     * @return
+     */
     @DeleteMapping(value = "{seminarId}")
     public HttpStatus deleteById(@PathVariable("seminarId") Long id){
         if(seminarService.deleteSeminar(id)==1){
-            List<Klass_seminar> klass_seminarList=seminarService.findClass(id);
-            for(Klass_seminar klass_seminar:klass_seminarList){
+            List<KlassSeminar> klass_seminarList=seminarService.findClass(id);
+            for(KlassSeminar klass_seminar:klass_seminarList){
                 seminarService.deleteKlassSeminar(klass_seminar.getId());
             }
             return HttpStatus.OK;
@@ -64,9 +88,24 @@ public class SeminarController {
             return HttpStatus.NOT_FOUND;
         }
     }
+
+    /**
+     * 动态修改讨论课
+     * @param seminarId
+     * @param courseId
+     * @param roundId
+     * @param seminarName
+     * @param introduction
+     * @param maxTeam
+     * @param isVisible
+     * @param seminarSerial
+     * @param enrollStartTime
+     * @param enrollEndTime
+     * @return
+     */
     @PutMapping(value = "{seminarId}")
-    public HttpStatus updateInfo(@PathVariable("seminarId") Long seminarId,Long course_id,Long round_id,String seminar_name,String introducation,Integer max_team,Integer is_visible,Integer seminar_serial,Date enroll_start_time,Date enroll_end_time){
-        if(seminarService.updateInfo(seminarId,course_id,round_id,seminar_name,introducation,max_team,is_visible,seminar_serial,enroll_end_time,enroll_end_time)==1){
+    public HttpStatus updateInfo(@PathVariable("seminarId") Long seminarId,Long courseId,Long roundId,String seminarName,String introduction,Integer maxTeam,Integer isVisible,Integer seminarSerial,Date enrollStartTime,Date enrollEndTime){
+        if(seminarService.updateInfo(seminarId,courseId,roundId,seminarName,introduction,maxTeam,isVisible,seminarSerial,enrollStartTime,enrollEndTime)==1){
             return HttpStatus.OK;
         }
         else {
@@ -77,19 +116,34 @@ public class SeminarController {
 //    public int deleteKlassSeminar(Long id){
 //        return seminarService.deleteKlassSeminar(id);
 //    }
+
+    /**
+     * 设置讨论课所属轮次
+     * @param id
+     * @param roundId
+     * @return
+     */
     @PutMapping(value = "{seminarId}/round")
-    public HttpStatus setRound(@PathVariable("seminarId")Long id,Long round_id){
+    public HttpStatus setRound(@PathVariable("seminarId")Long id,Long roundId){
         Seminar seminar=seminarService.findById(id);
-        if(seminarService.updateInfo(id,seminar.getCourse_id(),round_id,seminar.getSeminar_name(),seminar.getIntroducation(),seminar.getMax_team(),seminar.getIs_visible(),seminar.getSeminar_serial(),seminar.getEnroll_start_time(),seminar.getEnroll_end_time())==1){
+        if(seminarService.updateInfo(id,seminar.getCourseId(),roundId,seminar.getSeminarName(),seminar.getIntroduction(),seminar.getMaxTeam(),seminar.getIsVisible(),seminar.getSeminarSerial(),seminar.getEnrollStartTime(),seminar.getEnrollEndTime())==1){
             return HttpStatus.OK;
         }
         else {
             return HttpStatus.FORBIDDEN;
         }
     }
-    @PutMapping(value = "{seminarId}/class/{class_id}/status")
-    public HttpStatus setStatus(@PathVariable("seminarId")Long id,@PathVariable("class_id")Long class_id,Integer status){
-        if(seminarService.changeStatus(id,class_id,status)==1){
+
+    /**
+     * 设置班级讨论课状态
+     * @param id
+     * @param classId
+     * @param status
+     * @return
+     */
+    @PutMapping(value = "{seminarId}/class/{classId}/status")
+    public HttpStatus setStatus(@PathVariable("seminarId")Long id,@PathVariable("classId")Long classId,Integer status){
+        if(seminarService.changeStatus(id,classId,status)==1){
             return HttpStatus.OK;
         }
         else {
@@ -105,4 +159,5 @@ public class SeminarController {
             return HttpStatus.BAD_REQUEST;
         }
     }
+
 }

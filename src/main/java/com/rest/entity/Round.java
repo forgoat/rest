@@ -4,11 +4,11 @@ import java.math.BigInteger;
 
 public class Round {
     private Long id;
-    private Long course_id;
-    private Integer round_serial;
-    private Integer presentation_score_method;
-    private Integer report_score_method;
-    private Integer question_score_method;
+    private Long courseId;
+    private Integer roundSerial;
+    private Integer presentationScoreMethod;
+    private Integer reportScoreMethod;
+    private Integer questionScoreMethod;
 
     public Round() {
     }
@@ -21,43 +21,43 @@ public class Round {
         this.id = id;
     }
 
-    public Long getCourse_id() {
-        return course_id;
+    public Long getCourseId() {
+        return courseId;
     }
 
-    public void setCourse_id(Long course_id) {
-        this.course_id = course_id;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
-    public Integer getRound_serial() {
-        return round_serial;
+    public Integer getRoundSerial() {
+        return roundSerial;
     }
 
-    public void setRound_serial(Integer round_serial) {
-        this.round_serial = round_serial;
+    public void setRoundSerial(Integer roundSerial) {
+        this.roundSerial = roundSerial;
     }
 
-    public Integer getPresentation_score_method() {
-        return presentation_score_method;
+    public Integer getPresentationScoreMethod() {
+        return presentationScoreMethod;
     }
 
-    public void setPresentation_score_method(Integer presentation_score_method) {
-        this.presentation_score_method = presentation_score_method;
+    public void setPresentationScoreMethod(Integer presentationScoreMethod) {
+        this.presentationScoreMethod = presentationScoreMethod;
     }
 
-    public Integer getReport_score_method() {
-        return report_score_method;
+    public Integer getReportScoreMethod() {
+        return reportScoreMethod;
     }
 
-    public void setReport_score_method(Integer report_score_method) {
-        this.report_score_method = report_score_method;
+    public void setReportScoreMethod(Integer reportScoreMethod) {
+        this.reportScoreMethod = reportScoreMethod;
     }
 
-    public Integer getQuestion_score_method() {
-        return question_score_method;
+    public Integer getQuestionScoreMethod() {
+        return questionScoreMethod;
     }
 
-    public void setQuestion_score_method(Integer question_score_method) {
-        this.question_score_method = question_score_method;
+    public void setQuestionScoreMethod(Integer questionScoreMethod) {
+        this.questionScoreMethod = questionScoreMethod;
     }
 }

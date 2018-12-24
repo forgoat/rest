@@ -4,14 +4,14 @@ import java.math.BigInteger;
 
 public class Attendance {
     private Long id;
-    private Long klass_seminar_id;
-    private Long team_id;
-    private Integer team_order;
-    private Integer is_present;
-    private String report_name;
-    private String report_url;
-    private String ppt_name;
-    private String ppt_url;
+    private Long klassSeminarId;
+    private Long teamId;
+    private Integer teamOrder;
+    private Integer isPresent;
+    private String reportName;
+    private String reportUrl;
+    private String pptName;
+    private String pptUrl;
 
     public Attendance() {
     }
@@ -24,67 +24,67 @@ public class Attendance {
         this.id = id;
     }
 
-    public Long getKlass_seminar_id() {
-        return klass_seminar_id;
+    public Long getKlassSeminarId() {
+        return klassSeminarId;
     }
 
-    public void setKlass_seminar_id(Long klass_seminar_id) {
-        this.klass_seminar_id = klass_seminar_id;
+    public void setKlassSeminarId(Long klassSeminarId) {
+        this.klassSeminarId = klassSeminarId;
     }
 
-    public Long getTeam_id() {
-        return team_id;
+    public Long getTeamId() {
+        return teamId;
     }
 
-    public void setTeam_id(Long team_id) {
-        this.team_id = team_id;
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
 
-    public Integer getTeam_order() {
-        return team_order;
+    public Integer getTeamOrder() {
+        return teamOrder;
     }
 
-    public void setTeam_order(Integer team_order) {
-        this.team_order = team_order;
+    public void setTeamOrder(Integer teamOrder) {
+        this.teamOrder = teamOrder;
     }
 
-    public Integer getIs_present() {
-        return is_present;
+    public Integer getIsPresent() {
+        return isPresent;
     }
 
-    public void setIs_present(Integer is_present) {
-        this.is_present = is_present;
+    public void setIsPresent(Integer isPresent) {
+        this.isPresent = isPresent;
     }
 
-    public String getReport_name() {
-        return report_name;
+    public String getReportName() {
+        return reportName;
     }
 
-    public void setReport_name(String report_name) {
-        this.report_name = report_name;
+    public void setReportName(String reportName) {
+        this.reportName = reportName;
     }
 
-    public String getReport_url() {
-        return report_url;
+    public String getReportUrl() {
+        return reportUrl;
     }
 
-    public void setReport_url(String report_url) {
-        this.report_url = report_url;
+    public void setReportUrl(String reportUrl) {
+        this.reportUrl = reportUrl;
     }
 
-    public String getPpt_name() {
-        return ppt_name;
+    public String getPptName() {
+        return pptName;
     }
 
-    public void setPpt_name(String ppt_name) {
-        this.ppt_name = ppt_name;
+    public void setPptName(String pptName) {
+        this.pptName = pptName;
     }
 
-    public String getPpt_url() {
-        return ppt_url;
+    public String getPptUrl() {
+        return pptUrl;
     }
 
-    public void setPpt_url(String ppt_url) {
-        this.ppt_url = ppt_url;
+    public void setPptUrl(String pptUrl) {
+        this.pptUrl = pptUrl;
     }
 }

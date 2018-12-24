@@ -1,43 +1,43 @@
 package com.rest.entity;
 
 public class KlassStudent {
-    private Long klass_id;
-    private Long student_id;
-    private Long course_id;
-    private Long team_id;
+    private Long klassId;
+    private Long studentId;
+    private Long courseId;
+    private Long teamId;
 
     public KlassStudent() {
     }
 
-    public Long getKlass_id() {
-        return klass_id;
+    public Long getKlassId() {
+        return klassId;
     }
 
-    public void setKlass_id(Long klass_id) {
-        this.klass_id = klass_id;
+    public void setKlassId(Long klassId) {
+        this.klassId = klassId;
     }
 
-    public Long getStudent_id() {
-        return student_id;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setStudent_id(Long student_id) {
-        this.student_id = student_id;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
-    public Long getCourse_id() {
-        return course_id;
+    public Long getCourseId() {
+        return courseId;
     }
 
-    public void setCourse_id(Long course_id) {
-        this.course_id = course_id;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
-    public Long getTeam_id() {
-        return team_id;
+    public Long getTeamId() {
+        return teamId;
     }
 
-    public void setTeam_id(Long team_id) {
-        this.team_id = team_id;
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
 }

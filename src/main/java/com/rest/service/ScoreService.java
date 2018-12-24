@@ -1,7 +1,9 @@
 package com.rest.service;
 
 import com.rest.dao.ScoreDao;
+import com.rest.dao.SeminarScoreDao;
 import com.rest.entity.Score;
+import com.rest.entity.SeminarScore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.List;
 public class ScoreService {
     @Autowired
     private ScoreDao scoreDao;
+    @Autowired
+    private SeminarScoreDao seminarScoreDao;
 
     public List<Score>queryScore(BigInteger course_id,
                                  BigInteger student_id,
@@ -19,5 +23,14 @@ public class ScoreService {
                                  BigInteger seminar_id){
         System.out.println("List<Score>queryScore");
         return scoreDao.queryScore(course_id,student_id,round_id,seminar_id);
+    }
+    public int saveSeminarScore(SeminarScore seminarScore){
+        return  seminarScoreDao.save(seminarScore);
+    }
+    public SeminarScore findByTeamIdAndSeminarId(Long teamId,Long seminarId){
+        return seminarScoreDao.findByTeamIdAndSeminarId(teamId,seminarId);
+    }
+    public List<SeminarScore> findByKlassSeminarId(Long classSeminarId){
+        return seminarScoreDao.findAllByKlassSeminarId(classSeminarId);
     }
 }

@@ -3,11 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.KlassSeminarDao">
-    <select id="findBySeminar" parameterType="long" resultType="com.rest.entity.Klass_seminar">
-        SELECT * FROM standard_seminar_system.klass_seminar WHERE seminar_id=#{seminar_id}
+    <select id="findBySeminar" parameterType="long" resultType="com.rest.entity.KlassSeminar">
+        SELECT * FROM standard_seminar_system.klass_seminar WHERE seminar_id=#{seminarId}
     </select>
-    <insert id="save" parameterType="com.rest.entity.Klass_seminar" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO standard_seminar_system.klass_seminar(klass_id,seminar_id,seminar_status) VALUE(#{klass_id},#{seminar_id},0)
+    <insert id="save" parameterType="com.rest.entity.KlassSeminar" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO standard_seminar_system.klass_seminar(klass_id,seminar_id,status) VALUE(#{klassId},#{seminarId},0)
     </insert>
     <delete id="delete" parameterType="long">
         DELETE FROM standard_seminar_system.klass_seminar WHERE id=#{id}

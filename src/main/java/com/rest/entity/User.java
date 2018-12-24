@@ -5,7 +5,7 @@ public class User {
     private Long id;
     private String account;
     private String password;
-    private Integer is_active;
+    private Integer isActive;
     private String name;
     private String email;
     private String role;
@@ -15,8 +15,8 @@ public class User {
         id=teacher.getId();
         account=teacher.getAccount();
         password=teacher.getPassword();
-        is_active=teacher.isIs_active();
-        name=teacher.getTeacher_name();
+        isActive=teacher.getIsActive();
+        name=teacher.getTeacherName();
         email=teacher.getEmail();
         role="teacher";
     }
@@ -24,8 +24,8 @@ public class User {
         id=student.getId();
         account=student.getAccount();
         password=student.getPassword();
-        is_active=student.getIs_active();
-        name=student.getStudent_name();
+        isActive=student.getIsActive();
+        name=student.getStudentName();
         email=student.getEmail();
         role="student";
     }
@@ -53,12 +53,20 @@ public class User {
         this.password = password;
     }
 
-    public Integer isIs_active() {
-        return is_active;
+    public Integer getIsActive() {
+        return isActive;
     }
 
-    public void setIs_active(Integer is_active) {
-        this.is_active = is_active;
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getName() {
@@ -77,11 +85,5 @@ public class User {
         this.email = email;
     }
 
-    public String getRoleName() {
-        return role;
-    }
-
-    public void setRoleName(String roleName) {
-        this.role = roleName;
-    }
+    
 }

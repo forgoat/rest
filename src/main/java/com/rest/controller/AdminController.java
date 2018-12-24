@@ -15,8 +15,8 @@ import java.math.BigInteger;
 import java.security.Principal;
 import java.util.List;
 
-@Controller
-@AllArgsConstructor
+@RestController
+//@AllArgsConstructor
 //@RequestMapping(value = "/")
 public class   AdminController {
     @Autowired
@@ -25,10 +25,10 @@ public class   AdminController {
     public List<Admin> adminList(){
         return adminService.adminList();
     }
-    @GetMapping(value = "findbyid")
-    public Admin findAdminById(BigInteger id){
-        return adminService.findAdminById(id);
-    }
+//    @GetMapping(value = "findbyid")
+//    public Admin findAdminById(Long id){
+//        return adminService.findAdminById(id);
+//    }
 
     @GetMapping(value = "/login" )
     public String login()

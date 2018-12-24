@@ -6,9 +6,9 @@
     <select id="teacherlist" resultType="com.rest.entity.Teacher">
         SELECT * FROM standard_seminar_system.teacher;
     </select>
-    <insert id="add" parameterType="com.rest.entity.Teacher" useGeneratedKeys="true">
+    <insert id="save" parameterType="com.rest.entity.Teacher" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO standard_seminar_system.teacher(account,password,is_active,teacher_name,email) VALUE
-        (#{account},#{password},#{is_active},#{teacher_name},#{email})
+        (#{account},#{password},#{isActive},#{teacherName},#{email})
     </insert>
     <select id="findByAccount" parameterType="String" resultType="com.rest.entity.Teacher">
         SELECT * FROM standard_seminar_system.teacher WHERE account=#{account}
@@ -23,23 +23,21 @@
         UPDATE standard_seminar_system.teacher SET email=#{param2} WHERE id=#{param1}
     </update>
     <update id="actival">
-        UPDATE standard_seminar_system.teacher SET is_active=1 WHERE id=#{param2} AND password=#{param1}
+        UPDATE standard_seminar_system.teacher SET is_active=1 WHERE id=#{id}
     </update>
     <delete id="delete" parameterType="long">
         DELETE FROM standard_seminar_system.teacher WHERE id=#{id}
     </delete>
     <select id="search" resultType="com.rest.entity.Teacher">
         SELECT * FROM standard_seminar_system.teacher
-        WHERE
-        <if test="param1!=null and param2==null ">
-            account=#{param1}
-        </if>
-        <if test="param2!=null and param1==null ">
-            teacher_name=#{param2}
-        </if>
-        <if test="param1!=null and param2!=null ">
-            account=#{param1} AND teacher_name=#{param2}
-        </if>
+        <where>
+            <if test="param1!=null ">
+                account=#{param1}
+            </if>
+            <if test="param2!=null ">
+                AND teacher_name=#{param2}
+            </if>
+        </where>
     </select>
     <update id="updateInfo">
         UPDATE standard_seminar_system.teacher

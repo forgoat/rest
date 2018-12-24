@@ -1,63 +1,52 @@
 package com.rest.entity;
 
 public class Score {
-    private Number seminar_total_score;
-    private Number round_total_score;
-    private  Number presentaton_score;
-    private  Number question_score;
-    private  Number report_score;
+    private double seminarTotalScore;
+    private double roundTotalScore;
+    private double presentatonScore;
+    private double questionScore;
+    private double reportScore;
 
     public Score() {
     }
 
-    public Number getSeminar_total_score() {
-        return seminar_total_score;
+    public double getSeminarTotalScore() {
+        return seminarTotalScore;
     }
 
-    public void setSeminar_total_score(Number seminar_total_score) {
-        this.seminar_total_score = seminar_total_score;
+    public void setSeminarTotalScore(double seminarTotalScore) {
+        this.seminarTotalScore = seminarTotalScore;
     }
 
-    public Number getRound_total_score() {
-        return round_total_score;
+    public double getRoundTotalScore() {
+        return roundTotalScore;
     }
 
-    public void setRound_total_score(Number round_total_score) {
-        this.round_total_score = round_total_score;
+    public void setRoundTotalScore(double roundTotalScore) {
+        this.roundTotalScore = roundTotalScore;
     }
 
-    public Number getPresentaton_score() {
-        return presentaton_score;
+    public double getPresentatonScore() {
+        return presentatonScore;
     }
 
-    public void setPresentaton_score(Number presentaton_score) {
-        this.presentaton_score = presentaton_score;
+    public void setPresentatonScore(double presentatonScore) {
+        this.presentatonScore = presentatonScore;
     }
 
-    public Number getQuestion_score() {
-        return question_score;
+    public double getQuestionScore() {
+        return questionScore;
     }
 
-    public void setQuestion_score(Number question_score) {
-        this.question_score = question_score;
+    public void setQuestionScore(double questionScore) {
+        this.questionScore = questionScore;
     }
 
-    public Number getReport_score() {
-        return report_score;
+    public double getReportScore() {
+        return reportScore;
     }
 
-    public void setReport_score(Number report_score) {
-        this.report_score = report_score;
-    }
-
-    @Override
-    public String toString() {
-        return "Score{" +
-                "seminar_total_score=" + seminar_total_score +
-                ", round_total_score=" + round_total_score +
-                ", presentaton_score=" + presentaton_score +
-                ", question_score=" + question_score +
-                ", report_score=" + report_score +
-                '}';
+    public void setReportScore(double reportScore) {
+        this.reportScore = reportScore;
     }
 }

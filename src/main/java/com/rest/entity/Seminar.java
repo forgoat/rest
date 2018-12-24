@@ -5,15 +5,15 @@ import java.sql.Date;
 
 public class Seminar {
     private Long id;
-    private Long course_id;
-    private Long round_id;
-    private String seminar_name;
-    private String introducation;
-    private Integer max_team;
-    private Integer is_visible;
-    private Integer seminar_serial;
-    private Date enroll_start_time;
-    private Date enroll_end_time;
+    private Long courseId;
+    private Long roundId;
+    private String seminarName;
+    private String  introduction;
+    private Integer maxTeam;
+    private Integer isVisible;
+    private Integer seminarSerial;
+    private Date enrollStartTime;
+    private Date enrollEndTime;
 
     public Seminar() {
     }
@@ -26,75 +26,91 @@ public class Seminar {
         this.id = id;
     }
 
-    public Long getCourse_id() {
-        return course_id;
+    public Long getCourseId() {
+        return courseId;
     }
 
-    public void setCourse_id(Long course_id) {
-        this.course_id = course_id;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
-    public Long getRound_id() {
-        return round_id;
+    public Long getRoundId() {
+        return roundId;
     }
 
-    public void setRound_id(Long round_id) {
-        this.round_id = round_id;
+    public void setRoundId(Long roundId) {
+        this.roundId = roundId;
     }
 
-    public String getSeminar_name() {
-        return seminar_name;
+    public String getSeminarName() {
+        return seminarName;
     }
 
-    public void setSeminar_name(String seminar_name) {
-        this.seminar_name = seminar_name;
+    public void setSeminarName(String seminarName) {
+        this.seminarName = seminarName;
     }
 
-    public String getIntroducation() {
-        return introducation;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setIntroducation(String introducation) {
-        this.introducation = introducation;
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
-    public Integer getMax_team() {
-        return max_team;
+    public Integer getMaxTeam() {
+        return maxTeam;
     }
 
-    public void setMax_team(Integer max_team) {
-        this.max_team = max_team;
+    public void setMaxTeam(Integer maxTeam) {
+        this.maxTeam = maxTeam;
     }
 
-    public Integer getIs_visible() {
-        return is_visible;
+    public Integer getIsVisible() {
+        return isVisible;
     }
 
-    public void setIs_visible(Integer is_visible) {
-        this.is_visible = is_visible;
+    public void setIsVisible(Integer isVisible) {
+        this.isVisible = isVisible;
     }
 
-    public Integer getSeminar_serial() {
-        return seminar_serial;
+    public Integer getSeminarSerial() {
+        return seminarSerial;
     }
 
-    public void setSeminar_serial(Integer seminar_serial) {
-        this.seminar_serial = seminar_serial;
+    public void setSeminarSerial(Integer seminarSerial) {
+        this.seminarSerial = seminarSerial;
     }
 
-    public Date getEnroll_start_time() {
-        return enroll_start_time;
+    public Date getEnrollStartTime() {
+        return enrollStartTime;
     }
 
-    public void setEnroll_start_time(Date enroll_start_time) {
-        this.enroll_start_time = enroll_start_time;
+    public void setEnrollStartTime(Date enrollStartTime) {
+        this.enrollStartTime = enrollStartTime;
     }
 
-    public Date getEnroll_end_time() {
-        return enroll_end_time;
+    public Date getEnrollEndTime() {
+        return enrollEndTime;
     }
 
-    public void setEnroll_end_time(Date enroll_end_time) {
-        this.enroll_end_time = enroll_end_time;
+    public void setEnrollEndTime(Date enrollEndTime) {
+        this.enrollEndTime = enrollEndTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Seminar{" +
+                "id=" + id +
+                ", courseId=" + courseId +
+                ", roundId=" + roundId +
+                ", seminarName='" + seminarName + '\'' +
+                ", introduction='" + introduction + '\'' +
+                ", maxTeam=" + maxTeam +
+                ", isVisible=" + isVisible +
+                ", seminarSerial=" + seminarSerial +
+                ", enrollStartTime=" + enrollStartTime +
+                ", enrollEndTime=" + enrollEndTime +
+                '}';
     }
 }

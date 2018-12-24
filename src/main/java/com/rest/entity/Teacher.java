@@ -1,13 +1,11 @@
 package com.rest.entity;
 
-import java.math.BigInteger;
-
 public class Teacher {
     private Long id;
     private String account;
     private String password;
-    private Integer is_active;
-    private String teacher_name;
+    private Integer isActive;
+    private String teacherName;
     private String email;
 
     public Teacher() {
@@ -37,20 +35,20 @@ public class Teacher {
         this.password = password;
     }
 
-    public Integer isIs_active() {
-        return is_active;
+    public Integer getIsActive() {
+        return isActive;
     }
 
-    public void setIs_active(Integer is_active) {
-        this.is_active = is_active;
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
     }
 
-    public String getTeacher_name() {
-        return teacher_name;
+    public String getTeacherName() {
+        return teacherName;
     }
 
-    public void setTeacher_name(String teacher_name) {
-        this.teacher_name = teacher_name;
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 
     public String getEmail() {
@@ -59,5 +57,14 @@ public class Teacher {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "account='" + account + '\'' +
+                ", teacherName='" + teacherName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

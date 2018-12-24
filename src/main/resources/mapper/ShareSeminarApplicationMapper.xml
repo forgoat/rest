@@ -4,6 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.ShareSeminarApplicationDao">
     <insert id="save" parameterType="com.rest.entity.ShareSeminarApplication" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO standard_seminar_system.share_seminar_application(main_course_id,sub_course_id,sub_course_teacher_id) VALUE (#{main_course_id},#{sub_course_id},#{sub_course_teacher_id})
+        INSERT INTO standard_seminar_system.share_seminar_application(main_course_id,sub_course_id,sub_course_teacher_id) VALUE (#{mainCourseId},#{subCourseId},#{subCourseTeacherId})
     </insert>
 </mapper>

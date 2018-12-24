@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.SeminarScoreDao">
+    <insert id="save" parameterType="com.rest.entity.SeminarScore">
+        INSERT INTO standard_seminar_system.seminar_score(klass_seminar_id,team_id,total_score,presentation_score,question_score,report_score) VALUE (#{klassSeminarId},#{teamId},#{totalScore},#{presentationScore},#{questionScore},#{reportScore})
+    </insert>
+    <select id="findByTeamIdAndSeminarId" resultType="com.rest.entity.SeminarScore">
+        SELECT * FROM standard_seminar_system.seminar_score WHERE team_id=#{param1} AND klass_seminar_id=#{param2}
+    </select>
+    <select id="findAllByKlassSeminarId" resultType="com.rest.entity.SeminarScore" parameterType="long">
+        SELECT * FROM standard_seminar_system.seminar_score WHERE klass_seminar_id=#{classSeminarId}
+    </select>
+</mapper>

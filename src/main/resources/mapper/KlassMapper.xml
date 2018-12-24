@@ -6,7 +6,7 @@
     <delete id="deleteById" parameterType="long">
         DELETE FROM standard_seminar_system.klass WHERE id=#{id}
     </delete>
-    <select id="findByCourse_id" resultType="com.rest.entity.Klass">
+    <select id="findByCourseId" resultType="com.rest.entity.Klass">
         SELECT * FROM standard_seminar_system.klass WHERE course_id=#{courseId}
     </select>
 </mapper>
