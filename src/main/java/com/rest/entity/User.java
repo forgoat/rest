@@ -85,11 +85,5 @@ public class User {
         this.email = email;
     }
 
-    public String getRoleName() {
-        return role;
-    }
-
-    public void setRoleName(String roleName) {
-        this.role = roleName;
-    }
+    
 }

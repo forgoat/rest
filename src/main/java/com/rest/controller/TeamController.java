@@ -30,6 +30,12 @@ public class TeamController {
 //    public Team findById(Long teamId){
 //        return teamService.findTeamByTeamId(teamId);
 //    }
+
+    /**
+     * 查找小组
+     * @param teamId
+     * @return
+     */
     @GetMapping(value = "{teamId}")
     public ResponseEntity<TeamInfo> teamInfo(@PathVariable("teamId") Long teamId){
         TeamInfo teamInfo=new TeamInfo();
@@ -54,6 +60,12 @@ public class TeamController {
         teamInfo.setMember(member);
         return new ResponseEntity<TeamInfo>(teamInfo, HttpStatus.OK);
     }
+
+    /**
+     * 通过小组认证
+     * @param teamId
+     * @return
+     */
     @PutMapping(value = "{teamId}/approve")
     public HttpStatus setValid(@PathVariable("teamId") Long teamId){
         Team team=teamService.findTeamByTeamId(teamId);
@@ -71,14 +83,28 @@ public class TeamController {
             }
         }
     }
+
+    /**
+     *动态修改分组
+     * @param teamId
+     * @param teamName
+     * @param teamSerial
+     * @return
+     */
     @PutMapping(value = "{teamId}")
-    public HttpStatus updateInfo(@PathVariable("teamId") Long teamId,String team_name,Integer team_serial) {
-        if (teamService.updateInfo(teamId, team_name, team_serial) == 1) {
+    public HttpStatus updateInfo(@PathVariable("teamId") Long teamId,String teamName,Integer teamSerial) {
+        if (teamService.updateInfo(teamId,teamName,teamSerial) == 1) {
             return HttpStatus.OK;
         } else {
             return HttpStatus.FORBIDDEN;
         }
     }
+
+    /**
+     *删除分组
+     * @param teamId
+     * @return
+     */
     @DeleteMapping(value = "{teamId}")
     public HttpStatus deleteTeam(@PathVariable("teamId") Long teamId){
         Team team=teamService.findTeamByTeamId(teamId);
@@ -94,6 +120,13 @@ public class TeamController {
             }
         }
     }
+
+    /**
+     *移除组员
+     * @param teamId
+     * @param studentId
+     * @return
+     */
     @PutMapping(value = "{teamId}/remove")
     public HttpStatus removeMember(@PathVariable("teamId") Long teamId,Long studentId){
         Team team=teamService.findTeamByTeamId(teamId);

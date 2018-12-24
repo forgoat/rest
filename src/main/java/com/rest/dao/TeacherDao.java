@@ -13,7 +13,7 @@ public interface TeacherDao {
     public int save(Teacher teacher);
     public Teacher findByAccount(String account);
     public Teacher findById(Long id);
-    public int updatePassword(@Param(value = "id") Long id, @Param(value = "password") String password);
+    public int updatePassword(@Param("id") Long id, @Param(value = "password") String password);
     public int updateEmail(@Param(value = "id")Long id,@Param(value = "email")String email);
     public int actival(Long id);
     public int delete(Long id);

@@ -28,6 +28,14 @@ public class UserController {
     private StudentService studentService;
     @Autowired
     private JavaMailSender javaMailSender;
+
+    /**
+     * 用户登录
+     * @param account
+     * @param password
+     * @param request
+     * @return
+     */
     @PostMapping(value = "login",produces = "application/json;charset=UTF-8")
     @ResponseBody
     public ResponseEntity<Object> Login(String account, String password, HttpServletRequest request){
@@ -36,7 +44,7 @@ public class UserController {
             User user=new User(teacher);
             HttpSession session=request.getSession();//这就是session的创建
             session.setAttribute("id",user.getId());
-            session.setAttribute("rolename",user.getRoleName());
+            session.setAttribute("rolename",user.getRole());
             HttpStatus httpStatus=HttpStatus.OK;
             return new ResponseEntity<Object>(user,httpStatus);
         }
@@ -46,7 +54,7 @@ public class UserController {
                 User user=new User(student);
                 HttpSession session=request.getSession();//这就是session的创建
                 session.setAttribute("id",user.getId());
-                session.setAttribute("rolename",user.getRoleName());
+                session.setAttribute("rolename",user.getRole());
                 HttpStatus httpStatus=HttpStatus.OK;
                 return new ResponseEntity<Object>(user,httpStatus);
             }
@@ -56,6 +64,13 @@ public class UserController {
             }
         }
     }
+
+    /**
+     * 用户信息
+     * @param id
+     * @param role
+     * @return
+     */
     @GetMapping(value = "information")
     public ResponseEntity<Object> information(Long id,String role){
 //        HttpSession session=request.getSession();//这就是session的创建
@@ -90,6 +105,14 @@ public class UserController {
 //            return user;
 //        }
 //    }
+
+    /**
+     * 修改密码
+     * @param id
+     * @param password
+     * @param role
+     * @return
+     */
     @PutMapping(value = "password")
     public HttpStatus updatePassword(Long id, String password, String role){
         if(role.equals("student")){
@@ -109,6 +132,14 @@ public class UserController {
             }
         }
     }
+
+    /**
+     * 修改邮箱
+     * @param id
+     * @param email
+     * @param role
+     * @return
+     */
     @PutMapping(value = "email")
     public HttpStatus updateEmail(Long id,String email,String role){
         if(role.equals("student")){
@@ -139,6 +170,12 @@ public class UserController {
     {
         return "test2";
     }
+
+    /**
+     * 发送密码到邮箱
+     * @param account
+     * @return
+     */
     @GetMapping(value = "/password")
     public HttpStatus userPassword(String account){
         Teacher teacher=teacherService.findByAccount(account);

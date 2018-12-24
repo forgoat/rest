@@ -1,7 +1,5 @@
 package com.rest.entity;
 
-import java.math.BigInteger;
-
 public class Teacher {
     private Long id;
     private String account;
