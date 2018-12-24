@@ -16,7 +16,9 @@ public class FileUploadDownloadController {
     /*
      * 获取s_SemSubmit.html页面
      */
+
     @RequestMapping("/file")
+    @ApiOperation(nickname = "swagger-helloworld", value = "Swagger的世界", notes = "测试HelloWorld")
     public String file(){
         return "s_SemSubmit.html";
     }
@@ -28,7 +30,7 @@ public class FileUploadDownloadController {
     @ResponseBody
     public String PPTUpload(@RequestParam("fileName1") MultipartFile file1){
         if(file1.isEmpty()){
-            return "false";
+            return "file1.isEmpty";
         }
         String fileName1 = file1.getOriginalFilename();
         int size = (int) file1.getSize();
@@ -49,11 +51,11 @@ public class FileUploadDownloadController {
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            return "false";
+            return "printStackTrace false";
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            return "false";
+            return "printStackTrace false";
         }
     }
 
