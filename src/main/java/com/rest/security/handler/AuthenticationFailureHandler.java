@@ -1,4 +1,4 @@
-package com.rest.config.handler;
+package com.rest.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rest.support.LoginType;
@@ -14,10 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @author JuboYu on 2018/12/3.
- * @version 1.0
- */
 @Component("AuthenticationFailureHandler")
 public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     @Autowired

@@ -18,7 +18,6 @@ public class FileUploadDownloadController {
      */
 
     @RequestMapping("/file")
-    @ApiOperation(nickname = "swagger-helloworld", value = "Swagger的世界", notes = "测试HelloWorld")
     public String file(){
         return "s_SemSubmit.html";
     }

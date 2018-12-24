@@ -1,11 +1,9 @@
 package com.rest.entity;
 
 import lombok.Data;
-
-import java.math.BigInteger;
 @Data
 public class Admin {
-    private BigInteger id;
+    private Long id;
     private String account;
     private String password;
 
@@ -13,11 +11,11 @@ public class Admin {
     public Admin() {
     }
 
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

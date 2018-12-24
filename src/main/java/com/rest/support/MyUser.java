@@ -2,10 +2,6 @@ package com.rest.support;
 import com.rest.entity.Student;
 import com.rest.entity.Teacher;
 
-/**
- * @author JuboYu on 2018/12/15.
- * @version 1.0
- */
 public class MyUser {
 //    private Integer id;
 //    private String account;

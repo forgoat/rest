@@ -1,9 +1,10 @@
-package com.rest.config;
+package com.rest.security;
 
 
 import com.rest.entity.Admin;
 import com.rest.entity.Student;
 import com.rest.entity.Teacher;
+import com.rest.service.AdminService;
 import com.rest.service.StudentService;
 import com.rest.service.TeacherService;
 import com.rest.support.UserInfo;
@@ -20,10 +21,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author JuboYu on 2018/12/12.
- * @version 1.0
- */
+
 @Component
 public class JWTAuthenticationProvider implements AuthenticationProvider {
 //    @Autowired
@@ -34,6 +32,9 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private AdminService adminService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -84,6 +85,17 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
             }
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(student.getAccount(), student.getPassword(), authorities);
             authenticationToken.setDetails(new UserInfo(student.getId(), student.getAccount(), "student"));
+            return authenticationToken;
+        }
+
+        Admin admin = adminService.findByName(username);
+        if (null != admin) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            if (!password.equals(admin.getPassword())) {
+                throw new UsernameIsExitedException("密码错误");
+            }
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(admin.getAccount(), admin.getPassword(), authorities);
+            authenticationToken.setDetails(new UserInfo(admin.getId(), admin.getAccount(), "admin"));
             return authenticationToken;
         }
 
