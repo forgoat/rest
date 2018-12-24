@@ -1,5 +1,7 @@
 package com.rest.support;
 
+import java.math.BigInteger;
+
 /**
  * @author JuboYu on 2018/12/5.
  * @version 1.0
@@ -11,6 +13,12 @@ public class UserInfo {
 
     public UserInfo(Long userId, String userName, String userType) {
         this.userId = userId;
+        this.userName = userName;
+        this.userType = userType;
+    }
+    public UserInfo(BigInteger userId, String userName, String userType) {
+        String changeId=userId.toString();
+        this.userId = Long.valueOf(changeId);
         this.userName = userName;
         this.userType = userType;
     }

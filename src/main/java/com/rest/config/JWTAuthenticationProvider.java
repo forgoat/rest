@@ -4,6 +4,7 @@ package com.rest.config;
 import com.rest.entity.Admin;
 import com.rest.entity.Student;
 import com.rest.entity.Teacher;
+import com.rest.service.AdminService;
 import com.rest.service.StudentService;
 import com.rest.service.TeacherService;
 import com.rest.support.UserInfo;
@@ -36,6 +37,9 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
     private StudentService studentService;
 
     @Autowired
+    private AdminService adminService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     /**
@@ -53,17 +57,18 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        System.out.println("JWTAuthenticationProvider"+username+password);
 
-//        Admin admin = adminMapper.getAdminByAccount(username);
-//        if (null != admin) {
-//            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-//            if (!password.equals(admin.getPassword())) {
-//                throw new UsernameIsExitedException("密码错误");
-//            }
-//            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password, authorities);
-//            authenticationToken.setDetails(new UserInfo(admin.getId(), admin.getAccount(), "admin"));
-//            return authenticationToken;
-//        }
+        Admin admin = adminService.findByName(username);
+        if (null != admin) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            if (!password.equals(admin.getPassword())) {
+                throw new UsernameIsExitedException("密码错误");
+            }
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password, authorities);
+            authenticationToken.setDetails(new UserInfo(admin.getId(), admin.getAccount(), "admin"));
+            return authenticationToken;
+        }
 
         Teacher teacher = teacherService.findByAccount(username);
         if (null != teacher) {

@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author JuboYu on 2018/12/3.
  * @version 1.0
  */
-@ConfigurationProperties(prefix = "xmu.cms")
+@ConfigurationProperties(prefix = "rest.support")
 public class SecurityProperties {
     private LoginType loginType = LoginType.JSON;
 

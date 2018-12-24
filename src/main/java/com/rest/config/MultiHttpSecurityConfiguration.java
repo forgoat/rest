@@ -4,7 +4,6 @@ import com.rest.config.Filter.JWTAuthenticationFilter;
 import com.rest.config.Filter.JWTLoginFilter;
 import com.rest.config.handler.AuthenticationFailureHandler;
 import com.rest.config.handler.AuthenticationSuccessHandler;
-import com.rest.security.MyUserDetailsService;
 import com.rest.support.AdminAuthorizedEntryPoint;
 import com.rest.support.UserAuthorizedEntryPoint;
 
@@ -46,52 +45,30 @@ public class MultiHttpSecurityConfiguration {
         @Autowired
         private AuthenticationFailureHandler failureHandler;
 
-        private MyUserDetailsService myUserDetailsService;
-
-        @Autowired
-        public void setMyUserDetailsService(MyUserDetailsService myUserDetailsService){
-            this.myUserDetailsService = myUserDetailsService;
-        }
-
-        /**
-         * 匹配 "/" 路径，不需要权限即可访问
-         * 匹配 "/user" 及其以下所有路径，都需要 "USER" 权限
-         * 登录地址为 "/login"，登录成功默认跳转到页面 "/user"
-         * 退出登录的地址为 "/logout"，退出成功后跳转到页面 "/login"
-         * 默认启用 CSRF
-         */
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http
-                    .csrf().disable()
+            http.exceptionHandling().
+                    authenticationEntryPoint(new AdminAuthorizedEntryPoint());
+            http.addFilter(jwtLoginFilter())
+                    .addFilterBefore(jwtAuthenticationFilter(), JWTLoginFilter.class);
+            http.antMatcher("/admin/**")
                     .authorizeRequests()
-                    // .antMatchers("/login","/css/**", "/js/**","/fonts/**").permitAll()
-                    .antMatchers("/").permitAll()
-                    .antMatchers(
-                            "/*.html",
-                            "/favicon.ico",
-                            "/**/*.html",
-                            "/**/*.css",
-                            "/**/*.js"
-                    ).permitAll()
-                    .antMatchers("/admin/**").hasRole("ADMIN")
-                    .antMatchers("/[^login]/**]").hasRole("ADMIN")
-                    .antMatchers("/index").hasRole("USER")
-                    .and()
-                    .formLogin().loginPage("/login")
-                    .defaultSuccessUrl("/studentListPage")
-                    .and()
-                    .logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+                    .antMatchers("/admin/login").permitAll()
+                    .anyRequest().hasRole("ADMIN");
+            http.formLogin()
+                    .loginPage("/login").loginProcessingUrl("/login")
+                    .usernameParameter("account").passwordParameter("password")
+                    .successHandler(successHandler).failureHandler(failureHandler)
+                    .permitAll();
+            http.csrf().disable();
+            http.cors();
         }
 
-        /**
-         * 添加 UserDetailsService， 实现自定义登录校验
-         */
         @Override
-        protected void configure(AuthenticationManagerBuilder builder) throws Exception{
-            builder.userDetailsService(myUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            //auth.userDetailsService(adminUserDetailsService).passwordEncoder(passwordEncoder());
+            auth.authenticationProvider(jwtAuthenticationProvider);
         }
-
 
         @Override
         public void configure(WebSecurity web) throws Exception {
@@ -128,52 +105,29 @@ public class MultiHttpSecurityConfiguration {
         @Autowired
         private AuthenticationFailureHandler failureHandler;
 
-        private MyUserDetailsService myUserDetailsService;
-
-        @Autowired
-        public void setMyUserDetailsService(MyUserDetailsService myUserDetailsService){
-            this.myUserDetailsService = myUserDetailsService;
-        }
-
-        /**
-         * 匹配 "/" 路径，不需要权限即可访问
-         * 匹配 "/user" 及其以下所有路径，都需要 "USER" 权限
-         * 登录地址为 "/login"，登录成功默认跳转到页面 "/user"
-         * 退出登录的地址为 "/logout"，退出成功后跳转到页面 "/login"
-         * 默认启用 CSRF
-         */
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http
-                    .csrf().disable()
-                    .authorizeRequests()
-                    // .antMatchers("/login","/css/**", "/js/**","/fonts/**").permitAll()
-                    .antMatchers("/").permitAll()
-                    .antMatchers(
-                            "/*.html",
-                            "/favicon.ico",
-                            "/**/*.html",
-                            "/**/*.css",
-                            "/**/*.js"
-                    ).permitAll()
-                    .antMatchers("/admin/**").hasRole("ADMIN")
-                    .antMatchers("/[^login]/**]").hasRole("ADMIN")
-                    .antMatchers("/index").hasRole("USER")
-                    .and()
-                    .formLogin().loginPage("/studentListPage")
-                    .defaultSuccessUrl("/login")
-                    .and()
-                    .logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+            http.exceptionHandling().
+                    authenticationEntryPoint(new UserAuthorizedEntryPoint());
+            http.addFilter(userJWTLoginFilter())
+                    .addFilterBefore(userJWTAuthenticationFilter(), JWTLoginFilter.class);
+            http.authorizeRequests()
+                    .antMatchers("/login").permitAll()
+                    .antMatchers("/test/**").permitAll()
+                    .anyRequest().authenticated();
+            http.formLogin()
+                    .loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/studentListPage")
+                    .usernameParameter("account").passwordParameter("password")
+                    .successHandler(successHandler).failureHandler(failureHandler)
+                    .permitAll();
+            http.csrf().disable();
+            http.cors();
         }
 
-        /**
-         * 添加 UserDetailsService， 实现自定义登录校验
-         */
         @Override
-        protected void configure(AuthenticationManagerBuilder builder) throws Exception{
-            builder.userDetailsService(myUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.authenticationProvider(jwtAuthenticationProvider);
         }
-
 
         @Override
         public void configure(WebSecurity web) throws Exception {
