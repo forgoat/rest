@@ -12,4 +12,7 @@
     <select id="findByRoundIdAndClassId" resultType="integer">
         SELECT enroll_number FROM standard_seminar_system.klass_round WHERE round_id=#{param1} AND klass_id=#{param2}
     </select>
+    <insert id="save" parameterType="com.rest.entity.KlassRound">
+        INSERT INTO standard_seminar_system.klass_round(klass_id,round_id,enroll_number) VALUE (#{klassId},#{roundId},#{enrollNumber})
+    </insert>
 </mapper>

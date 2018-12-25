@@ -1,8 +1,10 @@
 package com.rest.controller;
 
+import com.rest.entity.Klass;
 import com.rest.entity.KlassRound;
 import com.rest.entity.Round;
 import com.rest.entity.Seminar;
+import com.rest.service.KlassService;
 import com.rest.service.RoundService;
 import com.rest.service.SeminarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class RoundController {
     private RoundService roundService;
     @Autowired
     private SeminarService seminarService;
+    @Autowired
+    private KlassService klassService;
 
     /**
      * 保存轮次
@@ -27,13 +31,25 @@ public class RoundController {
      */
     @PostMapping(value = "")
     public ResponseEntity<Long> saveRound(Round round){
+        List<Klass> klassList=klassService.findByCourseId(round.getCourseId());
         if(roundService.saveRound(round)==1){
+            for(Klass klass:klassList){
+                KlassRound klassRound=new KlassRound();
+                klassRound.setEnrollNumber(1);
+                klassRound.setKlassId(klass.getId());
+                klassRound.setRoundId(round.getId());
+                roundService.save(klassRound);
+            }
             return new ResponseEntity<Long>(round.getId(), HttpStatus.ACCEPTED);
         }
         else {
             Long id=new Long(0);
             return new ResponseEntity<Long>(id,HttpStatus.FORBIDDEN);
         }
+    }
+    @PostMapping(value = "klassRound")
+    public int saveKlassRound(KlassRound klassRound){
+        return roundService.save(klassRound);
     }
 
     /**
@@ -83,6 +99,11 @@ public class RoundController {
         return roundService.findKlassRound(klassId);
     }
 
+    /**
+     * 删除轮次
+     * @param roundId
+     * @return
+     */
     @DeleteMapping(value = "{roundId}")
     public HttpStatus deleteByRoundId(@PathVariable("roundId") Long roundId){
         if (roundService.deleteRound(roundId)==1){
@@ -99,5 +120,9 @@ public class RoundController {
     @GetMapping(value = "findEnrollNumber")
     public Integer findEnrollNumber(Long roundId,Long klassId){
         return roundService.findEnrollNumber(roundId,klassId);
+    }
+    @PutMapping(value = "updateSerial")
+    public int updateSerial(Long id,Integer serial){
+        return roundService.updateSerial(id,serial);
     }
 }

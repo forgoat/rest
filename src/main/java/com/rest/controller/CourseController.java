@@ -231,6 +231,74 @@ public class CourseController {
     @PutMapping(value = "seminarsharerequest")
     public HttpStatus acceptSeminarShare(Long shareSeminarId){
         if(courseService.acceptSeminarShare(shareSeminarId)==1){
+            ShareSeminarApplication shareSeminarApplication=courseService.findByShareSeminarId(shareSeminarId);
+            Long subCourseId=shareSeminarApplication.getSubCourseId();
+            Long mainCourseId=shareSeminarApplication.getMainCourseId();
+            List<Seminar> seminarList=seminarService.findByCourseId(subCourseId);
+            for(Seminar seminar:seminarList){
+                Long roundId=seminar.getRoundId();
+                if(seminarService.deleteSeminar(seminar.getId())==1){
+                    seminarService.deleteBySeminarId(seminar.getId());
+                    List<Seminar> seminars=seminarService.findByRoundId(roundId);
+                    if(seminars.isEmpty()){
+                        roundService.deleteRound(roundId);
+                    }
+                }
+            }
+            List<Round> roundList=roundService.findByCourseId(mainCourseId);
+            for(Round round:roundList){
+                round.setCourseId(subCourseId);
+                roundService.saveRound(round);
+                List<Klass> klassList=klassService.findByCourseId(round.getCourseId());
+                if(roundService.saveRound(round)==1) {
+                    for (Klass klass : klassList) {
+                        KlassRound klassRound = new KlassRound();
+                        klassRound.setEnrollNumber(1);
+                        klassRound.setKlassId(klass.getId());
+                        klassRound.setRoundId(round.getId());
+                        roundService.save(klassRound);
+                    }
+                }
+                else {
+                    return HttpStatus.BAD_REQUEST;
+                }
+            }
+            List<Seminar> seminarList1=seminarService.findByCourseId(mainCourseId);
+            for(Seminar seminar:seminarList1){
+                List<Seminar> seminarList2=seminarService.findByCourseIdAndRoundId(seminar.getCourseId(),seminar.getRoundId());
+                int serial=0;
+                if (seminarList.isEmpty()){
+                    serial=0;
+                }
+                else {
+                    for(Seminar s:seminarList){
+                        if(s.getSeminarSerial()>serial){
+                            serial=s.getSeminarSerial();
+                        }
+                    }
+                }
+                seminar.setSeminarSerial(serial+1);
+                seminar.setCourseId(subCourseId);
+                if(seminarService.save(seminar)==1){
+                    List<Klass> klassList=klassService.findByCourseId(subCourseId);
+                    for(Klass klass:klassList){
+                        KlassSeminar klass_seminar=new KlassSeminar();
+                        klass_seminar.setKlassId(klass.getId());
+                        klass_seminar.setSeminarId(seminar.getId());
+                        seminarService.saveKlassSeminar(klass_seminar);
+                    }
+                }
+                else {
+                    Long id=new Long(0);
+                }
+            }
+            Teacher teacher=teacherService.findById(shareSeminarApplication.getSubCourseTeacherId());
+            SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
+            simpleMailMessage.setTo(teacher.getEmail());
+            simpleMailMessage.setFrom("1010410164@qq.com");
+            simpleMailMessage.setSubject("同意共享分组");
+            simpleMailMessage.setText(teacher.getTeacherName());
+            javaMailSender.send(simpleMailMessage);
             return HttpStatus.OK;
         }
         else {
@@ -245,7 +313,22 @@ public class CourseController {
      */
     @PutMapping(value = "/seminarshare")
     public HttpStatus rejectSeminarShare(Long shareSeminarId){
+        ShareSeminarApplication shareSeminarApplication=courseService.findByShareSeminarId(shareSeminarId);
+        Long subCourseId=shareSeminarApplication.getSubCourseId();
         if(courseService.rejectSeminarShare(shareSeminarId)==1){
+            if (shareSeminarApplication.getStatus().equals(1)){
+               List<Seminar> seminarList=seminarService.findByCourseId(subCourseId);
+               for(Seminar seminar:seminarList){
+                   Long roundId=seminar.getRoundId();
+                   if(seminarService.deleteSeminar(seminar.getId())==1){
+                       seminarService.deleteBySeminarId(seminar.getId());
+                       List<Seminar> seminars=seminarService.findByRoundId(roundId);
+                       if(seminars.isEmpty()){
+                           roundService.deleteRound(roundId);
+                       }
+                   }
+               }
+            }
             return HttpStatus.OK;
         }
         else {

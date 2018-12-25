@@ -2,9 +2,7 @@ package com.rest.controller;
 
 import com.rest.dao.TeamStudentDao;
 import com.rest.entity.*;
-import com.rest.service.ScoreService;
-import com.rest.service.StudentService;
-import com.rest.service.TeamService;
+import com.rest.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +21,10 @@ public class TeamController {
     private StudentService studentService;
     @Autowired
     private ScoreService scoreService;
+    @Autowired
+    private CourseService courseService;
+    @Autowired
+    private TeacherService teacherService;
 //    @GetMapping(value = "findStu")
 //    public List<KlassStudent> findByTeamId(Long teamId){
 //        return teamService.findStuByTeamId(teamId);
@@ -180,7 +182,44 @@ public class TeamController {
      * @return
      */
     @GetMapping(value = "")
-    public Long findTeamIdByStudentId(Long studentId){
+    public Long findTeamIdByStudentId(Long studentId)
+    {
         return teamService.findTeamByStudentId(studentId);
     }
+//    @GetMapping(value = "findSId")
+//    public Long findId(Long courseId){
+//        return teamService.findId(courseId);
+//    }
+    @GetMapping(value = "findConflict")
+    public List<Long> findConflict(Long courseId){
+        return teamService.findConflictCourse(courseId);
+    }
+
+    /**
+     * 可分享分组对象
+     * @param courseId
+     * @return
+     */
+    @GetMapping(value = "shareObject")
+    public List<ShareObject> shareCourseObject(Long courseId){
+        List<Course> courseList=courseService.findAllCourse();
+        List<Long> conflictList=teamService.findConflictCourse(courseId);
+        List<ShareObject> shareObjectList=new ArrayList<ShareObject>();
+        for (Course course:courseList){
+            boolean flag=true;
+            for (Long id:conflictList){
+                if(id.equals(course.getId())){
+                    flag=false;
+                }
+            }
+            if (flag){
+                ShareObject shareObject=new ShareObject(course);
+                Teacher teacher=teacherService.findById(course.getTeacherId());
+                shareObject.setTeacherName(teacher.getTeacherName());
+                shareObjectList.add(shareObject);
+            }
+        }
+        return shareObjectList;
+    }
+
 }
