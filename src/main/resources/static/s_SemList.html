@@ -29,35 +29,6 @@
         .last{ background-color:#d6e6f1; border-color:#6196bb; }
         .list ul li ul li ul li a{ color:#316a91; padding-left:30px;}
     </style>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.inactive').click(function(){
-                if($(this).siblings('ul').css('display')=='none'){
-                    $(this).parent('li').siblings('li').removeClass('inactives');
-                    $(this).addClass('inactives');
-                    $(this).siblings('ul').slideDown(100).children('li');
-                    if($(this).parents('li').siblings('li').children('ul').css('display')=='block'){
-                        $(this).parents('li').siblings('li').children('ul').parent('li').children('a').removeClass('inactives');
-                        $(this).parents('li').siblings('li').children('ul').slideUp(100);
-
-                    }
-                }else{
-                    //控制自身变成+号
-                    $(this).removeClass('inactives');
-                    //控制自身菜单下子菜单隐藏
-                    $(this).siblings('ul').slideUp(100);
-                    //控制自身子菜单变成+号
-                    $(this).siblings('ul').children('li').children('ul').parent('li').children('a').addClass('inactives');
-                    //控制自身菜单下子菜单隐藏
-                    $(this).siblings('ul').children('li').children('ul').slideUp(100);
-
-                    //控制同级菜单只保持一个是展开的（-号显示）
-                    $(this).siblings('ul').children('li').children('a').removeClass('inactives');
-                }
-            })
-        });
-    </script>
 </head>
 <header class="aui-navBar aui-navBar-fixed b-line">
     <a href="javascript:history.back(-1)" class="aui-navBar-item">
@@ -71,28 +42,38 @@
     </a>
 </header>
 <body>
-<div class="list">
-    <ul class="yiji">
-        <li><a href="#" class="inactive">讨论课信息</a>
-            <ul style="display: none">
-                <li><a href="#" class="inactive active">第一轮</a>
-                    <ul>
-                        <li><a href="/student/semminar/finish">${all_sem_1_1}</a></li>
-                    </ul>
-                </li>
-                <li><a href="#" class="inactive active">第二轮</a>
-                    <ul>
-                        <li><a href="#">${all_sem_2_1}</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
-</div>
-<div id="sscd" class="div-auto1">
-
+<div class="list"id="myView">
 </div>
 </body>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+    function load() {
+        $('.inactive').click(function(){
+            if($(this).siblings('ul').css('display')=='none'){
+                $(this).parent('li').siblings('li').removeClass('inactives');
+                $(this).addClass('inactives');
+                $(this).siblings('ul').slideDown(100).children('li');
+                if($(this).parents('li').siblings('li').children('ul').css('display')=='block'){
+                    $(this).parents('li').siblings('li').children('ul').parent('li').children('a').removeClass('inactives');
+                    $(this).parents('li').siblings('li').children('ul').slideUp(100);
+
+                }
+            }else{
+                //控制自身变成+号
+                $(this).removeClass('inactives');
+                //控制自身菜单下子菜单隐藏
+                $(this).siblings('ul').slideUp(100);
+                //控制自身子菜单变成+号
+                $(this).siblings('ul').children('li').children('ul').parent('li').children('a').addClass('inactives');
+                //控制自身菜单下子菜单隐藏
+                $(this).siblings('ul').children('li').children('ul').slideUp(100);
+
+                //控制同级菜单只保持一个是展开的（-号显示）
+                $(this).siblings('ul').children('li').children('a').removeClass('inactives');
+            }
+        })
+    }
+</script>
 <script type="text/javascript" src="js/vue.js"></script>
 <script>
     function getUrlParam(name) {
@@ -100,10 +81,65 @@
         var r = window.location.search.substr(1).match(reg);  //匹配目标参数
         if (r != null) return unescape(r[2]); return null; //返回参数值
     };
-    function settittle() {
-        var id=getUrlParam('courseid');
-        $("#ssct").html(id);
+    var myModel = {courseList:[]};
+    var sem = {semList:[]};
+    var id='';
+    var semid=16;
+    function getData(){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/course/"+semid+"/seminar",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+            data:{studentId:113},     //指客户端提交给后台的参数
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.courseList=res;
+                var htmlNav='';
+                $("#myView").empty();
+                alert();
+                if( myModel.courseList.length>0)
+                {
+                    htmlNav+='<ul class="yiji">';
+                    for(var i=0;i< myModel.courseList.length;i++)
+                    {
+                        htmlNav+='<li><a href="#" class="inactive">第'+ myModel.courseList[i].roundSerial+'轮</a>';
+                        htmlNav+='<ul style="display: none">';
+                        sem.semList=myModel.courseList[i].klassSeminarInfoList;
+                        if(sem.semList.length>0)
+                        {
+                            for(var j=0;j<sem.semList.length;j++) {
+                                if(sem.semList[j].status==0)
+                                {
+                                    id="s_SemInfoW.html";
+                                }else if(sem.semList[j].status==1)
+                                {
+                                    id="s_SemInfoZ.html";
+                                }else
+                                {
+                                    id="s_SemInfoY.html";
+                                }
+                                htmlNav += '<li><a href="';
+                                htmlNav+=id+'?seminarid='+sem.semList[j].id;
+                                htmlNav+='" class="inactive active">';
+                                htmlNav+=sem.semList[j].seminarName ;
+                                htmlNav+='</a></li>';
+                            }
+                        }
+                        htmlNav+='</ul>';
+                        htmlNav+='</li>';
+                    }
+                    htmlNav+='</ul>';
+                    $("#myView").html(htmlNav);
+                }
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
     }
-    settittle();
+    getData();
+    load();
 </script>
 </html>

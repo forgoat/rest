@@ -1,6 +1,7 @@
 package com.rest.controller;
 
 import com.rest.entity.Student;
+import com.rest.entity.StudentData;
 import com.rest.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +23,10 @@ public class StudentController {
      * @return
      */
     @GetMapping(value ="" )
-    public ResponseEntity<List<Student>> findAllStudent(){
+    public StudentData findAllStudent(){
         List<Student> studentList=studentService.findAllStudent();
-        HttpStatus httpStatus=HttpStatus.OK;
-        return new ResponseEntity<List<Student>>(studentList,httpStatus);
+        StudentData studentData=new StudentData(studentList);
+        return studentData;
     }
 
     /**

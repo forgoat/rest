@@ -108,20 +108,7 @@
         });
     }
     layui.use('table', function(){
-        $.ajax({
-            url: "/teacher",                //后端的API地址
-            type: 'GET',                                //http:POST/GET
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function(result){
-                myModel.courseList = result;
-            },
-            error: function(){
-                alert('服务器忙，请稍候');
-            }
-        });
-        var table = layui.table;
-        var myModel = {courseList:[]};
+         var table = layui.table;
 
         //第一个实例
         table.render({
@@ -129,14 +116,6 @@
             ,url:'/teacher'
             ,height: 312
             ,page: true //开启分页
-            ,parseData: function(res){ //res 即为原始返回的数据
-                return {
-                    "code": 0, //解析接口状态
-                    "msg": null, //解析提示文本
-                    "count": myModel.courseList.length, //解析数据长度
-                    "data": myModel.courseList //解析数据列表
-                };
-            }
             ,cols: [[ //表头
                 {field: 'id', title: 'ID', width:200, sort: true, fixed: 'left'}
                 ,{field: 'teacherName', title: '教师名', width:200}
