@@ -1,7 +1,5 @@
 package com.rest.entity;
 
-import java.math.BigInteger;
-
 public class Klass {
     private Long id;
     private Long courseId;
