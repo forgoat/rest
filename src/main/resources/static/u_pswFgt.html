@@ -26,14 +26,12 @@
         <div class="aui-code-box">
             <form action="/login" method="post">
                 <p class="aui-code-line">
-                    <input  class="aui-code-line-input"  type="text" placeholder="学号/教工号" name="userid"/>
+                    <input  class="aui-code-line-input"  type="text" placeholder="学号/教工号" name="userid"id="upfi"/>
                 </p>
                 <p>
                 <div class="aui-code-box">
-                    <button >
-                        <a href="u_resetPsw.html ">
+                    <button onclick="upfi()">
                             下一步
-                        </a>
                     </button>
                 </div>
                 </p>
@@ -41,6 +39,22 @@
         </div>
     </section>
 </section>
-
+<script>
+    function upfi() {
+        var account=$("#upfi").val();
+        $.ajax({
+            url:"/password",
+            data:{account:account},
+            type: "PUT",
+            dataType:'text',
+            success:function() {
+                alert("已发送");
+            },
+            error: function(){
+                alert("通信失败！");
+            }
+        });
+    }
+</script>
 </body>
 

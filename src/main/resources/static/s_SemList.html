@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ooad所有讨论课</title>
+    <title id="ssct">课程名</title>
     <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0">
     <link type="text/css" rel="stylesheet" href="css/base.css">
     <link type="text/css" rel="stylesheet" href="css/home.css">
@@ -89,5 +89,21 @@
         </li>
     </ul>
 </div>
+<div id="sscd" class="div-auto1">
+
+</div>
 </body>
+<script type="text/javascript" src="js/vue.js"></script>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    function settittle() {
+        var id=getUrlParam('courseid');
+        $("#ssct").html(id);
+    }
+    settittle();
+</script>
 </html>
