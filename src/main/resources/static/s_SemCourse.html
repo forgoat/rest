@@ -20,6 +20,7 @@
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/gooey.min.js"></script>
     <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/vue-router.js"></script>
 
 </head>
 <body>
@@ -28,8 +29,8 @@
 
 <section class="aui-scrollView" id="myView">
     <a  class="aui-topic-item aui-flex" v-for="course in courseList" >
-        <div class="aui-flex-box">
-            <h4><a href='s_SemList.html?"+{{course.id}}"'>{{course.course_name}}</a></h4>
+        <div class="aui-flex-box" onclick="jump(courseList)">
+                <h4>{{course.courseName}}</h4>
         </div>
         <div class="aui-topic-arrow"></div>
     </a>
@@ -125,8 +126,10 @@
     });
 </script>
 <script>
+    function jump(courseid) {
+        window.location.href="s_SemList.html?course="+courseid;
+    }
     var myModel = {courseList:[]};
-    var studentid=100;
 
     myViewModel = new Vue({
         el: '#myView',//所在位置的id
@@ -138,7 +141,7 @@
         $.ajax({
             url: "/course",                //后端的API地址
             type: 'GET',                                //http:POST/GET
-            data: {studentid:studentid},                            //指客户端提交给后台的参数
+            //data: postData,                            //指客户端提交给后台的参数
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success: function(result){
