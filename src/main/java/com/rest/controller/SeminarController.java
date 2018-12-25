@@ -199,7 +199,8 @@ public class SeminarController {
         return seminarService.findByCourseId(courseId);
     }
     @DeleteMapping("deleteSeminar")
-    public int deleteBySeminarId(Long seminarId){
+    public int deleteBySeminarId(Long seminarId)
+    {
         return seminarService.deleteBySeminarId(seminarId);
     }
 }

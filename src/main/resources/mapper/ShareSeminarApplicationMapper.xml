@@ -18,4 +18,7 @@
     <update id="reject" parameterType="long">
         UPDATE standard_seminar_system.share_seminar_application SET status=0 WHERE id=#{shareSeminarId}
     </update>
+    <select id="findByCourseId" resultType="com.rest.entity.ShareTeamApplication" parameterType="long">
+        SELECT * FROM standard_seminar_system.share_seminar_application WHERE status=1 AND (sub_course_id=#{courseId} OR main_course_id=#{courseId})
+    </select>
 </mapper>
