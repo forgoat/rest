@@ -38,7 +38,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">姓名</label>
                             <div class="layui-input-block">
-                                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input" id="tname">
+                                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input" id="account">
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -61,7 +61,7 @@
                         </div>
                     </form>
                     <div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
-                        <button data-method="offset" data-type="auto" class="layui-btn layui-btn-normal">提交</button>
+                        <button data-method="offset" data-type="auto" class="layui-btn layui-btn-normal" onclick="creat()">提交</button>
                         <button class="layui-btn"><a href="a_ConTea.html"style="color: white">取消</a></button>
                     </div>
                 </div>
@@ -72,18 +72,36 @@
 
 
 <script src="layui/layui.js" charset="utf-8"></script>
+<script src="js/jquery.min.js" charset="utf-8"></script>
+
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
 function creat() {
-    var tname = $('#tname').val();
-    var tnumber=$('#tnumber').val();
-    var email=$('#email').val();
-    var password=$('#password').val();
-    if(tname==''||tnumber==''||email==''||password=='')
+    var account = $("#account").val();
+    var tnumber=$("#tnumber").val();
+    var email=$("#email").val();
+    var password = $("#password").val();
+    if(account==''||tnumber==''||email==''||password=='')
         alert("请填写完整");
     else
     {
+        $.ajax({
+            url:"/teacher",
+            data:{account:tnumber,password:password,isActive:0,teacherName:account,email:email},
+            type: "POST",
+            dataType:'text',
+            success:function(data) {
 
+               var edata=eval("("+data+")");
+                  if(edata.id>0)
+                  {
+                      alert("success!");
+                  }
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
     }
 }
 </script>
