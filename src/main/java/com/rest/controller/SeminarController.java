@@ -28,6 +28,19 @@ public class SeminarController {
      */
     @PostMapping(value = "")
     public ResponseEntity<Long> saveSeminar(Seminar seminar){
+        List<Seminar> seminarList=seminarService.findByCourseIdAndRoundId(seminar.getCourseId(),seminar.getRoundId());
+        int serial=0;
+        if (seminarList.isEmpty()){
+            serial=0;
+        }
+        else {
+            for(Seminar s:seminarList){
+                if(s.getSeminarSerial()>serial){
+                    serial=s.getSeminarSerial();
+                }
+            }
+        }
+        seminar.setSeminarSerial(serial+1);
         if(seminarService.save(seminar)==1){
             List<Klass> klassList=klassService.findByCourseId(seminar.getCourseId());
             for(Klass klass:klassList){
@@ -160,12 +173,20 @@ public class SeminarController {
         }
     }
 
-    @GetMapping(value = "")
+    @GetMapping(value = "/round")
     public List<Seminar> findByRoundId(Long roundId){
         return seminarService.findByRoundId(roundId);
     }
     @GetMapping(value = "{seminarId}/klassSeminar")
     public KlassSeminar findKlassSeminar(@PathVariable("seminarId") Long seminarId,Long klassId){
         return seminarService.findKlassSeminar(klassId,seminarId);
+    }
+    @GetMapping(value = "")
+    public List<Seminar> findAll(){
+        return seminarService.findAll();
+    }
+    @GetMapping(value = "courseAndRound")
+    public List<Seminar> findByCourseIdAndRoundId(Long courseId,Long roundId){
+        return seminarService.findByCourseIdAndRoundId(courseId,roundId);
     }
 }

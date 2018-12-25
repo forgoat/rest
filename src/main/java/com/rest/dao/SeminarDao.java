@@ -13,5 +13,7 @@ public interface SeminarDao {
     public List<Seminar> findByRoundId(Long roundId);
     public Seminar findById(Long id);
     public int delete(Long id);
+    public List<Seminar> findAll();
+    public List<Seminar> findByCourseIdAndRoundId(@Param("courseId") Long courseId,@Param("roundId") Long roundId);
     public int updateSelective(@Param("id") Long id, @Param("courseId") Long courseId, @Param("roundId") Long roundId, @Param("seminarName") String seminarName, @Param("introduction") String introduction, @Param("maxTeam") Integer maxTeam,@Param("isVisible") Integer isVisible, @Param("seminarSerial") Integer seminarSerial, @Param("enrollStartTime") Date enrollStartTime,@Param("enrollEndTime") Date enrollEndTime);
 }

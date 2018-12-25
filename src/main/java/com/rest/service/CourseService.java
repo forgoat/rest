@@ -52,4 +52,10 @@ public class CourseService {
     public int acceptSeminarShare(Long shareSeminarId){
         return shareSeminarApplicationDao.acceptSeminarShare(shareSeminarId);
     }
+    public ShareSeminarApplication findByShareSeminarId(Long shareSeminarId){
+        return shareSeminarApplicationDao.findById(shareSeminarId);
+    }
+    public int rejectSeminarShare(Long shareSeminarId){
+        return shareSeminarApplicationDao.reject(shareSeminarId);
+    }
 }

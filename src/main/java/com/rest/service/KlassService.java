@@ -12,6 +12,7 @@ import java.util.List;
 public class KlassService {
     @Autowired
     private KlassDao klassDao;
+
     @Autowired
     private KlassStudentDao klassStudentDao;
     public int deleteById(Long id){
@@ -20,6 +21,9 @@ public class KlassService {
     public List<Klass> findByCourseId(Long courseId)
     {
         return klassDao.findByCourseId(courseId);
+    }
+    public int saveKlass(Klass klass){
+        return klassDao.saveKlass(klass);
     }
     public Long findTeam(Long courseId,Long studentId){
         return klassStudentDao.findTeam(courseId,studentId);
