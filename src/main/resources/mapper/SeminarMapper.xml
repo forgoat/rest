@@ -55,6 +55,6 @@
         SELECT * FROM standard_seminar_system.seminar WHERE course_id=#{param1} AND round_id=#{param2}
     </select>
     <select id="findByCourseId" resultType="com.rest.entity.Seminar">
-        SELECT * standard_seminar_system.seminar WHERE course_id=#{courseId}
+        SELECT * FROM standard_seminar_system.seminar WHERE course_id=#{courseId}
     </select>
 </mapper>

@@ -245,7 +245,53 @@ public class CourseController {
                     }
                 }
             }
-
+            List<Round> roundList=roundService.findByCourseId(mainCourseId);
+            for(Round round:roundList){
+                round.setCourseId(subCourseId);
+                roundService.saveRound(round);
+                List<Klass> klassList=klassService.findByCourseId(round.getCourseId());
+                if(roundService.saveRound(round)==1) {
+                    for (Klass klass : klassList) {
+                        KlassRound klassRound = new KlassRound();
+                        klassRound.setEnrollNumber(1);
+                        klassRound.setKlassId(klass.getId());
+                        klassRound.setRoundId(round.getId());
+                        roundService.save(klassRound);
+                    }
+                }
+                else {
+                    return HttpStatus.BAD_REQUEST;
+                }
+            }
+            List<Seminar> seminarList1=seminarService.findByCourseId(mainCourseId);
+            for(Seminar seminar:seminarList1){
+                List<Seminar> seminarList2=seminarService.findByCourseIdAndRoundId(seminar.getCourseId(),seminar.getRoundId());
+                int serial=0;
+                if (seminarList.isEmpty()){
+                    serial=0;
+                }
+                else {
+                    for(Seminar s:seminarList){
+                        if(s.getSeminarSerial()>serial){
+                            serial=s.getSeminarSerial();
+                        }
+                    }
+                }
+                seminar.setSeminarSerial(serial+1);
+                seminar.setCourseId(subCourseId);
+                if(seminarService.save(seminar)==1){
+                    List<Klass> klassList=klassService.findByCourseId(subCourseId);
+                    for(Klass klass:klassList){
+                        KlassSeminar klass_seminar=new KlassSeminar();
+                        klass_seminar.setKlassId(klass.getId());
+                        klass_seminar.setSeminarId(seminar.getId());
+                        seminarService.saveKlassSeminar(klass_seminar);
+                    }
+                }
+                else {
+                    Long id=new Long(0);
+                }
+            }
             return HttpStatus.OK;
         }
         else {

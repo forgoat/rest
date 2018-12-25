@@ -194,6 +194,10 @@ public class SeminarController {
     public List<Seminar> findByCourseIdAndRoundId(Long courseId,Long roundId){
         return seminarService.findByCourseIdAndRoundId(courseId,roundId);
     }
+    @GetMapping(value = "findByCourse")
+    public List<Seminar> findByCourseId(Long courseId){
+        return seminarService.findByCourseId(courseId);
+    }
     @DeleteMapping("deleteSeminar")
     public int deleteBySeminarId(Long seminarId){
         return seminarService.deleteBySeminarId(seminarId);
