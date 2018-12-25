@@ -1,7 +1,9 @@
 package com.rest.service;
 
 import com.rest.dao.KlassStudentDao;
+import com.rest.dao.KlassTeamDao;
 import com.rest.dao.TeamDao;
+import com.rest.dao.TeamStudentDao;
 import com.rest.entity.Klass;
 import com.rest.entity.KlassStudent;
 import com.rest.entity.Student;
@@ -18,6 +20,10 @@ public class TeamService {
     private TeamDao teamDao;
     @Autowired
     private KlassStudentDao klassStudentDao;
+    @Autowired
+    private TeamStudentDao teamStudentDao;
+    @Autowired
+    private KlassTeamDao klassTeamDao;
     public List<Team> queryAllTeam(BigInteger course_id){
         return teamDao.queryAllTeam(course_id);
     }
@@ -60,7 +66,14 @@ public class TeamService {
     public int quitTeam(Long studentId){
         return klassStudentDao.quitTeam(studentId);
     }
-    public int updateTeam(Long studentId,Long teamId){
+    public int updateTeam(Long studentId,Long teamId)
+    {
         return klassStudentDao.updateTeam(studentId,teamId);
+    }
+    public Long findTeamByStudentId(Long studentId){
+        return teamStudentDao.findByStudentId(studentId);
+    }
+    public List<Long> findAllKlass(Long teamId){
+        return klassTeamDao.findByTeamId(teamId);
     }
 }

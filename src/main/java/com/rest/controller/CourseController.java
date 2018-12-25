@@ -1,10 +1,7 @@
 package com.rest.controller;
 
 import com.rest.entity.*;
-import com.rest.service.CourseService;
-import com.rest.service.KlassService;
-import com.rest.service.SeminarService;
-import com.rest.service.TeacherService;
+import com.rest.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +9,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,6 +23,13 @@ public class CourseController {
     private JavaMailSender javaMailSender;
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private TeamService teamService;
+    @Autowired
+    private RoundService roundService;
+    @Autowired
+    private SeminarService seminarService;
+
 
     /**
      * 查找所有课程
@@ -175,10 +180,77 @@ public class CourseController {
             }
         }
     }
+
+    /**
+     * 查看讨论课共享信息
+     * @param courseId
+     * @return
+     */
     @GetMapping(value = "{courseId}/seminarshare")
     public ResponseEntity<List<ShareSeminarApplication>> findSeminarShare(@PathVariable("courseId") Long courseId){
         List<ShareSeminarApplication> shareSeminarApplicationList=courseService.findSeminarShare(courseId);
         HttpStatus httpStatus=(shareSeminarApplicationList.isEmpty())?HttpStatus.NOT_FOUND:HttpStatus.OK;
         return new ResponseEntity<List<ShareSeminarApplication>>(shareSeminarApplicationList,httpStatus);
+    }
+
+    /**
+     *
+     * @param shareSeminarId
+     * @return
+     */
+//    @PutMapping(value = "{courseId}/seminarshare/{shareSeminarId}")
+//    public HttpStatus acceptSeminarShare(@PathVariable("shareSeminarId") Long shareSeminarId) {
+//        HttpStatus httpStatus = HttpStatus.OK;
+//        return httpStatus;
+//    }
+
+//    /**
+//     * 查找该课程下的学生所属队伍
+//     * @param courseId
+//     * @param studentId
+//     * @return
+//     */
+//    @GetMapping(value = "{courseId}/team")
+//    public ResponseEntity<Long> findTeam(@PathVariable("courseId") Long courseId,Long studentId){
+//        Long teamId=klassService.findTeam(courseId,studentId);
+//        HttpStatus httpStatus=(teamId!=null)?HttpStatus.OK:HttpStatus.NOT_FOUND;
+//        return new ResponseEntity<Long>(teamId,httpStatus);
+//    }
+
+    /**
+     * 查找学生的班级讨论课
+     * @param courseId
+     * @param studentId
+     * @return
+     */
+    @GetMapping(value = "{courseId}/seminar")
+    public List<SeminarInfo> findKlassTeam(@PathVariable("courseId") Long courseId,Long studentId){
+        List<Klass> classlist=klassService.findByCourseId(courseId);
+        Long teamId=teamService.findTeamByStudentId(studentId);
+        System.out.println("teamId is"+teamId);
+        List<Long> klassId=teamService.findAllKlass(teamId);
+        Long classId=new Long(0);
+        for(Klass klass:classlist){
+            for(Long k:klassId){
+                if(klass.getId().equals(k)){
+                    classId=k;
+                }
+            }
+        }
+        List<SeminarInfo> seminarInfoList=new ArrayList<SeminarInfo>();
+        List<KlassRound> klassRoundList=roundService.findKlassRound(classId);
+        for(KlassRound klassRound:klassRoundList) {
+            SeminarInfo seminarInfo = new SeminarInfo(klassRound);
+            Long roundId = klassRound.getRoundId();
+            List<Seminar> seminarList = seminarService.findByRoundId(roundId);
+            List<KlassSeminar> klassSeminarList = new ArrayList<KlassSeminar>();
+            for (Seminar seminar : seminarList) {
+                KlassSeminar klassSeminar = seminarService.findKlassSeminar(classId, seminar.getId());
+                klassSeminarList.add(klassSeminar);
+            }
+            seminarInfo.addSeminar(klassSeminarList);
+            seminarInfoList.add(seminarInfo);
+        }
+        return seminarInfoList;
     }
 }

@@ -60,4 +60,16 @@ public class Klass {
     public void setKlassLocation(String klassLocation) {
         this.klassLocation = klassLocation;
     }
+
+    @Override
+    public String toString() {
+        return "Klass{" +
+                "id=" + id +
+                ", courseId=" + courseId +
+                ", grade=" + grade +
+                ", klassSerial=" + klassSerial +
+                ", klassTime='" + klassTime + '\'' +
+                ", klassLocation='" + klassLocation + '\'' +
+                '}';
+    }
 }

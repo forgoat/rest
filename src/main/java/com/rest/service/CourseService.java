@@ -49,4 +49,7 @@ public class CourseService {
     public List<ShareSeminarApplication> findSeminarShare(Long courseId){
         return shareSeminarApplicationDao.findByMainCourseIdOrSubCourseId(courseId);
     }
+    public int acceptSeminarShare(Long shareSeminarId){
+        return shareSeminarApplicationDao.acceptSeminarShare(shareSeminarId);
+    }
 }

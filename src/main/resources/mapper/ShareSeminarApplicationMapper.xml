@@ -9,4 +9,7 @@
     <select id="findByMainCourseIdOrSubCourseId" parameterType="long" resultType="com.rest.entity.ShareSeminarApplication">
         SELECT * FROM standard_seminar_system.share_seminar_application WHERE main_course_id=#{courseId} OR sub_course_id=#{courseId}
     </select>
+    <update id="acceptSeminarShare" parameterType="long">
+        UPDATE standard_seminar_system.share_seminar_application SET status=1 WHERE id=#{shareSeminarId}
+    </update>
 </mapper>
