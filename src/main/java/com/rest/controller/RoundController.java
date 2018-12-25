@@ -78,7 +78,26 @@ public class RoundController {
         return new ResponseEntity<List<Seminar>>(seminarList,httpStatus);
     }
     @GetMapping(value = "findKlassRound")
-    public List<KlassRound> findKlassRound(Long klassId){
+    public List<KlassRound> findKlassRound(Long klassId)
+    {
         return roundService.findKlassRound(klassId);
+    }
+
+    @DeleteMapping(value = "{roundId}")
+    public HttpStatus deleteByRoundId(@PathVariable("roundId") Long roundId){
+        if (roundService.deleteRound(roundId)==1){
+            return HttpStatus.OK;
+        }
+        else {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
+    @GetMapping(value = "findByCourseId")
+    public List<Round> findByCourseId(Long courseId){
+        return roundService.findByCourseId(courseId);
+    }
+    @GetMapping(value = "findEnrollNumber")
+    public Integer findEnrollNumber(Long roundId,Long klassId){
+        return roundService.findEnrollNumber(roundId,klassId);
     }
 }

@@ -31,4 +31,13 @@ public class KlassRound {
     public void setEnrollNumber(Integer enrollNumber) {
         this.enrollNumber = enrollNumber;
     }
+
+    @Override
+    public String toString() {
+        return "KlassRound{" +
+                "klassId=" + klassId +
+                ", roundId=" + roundId +
+                ", enrollNumber=" + enrollNumber +
+                '}';
+    }
 }
