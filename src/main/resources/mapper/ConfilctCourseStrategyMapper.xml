@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.ConflictCourseStrategyDao">
+    <select id="findId" parameterType="long" resultType="long">
+        SELECT id FROM standard_seminar_system.conflict_course_strategy WHERE course_id=#{courseId}
+    </select>
+    <select id="findConflict" parameterType="long" resultType="long">
+        SELECT course_id FROM standard_seminar_system.conflict_course_strategy WHERE id=#{id}
+    </select>
+</mapper>

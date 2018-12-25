@@ -292,6 +292,13 @@ public class CourseController {
                     Long id=new Long(0);
                 }
             }
+            Teacher teacher=teacherService.findById(shareSeminarApplication.getSubCourseTeacherId());
+            SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
+            simpleMailMessage.setTo(teacher.getEmail());
+            simpleMailMessage.setFrom("1010410164@qq.com");
+            simpleMailMessage.setSubject("同意共享分组");
+            simpleMailMessage.setText(teacher.getTeacherName());
+            javaMailSender.send(simpleMailMessage);
             return HttpStatus.OK;
         }
         else {
