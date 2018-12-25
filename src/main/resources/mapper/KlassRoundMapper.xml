@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.KlassRoundDao">
+    <select id="findByKlassId" resultType="com.rest.entity.KlassRound" parameterType="long">
+        SELECT * FROM standard_seminar_system.klass_round WHERE klass_id=#{klassId}
+    </select>
+</mapper>

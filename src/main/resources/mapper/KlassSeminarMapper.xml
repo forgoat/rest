@@ -18,4 +18,7 @@
     <update id="changeddl">
         UPDATE standard_seminar_system.klass_seminar SET report_ddl=#{param3} WHERE seminar_id=#{param1} AND klass_id=#{param2}
     </update>
+    <select id="findByKlassIdAndSeminarId" resultType="com.rest.entity.KlassSeminar">
+        SELECT * FROM standard_seminar_system.klass_seminar WHERE klass_id=#{param1} AND seminar_id=#{param2}
+    </select>
 </mapper>

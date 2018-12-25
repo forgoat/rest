@@ -1,5 +1,6 @@
 package com.rest.controller;
 
+import com.rest.entity.KlassRound;
 import com.rest.entity.Round;
 import com.rest.entity.Seminar;
 import com.rest.service.RoundService;
@@ -75,5 +76,9 @@ public class RoundController {
         List<Seminar> seminarList=seminarService.findByRoundId(roundId);
         HttpStatus httpStatus=(seminarList.isEmpty())?HttpStatus.NOT_FOUND:HttpStatus.OK;
         return new ResponseEntity<List<Seminar>>(seminarList,httpStatus);
+    }
+    @GetMapping(value = "findKlassRound")
+    public List<KlassRound> findKlassRound(Long klassId){
+        return roundService.findKlassRound(klassId);
     }
 }

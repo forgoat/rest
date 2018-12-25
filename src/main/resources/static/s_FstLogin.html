@@ -26,13 +26,13 @@
         <div class="aui-code-box">
             <form action="/login" method="post">
                 <p class="aui-code-line">
-                    <input  class="aui-code-line-input"  type="text" placeholder="输入密码" name="userid"/>
+                    <input  class="aui-code-line-input"  type="text" placeholder="输入密码" name="userid" id="sfli1"/>
                 </p>
                 <p class="aui-code-line aui-code-line-clear">
-                    <input type="password"  placeholder="确认密码" name="password" class="aui-code-line-input password" >
+                    <input type="password"  placeholder="确认密码" name="password" class="aui-code-line-input password" id="sfli2"/>
                 </p>
                 <p class="aui-code-line">
-                    <input  class="aui-code-line-input"  type="text" placeholder="输入邮箱" name="userid"/>
+                    <input  class="aui-code-line-input"  type="text" placeholder="输入邮箱" name="userid" id="sfli3"/>
                 </p>
                 <p>
 
@@ -43,7 +43,7 @@
                 </p>
 
                 <div class="aui-code-box">
-                    <button >
+                    <button onclick="fstlog()" >
                         确认提交
                     </button>
                 </div>
@@ -51,6 +51,33 @@
         </div>
     </section>
 </section>
-
+<script>
+    function  fstlog() {
+        var id=1;
+       var psw1=$("#sfli1").val();
+       var psw2=$("#sfli2").val();
+       var email=$("#sfli3").val();
+       if(psw1==''||psw2==''||email=='')
+           alert("请填写完整！");
+        else if(psw1.length<6)
+            alert("密码太短！");
+        else if(psw1!=psw2)
+            alert("两次输入密码不一致！");
+        else {
+           $.ajax({
+               url:"/student/active",
+               data:{id:id,password:psw1,email:email},
+               type: "PUT",
+               dataType:'text',
+               success:function() {
+                   window.location.href="s_Inf.html";
+               },
+               error: function(){
+                  alert("请求失败");
+               }
+           });
+       }
+    }
+</script>
 </body>
 </html>

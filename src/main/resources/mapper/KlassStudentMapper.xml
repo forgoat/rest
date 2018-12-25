@@ -4,15 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.KlassStudentDao">
     <select id="findByTeamId" parameterType="long" resultType="com.rest.entity.KlassStudent">
-        SELECT * FROM standard_seminar_system.klass_student_table WHERE team_id=#{teamId}
+        SELECT * FROM standard_seminar_system.klass_student WHERE team_id=#{teamId}
     </select>
     <update id="quitTeam" parameterType="long">
-        UPDATE standard_seminar_system.klass_student_table SET team_id=0 WHERE student_id=#{studentId}
+        UPDATE standard_seminar_system.klass_student SET team_id=0 WHERE student_id=#{studentId}
     </update>
     <select id="findByStudentId" resultType="com.rest.entity.KlassStudent">
-        SELECT * FROM standard_seminar_system.klass_student_table WHERE student_id=#{studentId}
+        SELECT * FROM standard_seminar_system.klass_student WHERE student_id=#{studentId}
     </select>
     <update id="updateTeam">
-        UPDATE standard_seminar_system.klass_student_table SET team_id=#{param2} WHERE student_id=#{param1}
+        UPDATE standard_seminar_system.klass_student SET team_id=#{param2} WHERE student_id=#{param1}
     </update>
+    <select id="findTeam" resultType="long">
+        SELECT team_id FROM standard_seminar_system.klass_student WHERE student_id=#{param2} AND course_id=#{param1}
+    </select>
 </mapper>

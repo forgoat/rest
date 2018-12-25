@@ -160,4 +160,12 @@ public class SeminarController {
         }
     }
 
+    @GetMapping(value = "")
+    public List<Seminar> findByRoundId(Long roundId){
+        return seminarService.findByRoundId(roundId);
+    }
+    @GetMapping(value = "{seminarId}/klassSeminar")
+    public KlassSeminar findKlassSeminar(@PathVariable("seminarId") Long seminarId,Long klassId){
+        return seminarService.findKlassSeminar(klassId,seminarId);
+    }
 }

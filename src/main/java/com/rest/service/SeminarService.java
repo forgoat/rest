@@ -43,7 +43,11 @@ public class SeminarService {
     public int changeddl(Long seminarId,Long classId,Date reportDdl){
         return klassSeminarDao.changeddl(seminarId,classId,reportDdl);
     }
-    public List<Seminar> findByRoundId(Long roundId){
+    public List<Seminar> findByRoundId(Long roundId)
+    {
         return seminarDao.findByRoundId(roundId);
+    }
+    public KlassSeminar findKlassSeminar(Long klassId,Long seminarId){
+        return klassSeminarDao.findByKlassIdAndSeminarId(klassId,seminarId);
     }
 }

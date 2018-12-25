@@ -9,7 +9,6 @@ public class Student {
     private Integer isActive;
     private String studentName;
     private String email;
-    private Integer sex;
     public Student() {
     }
 
@@ -62,13 +61,4 @@ public class Student {
         this.email = email;
     }
 
-
-
-    public Integer getSex() {
-        return sex;
-    }
-
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
 }

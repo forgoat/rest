@@ -1,5 +1,6 @@
 package com.rest.controller;
 
+import com.rest.dao.TeamStudentDao;
 import com.rest.entity.*;
 import com.rest.service.ScoreService;
 import com.rest.service.StudentService;
@@ -172,4 +173,14 @@ public class TeamController {
 //        HttpStatus httpStatus=(seminarScore!=null)?HttpStatus.OK:HttpStatus.NOT_FOUND;
 //        return new ResponseEntity<SeminarScore>(seminarScore,httpStatus);
 //    }
+
+    /**
+     * 查找学生的teamId
+     * @param studentId
+     * @return
+     */
+    @GetMapping(value = "")
+    public Long findTeamIdByStudentId(Long studentId){
+        return teamService.findTeamByStudentId(studentId);
+    }
 }
