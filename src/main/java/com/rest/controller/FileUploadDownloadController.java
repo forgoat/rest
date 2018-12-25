@@ -15,8 +15,8 @@ import java.net.URLEncoder;
 
 @Controller
 public class FileUploadDownloadController {
-//    @Autowired
-//    ImportExcelService importExcelService;
+    @Autowired
+    ImportExcelService importExcelService;
 //
 //    //  Excel导入数据到数据库
 //    @RequestMapping("/PPTUpload")

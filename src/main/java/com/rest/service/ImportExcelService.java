@@ -78,7 +78,7 @@ public class ImportExcelService {
             throw  new ImportExcelException(ResultEnum.DATA_IS_NULL);// 数据为空 请填写数据
         }
         long startTime = System.currentTimeMillis();
-        for(int i = 1;i<= rows+1;i++){
+        for(int i = 2;i<= rows+1;i++){
             Row row = sheet.getRow(i);
 
             if(row !=null){
