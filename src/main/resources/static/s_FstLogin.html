@@ -24,7 +24,7 @@
     </header>
     <section class="aui-scrollView">
         <div class="aui-code-box">
-            <form action="/login" method="post">
+            <form>
                 <p class="aui-code-line">
                     <input  class="aui-code-line-input"  type="text" placeholder="输入密码" name="userid" id="sfli1"/>
                 </p>
@@ -43,7 +43,7 @@
                 </p>
 
                 <div class="aui-code-box">
-                    <button onclick="fstlog()" >
+                    <button onclick="fstlog()">
                         确认提交
                     </button>
                 </div>
@@ -51,14 +51,14 @@
         </div>
     </section>
 </section>
-<script>
+<script >
     function  fstlog() {
-        var id=1;
-       var psw1=$("#sfli1").val();
-       var psw2=$("#sfli2").val();
-       var email=$("#sfli3").val();
-       if(psw1==''||psw2==''||email=='')
-           alert("请填写完整！");
+        var id=113;
+        var psw1=$("#sfli1").val();
+        var psw2=$("#sfli2").val();
+        var email=$("#sfli3").val();
+        if(psw1==''||psw2==''||email=='')
+            alert("请填写完整！");
         else if(psw1.length<6)
             alert("密码太短！");
         else if(psw1!=psw2)

@@ -35,18 +35,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                 // .antMatchers("/login","/css/**", "/js/**","/fonts/**").permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers(
-                        "/*.html",
-                        "/favicon.ico",
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js"
-                ).permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/[^login]/**]").hasRole("ADMIN")
-                .antMatchers("/index").hasRole("USER")
-                .and()
-                .formLogin().loginPage("/login")
+//                .antMatchers(
+//                        "/*.html",
+//                        "/favicon.ico",
+//                        "/**/*.html",
+//                        "/**/*.css",
+//                        "/**/*.js"
+//                ).permitAll()
+//                .antMatchers("/admin/**").hasRole("ADMIN")
+//                .antMatchers("/[^login]/**]").hasRole("ADMIN")
+//                .antMatchers("/index").hasRole("USER")
+               .and()
+           .formLogin().loginPage("/login")
                 .defaultSuccessUrl("/studentListPage")
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/login");

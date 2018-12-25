@@ -76,9 +76,17 @@
         <li><a href="#" class="inactive">讨论课信息</a>
             <ul style="display: none">
                 <li><a href="#" class="inactive active">第一轮</a>
+                </li>
+                <li><a href="#" class="inactive active">第二轮</a>
                     <ul>
-                        <li><a href="/student/semminar/finish">${all_sem_1_1}</a></li>
+                        <li><a href="#">${all_sem_2_1}</a></li>
                     </ul>
+                </li>
+            </ul>
+        </li>
+        <li><a href="#" class="inactive">讨论课信息</a>
+            <ul style="display: none">
+                <li><a href="#" class="inactive active">第一轮</a>
                 </li>
                 <li><a href="#" class="inactive active">第二轮</a>
                     <ul>
@@ -100,9 +108,38 @@
         var r = window.location.search.substr(1).match(reg);  //匹配目标参数
         if (r != null) return unescape(r[2]); return null; //返回参数值
     };
-    function settittle() {
-        var id=getUrlParam('courseid');
-        $("#ssct").html(id);
+    function getData(){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/course/"+courseid+"/seminar",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            data:{studentId:113},                            //指客户端提交给后台的参数
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                var htmlNav='';
+                $("#myView").empty();
+                // alert(myModel.courseList.length);
+                if(res.length>0)
+                {
+                    for(var i=0;i<res.length;i++)
+                    {
+                        htmlNav+='<li><a href="#" class="inactive">讨论课信息+res[i].roundId+'"</a>';
+                        htmlNav+='<div class="aui-flex-box">';
+                        htmlNav+='<h4>';
+                        htmlNav+=res[i].courseName;
+                        htmlNav+='</h4>';
+                        htmlNav+='</div>';
+                        htmlNav+='<div class="aui-topic-arrow"></div>';
+                        htmlNav+='</a>';
+                    }
+                    $("#myView").html(htmlNav);
+                }
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
     }
     settittle();
 </script>

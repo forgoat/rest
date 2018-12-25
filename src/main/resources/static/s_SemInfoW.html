@@ -29,27 +29,27 @@
         </a>
     </header>
     <body>
-    <div class="div-auto1" >
-        轮次：${round}
+    <div class="div-auto1" id="myView1">
+        轮次：
     </div>
-    <div class="div-auto2" >
-        主题：${theme}
+    <div class="div-auto2" id="myView2">
+        主题：
     </div>
-    <div class="div-auto1" >
-        课次序号：${number}
+    <div class="div-auto1" id="myView3">
+        课次序号：
     </div>
-    <div class="div-auto2" >
-        要求：${require}
+    <div class="div-auto2" id="myView4">
+        要求：
     </div>
-    <div class="div-auto1" >
+    <div class="div-auto1" id="myView5">
         课程情况：未开始
         <a href="s_SemRegister.html">查看情况</a>
     </div>
-    <div class="div-auto2">
-        报名开始时间：${starttime}
+    <div class="div-auto2" id="myView6">
+        报名开始时间：/报名：
     </div>
-    <div class="div-auto2">
-        报名截止时间：${endtime}
+    <div class="div-auto2"id="myView7">
+        报名截止时间：/PPT：
     </div>
     <div class="aui-code-btn">
         <button>
@@ -148,6 +148,53 @@
             }
         )
     });
+</script>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    function emm() {
+        var seminarid=getUrlParam("seminarid");
+        $.ajax({
+            url: "/seminar/"+seminarid,
+            type: "GET",
+            dataType:'text',
+            success:function(data) {
+                var json=eval("("+data+")");
+                $("#myView1").html("轮次： "+json.roundId);
+                $("#myView2").html("主题:"+json.seminarName);
+                $("#myView3").html("课次序号:"+json.seminarSerial);
+                $("#myView4").html("要求:"+json.introduction);
+            },error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+        $.ajax({
+            url: "/seminar/"+seminarid,
+            type: "GET",
+            dataType:'text',
+            success:function(res) {
+                if(res=='')
+                {
+
+                }
+                else
+                {
+
+                }
+                var json=eval("("+data+")");
+                $("#myView1").html("轮次： "+json.roundId);
+                $("#myView2").html("主题:"+json.seminarName);
+                $("#myView3").html("课次序号:"+json.seminarSerial);
+                $("#myView4").html("要求:"+json.introduction);
+            },error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+    emm();
 </script>
 
 </body>
