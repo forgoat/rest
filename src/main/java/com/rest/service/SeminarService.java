@@ -50,4 +50,10 @@ public class SeminarService {
     public KlassSeminar findKlassSeminar(Long klassId,Long seminarId){
         return klassSeminarDao.findByKlassIdAndSeminarId(klassId,seminarId);
     }
+    public List<Seminar> findAll(){
+        return seminarDao.findAll();
+    }
+    public List<Seminar> findByCourseIdAndRoundId(Long courseId,Long roundId){
+        return seminarDao.findByCourseIdAndRoundId(courseId,roundId);
+    }
 }

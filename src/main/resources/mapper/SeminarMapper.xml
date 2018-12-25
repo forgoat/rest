@@ -48,4 +48,10 @@
     <select id="findByRoundId" parameterType="long" resultType="com.rest.entity.Seminar">
         SELECT * FROM standard_seminar_system.seminar WHERE round_id=#{roundId}
     </select>
+    <select id="findAll" resultType="com.rest.entity.Seminar">
+        SELECT * FROM standard_seminar_system.seminar
+    </select>
+    <select id="findByCourseIdAndRoundId" resultType="com.rest.entity.Seminar">
+        SELECT * FROM standard_seminar_system.seminar WHERE course_id=#{param1} AND round_id=#{param2}
+    </select>
 </mapper>

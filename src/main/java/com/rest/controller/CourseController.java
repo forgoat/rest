@@ -2,6 +2,7 @@ package com.rest.controller;
 
 import com.rest.entity.*;
 import com.rest.service.*;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -117,7 +118,7 @@ public class CourseController {
      * @param subCourseId
      * @return
      */
-    @PostMapping(value = "{courseId}/seminarshare")
+    @PostMapping(value = "{courseId}/seminarsharerequest")
     public ResponseEntity<Long> sendSeminarShare(@PathVariable("courseId") Long mainCourseId,Long subCourseId){
         Course mainCourse=courseService.findById(mainCourseId);
         if(mainCourse==null){
@@ -182,17 +183,46 @@ public class CourseController {
     }
 
     /**
-     * 查看讨论课共享信息
+     * 查看讨论课共享信息申请
      * @param courseId
      * @return
      */
-    @GetMapping(value = "{courseId}/seminarshare")
+    @GetMapping(value = "{courseId}/seminarsharerequest")
     public ResponseEntity<List<ShareSeminarApplication>> findSeminarShare(@PathVariable("courseId") Long courseId){
         List<ShareSeminarApplication> shareSeminarApplicationList=courseService.findSeminarShare(courseId);
         HttpStatus httpStatus=(shareSeminarApplicationList.isEmpty())?HttpStatus.NOT_FOUND:HttpStatus.OK;
         return new ResponseEntity<List<ShareSeminarApplication>>(shareSeminarApplicationList,httpStatus);
     }
 
+    /**
+     * 同意共享讨论课
+     * @param shareSeminarId
+     * @return
+     */
+    @PutMapping(value = "seminarsharerequest")
+    public HttpStatus acceptSeminarShare(Long shareSeminarId){
+        if(courseService.acceptSeminarShare(shareSeminarId)==1){
+            return HttpStatus.OK;
+        }
+        else {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
+
+    /**
+     * 拒绝共享或取消共享
+     * @param shareSeminarId
+     * @return
+     */
+    @PutMapping(value = "/seminarshare")
+    public HttpStatus rejectSeminarShare(Long shareSeminarId){
+        if(courseService.rejectSeminarShare(shareSeminarId)==1){
+            return HttpStatus.OK;
+        }
+        else {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
     /**
      *
      * @param shareSeminarId
@@ -253,4 +283,5 @@ public class CourseController {
         }
         return seminarInfoList;
     }
+
 }
