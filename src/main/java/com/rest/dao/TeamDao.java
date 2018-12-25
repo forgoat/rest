@@ -29,6 +29,7 @@ public interface TeamDao {
     public int updateInfo(@Param("teamId") Long teamId,@Param("teamName") String teamName,@Param("teamSerial") Integer teamSerial);
     public int deleteTeam(Long id);
     public int save(Team team);
+    public List<Team> findByCourseId(Long CourseId);
 }/*
 updateKlassStudent(BigInteger team_id,BigInteger klass_id,BigInteger student_id,BigInteger course_id)
 

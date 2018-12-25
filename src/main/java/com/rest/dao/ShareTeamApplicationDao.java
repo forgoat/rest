@@ -10,4 +10,7 @@ public interface ShareTeamApplicationDao {
     public int save(ShareTeamApplication shareTeamApplication);
     public List<ShareTeamApplication> findBySubCourseId(Long courseId);
     public List<ShareTeamApplication> findByCourseId(Long courseId);
+    public int acceptTeamShare(Long id);
+    public int rejectTeamShare(Long id);
+    public ShareTeamApplication findById(Long id);
 }

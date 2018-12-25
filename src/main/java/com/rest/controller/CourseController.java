@@ -336,7 +336,7 @@ public class CourseController {
         return courseService.findAllSeminarShare(courseId);
     }
     /**
-     * 拒绝共享或取消共享
+     * 拒绝共享或取消共享讨论课
      * @param shareSeminarId
      * @return
      */
@@ -364,16 +364,38 @@ public class CourseController {
             return HttpStatus.BAD_REQUEST;
         }
     }
+
     /**
-     *
-     * @param shareSeminarId
+     *同意分组共享
+     * @param shareTeamId
      * @return
      */
-//    @PutMapping(value = "{courseId}/seminarshare/{shareSeminarId}")
-//    public HttpStatus acceptSeminarShare(@PathVariable("shareSeminarId") Long shareSeminarId) {
-//        HttpStatus httpStatus = HttpStatus.OK;
-//        return httpStatus;
+    @PutMapping(value = "{courseId}/teamsharerequest/{shareTeamId}")
+    public HttpStatus acceptTeamShare(@PathVariable("shareTeamId") Long shareTeamId) {
+        HttpStatus httpStatus;
+        if(courseService.acceptTeamShare(shareTeamId)==1){
+            httpStatus = HttpStatus.OK;
+        }
+        else {
+            httpStatus=HttpStatus.MULTI_STATUS;
+        }
+        return httpStatus;
+    }
+//    @PutMapping(value = "{courseId}/teamshare/{shareTeamId}")
+//    public HttpStatus rejectTeamShare(@PathVariable("shareTeamId") Long shareTeamId){
+//        ShareTeamApplication shareTeamApplication=courseService.findTeamShareById(shareTeamId);
+//        Long subCourseId=shareTeamApplication.getSubCourseId();
+//        if(courseService.rejectTeamShare(shareTeamId)==1){
+//            if(shareTeamApplication.getStatus().equals(1)){
+//
+//            }
+//        }
+//        HttpStatus httpStatus;
 //    }
+    @GetMapping(value = "{courseId}/team")
+    public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
+        return teamService.findTeamByCourseId(courseId);
+    }
 
 //    /**
 //     * 查找该课程下的学生所属队伍

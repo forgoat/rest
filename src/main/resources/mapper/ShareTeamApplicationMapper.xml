@@ -12,4 +12,13 @@
     <select id="findByCourseId" resultType="com.rest.entity.ShareTeamApplication">
         SELECT * FROM standard_seminar_system.share_team_application WHERE status=1 AND (sub_course_id=#{courseId} OR main_course_id=#{courseId})
     </select>
+    <update id="acceptTeamShare" parameterType="long">
+        UPDATE standard_seminar_system.share_team_application SET status=1 WHERE id=#{id}
+    </update>
+    <update id="rejectTeamShare" parameterType="long">
+        UPDATE standard_seminar_system.share_team_application SET status=0 WHERE id=#{id}
+    </update>
+    <select id="findById" parameterType="long" resultType="com.rest.entity.ShareTeamApplication">
+        SELECT * FROM standard_seminar_system.share_team_application WHERE id=#{id}
+    </select>
 </mapper>
