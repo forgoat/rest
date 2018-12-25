@@ -2,6 +2,7 @@ package com.rest.service;
 
 import com.rest.dao.KlassRoundDao;
 import com.rest.dao.RoundDao;
+import com.rest.entity.Klass;
 import com.rest.entity.KlassRound;
 import com.rest.entity.Round;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class RoundService {
                     integer=r.getRoundSerial();
                 }
             }
-            round.setRoundSerial(integer);
+            round.setRoundSerial(integer+1);
         }
         return roundDao.saveRound(round);
     }
@@ -70,7 +71,11 @@ public class RoundService {
     public Integer findEnrollNumber(Long roundId,Long klassId){
         return klassRoundDao.findByRoundIdAndClassId(roundId,klassId);
     }
-    public int updateSerial(Long id,Integer serial){
+    public int updateSerial(Long id,Integer serial)
+    {
         return roundDao.updateSerial(id,serial);
+    }
+    public int save(KlassRound klassRound){
+        return klassRoundDao.save(klassRound);
     }
 }

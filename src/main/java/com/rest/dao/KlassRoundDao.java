@@ -10,4 +10,5 @@ public interface KlassRoundDao {
     public List<KlassRound> findByKlassId(@Param("klassId") Long klassId);
     public Integer findByRoundIdAndClassId(@Param("roundId") Long roundId,@Param("klassId") Long klassId);
     public int deleteByRoundId(Long roundId);
+    public int save(KlassRound klassRound);
 }

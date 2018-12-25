@@ -231,6 +231,21 @@ public class CourseController {
     @PutMapping(value = "seminarsharerequest")
     public HttpStatus acceptSeminarShare(Long shareSeminarId){
         if(courseService.acceptSeminarShare(shareSeminarId)==1){
+            ShareSeminarApplication shareSeminarApplication=courseService.findByShareSeminarId(shareSeminarId);
+            Long subCourseId=shareSeminarApplication.getSubCourseId();
+            Long mainCourseId=shareSeminarApplication.getMainCourseId();
+            List<Seminar> seminarList=seminarService.findByCourseId(subCourseId);
+            for(Seminar seminar:seminarList){
+                Long roundId=seminar.getRoundId();
+                if(seminarService.deleteSeminar(seminar.getId())==1){
+                    seminarService.deleteBySeminarId(seminar.getId());
+                    List<Seminar> seminars=seminarService.findByRoundId(roundId);
+                    if(seminars.isEmpty()){
+                        roundService.deleteRound(roundId);
+                    }
+                }
+            }
+
             return HttpStatus.OK;
         }
         else {
@@ -245,7 +260,22 @@ public class CourseController {
      */
     @PutMapping(value = "/seminarshare")
     public HttpStatus rejectSeminarShare(Long shareSeminarId){
+        ShareSeminarApplication shareSeminarApplication=courseService.findByShareSeminarId(shareSeminarId);
+        Long subCourseId=shareSeminarApplication.getSubCourseId();
         if(courseService.rejectSeminarShare(shareSeminarId)==1){
+            if (shareSeminarApplication.getStatus().equals(1)){
+               List<Seminar> seminarList=seminarService.findByCourseId(subCourseId);
+               for(Seminar seminar:seminarList){
+                   Long roundId=seminar.getRoundId();
+                   if(seminarService.deleteSeminar(seminar.getId())==1){
+                       seminarService.deleteBySeminarId(seminar.getId());
+                       List<Seminar> seminars=seminarService.findByRoundId(roundId);
+                       if(seminars.isEmpty()){
+                           roundService.deleteRound(roundId);
+                       }
+                   }
+               }
+            }
             return HttpStatus.OK;
         }
         else {

@@ -53,6 +53,9 @@ public class SeminarService {
     public List<Seminar> findAll(){
         return seminarDao.findAll();
     }
+    public List<Seminar> findByCourseId(Long courseId){
+        return seminarDao.findByCourseId(courseId);
+    }
     public List<Seminar> findByCourseIdAndRoundId(Long courseId,Long roundId){
         return seminarDao.findByCourseIdAndRoundId(courseId,roundId);
     }
