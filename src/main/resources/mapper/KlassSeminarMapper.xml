@@ -21,4 +21,7 @@
     <select id="findByKlassIdAndSeminarId" resultType="com.rest.entity.KlassSeminar">
         SELECT * FROM standard_seminar_system.klass_seminar WHERE klass_id=#{param1} AND seminar_id=#{param2}
     </select>
+    <delete id="deleteBySeminarId" parameterType="long">
+        DELETE FROM standard_seminar_system.klass_seminar WHERE seminar_id=#{seminarId}
+    </delete>
 </mapper>

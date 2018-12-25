@@ -4,6 +4,7 @@ import com.rest.entity.Klass;
 import com.rest.entity.KlassSeminar;
 import com.rest.entity.Seminar;
 import com.rest.service.KlassService;
+import com.rest.service.RoundService;
 import com.rest.service.SeminarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,8 @@ public class SeminarController {
     private SeminarService seminarService;
     @Autowired
     private KlassService klassService;
+    @Autowired
+    private RoundService roundService;
 
     /**
      * 保存讨论课
@@ -90,15 +93,12 @@ public class SeminarController {
      */
     @DeleteMapping(value = "{seminarId}")
     public HttpStatus deleteById(@PathVariable("seminarId") Long id){
+        Long roundId=seminarService.findById(id).getRoundId();
         if(seminarService.deleteSeminar(id)==1){
-            List<KlassSeminar> klass_seminarList=seminarService.findClass(id);
-            for(KlassSeminar klass_seminar:klass_seminarList){
-                seminarService.deleteKlassSeminar(klass_seminar.getId());
-            }
-            Long roundId=seminarService.findById(id).getRoundId();
+            seminarService.deleteBySeminarId(id);
             List<Seminar> seminarList=seminarService.findByRoundId(roundId);
             if(seminarList.isEmpty()){
-
+                roundService.deleteRound(roundId);
             }
             return HttpStatus.OK;
         }
@@ -193,5 +193,9 @@ public class SeminarController {
     @GetMapping(value = "courseAndRound")
     public List<Seminar> findByCourseIdAndRoundId(Long courseId,Long roundId){
         return seminarService.findByCourseIdAndRoundId(courseId,roundId);
+    }
+    @DeleteMapping("deleteSeminar")
+    public int deleteBySeminarId(Long seminarId){
+        return seminarService.deleteBySeminarId(seminarId);
     }
 }

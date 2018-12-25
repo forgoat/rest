@@ -16,6 +16,20 @@ public class RoundService {
     @Autowired
     private KlassRoundDao klassRoundDao;
     public int saveRound(Round round){
+        List<Round> roundList=roundDao.findByCourseId(round.getCourseId());
+        if(roundList.isEmpty()){
+            Integer integer=new Integer(1);
+            round.setRoundSerial(integer);
+        }
+        else {
+            Integer integer=new Integer(0);
+            for(Round r:roundList){
+                if (r.getRoundSerial()>integer){
+                    integer=r.getRoundSerial();
+                }
+            }
+            round.setRoundSerial(integer);
+        }
         return roundDao.saveRound(round);
     }
     public Round find(Long id){
@@ -35,8 +49,18 @@ public class RoundService {
         return klassRoundDao.deleteByRoundId(roundId);
     }
     public int deleteRound(Long roundId){
+        Round round=roundDao.find(roundId);
+        Long courseId=round.getCourseId();
         if(roundDao.deleteById(roundId)==1){
             klassRoundDao.deleteByRoundId(roundId);
+            List<Round> roundList=roundDao.findByCourseId(courseId);
+            if(!roundList.isEmpty()){
+                for(Round round1:roundList){
+                    if(round1.getRoundSerial()>round.getRoundSerial()){
+                        roundDao.updateSerial(round1.getId(),round1.getRoundSerial()-1);
+                    }
+                }
+            }
             return 1;
         }
         else {
@@ -45,5 +69,8 @@ public class RoundService {
     }
     public Integer findEnrollNumber(Long roundId,Long klassId){
         return klassRoundDao.findByRoundIdAndClassId(roundId,klassId);
+    }
+    public int updateSerial(Long id,Integer serial){
+        return roundDao.updateSerial(id,serial);
     }
 }

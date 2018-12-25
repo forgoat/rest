@@ -83,6 +83,11 @@ public class RoundController {
         return roundService.findKlassRound(klassId);
     }
 
+    /**
+     * 删除轮次
+     * @param roundId
+     * @return
+     */
     @DeleteMapping(value = "{roundId}")
     public HttpStatus deleteByRoundId(@PathVariable("roundId") Long roundId){
         if (roundService.deleteRound(roundId)==1){
@@ -99,5 +104,9 @@ public class RoundController {
     @GetMapping(value = "findEnrollNumber")
     public Integer findEnrollNumber(Long roundId,Long klassId){
         return roundService.findEnrollNumber(roundId,klassId);
+    }
+    @PutMapping(value = "updateSerial")
+    public int updateSerial(Long id,Integer serial){
+        return roundService.updateSerial(id,serial);
     }
 }
