@@ -1,5 +1,6 @@
 package com.rest.controller;
 import com.rest.entity.Teacher;
+import com.rest.entity.TeacherData;
 import com.rest.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,11 @@ public class TeacherController {
      * @return
      */
     @GetMapping(value = "")
-    public List<Teacher> teacherList() {
-        return teacherService.teacherList();
+    public TeacherData teacherList() {
+       TeacherData teacherData=new TeacherData(teacherService.teacherList());
+       return teacherData;
     }
+
 
     /**
      * 创建老师

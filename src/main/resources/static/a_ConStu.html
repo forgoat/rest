@@ -97,20 +97,7 @@
         });
     }
     layui.use('table', function(){
-        $.ajax({
-            url: "/student",                //后端的API地址
-            type: 'GET',                                //http:POST/GET
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function(result){
-                myModel.courseList = result;
-            },
-            error: function(){
-                alert('服务器忙，请稍候');
-            }
-        });
         var table = layui.table;
-        var myModel = {courseList:[]};
 
         //第一个实例
         table.render({
@@ -119,14 +106,6 @@
             ,height: 312
             ,page: true //开启分页
             ,id:'Reload'
-            ,parseData: function(res){ //res 即为原始返回的数据
-                return {
-                    "code": 0, //解析接口状态
-                    "msg": null, //解析提示文本
-                    "count": myModel.courseList.length, //解析数据长度
-                    "data": myModel.courseList //解析数据列表
-                };
-            }
             ,cols: [[ //表头
                 {field: 'id', title: 'ID', width:200, sort: true, fixed: 'left'}
                 ,{field: 'studentName', title: '学生名', width:200}
@@ -134,25 +113,25 @@
                 ,{fixed: 'right', width:200, align:'center', toolbar: '#barDemo'}
             ]]
         });
-        // var active= {
-        //     reload: function(){
-        //         var demoReload = $('#demoReload').val();
-        //         alert(demoReload);
-        //
-        //         //执行重载
-        //         table.reload('Reload',{
-        //             elem: '#demo'
-        //             ,where: {
-        //                 id:demoReload
-        //             }
-        //         });
-        //     }
-        // };
-        //
-        // $('#reloadiv').on('click', function(){
-        //     var type = $(this).data('type');
-        //     active[type] ? active[type].call(this) : '';
-        // });
+        var active= {
+            reload: function(){
+                var demoReload = $('#demoReload').val();
+                alert(demoReload);
+
+                //执行重载
+                table.reload('Reload',{
+                    elem: '#demo'
+                    ,where: {
+                        id:demoReload
+                    }
+                });
+            }
+        };
+
+        $('#reloadiv').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
 
 
         table.on('tool(test)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
