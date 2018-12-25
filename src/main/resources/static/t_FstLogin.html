@@ -26,10 +26,10 @@
         <div class="aui-code-box">
             <form action="/login" method="post">
                 <p class="aui-code-line">
-                    <input  class="aui-code-line-input"  type="text" placeholder="输入密码" name="userid"/>
+                    <input  class="aui-code-line-input"  type="text" placeholder="输入密码" name="userid" id="tfli1"/>
                 </p>
                 <p class="aui-code-line aui-code-line-clear">
-                    <input type="password"  placeholder="确认密码" name="password" class="aui-code-line-input password" >
+                    <input type="password"  placeholder="确认密码" name="password" class="aui-code-line-input password" id="tfli2">
                 </p>
 
                 <p>
@@ -41,7 +41,7 @@
                 </p>
 
                 <div class="aui-code-box">
-                    <button >
+                    <button onclick="tfstlog()">
                         确认提交
                     </button>
                 </div>
@@ -50,4 +50,33 @@
     </section>
 </section>
 
+<script>
+    function tfstlog() {
+        var psw1=$("#tfli1").val();
+        var psw2=$("#tfli2").val()
+        var id=3;
+        if(psw1==''||psw2=='')
+            alert("请填写完整！");
+        else if(psw1.length<6)
+            alert("密码太短！");
+        else if(psw1!=psw2)
+            alert("两次输入密码不一致！");
+        else{
+            $.ajax({
+                url:"/teacher/active",
+                data:{id:id,password:psw1},
+                type: "PUT",
+                dataType:'text',
+                success:function() {
+                    window.location.href="t_Inf.html";
+                },
+                error: function(){
+                    alert("通信失败！");
+                }
+            });
+        }
+
+    }
+</script>
 </body>
+</html>

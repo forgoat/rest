@@ -43,7 +43,7 @@
                 </div>
                 <div class="aui-code-box">
                     <button onclick="login()">
-                        登录
+                            登录
                     </button>
                 </div>
             </form>
@@ -67,15 +67,15 @@
             dataType:'text',
             success:function(data) {
                 var json=eval("("+data+")");
-                alert(json.roleName);
-                if (json.roleName == 'teacher') {
-                    if(json.isActive==0)
+                alert(json.role);
+                if (json.role == 'teacher') {
+                    if(json.isActive==1)
                     window.location.href="t_Inf.html";
                     else
                         window.location.href="t_FstLogin.html";
                 }
-                else if(json.roleName=='student'){
-                    if(json.isActive==0)
+                else if(json.role=='student'){
+                    if(json.isActive==1)
                         window.location.href="s_Inf.html";
                     else
                         window.location.href="s_FstLogin.html";
