@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,8 @@ public class CourseController {
     private JavaMailSender javaMailSender;
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private ImportExcelService importExcelService;
     @Autowired
     private TeamService teamService;
     @Autowired
@@ -99,6 +102,32 @@ public class CourseController {
         HttpStatus httpStatus=(klassList.isEmpty())?HttpStatus.NOT_FOUND:HttpStatus.OK;
         return new ResponseEntity<List<Klass>>(klassList,httpStatus);
     }
+
+    /**
+     * 创建班级 导入学生名单
+     * @param courseId
+     * @Param klass
+     * @Param myFile
+     * @return
+     */
+    @PostMapping(value = "{courseId}/class")
+    public ResponseEntity<Long> saveKlass(@PathVariable("courseId")Long courseId,
+                                          Klass klass,
+                                          @RequestParam("myFile") MultipartFile myFile){
+
+        if(klassService.saveKlass(klass)==1){
+            //  Excel导入数据到数据库
+            Integer nums = importExcelService.importExcel(myFile);
+
+            return new ResponseEntity<Long>(klass.getId(),HttpStatus.ACCEPTED);
+        }
+        else {
+            Long id=new Long(0);
+            return new ResponseEntity<Long>(id,HttpStatus.FORBIDDEN);
+        }
+    }
+
+
 
     /**
      * 查找老师的课程

@@ -39,6 +39,22 @@
         #{sex}
         )
     </insert>
+    <insert id="batchSaveStudent" parameterType="com.rest.entity.Student">
+         INSERT INTO standard_seminar_system.student(
+        account,
+        password,
+        is_active,
+        student_name
+        )VALUE
+        <foreach collection="list" item="student"  separator=",">
+        (
+        #{student.account},
+        '123456',
+        0,
+        #{student.studentName}
+        )
+        </foreach>
+    </insert>
     <select id="findByAccount" parameterType="String" resultType="com.rest.entity.Student">
         SELECT * FROM standard_seminar_system.student WHERE account=#{account}
     </select>
@@ -57,6 +73,9 @@
     <delete id="delete" parameterType="long">
         DELETE FROM standard_seminar_system.student WHERE id=#{id}
     </delete>
+    <update  id="deleteAll">
+        TRUNCATE TABLE standard_seminar_system.student;
+    </update >
     <update id="updateInfo">
         UPDATE standard_seminar_system.student
         <set>
