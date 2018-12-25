@@ -21,7 +21,7 @@ public class CourseService {
     @Autowired
     private ShareTeamApplicationDao shareTeamApplicationDao;
 
-    public List<Course> queryCourseByStudentId(BigInteger id){
+    public List<Course> queryCourseByStudentId(Long id){
         return courseDao.queryCourseByStudentId(id);
     }
 

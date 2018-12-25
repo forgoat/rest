@@ -9,6 +9,7 @@ public class Team {
     private Long leaderId;
     private String teamName;
     private Integer teamSerial;
+    private Integer klassSerial;
     private Integer status;
 
     public Team() {
@@ -68,5 +69,13 @@ public class Team {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getKlassSerial() {
+        return klassSerial;
+    }
+
+    public void setKlassSerial(Integer klassSerial) {
+        this.klassSerial = klassSerial;
     }
 }

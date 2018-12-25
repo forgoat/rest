@@ -25,13 +25,15 @@ public class CourseController {
     @Autowired
     private TeacherService teacherService;
     @Autowired
-    private ImportExcelService importExcelService;
-    @Autowired
     private TeamService teamService;
     @Autowired
     private RoundService roundService;
     @Autowired
     private SeminarService seminarService;
+
+    @Autowired
+    private ImportExcelService importExcelService;
+
 
 
     /**
@@ -71,6 +73,20 @@ public class CourseController {
         Course course=courseService.findById(courseId);
         HttpStatus httpStatus=(course!=null)?HttpStatus.OK:HttpStatus.NOT_FOUND;
         ResponseEntity<Course> courseResponseEntity=new ResponseEntity<Course>(course,httpStatus);
+        System.out.println(courseResponseEntity.getStatusCode());
+        return courseResponseEntity;
+    }
+
+    /**
+     * 通过学生ID查看他的课程
+     * @param studentId
+     * @return
+     */
+    @GetMapping(value = "student/{studentId}")
+    public ResponseEntity<List<Course>> queryCourseByStudentId(@PathVariable("studentId") Long studentId){
+        List<Course> courseList=courseService.queryCourseByStudentId(studentId);
+        HttpStatus httpStatus=(courseList!=null)?HttpStatus.OK:HttpStatus.NOT_FOUND;
+        ResponseEntity<List<Course>> courseResponseEntity=new ResponseEntity<List<Course>>(courseList,httpStatus);
         System.out.println(courseResponseEntity.getStatusCode());
         return courseResponseEntity;
     }
@@ -282,4 +298,7 @@ public class CourseController {
         }
         return seminarInfoList;
     }
+
+
+
 }

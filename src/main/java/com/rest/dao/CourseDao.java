@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface CourseDao {
 
-    List<Course> queryCourseByStudentId(BigInteger id); //我的课程 所有课程
+    List<Course> queryCourseByStudentId(Long id); //我的课程 所有课程
     List<Course> findAllCourse();
     int saveCourse(Course course);
     Course findById(Long id);
