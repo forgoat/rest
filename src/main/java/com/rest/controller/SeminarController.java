@@ -95,6 +95,11 @@ public class SeminarController {
             for(KlassSeminar klass_seminar:klass_seminarList){
                 seminarService.deleteKlassSeminar(klass_seminar.getId());
             }
+            Long roundId=seminarService.findById(id).getRoundId();
+            List<Seminar> seminarList=seminarService.findByRoundId(roundId);
+            if(seminarList.isEmpty()){
+
+            }
             return HttpStatus.OK;
         }
         else {

@@ -25,7 +25,25 @@ public class RoundService {
         return roundDao.updateRoundSelective(id,presentationScoreMethod,reportScoreMethod,questionScoreMethod);
     }
 
+    public List<Round> findByCourseId(Long courseId){
+        return roundDao.findByCourseId(courseId);
+    }
     public List<KlassRound> findKlassRound(Long klassId){
         return klassRoundDao.findByKlassId(klassId);
+    }
+    public int deleteKlassRoundByRoundId(Long roundId){
+        return klassRoundDao.deleteByRoundId(roundId);
+    }
+    public int deleteRound(Long roundId){
+        if(roundDao.deleteById(roundId)==1){
+            klassRoundDao.deleteByRoundId(roundId);
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    public Integer findEnrollNumber(Long roundId,Long klassId){
+        return klassRoundDao.findByRoundIdAndClassId(roundId,klassId);
     }
 }

@@ -286,9 +286,10 @@ public class CourseController {
     public List<SeminarInfo> findKlassTeam(@PathVariable("courseId") Long courseId,Long studentId){
         List<Klass> classlist=klassService.findByCourseId(courseId);
         Long teamId=teamService.findTeamByStudentId(studentId);
-        System.out.println("teamId is"+teamId);
+        System.out.println("teamId is "+teamId);
         List<Long> klassId=teamService.findAllKlass(teamId);
         Long classId=new Long(0);
+        List<Round> roundList=roundService.findByCourseId(courseId);
         for(Klass klass:classlist){
             for(Long k:klassId){
                 if(klass.getId().equals(k)){
@@ -296,18 +297,23 @@ public class CourseController {
                 }
             }
         }
+        System.out.println("classId is "+classId);
         List<SeminarInfo> seminarInfoList=new ArrayList<SeminarInfo>();
-        List<KlassRound> klassRoundList=roundService.findKlassRound(classId);
-        for(KlassRound klassRound:klassRoundList) {
-            SeminarInfo seminarInfo = new SeminarInfo(klassRound);
-            Long roundId = klassRound.getRoundId();
-            List<Seminar> seminarList = seminarService.findByRoundId(roundId);
-            List<KlassSeminar> klassSeminarList = new ArrayList<KlassSeminar>();
-            for (Seminar seminar : seminarList) {
-                KlassSeminar klassSeminar = seminarService.findKlassSeminar(classId, seminar.getId());
-                klassSeminarList.add(klassSeminar);
+        for(Round round:roundList){
+            System.out.println("roundId is "+round.getId());
+            SeminarInfo seminarInfo=new SeminarInfo(round);
+            seminarInfo.setKlassId(classId);
+            seminarInfo.setEnrollNumber(roundService.findEnrollNumber(round.getId(),classId));
+            List<Seminar> seminarList=seminarService.findByRoundId(round.getId());
+            List<KlassSeminarInfo> klassSeminarInfoList=new ArrayList<KlassSeminarInfo>();
+            for(Seminar seminar:seminarList){
+                System.out.println("name is "+seminar.getSeminarName());
+                KlassSeminar klassSeminar=seminarService.findKlassSeminar(classId,seminar.getId());
+                KlassSeminarInfo klassSeminarInfo=new KlassSeminarInfo(klassSeminar);
+                klassSeminarInfo.setSeminarName(seminar.getSeminarName());
+                klassSeminarInfoList.add(klassSeminarInfo);
             }
-            seminarInfo.addSeminar(klassSeminarList);
+            seminarInfo.setKlassSeminarInfoList(klassSeminarInfoList);
             seminarInfoList.add(seminarInfo);
         }
         return seminarInfoList;

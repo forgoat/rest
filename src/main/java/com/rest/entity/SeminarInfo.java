@@ -4,21 +4,25 @@ import java.util.List;
 
 public class SeminarInfo {
     private Long roundId;
+    private Integer roundSerial;
     private Long klassId;
     private Integer enrollNumber;
-    private List<KlassSeminar> klassSeminarList;
+    private Integer presentationScoreMethod;
+    private Integer reportScoreMethod;
+    private Integer questionScoreMethod;
+    private List<KlassSeminarInfo> klassSeminarInfoList;
 
     public SeminarInfo() {
     }
 
-    public SeminarInfo(KlassRound klassRound){
-        roundId=klassRound.getRoundId();
-        klassId=klassRound.getKlassId();
-        enrollNumber=klassRound.getEnrollNumber();
+    public SeminarInfo(Round round){
+        roundId=round.getId();
+        roundSerial=round.getRoundSerial();
+        presentationScoreMethod=round.getPresentationScoreMethod();
+        reportScoreMethod=round.getReportScoreMethod();
+        questionScoreMethod=round.getQuestionScoreMethod();
     }
-    public void addSeminar(List<KlassSeminar> klassSeminars){
-        klassSeminarList=klassSeminars;
-    }
+
     public Long getRoundId() {
         return roundId;
     }
@@ -43,11 +47,43 @@ public class SeminarInfo {
         this.enrollNumber = enrollNumber;
     }
 
-    public List<KlassSeminar> getKlassSeminarList() {
-        return klassSeminarList;
+    public Integer getRoundSerial() {
+        return roundSerial;
     }
 
-    public void setKlassSeminarList(List<KlassSeminar> klassSeminarList) {
-        this.klassSeminarList = klassSeminarList;
+    public void setRoundSerial(Integer roundSerial) {
+        this.roundSerial = roundSerial;
+    }
+
+    public List<KlassSeminarInfo> getKlassSeminarInfoList() {
+        return klassSeminarInfoList;
+    }
+
+    public void setKlassSeminarInfoList(List<KlassSeminarInfo> klassSeminarInfoList) {
+        this.klassSeminarInfoList = klassSeminarInfoList;
+    }
+
+    public Integer getPresentationScoreMethod() {
+        return presentationScoreMethod;
+    }
+
+    public void setPresentationScoreMethod(Integer presentationScoreMethod) {
+        this.presentationScoreMethod = presentationScoreMethod;
+    }
+
+    public Integer getReportScoreMethod() {
+        return reportScoreMethod;
+    }
+
+    public void setReportScoreMethod(Integer reportScoreMethod) {
+        this.reportScoreMethod = reportScoreMethod;
+    }
+
+    public Integer getQuestionScoreMethod() {
+        return questionScoreMethod;
+    }
+
+    public void setQuestionScoreMethod(Integer questionScoreMethod) {
+        this.questionScoreMethod = questionScoreMethod;
     }
 }
