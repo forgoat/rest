@@ -26,4 +26,7 @@
     <delete id="deleteById" parameterType="long">
         DELETE FROM standard_seminar_system.course WHERE id=#{id}
     </delete>
+    <select id="findByTeacherId" parameterType="long" resultType="com.rest.entity.Course">
+        SELECT * FROM standard_seminar_system.course WHERE teacher_id=#{teacherId}
+    </select>
 </mapper>

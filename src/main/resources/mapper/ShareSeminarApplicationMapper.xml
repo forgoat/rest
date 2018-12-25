@@ -6,4 +6,7 @@
     <insert id="save" parameterType="com.rest.entity.ShareSeminarApplication" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO standard_seminar_system.share_seminar_application(main_course_id,sub_course_id,sub_course_teacher_id) VALUE (#{mainCourseId},#{subCourseId},#{subCourseTeacherId})
     </insert>
+    <select id="findByMainCourseIdOrSubCourseId" parameterType="long" resultType="com.rest.entity.ShareSeminarApplication">
+        SELECT * FROM standard_seminar_system.share_seminar_application WHERE main_course_id=#{courseId} OR sub_course_id=#{courseId}
+    </select>
 </mapper>

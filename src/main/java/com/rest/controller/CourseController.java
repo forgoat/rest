@@ -95,12 +95,24 @@ public class CourseController {
     }
 
     /**
+     * 查找老师的课程
+     * @param teacherId
+     * @return
+     */
+    @GetMapping(value = "/teacher/{teacherId}")
+    public ResponseEntity<List<Course>> findByTeacherId(@PathVariable("teacherId") Long teacherId){
+        List<Course> courseList=courseService.findByTeacherId(teacherId);
+        HttpStatus httpStatus=(courseList.isEmpty())?HttpStatus.NOT_FOUND:HttpStatus.OK;
+        return  new ResponseEntity<List<Course>>(courseList,httpStatus);
+    }
+
+    /**
      *发出讨论课共享申请
      * @param mainCourseId
      * @param subCourseId
      * @return
      */
-    @PostMapping(value = "{courseId}/seminarsharerequest")
+    @PostMapping(value = "{courseId}/seminarshare")
     public ResponseEntity<Long> sendSeminarShare(@PathVariable("courseId") Long mainCourseId,Long subCourseId){
         Course mainCourse=courseService.findById(mainCourseId);
         if(mainCourse==null){
@@ -162,5 +174,11 @@ public class CourseController {
                 return new ResponseEntity<Long>(id, HttpStatus.BAD_REQUEST);
             }
         }
+    }
+    @GetMapping(value = "{courseId}/seminarshare")
+    public ResponseEntity<List<ShareSeminarApplication>> findSeminarShare(@PathVariable("courseId") Long courseId){
+        List<ShareSeminarApplication> shareSeminarApplicationList=courseService.findSeminarShare(courseId);
+        HttpStatus httpStatus=(shareSeminarApplicationList.isEmpty())?HttpStatus.NOT_FOUND:HttpStatus.OK;
+        return new ResponseEntity<List<ShareSeminarApplication>>(shareSeminarApplicationList,httpStatus);
     }
 }
