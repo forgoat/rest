@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/chosen.css">
     <script type="text/javascript" src="js/jquery.min.js"></script>
 
+
 </head>
 <body>
 <section class="aui-flexView">
@@ -25,44 +26,122 @@
     </header>
     <section class="aui-scrollView">
         <div class="aui-code-box">
-            <form action="/login" method="post">
-
-
                 <div class="col-md-12">
-
-
                     <div>
                         <label class="col-sm-2 control-label">共享类型：</label>
-                        <select name="dept" data-placeholder="类型" style="width:200px;height:25px" id="dept" class="dept_select">
-
-                            <option value="共享分组">共享分组</option>
-                            <option value="共享讨论课">共享讨论课</option>
-
-
+                        <select name="dept" style="width:200px;height:25px;background: white" id="share" class="dept_select" onchange="sele_Change()">
+                            <option  value="0">共享分组</option>
+                            <option  value="1">共享讨论课</option>
                         </select>
                     </div>
                     <hr>
-                    <div>
+                    <div >
                         <label class="col-sm-2 control-label">共享对象：</label>
                         <select name="dept" data-placeholder="类型" style="width:200px;height:25px" id="dept" class="dept_select">
-
-                            <option value="课程名+老师">课程名+老师</option>
-                            <option value="课程名+老师">课程名+老师</option>
-
-
                         </select>
                     </div>
 
                 </div>
                 <div class="aui-code-box">
-                    <button >
+                    <button onclick="clickme()">
                         确认共享
                     </button>
                 </div>
-            </form>
         </div>
     </section>
 </section>
+<script type="text/javascript">
+    var myModel = {courseList:[]};
+    var youModel={teacherList:[]};
+    var ht='';
+    var courseid=16;
+    function sele_Change(){
+        var objS = document.getElementById("share");
+        var get_map = objS.options[objS.selectedIndex].value;
+        alert(get_map);
+        ht='';
+        $("#dept").empty();
+        if(get_map==0)
+        { $.ajax({
+            url:"/team/shareObject",
+            type: "GET",
+            data:{courseId:courseid},
+            dataType:'text',
+            success:function(em) {
+                youModel.teacherList=eval("("+em+")");
+                if( youModel.teacherList.length>0)
+                {
+                    alert(youModel.teacherList.length);
+                    for(var i=0;i< youModel.teacherList.length;i++)
+                    {
+                        alert(youModel.teacherList[i].courseName);
+                        ht+='<option value="'+youModel.teacherList[i].id+'">';
+                        ht+='('+youModel.teacherList[i].teacherName+')'+youModel.teacherList[i].courseName;
+                        ht+='</option>';
+                    }
+                }
+                $("#dept").html(ht);
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
 
+        }
+        else
+        {
+            $.ajax({
+                url:"/course",
+                type: "GET",
+                dataType:'text',
+                success:function(teacher) {
+                    myModel.courseList=eval("("+teacher+")");
+                    alert(myModel.courseList.length);
+                    if( myModel.courseList.length>0)
+                    {
+                        for(var i=0;i< myModel.courseList.length;i++)
+                        {
+                            if(myModel.courseList[i].id!=courseid) {
+                                ht += '<option value="' + myModel.courseList[i].id + '">';
+                                ht += myModel.courseList[i].courseName;
+                                ht += '</option>';
+                            }
+                        }
+                    }
+                    $("#dept").html(ht);
+                },
+                error: function(){
+                    alert('服务器忙，请稍候');
+                }
+            });
+        }
+    }
+    function clickme() {
+        if($("#share").val()==1)
+        {
+            $.ajax({
+                url:"/course/"+courseid+"/seminarsharerequest",
+                type: "POST",
+                data:{subCourseId: $("#dept").val()},
+                dataType:'text',
+                success:function() {
+                    alert("success!");
+                }
+                });
+        }
+        else {
+        $.ajax({
+            url:"/course/"+courseid+"/teamsharerequest;",
+            type: "POST",
+            data:{subCourseId: $("#dept").val()},
+            dataType:'text',
+            success:function() {
+                alert("success!");
+            }
+        });
+        }
+    }
+</script>
 </body>
+</html>
 

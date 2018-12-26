@@ -73,12 +73,12 @@
         status
         )VALUE
         (
-        #{klass_id},
-        #{course_id},
-        #{leader_id},
-        #{team_name},
+        #{klassId},
+        #{courseId},
+        #{leaderId},
+        #{teamName},
         #{klassSerial},
-        #{team_serial},
+        #{teamSerial},
         1
         )
 
@@ -95,15 +95,15 @@
         )
     </insert>
 
-    <insert id="updateTeamValidApplication" parameterType="com.rest.entity. ">
+    <insert id="updateTeamValidApplication" parameterType="com.rest.entity.TeamValidApplication">
         INSERT INTO standard_seminar_system.team_valid_application(
         team_id,
         teacher_id,
         status
         )VALUE
         (
-        #{team_id},
-        #{teacher_id},
+        #{teamId},
+        #{teacherId},
         1
         )ON DULPLICATE KEY UPDATE
         status=values(status)
