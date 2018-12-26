@@ -8,11 +8,11 @@ import java.util.List;
 
 @Mapper
 public interface KlassStudentDao {
-    public Long findKlass(@Param("studentId") Long studentId,@Param("courseId") Long courseId);
-     List<KlassStudent> findByTeamId(Long teamId);
-     int quitTeam(Long studentId);
-     KlassStudent findByStudentId(Long studentId);
-     int updateTeam(@Param("studentId") Long studentId,@Param("teamId") Long teamId);
-     Long findTeam(@Param("courseId")Long courseId,@Param("studentId")Long studentId);
-     Long queryKlassByStudentIdCourseId(@Param("studentId")Long studentId,@Param("courseId")Long courseId);
+    public Long findKlass(@Param("courseId") Long courseId,@Param("studentId") Long studentId);
+    public List<KlassStudent> findByTeamId(Long teamId);
+    public int quitTeam(Long studentId);
+    public KlassStudent findByStudentId(Long studentId);
+    public int updateTeam(@Param("studentId") Long studentId,@Param("teamId") Long teamId);
+    public Long findTeam(@Param("courseId")Long courseId,@Param("studentId")Long studentId);
+    public KlassStudent findByCourseIdAndStudentId(@Param("courseId") Long courseId,@Param("studentId") Long studentId);
 }

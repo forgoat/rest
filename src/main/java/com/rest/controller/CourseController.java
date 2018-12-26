@@ -482,6 +482,8 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
             if(courseService.acceptTeamMainCourseId(mainCourseId,subCourseId)==1){
                 System.out.println("修改从课程表成功");
                 teamService.deleteTeamByCourseId(subCourseId);
+                List<Team> teamList=teamService.findTeamByCourseId(mainCourseId);
+
                 return HttpStatus.OK;
             }
             else {
@@ -526,5 +528,4 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
     public int acceptTeamMainCourseId(Long mainCourseId,@PathVariable("courseId") Long subCourseId){
         return courseService.acceptTeamMainCourseId(mainCourseId,subCourseId);
     }
-
 }
