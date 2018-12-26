@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: root
-    password: Abcd1234!
+    password: 12345678
     url: jdbc:mysql://127.0.0.1:3306/standard_seminar_system?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
   mail:
     username: 1010410164@qq.com
@@ -12,3 +12,4 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true   #开启驼峰命名转换
+  type-aliases-package: com.rest.entity

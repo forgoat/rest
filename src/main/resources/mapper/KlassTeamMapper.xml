@@ -12,5 +12,7 @@
     <insert id="save" parameterType="com.rest.entity.KlassTeam">
         INSERT INTO standard_seminar_system.klass_team(klass_id,team_id) VALUE (#{klassId},#{teamId})
     </insert>
-
+    <select id="findByKlassId" resultType="com.rest.entity.KlassTeam" parameterType="long">
+        SELECT * FROM standard_seminar_system.klass_team WHERE klass_id=#{klassId}
+    </select>
 </mapper>

@@ -67,13 +67,20 @@ public class CourseService {
     public List<ShareSeminarApplication> findAllSeminarShare(Long courseId){
         return shareSeminarApplicationDao.findByCourseId(courseId);
     }
-    public int acceptTeamShare(Long shareTeamId){
-        return acceptTeamShare(shareTeamId);
+    public int acceptTeamShareRequest(Long id){
+        return shareTeamApplicationDao.acceptTeamShare(id);
     }
-    public int rejectTeamShare(Long shareTeamId){
-        return rejectTeamShare(shareTeamId);
+
+    public int rejectTeamShareRequest(Long id){
+        return shareTeamApplicationDao.rejectTeamShare(id);
     }
     public ShareTeamApplication findTeamShareById(Long id){
-        return shareTeamApplicationDao.findById(id);
+        return shareTeamApplicationDao.findShareTeamApplication(id);
+    }
+    public List<ShareTeamApplication> findAllTeamShare(){
+        return shareTeamApplicationDao.findAll();
+    }
+    public int acceptTeamMainCourseId(Long mainCourseId,Long subCourseId){
+        return courseDao.acceptMainTeamCourseId(mainCourseId,subCourseId);
     }
 }

@@ -28,6 +28,7 @@ public interface TeamDao {
     List<TeamAndStrategy> queryTeamAndStrategy(@Param("id")Long id);
     List<TeamStrategy> queryTeamStrategy(@Param("courseId")Long courseId);
     List<ConflictCourseStrategy> queryConflictCourseStrategy(@Param("id")Long id);
+    MemberLimitStrategy queryMemberLimitStrategyById(@Param("id")Long id);
 
 
     public Team findById(Long id);
@@ -36,8 +37,6 @@ public interface TeamDao {
     public int deleteTeam(Long id);
     public int save(Team team);
     public List<Team> findByCourseId(Long CourseId);
-}/*
-updateKlassStudent(BigInteger team_id,BigInteger klass_id,BigInteger student_id,BigInteger course_id)
+    public int deleteTeamByCourseId(Long courseId);
 
-
-*/
+}

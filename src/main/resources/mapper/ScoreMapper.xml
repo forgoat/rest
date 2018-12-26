@@ -4,39 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.ScoreDao">
     <select id="queryScore" resultType="com.rest.entity.Score">
-        SELECT
-        seminar_score.total_score,
-        round_score.total_score,
-        seminar_score.presentaton_score,
-        seminar_score.question_score,
-        seminar_score.report_score
-        FROM
-        seminar_score,
-        round_score
-        WHERE
-        seminar_score.klass_seminar_id=(
-        SELECT id
-        FROM klass_seminar
-        WHERE seminar_id=#{seminar_id}
-        AND klass_id=(
-        SELECT klass_id
-        FROM klass_student
-        WHERE
-        student_id=#{studentId}
-        AND course_id=#{course_id}
-        )
-        )
-        AND
-        round_score.round_id=#{round_id}
-        AND
-        seminar_score.team_id=round_score.team_id
-        AND
-        round_score.team_id=(
-        SELECT team_id
-        FROM klass_student
-        WHERE
-        student_id=#{student_id}
-        AND course_id=#{course_id}
-        )
+
     </select>
 </mapper>

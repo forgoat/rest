@@ -12,18 +12,10 @@ import java.util.List;
 
 @Service
 public class ScoreService {
-    @Autowired
-    private ScoreDao scoreDao;
+
     @Autowired
     private SeminarScoreDao seminarScoreDao;
 
-    public List<Score>queryScore(BigInteger course_id,
-                                 BigInteger student_id,
-                                 BigInteger round_id,
-                                 BigInteger seminar_id){
-        System.out.println("List<Score>queryScore");
-        return scoreDao.queryScore(course_id,student_id,round_id,seminar_id);
-    }
     public int saveSeminarScore(SeminarScore seminarScore){
         return  seminarScoreDao.save(seminarScore);
     }

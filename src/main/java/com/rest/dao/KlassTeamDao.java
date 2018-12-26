@@ -10,4 +10,5 @@ public interface KlassTeamDao {
     public List<Long> findByTeamId(Long teamId);
     public int deleteKlassTeamsByTeamId(Long teamId);
     public int save(KlassTeam klassTeam);
+    public List<KlassTeam> findByKlassId(Long klassId);
 }

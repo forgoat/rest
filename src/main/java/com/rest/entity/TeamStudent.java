@@ -22,4 +22,12 @@ public class TeamStudent {
     public void setStudentId(Long studentId) {
         this.studentId = studentId;
     }
+
+    @Override
+    public String toString() {
+        return "TeamStudent{" +
+                "teamId=" + teamId +
+                ", studentId=" + studentId +
+                '}';
+    }
 }

@@ -12,5 +12,6 @@ public interface ShareTeamApplicationDao {
     public List<ShareTeamApplication> findByCourseId(Long courseId);
     public int acceptTeamShare(Long id);
     public int rejectTeamShare(Long id);
-    public ShareTeamApplication findById(Long id);
+    public ShareTeamApplication findShareTeamApplication(Long id);
+    public List<ShareTeamApplication> findAll();
 }
