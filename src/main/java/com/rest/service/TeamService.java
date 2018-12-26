@@ -199,69 +199,80 @@ public class TeamService {
         return num;
     }
     public Long findSubCourseTeamKlassId(Long courseId, Long teamId){
-        System.out.println("start ");
         List<TeamStudent> teamStudentList=findStudentByTeamId(teamId);
         List<Long> klassList=new ArrayList<Long>();
         for(TeamStudent teamStudent:teamStudentList){
             Long studentId=teamStudent.getStudentId();
-            System.out.println(klassStudentDao.findByCourseIdAndStudentId(courseId,studentId).getKlassId());
-            klassList.add(klassStudentDao.findKlass(courseId,studentId));
+            System.out.println(studentId+" "+courseId);
+            System.out.println(klassStudentDao.queryKlassByStudentIdCourseId(studentId,courseId));
+            klassList.add(klassStudentDao.queryKlassByStudentIdCourseId(studentId,courseId));
         }
         System.out.println("Find students' classId");
-        HashMap<Long,Integer> hashMap=new HashMap<Long, Integer>();
+        List<Long> classList=new ArrayList<Long>();
         for (Long id:klassList){
-            hashMap.put(id,0);
+            if (id!=null){
+                classList.add(id);
+            }
         }
-        for (Map.Entry<Long,Integer> b:hashMap.entrySet()){
-            System.out.println("The key is "+b.getKey()+" the value is "+b.getValue());
-        }
-        for(Long id:klassList){
-            for (Map.Entry<Long,Integer> arg:hashMap.entrySet()){
-                if (id.equals(arg.getKey())){
-                    hashMap.put(arg.getKey(),arg.getValue()+1);
+        if(!classList.isEmpty()) {
+            HashMap<Long, Integer> hashMap = new HashMap<Long, Integer>();
+            for (Long id : classList) {
+                hashMap.put(id, 0);
+            }
+            for (Long id : classList) {
+                for (Map.Entry<Long, Integer> arg : hashMap.entrySet()) {
+                    if (id.equals(arg.getKey())) {
+                        hashMap.put(arg.getKey(), arg.getValue() + 1);
+                    }
                 }
             }
-        }
-        Long classId;
-        Integer max;
-        Iterator it=hashMap.keySet().iterator();
-        String str=String.valueOf(it.next());
-        classId=Long.valueOf(str);
-        max=hashMap.get(classId);
-        System.out.println("The First is "+classId+" And number is "+max);
-        boolean sameFlag=true;
-        for(Map.Entry<Long,Integer> arg:hashMap.entrySet()){
-            if(arg.getValue()>max){
-                sameFlag=false;
-                classId=arg.getKey();
-                max=arg.getValue();
-            }
-        }
-        System.out.println("Now classId is "+classId+" the number is "+max+" And flag of AllSame is "+sameFlag);
-        if (sameFlag){
-            List<Klass> klasses=klassDao.findByCourseId(courseId);
-            HashMap<Long,Integer> hashMap1=new HashMap<>();
-            for (Klass klass:klasses){
-                Long id=klass.getId();
-                Integer num=numberOfKlassTeam(id);
-                hashMap1.put(id,num);
-            }
-            Long cId;
-            Integer min;
-            Iterator iterator=hashMap1.keySet().iterator();
-            String temp=String.valueOf(iterator.next());
-            cId=Long.valueOf(temp);
-            min=hashMap1.get(cId);
-            for (Map.Entry<Long,Integer> a:hashMap1.entrySet()){
-                System.out.println("the key is "+a.getKey()+" the value is "+a.getValue());
-                if(min>a.getValue()){
-                    min=a.getValue();
-                    cId=a.getKey();
+            Long classId;
+            Integer max;
+            Iterator it = hashMap.keySet().iterator();
+            String str = String.valueOf(it.next());
+            classId = Long.valueOf(str);
+            max = hashMap.get(classId);
+            System.out.println("The First is " + classId + " And number is " + max);
+            boolean sameFlag = true;
+            for (Map.Entry<Long, Integer> arg : hashMap.entrySet()) {
+                if (arg.getValue() > max) {
+                    sameFlag = false;
+                    classId = arg.getKey();
+                    max = arg.getValue();
                 }
             }
-            System.out.println("The classId is "+cId+" the number is "+min);
-            classId=cId;
+            System.out.println("Now classId is " + classId + " the number is " + max + " And flag of AllSame is " + sameFlag);
+            if (sameFlag&&hashMap.size()>1) {
+                List<Klass> klasses = klassDao.findByCourseId(courseId);
+                HashMap<Long, Integer> hashMap1 = new HashMap<>();
+                for (Klass klass : klasses) {
+                    Long id = klass.getId();
+                    Integer num = numberOfKlassTeam(id);
+                    hashMap1.put(id, num);
+                }
+                Long cId;
+                Integer min;
+                Iterator iterator = hashMap1.keySet().iterator();
+                String temp = String.valueOf(iterator.next());
+                cId = Long.valueOf(temp);
+                min = hashMap1.get(cId);
+                for (Map.Entry<Long, Integer> a : hashMap1.entrySet()) {
+                    System.out.println("the key is " + a.getKey() + " the value is " + a.getValue());
+                    if (min > a.getValue()) {
+                        min = a.getValue();
+                        cId = a.getKey();
+                    }
+                }
+                System.out.println("The classId is " + cId + " the number is " + min);
+                classId = cId;
+            }
+            return classId;
         }
-        return classId;
+        else {
+            return new Long(0);
+        }
+    }
+    public int deleteByTeamIdAndKlassId(Long teamId,Long klassId){
+        return klassTeamDao.deleteByTeamIdAndKlassId(teamId,klassId);
     }
 }

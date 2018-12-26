@@ -15,4 +15,7 @@
     <select id="findByKlassId" resultType="com.rest.entity.KlassTeam" parameterType="long">
         SELECT * FROM standard_seminar_system.klass_team WHERE klass_id=#{klassId}
     </select>
+    <delete id="deleteByTeamIdAndKlassId">
+        DELETE FROM standard_seminar_system.klass_team WHERE team_id=#{teamId} AND klass_id=#{klassId}
+    </delete>
 </mapper>

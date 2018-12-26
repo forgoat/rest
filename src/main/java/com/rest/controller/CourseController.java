@@ -483,7 +483,16 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
                 System.out.println("修改从课程表成功");
                 teamService.deleteTeamByCourseId(subCourseId);
                 List<Team> teamList=teamService.findTeamByCourseId(mainCourseId);
-
+                for (Team team:teamList){
+                    Long teamId=team.getId();
+                    Long classId=teamService.findSubCourseTeamKlassId(subCourseId,teamId);
+                    if (classId!=0) {
+                        KlassTeam klassTeam = new KlassTeam();
+                        klassTeam.setKlassId(classId);
+                        klassTeam.setTeamId(teamId);
+                        teamService.saveKlassTeam(klassTeam);
+                    }
+                }
                 return HttpStatus.OK;
             }
             else {
@@ -502,8 +511,37 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
      * @return
      */
     @PutMapping(value = "teamShare/{teamShareId}")
-    public int rejectTeamShareApllication(@PathVariable("teamShareId") Long teamShareId){
-        return courseService.rejectTeamShareRequest(teamShareId);
+    public HttpStatus rejectTeamShareApllication(@PathVariable("teamShareId") Long teamShareId){
+        ShareTeamApplication shareTeamApplication=courseService.findTeamShareById(teamShareId);
+        Integer status=shareTeamApplication.getStatus();
+        Long subCourseId=shareTeamApplication.getSubCourseId();
+        Long mainCourseId=shareTeamApplication.getMainCourseId();
+        System.out.println(status);
+        if (status==1){
+            if (courseService.rejectTeamShareRequest(teamShareId)==1){
+                courseService.acceptTeamMainCourseId(new Long(0),subCourseId);
+                List<Team> teamList=teamService.findTeamByCourseId(mainCourseId);
+                for(Team team:teamList){
+                    Long teamId=team.getId();
+                    Long classId=teamService.findSubCourseTeamKlassId(subCourseId,teamId);
+                    if (classId!=0){
+                        teamService.deleteByTeamIdAndKlassId(teamId,classId);
+                    }
+                }
+                return HttpStatus.OK;
+            }
+            else {
+                return HttpStatus.BAD_REQUEST;
+            }
+        }
+        else {
+            if (courseService.rejectTeamShareRequest(teamShareId)==1){
+                return HttpStatus.OK;
+            }
+            else {
+                return HttpStatus.BAD_REQUEST;
+            }
+        }
     }
     /**
      * 查看某个共享分组请求

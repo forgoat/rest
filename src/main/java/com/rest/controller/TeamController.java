@@ -280,10 +280,10 @@ public class TeamController {
     public List<TeamStudent> findStudentByTeamId(@PathVariable("teamId") Long teamId){
         return teamService.findStudentByTeamId(teamId);
     }
-    @GetMapping(value = "{teamId}/course")
-    public Long findSubTeamKlass(@PathVariable("teamId") Long teamId,Long courseId){
-        return teamService.findKlassId(teamId,courseId);
-    }
+//    @GetMapping(value = "{teamId}/course")
+//    public Long findSubTeamKlass(@PathVariable("teamId") Long teamId,Long courseId){
+//        return teamService.findSubCourseTeamKlassId(courseId,teamId);
+//    }
 
     /**
      * 删除某课程的班级
