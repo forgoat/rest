@@ -6,6 +6,12 @@
     <select id="findByStudentId" resultType="long" parameterType="long">
         SELECT team_id FROM standard_seminar_system.team_student WHERE student_id=#{studentId}
     </select>
+
+    <select id="queryByTeamId" resultType="Long">
+        SELECT student_id
+        FROM standard_seminar_system.team_student
+        WHERE team_id=#{teamId}
+    </select>
     <delete id="deleteByTeamId" parameterType="long">
         DELETE FROM standard_seminar_system.team_student WHERE team_id=#{teamId}
     </delete>

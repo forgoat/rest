@@ -1,51 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>个人中心</title>
-
+    <title>查看成绩</title>
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
-
-
     <link href="css/index.css" rel="stylesheet" type="text/css">
     <link href="css/child.css" rel="stylesheet" type="text/css">
-
     <link type="text/css" rel="stylesheet" href="css/base.css">
     <link type="text/css" rel="stylesheet" href="css/home.css">
-    <script type="text/javascript" src="js/slider.js"></script>
-    <script type="text/javascript" src="js/tab.js"></script>
-
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/gooey.min.js"></script>
-
 </head>
+<body>
+<header class="aui-navBar aui-navBar-fixed b-line"></header>
 
 <body>
-
-<header class="aui-navBar aui-navBar-fixed b-line">
-</header>
-
-<section class="aui-scrollView">
-
-    <a href="/teacher/semminar/teacher" class="aui-topic-item aui-flex">
-        <div class="aui-flex-box">
-            <h4>我的课程</h4>
-        </div>
-        <div class="aui-topic-arrow"></div>
-    </a>
-    <a href="javascript:;" class="aui-topic-item aui-flex">
-        <div class="aui-flex-box">
-            <h4>账户与设置</h4>
-        </div>
-        <div class="aui-topic-arrow"></div>
-    </a>
-
-
-</section>
-
+<div class="div-auto1" id="myView1">
+    轮次：
+</div>
+<div class="div-auto2" id="myView2">
+    主题：
+</div>
+<div class="div-auto1" id="myView3">
+    课次序号：
+</div>
+<div class="div-auto2"style="height: auto" id="myView4">
+    要求：
+</div>
+<div class="div-auto1" id="myView6">
+PPT:
+</div>
+<div class="div-auto2" id="myView7">
+    报告：
+</div>
+<div class="div-auto1" id="myView8">
+    提问:
+</div>
+<div class="div-auto2" id="myView9">
+    总成绩：
+</div>
+</body>
 <div class="header">
     <a class="return" onclick="javascript:history.back(-1);"></a>
 
@@ -84,17 +80,9 @@
 <div class="menu-box">
     <img class="arrow" src="img/jian-2.png">
     <ul>
-        <li class="selected">
-            <a href="/index/StuInfo">
-                <i>
-                    <img src="img/case.png">
 
-                </i>
-                <span>待办</span>
-            </a>
-        </li>
-        <li>
-            <a href="/index/TeaInfo">
+        <li class="selected">
+            <a href="s_SemCourse.html">
                 <i>
                     <img src="img/index-1.png">
                     <img src="img/index-2.png">
@@ -103,7 +91,7 @@
             </a>
         </li>
         <li>
-            <a href="/teacher/semminar/teacher">
+            <a href="s_SemCourse.html">
                 <i>
                     <img src="img/about.png">
                     <img src="img/about-1.png">
@@ -139,11 +127,56 @@
         });
 
         $("#gooey-v a").mousedown(
-                function(){
-                    $(this).css("backgroundColor","#e1f1fc");
-                }
+            function(){
+                $(this).css("backgroundColor","#e1f1fc");
+            }
         )
     });
+</script>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var json='';
+    function emm() {
+        var seminarid=getUrlParam("seminarid");
+        var klassseminar=getUrlParam("klassseminar");
+        var  teamid=7;
+        $.ajax({
+            url:"/seminar/"+seminarid,
+            type: "GET",
+            async:false,
+            dataType:'text',
+            success:function(data) {
+                json=eval("("+data+")");
+                $("#myView1").html("轮次： "+json.roundId);
+                $("#myView2").html("主题:"+json.seminarName);
+                $("#myView3").html("课次序号:"+json.seminarSerial);
+                $("#myView4").html("要求:"+json.introduction);
+            },error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+        $.ajax({
+            url: "/seminarscore/"+klassseminar+"/team/"+teamid,//获取本组本轮成绩
+            type: "GET",
+            async:false,
+            dataType:'text',
+            success:function(res) {
+                var attendence=eval("("+res+")");//本组报名数据
+                $("#myView6").html("PPT:"+attendence.presentationScore);
+                $("#myView7").html("书面报告："+attendence.reportScore);
+                $("#myView8").html("提问："+attendence.questionScore);
+                $("#myView9").html("总成绩："+attendence.totalScore);
+
+            },error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+    emm();
 </script>
 
 </body>

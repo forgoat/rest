@@ -74,10 +74,12 @@
     </a>
 </header>
 <body>
-<div class="list">
+<div class="list"id="myView">
+</div>
+<div class="list" >
     <ul class="yiji">
 
-        <li><a href="#" class="inactive">课程名+老师</a>
+        <li><a href="#" class="inactive" >课程名+老师</a>
             <ul style="display: none">
                 <li><a href="#">共享类型：</a></li>
                 <li class="last"><a href="#">共享情况：</a></li>
@@ -110,5 +112,62 @@
     </button>
 </div>
 
+<script>
+    function getData(){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/course/"+semid+"/seminar",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+            data:{studentId:113},     //指客户端提交给后台的参数
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.courseList=res;
+                var htmlNav='';
+                $("#myView").empty();
+                alert();
+                if( myModel.courseList.length>0)
+                {
+                    htmlNav+='<ul class="yiji">';
+                    for(var i=0;i< myModel.courseList.length;i++)
+                    {
+                        htmlNav+='<li><a href="#" class="inactive">第'+ myModel.courseList[i].roundSerial+'轮</a>';
+                        htmlNav+='<ul style="display: none">';
+                        sem.semList=myModel.courseList[i].klassSeminarInfoList;
+                        if(sem.semList.length>0)
+                        {
+                            for(var j=0;j<sem.semList.length;j++) {
+                                if(sem.semList[j].status==0)
+                                {
+                                    id="s_SemInfoW.html";
+                                }else if(sem.semList[j].status==1)
+                                {
+                                    id="s_SemInfoZ.html";
+                                }else
+                                {
+                                    id="s_SemInfoY.html";
+                                }
+                                htmlNav += '<li><a href="';
+                                htmlNav+=id+'?klassseminarid='+sem.semList[j].id;
+                                htmlNav+='&seminarid='+sem.semList[j].seminarId;
+                                htmlNav+='" class="inactive active">';
+                                htmlNav+=sem.semList[j].seminarName ;
+                                htmlNav+='</a></li>';
+                            }
+                        }
+                        htmlNav+='</ul>';
+                        htmlNav+='</li>';
+                    }
+                    htmlNav+='</ul>';
+                    $("#myView").html(htmlNav);
+                }
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+</script>
 </body>
 </html>

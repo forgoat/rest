@@ -21,6 +21,10 @@ public class CourseService {
     @Autowired
     private ShareTeamApplicationDao shareTeamApplicationDao;
 
+    public List<Course> queryCourseByStudentId(Long id){
+        return courseDao.queryCourseByStudentId(id);
+    }
+
     public List<Course> findAllCourse(){
         return courseDao.findAllCourse();
     }

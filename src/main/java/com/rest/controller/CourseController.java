@@ -77,6 +77,20 @@ public class CourseController {
     }
 
     /**
+     * 通过学生ID查看他的课程
+     * @param studentId
+     * @return
+     */
+    @GetMapping(value = "student/{studentId}")
+    public ResponseEntity<List<Course>> queryCourseByStudentId(@PathVariable("studentId") Long studentId){
+        List<Course> courseList=courseService.queryCourseByStudentId(studentId);
+        HttpStatus httpStatus=(courseList!=null)?HttpStatus.OK:HttpStatus.NOT_FOUND;
+        ResponseEntity<List<Course>> courseResponseEntity=new ResponseEntity<List<Course>>(courseList,httpStatus);
+        System.out.println(courseResponseEntity.getStatusCode());
+        return courseResponseEntity;
+    }
+
+    /**
      * 删除课程
      * @param courseId
      * @return
@@ -393,11 +407,10 @@ public class CourseController {
 //        }
 //        HttpStatus httpStatus;
 //    }
-    @GetMapping(value = "{courseId}/team")
-    public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
-        return teamService.findTeamByCourseId(courseId);
-    }
-
+@GetMapping(value = "{courseId}/team")
+public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
+    return teamService.findTeamByCourseId(courseId);
+}
 //    /**
 //     * 查找该课程下的学生所属队伍
 //     * @param courseId

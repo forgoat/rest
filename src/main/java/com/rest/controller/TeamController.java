@@ -26,6 +26,9 @@ public class TeamController {
     private CourseService courseService;
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private OrganizeTeamService organizeTeamService;
+
 //    @GetMapping(value = "findStu")
 //    public List<KlassStudent> findByTeamId(Long teamId){
 //        return teamService.findStuByTeamId(teamId);
@@ -225,16 +228,39 @@ public class TeamController {
     }
 
     /**
-     *
      * 保存分组
      * @param team
+     * @param teamId
+     * @param courseId
+     * @param klassStudent
+     * @param teamValidApplication
      * @return
      */
     @PostMapping(value = "")
-    public HttpStatus saveTeam(Team team){
+    public HttpStatus saveTeam(Team team,Long teamId,Long courseId,KlassStudent klassStudent, TeamValidApplication teamValidApplication){
         HttpStatus httpStatus=(teamService.saveTeam(team)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        organizeTeamService.updateTeamTable(team,klassStudent,teamValidApplication);
+        organizeTeamService.isValid(teamId,courseId);
         return httpStatus;
     }
+
+    /**
+     * 判断是否为合法小组
+     * @param teamId
+     * @param courseId
+     * @return
+     */
+    @PostMapping(value = "isValid")
+    public HttpStatus isValid(Long teamId,Long courseId){
+        if(organizeTeamService.isValid(teamId,courseId)==true){
+            return HttpStatus.OK;
+        }
+        else {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
+
+
     @PostMapping(value = "klassTeam")
     public HttpStatus saveKlassTeam(KlassTeam klassTeam){
         if(teamService.saveKlassTeam(klassTeam)==1){

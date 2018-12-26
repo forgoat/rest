@@ -39,7 +39,21 @@
         <span class="aui-center-title">我</span>
     </div>
 </div>
+<script type="text/javascript">
+    $(function(){
 
+        $("input[type=file]").change(function(){
+            $(this).parents(".uploader").find(".filename").val($(this).val());
+        });
+
+        $("input[type=file]").each(function(){
+            if($(this).val()==""){
+                $(this).parents(".uploader").find(".filename").val("请选择文件...");
+            }
+        });
+
+    });
+</script>
 <script>
     $(function(){
         var z = true;
@@ -131,8 +145,9 @@
 
     //写成函数的目的，为了【复用】
     function getData(){
+        var studentid=113;
         $.ajax({
-            url: "/course",                //后端的API地址
+            url: "/course/student/"+studentid,                //后端的API地址
             type: 'GET',                                //http:POST/GET
             //data: postData,                            //指客户端提交给后台的参数
             dataType: 'json',                            //服务端返回类型text，JSON

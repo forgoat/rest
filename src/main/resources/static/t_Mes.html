@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title id="ssct">课程名</title>
+    <title>待办</title>
     <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0">
     <link type="text/css" rel="stylesheet" href="css/base.css">
     <link type="text/css" rel="stylesheet" href="css/home.css">
     <script>
-                var offWidth = window.screen.width / 30; //这里用宽度/30表示1rem取得的px
-               document.getElementsByTagName("html")[0].style.fontSize = offWidth + 'px'; //把rem的值复制给顶级标签html的font-size
+        var offWidth = window.screen.width / 30; //这里用宽度/30表示1rem取得的px
+        document.getElementsByTagName("html")[0].style.fontSize = offWidth + 'px'; //把rem的值复制给顶级标签html的font-size
     </script>
     <style type="text/css">
         *{margin: 0;padding: 0}
@@ -74,73 +74,6 @@
         })
     }
 </script>
-<script type="text/javascript" src="js/vue.js"></script>
-<script>
-    function getUrlParam(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-        if (r != null) return unescape(r[2]); return null; //返回参数值
-    };
-    var myModel = {courseList:[]};
-    var sem = {semList:[]};
-    var id='';
-    var semid=16;
-    function getData(){
-        var courseid=getUrlParam('courseid');
-        $.ajax({
-            url: "/course/"+courseid+"/teamshare",                //后端的API地址
-            type: 'GET',                                //http:POST/GET
-            async:false,
-            data:{studentId:113},     //指客户端提交给后台的参数
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function(res){
-                myModel.courseList=res;
-                var htmlNav='';
-                $("#myView").empty();
-                alert();
-                if( myModel.courseList.length>0)
-                {
-                    htmlNav+='<ul class="yiji">';
-                    for(var i=0;i< myModel.courseList.length;i++)
-                    {
-                        htmlNav+='<li><a href="#" class="inactive">第'+ myModel.courseList[i].roundSerial+'轮</a>';
-                        htmlNav+='<ul style="display: none">';
-                        sem.semList=myModel.courseList[i].klassSeminarInfoList;
-                        if(sem.semList.length>0)
-                        {
-                            for(var j=0;j<sem.semList.length;j++) {
-                                if(sem.semList[j].status==0)
-                                {
-                                    id="s_SemInfoW.html";
-                                }else if(sem.semList[j].status==1)
-                                {
-                                    id="s_SemInfoZ.html";
-                                }else
-                                {
-                                    id="s_SemInfoY.html";
-                                }
-                                htmlNav += '<li><a href="';
-                                htmlNav+=id+'?klassseminarid='+sem.semList[j].id;
-                                htmlNav+='&seminarid='+sem.semList[j].seminarId;
-                                htmlNav+='" class="inactive active">';
-                                htmlNav+=sem.semList[j].seminarName ;
-                                htmlNav+='</a></li>';
-                            }
-                        }
-                        htmlNav+='</ul>';
-                        htmlNav+='</li>';
-                    }
-                    htmlNav+='</ul>';
-                    $("#myView").html(htmlNav);
-                }
-            },
-            error: function(){
-                alert('服务器忙，请稍候');
-            }
-        });
-    }
-    getData();
-    load();
-</script>
+
+</body>
 </html>

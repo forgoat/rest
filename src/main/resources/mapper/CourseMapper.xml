@@ -5,7 +5,7 @@
 <mapper namespace="com.rest.dao.CourseDao">
     <select id="queryCourseByStudentId" resultType="com.rest.entity.Course">
         SELECT *
-        FROM course
+        FROM standard_seminar_system.course
         WHERE
         course.id IN(
         SELECT course_id
