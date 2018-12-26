@@ -16,24 +16,25 @@
 <body>
 <header class="aui-navBar aui-navBar-fixed b-line"></header>
 
-
-
     <body>
-    <div class="div-auto1" >
-        轮次：${round}
+    <div class="div-auto1" id="myView1">
+        轮次：
     </div>
-    <div class="div-auto2" >
-        主题：${theme}
+    <div class="div-auto2" id="myView2">
+        主题：
     </div>
-    <div class="div-auto1" >
-        课次序号：${number}
+    <div class="div-auto1" id="myView3">
+        课次序号：
     </div>
-    <div class="div-auto2" >
-        要求：${require}
+    <div class="div-auto2"style="height: auto" id="myView4">
+        要求：
     </div>
-    <div class="div-auto1" >
+    <div class="div-auto1" id="myView5">
         课程情况：已完成
-        <a href="s_SemRegister.html">查看情况</a>
+        <a>查看情况</a>
+    </div>
+    <div class="div-auto2"style="height: auto" id="myView6">
+
     </div>
     </body>
     <div class="header">
@@ -133,13 +134,62 @@
         var r = window.location.search.substr(1).match(reg);  //匹配目标参数
         if (r != null) return unescape(r[2]); return null; //返回参数值
     };
-    function jump() {
-        var seminar=getUrlParam("seminar");
-        alert(seminar);
+    var json='';
+    function emm() {
+        var seminarid=getUrlParam("seminarid");
+        var klassseminarid=getUrlParam("klassseminarid");
+        $.ajax({
+            url: "/seminar/"+seminarid,
+            type: "GET",
+            async:false,
+            dataType:'text',
+            success:function(data) {
+                json=eval("("+data+")");
+                $("#myView1").html("轮次： "+json.roundSerial);
+                $("#myView2").html("主题:"+json.seminarName);
+                $("#myView3").html("课次序号:"+json.seminarSerial);
+                $("#myView4").html("要求:"+json.introduction);
+                $("#myView5").html("课程情况：已结束"+'<a href="s_SemTeam.html?klassseminarid='+klassseminarid+'">查看情况</a>');
+            },error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+        $.ajax({
+            url: "/seminar/"+seminarid,//获取本组是否报名
+            type: "GET",
+            async:false,
+            dataType:'text',
+            success:function(res) {
+                var attendence=eval("("+res+")");//本组报名数据
+                var ht='';
+                var istime=0;//报告提交时间0,1截止
+                if(res!='')
+                {
+                    ht+='<div class="div-auto1">报名： 第'+attendence.teamOrder+'组</div>';
+                    if(attendence.pptName=='')
+                        ht+='<div class="div-auto2">PPT： 未提交</div>';
+                    else
+                        ht+='<div class="div-auto2">PPT： 已提交</div>';
+                    if(attendence.reportName=='')
+                        ht+='<div class="div-auto2">书面报告： 未提交</div>';
+                    else
+                        ht+='<div class="div-auto2">书面报告： 已提交</div>';
+                    if(istime==0)
+                        ht+='<form action="PPTUpload" method="post" enctype="multipart/form-data">\n' +
+                            '        <p>报告提交 <input type="file" name="fileName1"/></p>\n' +
+                            '        <p><input type="submit" value="提交"/></p>\n' +
+                            '    </form>\n';
+                    else
+                        ht+='<button><a href="s_SemScore.html?seminarid='+seminarid+'&klassseminar='+klassseminarid+'">查看成绩</a></button>';
+                }
+                    $("#myView6").html(ht);
+            },error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
     }
-    jump();
+    emm();
 </script>
-
 
 </body>
 </html>

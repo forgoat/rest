@@ -121,7 +121,8 @@
                                     id="s_SemInfoY.html";
                                 }
                                 htmlNav += '<li><a href="';
-                                htmlNav+=id+'?seminarid='+sem.semList[j].id;
+                                htmlNav+=id+'?klassseminarid='+sem.semList[j].id;
+                                htmlNav+='&seminarid='+sem.semList[j].seminarId;
                                 htmlNav+='" class="inactive active">';
                                 htmlNav+=sem.semList[j].seminarName ;
                                 htmlNav+='</a></li>';

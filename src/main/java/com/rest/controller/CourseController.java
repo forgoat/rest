@@ -35,7 +35,6 @@ public class CourseController {
     private SeminarService seminarService;
 
 
-
     /**
      * 查找所有课程
      * @return
@@ -407,7 +406,10 @@ public class CourseController {
 //        }
 //        HttpStatus httpStatus;
 //    }
-
+@GetMapping(value = "{courseId}/team")
+public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
+    return teamService.findTeamByCourseId(courseId);
+}
 //    /**
 //     * 查找该课程下的学生所属队伍
 //     * @param courseId
@@ -463,8 +465,5 @@ public class CourseController {
         }
         return seminarInfoList;
     }
-
-
-
 
 }
