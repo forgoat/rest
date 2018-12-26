@@ -24,4 +24,13 @@
         </set>
         WHERE id=#{param1}
     </update>
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM standard_seminar_system.round WHERE id=#{id}
+    </delete>
+    <update id="updateSerial">
+        UPDATE standard_seminar_system.round SET round_serial=#{param2} where id=#{param1}
+    </update>
+    <select id="findByCourseId" parameterType="long" resultType="com.rest.entity.Round">
+        SELECT * FROM standard_seminar_system.round WHERE course_id=#{courseId}
+    </select>
 </mapper>

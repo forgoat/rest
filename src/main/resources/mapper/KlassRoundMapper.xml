@@ -4,6 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.KlassRoundDao">
     <select id="findByKlassId" resultType="com.rest.entity.KlassRound" parameterType="long">
-        SELECT * FROM standard_seminar_system.klass_round WHERE klass_id=#{klassId}
+        SELECT * FROM standard_seminar_system.klass_round WHERE klass_id=#{param1}
     </select>
+    <delete id="deleteByRoundId" parameterType="long">
+        DELETE FROM standard_seminar_system.klass_round WHERE round_id=#{roundId}
+    </delete>
+    <select id="findByRoundIdAndClassId" resultType="integer">
+        SELECT enroll_number FROM standard_seminar_system.klass_round WHERE round_id=#{param1} AND klass_id=#{param2}
+    </select>
+    <insert id="save" parameterType="com.rest.entity.KlassRound">
+        INSERT INTO standard_seminar_system.klass_round(klass_id,round_id,enroll_number) VALUE (#{klassId},#{roundId},#{enrollNumber})
+    </insert>
 </mapper>

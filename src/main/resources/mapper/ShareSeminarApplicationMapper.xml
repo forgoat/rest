@@ -7,9 +7,18 @@
         INSERT INTO standard_seminar_system.share_seminar_application(main_course_id,sub_course_id,sub_course_teacher_id) VALUE (#{mainCourseId},#{subCourseId},#{subCourseTeacherId})
     </insert>
     <select id="findByMainCourseIdOrSubCourseId" parameterType="long" resultType="com.rest.entity.ShareSeminarApplication">
-        SELECT * FROM standard_seminar_system.share_seminar_application WHERE main_course_id=#{courseId} OR sub_course_id=#{courseId}
+        SELECT * FROM standard_seminar_system.share_seminar_application WHERE sub_course_id=#{courseId}
     </select>
     <update id="acceptSeminarShare" parameterType="long">
         UPDATE standard_seminar_system.share_seminar_application SET status=1 WHERE id=#{shareSeminarId}
     </update>
+    <select id="findById" parameterType="long" resultType="com.rest.entity.ShareSeminarApplication">
+        SELECT * FROM standard_seminar_system.share_seminar_application WHERE id=#{id}
+    </select>
+    <update id="reject" parameterType="long">
+        UPDATE standard_seminar_system.share_seminar_application SET status=0 WHERE id=#{shareSeminarId}
+    </update>
+    <select id="findByCourseId" resultType="com.rest.entity.ShareTeamApplication" parameterType="long">
+        SELECT * FROM standard_seminar_system.share_seminar_application WHERE status=1 AND (sub_course_id=#{courseId} OR main_course_id=#{courseId})
+    </select>
 </mapper>

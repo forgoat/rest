@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>讨论课（正）</title>
+    <title>班级信息</title>
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
@@ -14,62 +14,96 @@
     <script type="text/javascript" src="js/tab.js"></script>
     <script type="text/javascript" src="js/slider.js"></script>
 </head>
-
 <body>
-<header class="aui-navBar aui-navBar-fixed b-line"></header>
+
 <section class="aui-flexView">
     <header class="aui-navBar aui-navBar-fixed b-line">
         <a href="javascript:history.back(-1)" class="aui-navBar-item">
             <i class="icon icon-return"></i>
         </a>
         <div class="aui-center">
-            <span class="aui-center-title">讨论课</span>
+            <span class="aui-center-title">班级信息</span>
         </div>
         <a href="javascript:;" class="aui-navBar-item">
             <i class="icon icon-sys"></i>
         </a>
     </header>
     <body>
+    <h2>2016-1</h2>
     <div class="div-auto1" >
-        轮次：${round}
+        讨论课时间：
     </div>
     <div class="div-auto2" >
-        主题：${theme}
+        讨论课地点：
     </div>
     <div class="div-auto1" >
-        课次序号：${number}
+        班级学生名单：
+        <button>
+            选择文件
+        </button>
+    </div>
+
+        <div class="aui-code-box">
+    <div>
+        <div style="font-size:14px;height:35px;width:100px;float: left;margin-right: 30px;">
+            <button >
+                提交
+            </button>
+        </div>
+        <div style="font-size:14px;height:35px;width:100px;float: left;margin-right: 30px;">
+            <button >
+                删除班级
+            </button>
+        </div>
+
+    </div>
+        </div>
+
+
+
+    <h2>2016-2</h2>
+    <div class="div-auto1" >
+        讨论课时间：
     </div>
     <div class="div-auto2" >
-        要求：${require}
+        讨论课地点：
     </div>
     <div class="div-auto1" >
-        课程情况：正在进行
-        <a href="s_SemRegister.html">查看情况</a>
+        班级学生名单：
+        <button>
+            选择文件
+        </button>
     </div>
+
+    <div class="aui-code-box">
+        <div>
+            <div style="font-size:14px;height:35px;width:100px;float: left;margin-right: 30px;">
+                <button >
+                    提交
+                </button>
+            </div>
+            <div style="font-size:14px;height:35px;width:100px;float: left;margin-right: 30px;">
+                <button >
+                    删除班级
+                </button>
+            </div>
+
+        </div>
+    </div>
+
     </body>
     <section class="aui-scrollView">
         <div class="aui-code-box">
             <form action="">
                 <div class="aui-code-btn">
                     <button>
-                        <a href="javascript:;">进入讨论课</a>
+                        <a href="javascript:;">新增班级</a>
                     </button>
                 </div>
             </form>
         </div>
     </section>
-<script>
-    function getUrlParam(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-        if (r != null) return unescape(r[2]); return null; //返回参数值
-    };
-    function jump() {
-        var seminar=getUrlParam("seminar");
-        alert(seminar);
-    }
-    jump();
-</script>
-</section>
+
+
 </body>
 </html>

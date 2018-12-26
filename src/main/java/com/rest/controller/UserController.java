@@ -42,9 +42,13 @@ public class UserController {
         Teacher teacher=teacherService.findByAccount(account);
         if(teacher!=null&&teacher.getPassword().equals(password)){
             User user=new User(teacher);
-            HttpSession session=request.getSession();//这就是session的创建
-            session.setAttribute("id",user.getId());
-            session.setAttribute("rolename",user.getRole());
+//            HttpSession session=request.getSession();//这就是session的创建
+//            session.setAttribute("id",user.getId());
+//            session.setAttribute("account",user.getAccount());
+//            session.setAttribute("rolename",user.getRole());
+//            Object acc=session.getAttribute("account");
+//
+//            System.out.println(acc);
             HttpStatus httpStatus=HttpStatus.OK;
             return new ResponseEntity<Object>(user,httpStatus);
         }
@@ -52,9 +56,12 @@ public class UserController {
             Student student=studentService.findByAccount(account);
             if(student!=null&&student.getPassword().equals(password)){
                 User user=new User(student);
-                HttpSession session=request.getSession();//这就是session的创建
-                session.setAttribute("id",user.getId());
-                session.setAttribute("rolename",user.getRole());
+//                HttpSession session=request.getSession();//这就是session的创建
+//                session.setAttribute("id",user.getId());
+//                session.setAttribute("account",user.getAccount());
+//                session.setAttribute("rolename",user.getRole());
+//                Object acc=session.getAttribute("account");
+//                System.out.println(acc);
                 HttpStatus httpStatus=HttpStatus.OK;
                 return new ResponseEntity<Object>(user,httpStatus);
             }
@@ -114,7 +121,10 @@ public class UserController {
      * @return
      */
     @PutMapping(value = "password")
-    public HttpStatus updatePassword(Long id, String password, String role){
+    public HttpStatus updatePassword(Long id, String password, String role,HttpSession session){
+        //Object account= session.getAttribute("account");
+
+        //System.out.println("your account=="+account);
         if(role.equals("student")){
             if(studentService.updatePassword(id,password)==1){
                 return HttpStatus.OK;

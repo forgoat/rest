@@ -18,4 +18,7 @@
     <select id="findTeam" resultType="long">
         SELECT team_id FROM standard_seminar_system.klass_student WHERE student_id=#{param2} AND course_id=#{param1}
     </select>
+    <select id="findKlass" resultType="long">
+        SELECT klass_id FROM standard_seminar_system.klass_student WHERE student_id=#{param1} AND course_id=#{param2}
+    </select>
 </mapper>

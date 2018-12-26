@@ -12,4 +12,10 @@
         FROM standard_seminar_system.team_student
         WHERE team_id=#{teamId}
     </select>
+    <delete id="deleteByTeamId" parameterType="long">
+        DELETE FROM standard_seminar_system.team_student WHERE team_id=#{teamId}
+    </delete>
+    <select id="findByTeamId" parameterType="long" resultType="com.rest.entity.TeamStudent">
+        SELECT * FROM standard_seminar_system.team_student WHERE team_id=#{teamId}
+    </select>
 </mapper>

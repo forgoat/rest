@@ -146,7 +146,10 @@
         DELETE FROM standard_seminar_system.team WHERE id=#{id}
     </delete>
     <insert id="save" parameterType="com.rest.entity.Team" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO standard_seminar_system.team(klass_id,course_id,leader_id,team_name,team_serial)
+        INSERT INTO standard_seminar_system.team(klass_id,course_id,leader_id,team_name,team_serial,status) VALUE (#{klassId},#{courseId},#{leaderId},#{teamName},#{teamSerial},1)
     </insert>
+    <select id="findByCourseId" resultType="com.rest.entity.Team" parameterType="long">
+        SELECT * FROM standard_seminar_system.team WHERE course_id=#{CourseId}
+    </select>
 
 </mapper>

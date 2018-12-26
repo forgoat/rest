@@ -1,6 +1,8 @@
 package com.rest.dao;
 
-import com.rest.entity.*;
+import com.rest.entity.Course;
+import com.rest.entity.Student;
+import com.rest.entity.Team;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,11 +32,19 @@ public interface TeamDao {
     List<TeamStrategy> queryTeamStrategy(@Param("course_id")Long courseId);
     List<ConflictCourseStrategy> queryConflictCourseStrategy(@Param("id")Long id);
 
-    Team findById(Long id);
-    int setValid(Long teamId);
-     int updateInfo(@Param("teamId") Long teamId,@Param("teamName") String teamName,@Param("teamSerial") Integer teamSerial);
-     int deleteTeam(Long id);
-     int save(Team team);
+    int updateTeamValidApplication(@Param("team_id") BigInteger team_id,
+                                   @Param("teacher_id") BigInteger teacher_id);//小组更新表
+
+    int updateKlassStudent(@Param("team_id") BigInteger team_id,
+                           @Param("klass_id") BigInteger klass_id,
+                           @Param("student_id") BigInteger student_id,
+                           @Param("course_id") BigInteger course_id);//小组更新表
+    public Team findById(Long id);
+    public int setValid(Long teamId);
+    public int updateInfo(@Param("teamId") Long teamId,@Param("teamName") String teamName,@Param("teamSerial") Integer teamSerial);
+    public int deleteTeam(Long id);
+    public int save(Team team);
+    public List<Team> findByCourseId(Long CourseId);
 }/*
 updateKlassStudent(BigInteger team_id,BigInteger klass_id,BigInteger student_id,BigInteger course_id)
 
