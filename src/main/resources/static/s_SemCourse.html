@@ -39,7 +39,21 @@
         <span class="aui-center-title">我</span>
     </div>
 </div>
+<script type="text/javascript">
+    $(function(){
 
+        $("input[type=file]").change(function(){
+            $(this).parents(".uploader").find(".filename").val($(this).val());
+        });
+
+        $("input[type=file]").each(function(){
+            if($(this).val()==""){
+                $(this).parents(".uploader").find(".filename").val("请选择文件...");
+            }
+        });
+
+    });
+</script>
 <script>
     $(function(){
         var z = true;

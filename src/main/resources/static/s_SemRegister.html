@@ -57,67 +57,12 @@
     </div>
     <div class="div-auto1" >
         第五组：
-        <a data-dialog="somedialog" >可报名</a>
+        <a onclick="">可报名</a>
     </div>
     <div class="div-auto2" >
         第六组：3-1
     </div>
     </body>
-
-        <div id="somedialog" class="dialog">
-            <div class="dialog__overlay"></div>
-            <div class="dialog__content">
-                <h2>
-                    <strong>Tips:</strong>
-                    是否确认报名此次讨论课？
-                </h2>
-                <div>
-                    <a data-dialog="onedialog">&nbsp;&nbsp;Sure&nbsp;&nbsp;</a>
-                    <a  data-dialog-close>&nbsp;&nbsp;Cancle&nbsp;&nbsp;</a>
-                </div>
-            </div>
-        </div>
-    <div id="onedialog" class="dialog">
-        <div class="dialog__overlay"></div>
-        <div class="dialog__content">
-            <h2>
-                <strong>报名成功</strong>
-            </h2>
-            <div>
-                <a  data-dialog-close>&nbsp;&nbsp;Sure&nbsp;&nbsp;</a>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-    <script type="text/javascript" src="/static/js/classie.js"></script>
-    <script type="text/javascript" src="/static/js/dialogFx.js"></script>
-    <script type="text/javascript">
-        (function() {
-
-            var dlgtrigger = document.querySelector( '[data-dialog]' ),
-                    somedialog = document.getElementById( dlgtrigger.getAttribute( 'data-dialog' ) ),
-                    dlg = new DialogFx( somedialog );
-
-            dlgtrigger.addEventListener( 'click', dlg.toggle.bind(dlg),true );
-
-        })();
-        (function() {
-
-            var dlgtrigger = document.querySelector( '[data-dialog]' ),
-                    onedialog = document.getElementById( dlgtrigger.getAttribute( 'data-dialog' ) ),
-                    adlg=new DialogFx(onedialog);
-            dlgtrigger.addEventListener( 'click', adlg.toggle.bind(adlg) );
-
-
-        })();
-    </script>
-
 
 </section>
 </body>
