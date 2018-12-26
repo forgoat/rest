@@ -115,4 +115,10 @@ public class StudentController {
             return HttpStatus.NOT_FOUND;
         }
     }
+
+    @GetMapping(value = "queryKlassByStudentIdCourseId")
+    public Long queryKlassByStudentIdCourseId(Long studentId,Long courseId){
+        return studentService.queryKlassByStudentIdCourseId(studentId,courseId);
+    }
+
 }

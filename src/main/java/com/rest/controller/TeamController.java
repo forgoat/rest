@@ -304,4 +304,14 @@ public class TeamController {
     public int deleteKlassTeam(@PathVariable(value = "teamId") Long teamId){
         return teamService.deleteKlassTeam(teamId);
     }
+
+    /**
+     * 查找MemberLimitStrategy
+     * @param courseId
+     * @return
+     */
+    @PostMapping(value = "queryMemberLimitStrategyById")
+    public MemberLimitStrategy queryMemberLimitStrategyById(Long courseId){
+        return organizeTeamService.queryMemberLimitStrategyById(organizeTeamService.queryMemberLimitStrategyId(courseId));
+    }
 }

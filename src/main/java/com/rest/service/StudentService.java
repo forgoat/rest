@@ -1,5 +1,6 @@
 package com.rest.service;
 
+import com.rest.dao.KlassStudentDao;
 import com.rest.dao.StudentDao;
 import com.rest.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import java.util.List;
 public class StudentService {
     @Autowired
     private StudentDao studentDao;
+    @Autowired
+    private KlassStudentDao klassStudentDao;
 
     public List<Student> findAllStudent(){
         return studentDao.findAllStudent();
@@ -53,5 +56,10 @@ public class StudentService {
     }
     public int updateInfo(Long id,String account,String email,String studentName){
         return studentDao.updateInfo(id,account,email,studentName);
+    }
+
+    public Long queryKlassByStudentIdCourseId(Long studentId,Long courseId){
+        System.out.println(klassStudentDao.queryKlassByStudentIdCourseId(studentId,courseId));
+        return klassStudentDao.queryKlassByStudentIdCourseId(studentId,courseId);
     }
 }

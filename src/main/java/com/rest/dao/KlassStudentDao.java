@@ -14,4 +14,5 @@ public interface KlassStudentDao {
      KlassStudent findByStudentId(Long studentId);
      int updateTeam(@Param("studentId") Long studentId,@Param("teamId") Long teamId);
      Long findTeam(@Param("courseId")Long courseId,@Param("studentId")Long studentId);
+     Long queryKlassByStudentIdCourseId(@Param("studentId")Long studentId,@Param("courseId")Long courseId);
 }

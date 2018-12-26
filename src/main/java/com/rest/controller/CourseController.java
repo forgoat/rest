@@ -526,4 +526,5 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
     public int acceptTeamMainCourseId(Long mainCourseId,@PathVariable("courseId") Long subCourseId){
         return courseService.acceptTeamMainCourseId(mainCourseId,subCourseId);
     }
+
 }
