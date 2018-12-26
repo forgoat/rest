@@ -31,8 +31,8 @@ public class TeamService {
         return conflictCourseStrategyDao.findId(courseId);
     }
 
-    public List<Team> queryAllTeam(BigInteger course_id){
-        return teamDao.queryAllTeam(course_id);
+    public List<Team> queryAllTeam(Long courseId){
+        return teamDao.queryAllTeam(courseId);
     }
 
     public List<Student> queryStudentNoTeam(){

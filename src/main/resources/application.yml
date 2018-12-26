@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: root
-    password: 12345678
+    password: 123456
     url: jdbc:mysql://127.0.0.1:3306/standard_seminar_system?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
   mail:
     username: 1010410164@qq.com

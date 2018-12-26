@@ -95,7 +95,7 @@
         )
     </insert>
 
-    <insert id="updateTeamValidApplication" parameterType="com.rest.entity.TeamValidApplication">
+    <insert id="updateTeamValidApplication" parameterType="com.rest.entity. ">
         INSERT INTO standard_seminar_system.team_valid_application(
         team_id,
         teacher_id,
