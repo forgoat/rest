@@ -9,9 +9,31 @@ public class ShareList {
     private Integer courseStatus;//主课程是0，从课程是1
     private Integer shareStatus;//共享分组是0，共享课程是1
 
+    public ShareList()
+    {
+        courseId=0;
+        shareCourseId=0;
+        shareCourseName=null;
+        shareTeacherId=0;
+        shareTeacherName=null;
+        courseStatus=0;
+        shareStatus=0;
+    }
+    public ShareList(Integer courseId)
+    {
+        this.courseId=courseId;
+        shareCourseId=0;
+        shareCourseName=null;
+        shareTeacherId=0;
+        shareTeacherName=null;
+        courseStatus=0;
+        shareStatus=0;
+    }
+
     public Integer getCourseId() {
         return courseId;
     }
+
 
     public void setCourseId(Integer courseId) {
         this.courseId = courseId;
