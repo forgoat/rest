@@ -110,17 +110,66 @@ public class TeamService {
     }
     public Long findKlassId(Long teamId,Long courseId){
         List<TeamStudent> teamStudentList=teamStudentDao.findByTeamId(teamId);
-        List<Long> num=new ArrayList<Long>();
+        List<Integer> num=new ArrayList<Integer>();
         List<Long> klassIdList=new ArrayList<Long>();
         Long classId=new Long(0);
         for(TeamStudent teamStudent:teamStudentList){
             Long klassId=klassStudentDao.findKlass(teamStudent.getStudentId(),courseId);
-            for(int i=0;i<klassIdList.size();i++){
+            boolean flag=true;
+            int i=0;
+            for(i=0;i<klassIdList.size();i++){
+                flag=true;
                 if(klassId.equals(klassIdList.get(i))){
-
+                    flag=false;
+                    break;
+                }
+            }
+            if (flag){
+                num.add(new Integer(1));
+            }
+            else {
+                num.set(i,num.get(i)+1);
+            }
+        }
+        Integer max=num.get(0);
+        Integer maxI=0;
+        boolean same=true;
+        for(int i=1;i<num.size();i++){
+            if(!num.get(i).equals(max)){
+                same=false;
+                if (num.get(i)>max){
+                    max=num.get(i);
+                    maxI=i;
+                }
+            }
+        }
+        if(!same) {
+            classId = klassIdList.get(maxI);
+        }
+        else {
+            Integer minI=new Integer(1000);
+            for(Long klassId:klassIdList){
+                List<KlassTeam> klassTeamList=klassTeamDao.findByKlassId(klassId);
+                if(minI>klassTeamList.size()){
+                    classId=klassId;
                 }
             }
         }
         return classId;
+    }
+    public int deleteTeamByCourseId(Long courseId){
+        List<Team> teamList=teamDao.findByCourseId(courseId);
+        if(!teamList.isEmpty()) {
+            for(Team team:teamList){
+                klassTeamDao.deleteKlassTeamsByTeamId(team.getId());
+            }
+            return teamDao.deleteTeamByCourseId(courseId);
+        }
+        else {
+            return 1;
+        }
+    }
+    public int deleteKlassTeam(Long teamId){
+        return klassTeamDao.deleteKlassTeamsByTeamId(teamId);
     }
 }

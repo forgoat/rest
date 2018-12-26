@@ -12,9 +12,11 @@ import java.util.List;
 public class KlassService {
     @Autowired
     private KlassDao klassDao;
-
     @Autowired
     private KlassStudentDao klassStudentDao;
+    public Long findKlassIdByCourseIdAndStudentId(Long courseId,Long studentId){
+        return klassStudentDao.findKlass(studentId,courseId);
+    }
     public int deleteById(Long id){
         return klassDao.deleteById(id);
     }

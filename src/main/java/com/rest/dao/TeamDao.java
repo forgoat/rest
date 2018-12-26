@@ -30,6 +30,7 @@ public interface TeamDao {
     public int deleteTeam(Long id);
     public int save(Team team);
     public List<Team> findByCourseId(Long CourseId);
+    public int deleteTeamByCourseId(Long courseId);
 }/*
 updateKlassStudent(BigInteger team_id,BigInteger klass_id,BigInteger student_id,BigInteger course_id)
 

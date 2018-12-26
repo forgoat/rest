@@ -49,4 +49,15 @@ public class ShareTeamApplication {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "ShareTeamApplication{" +
+                "id=" + id +
+                ", mainCourseId=" + mainCourseId +
+                ", subCourseId=" + subCourseId +
+                ", subCourseTeacherId=" + subCourseTeacherId +
+                ", status=" + status +
+                '}';
+    }
 }

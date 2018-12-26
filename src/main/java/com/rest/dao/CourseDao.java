@@ -2,6 +2,7 @@ package com.rest.dao;
 
 import com.rest.entity.Course;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigInteger;
@@ -16,4 +17,5 @@ public interface CourseDao {
     Course findById(Long id);
     int deleteById(Long id);
     public List<Course> findByTeacherId(Long teacherId);
+    public int acceptMainTeamCourseId(@Param("mainCourseId") Long mainCourseId, @Param("subCourseId") Long subCourseId);
 }

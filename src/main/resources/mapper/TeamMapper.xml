@@ -94,5 +94,7 @@
     <select id="findByCourseId" resultType="com.rest.entity.Team" parameterType="long">
         SELECT * FROM standard_seminar_system.team WHERE course_id=#{CourseId}
     </select>
-
+    <delete id="deleteTeamByCourseId" parameterType="long">
+        DELETE FROM standard_seminar_system.team WHERE course_id=#{courseId}
+    </delete>
 </mapper>

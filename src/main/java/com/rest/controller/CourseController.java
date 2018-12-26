@@ -373,7 +373,8 @@ public class CourseController {
     @PutMapping(value = "{courseId}/teamsharerequest/{shareTeamId}")
     public HttpStatus acceptTeamShare(@PathVariable("shareTeamId") Long shareTeamId) {
         HttpStatus httpStatus;
-        if(courseService.acceptTeamShare(shareTeamId)==1){
+        if(courseService.acceptTeamShareRequest(shareTeamId)==1){
+
             httpStatus = HttpStatus.OK;
         }
         else {
@@ -453,4 +454,63 @@ public class CourseController {
         return seminarInfoList;
     }
 
+    /**
+     * 同意共享分组请求
+     * @param teamShareId
+     * @return
+     */
+    @PutMapping(value = "teamShareRequest/{teamShareId}")
+    public HttpStatus acceptTeamShareApplication(@PathVariable("teamShareId") Long teamShareId){
+        ShareTeamApplication shareTeamApplication=courseService.findTeamShareById(teamShareId);
+        System.out.println(shareTeamApplication.toString());
+        Long mainCourseId=shareTeamApplication.getMainCourseId();
+        Long subCourseId=shareTeamApplication.getSubCourseId();
+        if (courseService.acceptTeamShareRequest(teamShareId)==1){
+            if(courseService.acceptTeamMainCourseId(mainCourseId,subCourseId)==1){
+                System.out.println("修改从课程表成功");
+                teamService.deleteTeamByCourseId(subCourseId);
+                return HttpStatus.OK;
+            }
+            else {
+                courseService.rejectTeamShareRequest(teamShareId);
+                return HttpStatus.BAD_REQUEST;
+            }
+        }
+        else {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
+
+    /**
+     * 拒绝共享分组请求
+     * @param teamShareId
+     * @return
+     */
+    @PutMapping(value = "teamShare/{teamShareId}")
+    public int rejectTeamShareApllication(@PathVariable("teamShareId") Long teamShareId){
+        return courseService.rejectTeamShareRequest(teamShareId);
+    }
+    /**
+     * 查看某个共享分组请求
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "teamShare/{teamShareId}")
+    public ShareTeamApplication findTeamShareApplication(@PathVariable("teamShareId") Long id){
+        return courseService.findTeamShareById(id);
+    }
+
+    /**
+     * 查看所有的共享分组请求
+     * @return
+     */
+    @GetMapping(value = "teamShare")
+    public List<ShareTeamApplication> findAllShareTeamApplication(){
+        return courseService.findAllTeamShare();
+    }
+
+    @PutMapping(value = "{courseId}/teamShareAccept")
+    public int acceptTeamMainCourseId(Long mainCourseId,@PathVariable("courseId") Long subCourseId){
+        return courseService.acceptTeamMainCourseId(mainCourseId,subCourseId);
+    }
 }

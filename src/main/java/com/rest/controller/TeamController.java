@@ -254,4 +254,28 @@ public class TeamController {
     public List<TeamStudent> findStudentByTeamId(@PathVariable("teamId") Long teamId){
         return teamService.findStudentByTeamId(teamId);
     }
+    @GetMapping(value = "{teamId}/course")
+    public Long findSubTeamKlass(@PathVariable("teamId") Long teamId,Long courseId){
+        return teamService.findKlassId(teamId,courseId);
+    }
+
+    /**
+     * 删除某课程的班级
+     * @param courseId
+     * @return
+     */
+    @DeleteMapping(value = "/course")
+    public int deleteTeamByCourseId(Long courseId){
+        return teamService.deleteTeamByCourseId(courseId);
+    }
+
+    /**
+     * 删除班级下的所有队伍副本
+     * @param teamId
+     * @return
+     */
+    @DeleteMapping(value = "{teamId}/klassTeam")
+    public int deleteKlassTeam(@PathVariable(value = "teamId") Long teamId){
+        return teamService.deleteKlassTeam(teamId);
+    }
 }

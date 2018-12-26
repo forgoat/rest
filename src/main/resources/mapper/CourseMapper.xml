@@ -29,4 +29,7 @@
     <select id="findByTeacherId" parameterType="long" resultType="com.rest.entity.Course">
         SELECT * FROM standard_seminar_system.course WHERE teacher_id=#{teacherId}
     </select>
+    <update id="acceptMainTeamCourseId">
+        UPDATE standard_seminar_system.course SET team_main_course_id=#{param1} WHERE id=#{param2}
+    </update>
 </mapper>
