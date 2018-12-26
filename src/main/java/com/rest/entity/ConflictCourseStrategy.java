@@ -4,9 +4,6 @@ public class ConflictCourseStrategy {
     private Long id;
     private Long courseId;
 
-    public ConflictCourseStrategy() {
-    }
-
     public Long getId() {
         return id;
     }

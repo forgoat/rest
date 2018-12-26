@@ -5,7 +5,7 @@
 <mapper namespace="com.rest.dao.TeamDao">
     <select id="queryAllTeam" resultType="com.rest.entity.Team">
         SELECT *
-        FROM team
+        FROM standard_seminar_system.team
         WHERE
         course_id=#{course_id}
         GROUP BY klass_id
@@ -13,33 +13,90 @@
 
     <select id="queryStudentNoTeam" resultType="com.rest.entity.Student">
         SELECT *
-        FROM student,klass_student
+        FROM standard_seminar_system.student,klass_student
         WHERE
         klass_student.team_id IS NULL
         AND
         student.id=klass_student.student_id
     </select>
-    
+
+    <select id="queryMemberLimit" resultType="com.rest.entity.MemberLimitStrategy">
+        SELECT *
+        FROM standard_seminar_system.member_limit_strategy
+        WHERE id=#{id}
+    </select>
+
+    <select id="queryCourseMemberLimitStrategy" resultType="com.rest.entity.CourseMemberLimitStrategy" parameterType="Long">
+        SELECT *
+        FROM standard_seminar_system.course_member_limit_strategy
+        WHERE id=#{id}
+
+    </select>
+
+    <select id="queryTeamOrStrategy" resultType="com.rest.entity.TeamOrStrategy" parameterType="Long">
+        SELECT *
+        FROM standard_seminar_system.team_or_strategy
+        WHERE  id=#{id}
+
+
+    </select>
+
+    <select id="queryTeamAndStrategy" resultType="com.rest.entity.TeamAndStrategy" parameterType="Long">
+        SELECT *
+        FROM standard_seminar_system.team_and_strategy
+        WHERE id=#{id}
+
+    </select>
+
+    <select id="queryTeamStrategy" resultType="com.rest.entity.TeamStrategy" parameterType="Long">
+        SELECT *
+        FROM standard_seminar_system.team_strategy
+        WHERE course_id=#{courseId}
+
+    </select>
+
+    <select id="queryConflictCourseStrategy" resultType="com.rest.entity.ConflictCourseStrategy" parameterType="Long">
+        SELECT *
+        FROM standard_seminar_system.conflict_course_strategy
+        WHERE  id=#{id}
+
+
+    </select>
     <insert id="createTeam" parameterType="com.rest.entity.Team">
-        INSERT INTO team(
+        INSERT INTO standard_seminar_system.team(
         klass_id,
         course_id,
         leader_id,
         team_name,
-        team_serial
+        team_serial,
+        klass_serial,
+        status
         )VALUE
         (
         #{klass_id},
         #{course_id},
         #{leader_id},
         #{team_name},
-        #{team_serial}
+        #{klassSerial},
+        #{team_serial},
+        1
         )
 
     </insert>
 
-    <insert id="updateTeamValidApplication" parameterType="BigInteger">
-        INSERT INTO team_valid_application(
+    <insert id="addTeammate" parameterType="Long">
+        INSERT INTO standard_seminar_system.team_student(
+        team_id,
+        student_id
+        )VALUE
+        (
+        #{teamId},
+        #{studentId}
+        )
+    </insert>
+
+    <insert id="updateTeamValidApplication" parameterType="com.rest.entity. ">
+        INSERT INTO standard_seminar_system.team_valid_application(
         team_id,
         teacher_id,
         status
@@ -47,25 +104,25 @@
         (
         #{team_id},
         #{teacher_id},
-        0
+        1
         )ON DULPLICATE KEY UPDATE
         status=values(status)
     </insert>
 
-    <insert id="updateKlassStudent" parameterType="BigInteger">
-         INSERT INTO klass_student(
-        team_id,
+    <insert id="updateKlassStudent" parameterType="com.rest.entity.KlassStudent">
+         INSERT INTO standard_seminar_system.klass_student(
         klass_id,
         student_id,
-        course_id
+        course_id,
+        team_id
         )VALUE
         (
-        #{team_id},
-        #{klass_id}
-        #{student_id},
-        #{course_id}
+        #{klassId},
+        #{studentId}
+        #{courseId},
+        #{teamId}
         )ON DULPLICATE KEY UPDATE
-        team_id=values(team_id)
+        team_id=values(teamId)
     </insert>
     <select id="findById" parameterType="long" resultType="com.rest.entity.Team">
         SELECT * FROM standard_seminar_system.team WHERE id=#{id}

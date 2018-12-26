@@ -90,7 +90,6 @@ public class CourseController {
         return courseResponseEntity;
     }
 
-
     /**
      * 删除课程
      * @param courseId
@@ -407,11 +406,10 @@ public class CourseController {
 //        }
 //        HttpStatus httpStatus;
 //    }
-    @GetMapping(value = "{courseId}/team")
-    public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
-        return teamService.findTeamByCourseId(courseId);
-    }
-
+@GetMapping(value = "{courseId}/team")
+public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
+    return teamService.findTeamByCourseId(courseId);
+}
 //    /**
 //     * 查找该课程下的学生所属队伍
 //     * @param courseId

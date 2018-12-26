@@ -3,6 +3,11 @@ package com.rest.service;
 import com.rest.dao.*;
 import com.rest.entity.*;
 import org.apache.poi.ss.formula.functions.T;
+import com.rest.dao.KlassStudentDao;
+import com.rest.dao.KlassTeamDao;
+import com.rest.dao.TeamDao;
+import com.rest.dao.TeamStudentDao;
+import com.rest.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +30,16 @@ public class TeamService {
     public Long findId(Long courseId){
         return conflictCourseStrategyDao.findId(courseId);
     }
+
+    public List<Team> queryAllTeam(Long courseId){
+        return teamDao.queryAllTeam(courseId);
+    }
+
+    public List<Student> queryStudentNoTeam(){
+        return teamDao.queryStudentNoTeam();
+    }
+
+
     public List<KlassStudent> findStuByTeamId(Long teamId){
         return klassStudentDao.findByTeamId(teamId);
     }
