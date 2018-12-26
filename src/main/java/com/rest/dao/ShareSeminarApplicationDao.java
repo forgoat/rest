@@ -13,4 +13,5 @@ public interface ShareSeminarApplicationDao {
     public int acceptSeminarShare(Long shareSeminarId);
     public ShareSeminarApplication findById(Long id);
     public int reject(Long shareSeminarId);
+    public List<ShareSeminarApplication> findByCourseId(Long courseId);
 }

@@ -3,6 +3,7 @@ package com.rest.controller;
 import com.rest.dao.TeamStudentDao;
 import com.rest.entity.*;
 import com.rest.service.*;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -111,6 +112,7 @@ public class TeamController {
     @DeleteMapping(value = "{teamId}")
     public HttpStatus deleteTeam(@PathVariable("teamId") Long teamId){
         Team team=teamService.findTeamByTeamId(teamId);
+
         if (team==null){
             return HttpStatus.NOT_FOUND;
         }
@@ -201,20 +203,20 @@ public class TeamController {
      * @return
      */
     @GetMapping(value = "shareObject")
-    public List<ShareObject> shareCourseObject(Long courseId){
-        List<Course> courseList=courseService.findAllCourse();
-        List<Long> conflictList=teamService.findConflictCourse(courseId);
-        List<ShareObject> shareObjectList=new ArrayList<ShareObject>();
-        for (Course course:courseList){
-            boolean flag=true;
-            for (Long id:conflictList){
-                if(id.equals(course.getId())){
-                    flag=false;
+    public List<ShareObject> shareCourseObject(Long courseId) {
+        List<Course> courseList = courseService.findAllCourse();
+        List<Long> conflictList = teamService.findConflictCourse(courseId);
+        List<ShareObject> shareObjectList = new ArrayList<ShareObject>();
+        for (Course course : courseList) {
+            boolean flag = true;
+            for (Long id : conflictList) {
+                if (id.equals(course.getId())) {
+                    flag = false;
                 }
             }
-            if (flag){
-                ShareObject shareObject=new ShareObject(course);
-                Teacher teacher=teacherService.findById(course.getTeacherId());
+            if (flag) {
+                ShareObject shareObject = new ShareObject(course);
+                Teacher teacher = teacherService.findById(course.getTeacherId());
                 shareObject.setTeacherName(teacher.getTeacherName());
                 shareObjectList.add(shareObject);
             }
@@ -222,4 +224,34 @@ public class TeamController {
         return shareObjectList;
     }
 
+    /**
+     *
+     * 保存分组
+     * @param team
+     * @return
+     */
+    @PostMapping(value = "")
+    public HttpStatus saveTeam(Team team){
+        HttpStatus httpStatus=(teamService.saveTeam(team)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
+    }
+    @PostMapping(value = "klassTeam")
+    public HttpStatus saveKlassTeam(KlassTeam klassTeam){
+        if(teamService.saveKlassTeam(klassTeam)==1){
+            return HttpStatus.OK;
+        }
+        else {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
+
+    /**
+     * 查找分组的小组成员
+     * @param teamId
+     * @return
+     */
+    @GetMapping(value = "{teamId}/student")
+    public List<TeamStudent> findStudentByTeamId(@PathVariable("teamId") Long teamId){
+        return teamService.findStudentByTeamId(teamId);
+    }
 }
