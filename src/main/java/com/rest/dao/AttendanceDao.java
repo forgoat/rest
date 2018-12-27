@@ -8,4 +8,5 @@ import java.util.List;
 @Mapper
 public interface AttendanceDao {
     public List<Attendance> findAttendanceByKlassSeminarId(Long klassSeminarId);
+    public int saveAttendance(Attendance attendance);
 }

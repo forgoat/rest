@@ -59,4 +59,7 @@ public class AttendanceService {
         attendanceInfomation.setMaxTeam(seminar.getMaxTeam());
         return attendanceInfomation;
     }
+    public int saveAttendance(Attendance attendance){
+        return attendanceDao.saveAttendance(attendance);
+    }
 }
