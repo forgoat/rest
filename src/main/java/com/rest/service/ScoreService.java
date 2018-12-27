@@ -33,6 +33,8 @@ public class ScoreService {
     private KlassRoundDao klassRoundDao;
     @Autowired
     private RoundScoreDao roundScoreDao;
+    @Autowired
+    private QuestionDao questionDao;
 
     public int saveSeminarScore(SeminarScore seminarScore){
         return  seminarScoreDao.save(seminarScore);
@@ -152,4 +154,7 @@ public class ScoreService {
         return roundScoreList.get(roundSerial);
     }
 
+    public Question findQuestionById(Long id){
+        return questionDao.findQuestionById(id);
+    }
 }

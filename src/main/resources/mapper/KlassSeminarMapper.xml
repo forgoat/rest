@@ -29,4 +29,12 @@
     <delete id="deleteBySeminarId" parameterType="long">
         DELETE FROM standard_seminar_system.klass_seminar WHERE seminar_id=#{seminarId}
     </delete>
+    <select id="queryKlassSeminarIdByKlassIdAndSeminarId" resultType="Long">
+        SELECT id
+        FROM standard_seminar_system.klass_seminar
+        WHERE
+        klass_id=#{klassId}
+        AND
+        seminar_id=#{seminarId}
+    </select>
 </mapper>

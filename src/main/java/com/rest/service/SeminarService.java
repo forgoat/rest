@@ -1,7 +1,7 @@
 package com.rest.service;
 
-import com.rest.dao.KlassSeminarDao;
-import com.rest.dao.SeminarDao;
+import com.rest.dao.*;
+import com.rest.entity.Klass;
 import com.rest.entity.KlassSeminar;
 import com.rest.entity.Seminar;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,14 @@ public class SeminarService {
     @Autowired
     private SeminarDao seminarDao;
     @Autowired
+    private TeamStudentDao teamStudentDao;
+    @Autowired
     private KlassSeminarDao klassSeminarDao;
+    @Autowired
+    private KlassTeamDao klassTeamDao;
+    @Autowired
+    private KlassDao klassDao;
+
     public int save(Seminar seminar){
         return seminarDao.save(seminar);
     }
@@ -62,4 +69,42 @@ public class SeminarService {
     public int deleteBySeminarId(Long seminarId){
         return klassSeminarDao.deleteBySeminarId(seminarId);
     }
+
+
+    /**
+     * 通过studentId courseId seminarId 查找 KlassSeminarId
+     * @param studentId
+     * @param courseId
+     * @param seminarId
+     * @return
+     */
+    public Long queryKlassSeminarId(Long studentId,Long courseId,Long seminarId){
+        Long teamId=teamStudentDao.findByStudentId(studentId);
+        System.out.println("teamId:"+teamId);
+
+        List<Long> klassIdList=klassTeamDao.findByTeamId(teamId);
+        System.out.println("klassIdList:"+klassIdList);
+
+        List<Klass> klassList=klassDao.findByCourseId(courseId);
+        System.out.println("klassList:"+klassList);
+
+        Long klassId=null;
+        for(Long a: klassIdList){
+            System.out.println("a:"+a);
+            for(Klass b:klassList){
+                System.out.println("b:"+b);
+                if(a==b.getId()){
+                    klassId=a;
+                    System.out.println("klassId"+a);
+                    break;
+                }
+            }
+            if(klassId!=null) break;
+        }
+        Long klassSeminarId=klassSeminarDao.queryKlassSeminarIdByKlassIdAndSeminarId(klassId,seminarId);
+        return klassSeminarId;
+    }
+
 }
+
+

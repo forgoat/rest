@@ -1,5 +1,6 @@
 package com.rest.controller;
 
+import com.rest.service.AttendanceService;
 import com.rest.service.ImportExcelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,11 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.Date;
+import java.util.Random;
 
 @Controller
 public class FileUploadDownloadController {
     @Autowired
     ImportExcelService importExcelService;
+    @Autowired
+    AttendanceService attendanceService;
 //
 //    //  Excel导入数据到数据库
 //    @RequestMapping("/PPTUpload")
@@ -42,7 +47,7 @@ public class FileUploadDownloadController {
      * */
     @RequestMapping("/PPTUpload")
     @ResponseBody
-    public String PPTUpload(@RequestParam("fileName1") MultipartFile file1){
+    public String PPTUpload(@RequestParam("fileName1") MultipartFile file1,Long studentId,Long courseId,Long seminarId){
         if(file1.isEmpty()){
             return "false";
         }
@@ -50,17 +55,26 @@ public class FileUploadDownloadController {
         int size = (int) file1.getSize();
         System.out.println(fileName1 + "-->" + size);
 
+        Random ra =new Random();
         //之后换成服务器文件上传的目录
-        String path = "C:/Users/zjlnc/Desktop/新建文件夹 (5)" ;
-        File dest = new File(path + "/" + fileName1);
+        String path = "C:/Users/Yue/Desktop/sys" ;
+        String fileName=ra.toString()+fileName1;
+        System.out.println(path + "/" + fileName);
+        File dest = new File(path + "/" + fileName);
         //判断文件父目录是否存在
         if(!dest.getParentFile().exists()){
             dest.getParentFile().mkdir();
         }
         try {
 
+            String a= "C:/Users/Yue/Desktop/sys";
             //保存文件
             file1.transferTo(dest);
+            studentId=Long.valueOf(103);
+            courseId=Long.valueOf(16);
+            seminarId=Long.valueOf(5);
+            System.out.println(studentId+" "+courseId+" "+seminarId);
+            attendanceService.savePPT(fileName,a,studentId,courseId,seminarId);
             return "true";
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
