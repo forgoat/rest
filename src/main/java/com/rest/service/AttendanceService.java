@@ -20,6 +20,8 @@ public class AttendanceService {
     private KlassSeminarDao klassSeminarDao;
     @Autowired
     private QuestionDao questionDao;
+    @Autowired
+    private StudentDao studentDao;
     public List<Attendance> findAttendanceByKlassSeminarId(Long klassSeminarId){
         return attendanceDao.findAttendanceByKlassSeminarId(klassSeminarId);
     }
@@ -66,6 +68,23 @@ public class AttendanceService {
     }
     public int saveQuestion(Question question){
         return questionDao.saveQuestion(question);
+    }
+    public List<Question> questionList(Long klassSeminarId,Long attendanceId){
+        return questionDao.questionList(klassSeminarId,attendanceId);
+    }
+
+    public List<QuestionInfo> questionInfoList(Long klassSeminarId,Long attendanceId){
+        List<Question> questionList=questionDao.questionList(klassSeminarId,attendanceId);
+        List<QuestionInfo> questionInfoList=new ArrayList<QuestionInfo>();
+        for(Question question:questionList){
+            Long studentId=question.getStudentId();
+            Long teamId=question.getTeamId();
+            QuestionInfo questionInfo=new QuestionInfo(question);
+            questionInfo.setStudentName(studentDao.findById(studentId).getStudentName());
+            questionInfo.setTeamSerial(teamDao.findById(teamId).getTeamSerial());
+            questionInfoList.add(questionInfo);
+        }
+        return questionInfoList;
     }
     public int gradeQuestion(Long questionId,double score){
         return questionDao.gradeQuestion(questionId,score);

@@ -12,4 +12,7 @@
     <select id="findQuestionById" parameterType="long" resultType="com.rest.entity.Question">
         SELECT * FROM standard_seminar_system.question WHERE id=#{questionId}
     </select>
+    <select id="questionList" resultType="com.rest.entity.Question">
+        SELECT * FROM standard_seminar_system.question WHERE klass_seminar_id=#{klassSeminarId} AND attendance_id=#{attendanceId} AND is_selected<![CDATA[!= ]]>1
+    </select>
 </mapper>

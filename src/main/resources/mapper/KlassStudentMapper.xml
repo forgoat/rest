@@ -21,7 +21,7 @@
     <select id="findKlass" resultType="long">
         SELECT klass_id FROM standard_seminar_system.klass_student WHERE student_id=#{param1} AND course_id=#{param2}
     </select>
-    <select id="queryKlassByStudentIdCourseId" resultType="Long">
+    <select id="queryKlassByStudentIdCourseId" resultType="long">
         SELECT klass_id
         FROM standard_seminar_system.klass_student
         WHERE

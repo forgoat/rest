@@ -55,7 +55,7 @@
         )
         </foreach>
     </insert>
-    <select id="findByAccount" parameterType="String" resultType="com.rest.entity.Student">
+    <select id="findByAccount" parameterType="string" resultType="com.rest.entity.Student">
         SELECT * FROM standard_seminar_system.student WHERE account=#{account}
     </select>
     <select id="findById" parameterType="long" resultType="com.rest.entity.Student">

@@ -1,9 +1,6 @@
 package com.rest.controller;
 
-import com.rest.entity.Attendance;
-import com.rest.entity.AttendanceInfo;
-import com.rest.entity.AttendanceInfomation;
-import com.rest.entity.Question;
+import com.rest.entity.*;
 import com.rest.service.AttendanceService;
 import com.rest.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +100,11 @@ public class AttendanceController {
     @GetMapping(value = "question/{questionId}")
     public Question findQuestionById(@PathVariable("questionId") Long id){
         return scoreService.findQuestionById(id);
+    }
+
+    @GetMapping(value = "{attendanceId}/questionList")
+    public List<QuestionInfo> questionList(Long klassSeminarId,@PathVariable("attendanceId") Long attendanceId){
+        return attendanceService.questionInfoList(klassSeminarId,attendanceId);
     }
 
 }
