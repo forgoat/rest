@@ -26,61 +26,6 @@
         .left{float:left;}
         .right{float:right;}
     </style>
-
-    <script>
-        var offWidth = window.screen.width / 30; //这里用宽度/30表示1rem取得的px
-        document.getElementsByTagName("html")[0].style.fontSize = offWidth + 'px'; //把rem的值复制给顶级标签html的font-size
-    </script>
-    <style type="text/css">
-        *{margin: 0;padding: 0}
-        body{font-size: 14px
-        ;font-family: "微软雅黑";}
-        ul,li{list-style: none;}
-        a:link,a:visited{text-decoration: none;color: #fff;}
-        .list{width: 30rem;border-bottom:solid 1px #fff;margin:40px auto 0 auto;}
-        .list ul li{background-color:#0c85b9a3
-        ; border:solid 1px #fff; border-bottom:0;}
-        .list ul li a{padding-left: 10px;color: black; font-size:14px; display: block;  height:36px;line-height: 36px;position: relative;
-        }
-        .list ul li .inactive{ background:url(img/off.png) no-repeat 28rem center;}
-        .list ul li .inactives{ background:url(img/on.png) no-repeat 28rem center;}
-        .list ul li ul{display: none;}
-        .list ul li ul li { border-left:0; border-right:0; background-color:#e1f1fc; border-color:#fff;}
-        .list ul li ul li ul{display: none;}
-        .list ul li ul li a{ padding-left:20px;}
-        .list ul li ul li ul li { background-color:#0c85b9a3; border-color:#fff; }
-        .last{ background-color:#e2e2e2; border-color:#fff; }
-        .list ul li ul li ul li a{ color:#e1f1fc; padding-left:30px;}
-    </style>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.inactive').click(function(){
-                if($(this).siblings('ul').css('display')=='none'){
-                    $(this).parent('li').siblings('li').removeClass('inactives');
-                    $(this).addClass('inactives');
-                    $(this).siblings('ul').slideDown(100).children('li');
-                    if($(this).parents('li').siblings('li').children('ul').css('display')=='block'){
-                        $(this).parents('li').siblings('li').children('ul').parent('li').children('a').removeClass('inactives');
-                        $(this).parents('li').siblings('li').children('ul').slideUp(100);
-
-                    }
-                }else{
-                    //控制自身变成+号
-                    $(this).removeClass('inactives');
-                    //控制自身菜单下子菜单隐藏
-                    $(this).siblings('ul').slideUp(100);
-                    //控制自身子菜单变成+号
-                    $(this).siblings('ul').children('li').children('ul').parent('li').children('a').addClass('inactives');
-                    //控制自身菜单下子菜单隐藏
-                    $(this).siblings('ul').children('li').children('ul').slideUp(100);
-
-                    // //控制同级菜单只保持一个是展开的（-号显示）
-                    // $(this).siblings('ul').children('li').children('a').removeClass('inactives');
-                }
-            })
-        });
-    </script>
 </head>
 <header class="aui-navBar aui-navBar-fixed b-line">
     <a href="javascript:history.back(-1)" class="aui-navBar-item">
@@ -100,12 +45,6 @@
     <div class="div-auto2" >
         业务流程分析
     </div>
-
-     
-
-
-
-
     <div class="div-auto1" >
      1-3组展示：已进行5分钟       已有1位同学提问
     </div>
@@ -141,7 +80,7 @@
                 `
             </div>
         </div>
-        <section>
+        </section>
     </body>
 
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
@@ -176,5 +115,7 @@
 
         });
     </script>
+</section>
+</body>
 
 </html>
