@@ -3,6 +3,7 @@ package com.rest.controller;
 import com.rest.entity.Attendance;
 import com.rest.entity.AttendanceInfo;
 import com.rest.entity.AttendanceInfomation;
+import com.rest.entity.Question;
 import com.rest.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,4 +44,10 @@ public class AttendanceController {
         HttpStatus httpStatus=(attendanceService.deleteAttendanceById(id)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
         return httpStatus;
     }
+    @PostMapping(value = "question")
+    public HttpStatus saveQuestion(Question question){
+        HttpStatus httpStatus=(attendanceService.saveQuestion(question)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
+    }
+
 }
