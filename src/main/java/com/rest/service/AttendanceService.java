@@ -67,4 +67,7 @@ public class AttendanceService {
     public int saveQuestion(Question question){
         return questionDao.saveQuestion(question);
     }
+    public int gradeQuestion(Long questionId,double score){
+        return questionDao.gradeQuestion(questionId,score);
+    }
 }
