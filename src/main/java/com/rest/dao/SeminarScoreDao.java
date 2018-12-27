@@ -8,7 +8,9 @@ import java.util.List;
 
 @Mapper
 public interface SeminarScoreDao {
-    public int save(SeminarScore seminarScore);
-    public SeminarScore findByTeamIdAndSeminarId(@Param("teamId") Long teamId, @Param("seminarId") Long seminarId);
-    public List<SeminarScore> findAllByKlassSeminarId(Long classSeminarId);
+     int save(SeminarScore seminarScore);
+     SeminarScore findByTeamIdAndSeminarId(@Param("teamId") Long teamId, @Param("seminarId") Long seminarId);
+     List<SeminarScore> findAllByKlassSeminarId(Long classSeminarId);
+     SeminarScore queryByKlassSeminarIdAndTeamId(@Param("klassSeminarId")Long klassSeminarId,@Param("teamId")Long teamId);
+
 }

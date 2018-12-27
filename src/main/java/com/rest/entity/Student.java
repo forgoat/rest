@@ -61,4 +61,15 @@ public class Student {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", isActive=" + isActive +
+                ", studentName='" + studentName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

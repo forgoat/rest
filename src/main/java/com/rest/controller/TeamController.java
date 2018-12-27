@@ -1,6 +1,7 @@
 package com.rest.controller;
 
 import com.rest.dao.TeamStudentDao;
+import com.rest.dao.TeamValidApplicationDao;
 import com.rest.entity.*;
 import com.rest.service.*;
 import org.apache.poi.ss.formula.functions.T;
@@ -28,6 +29,7 @@ public class TeamController {
     private TeacherService teacherService;
     @Autowired
     private OrganizeTeamService organizeTeamService;
+
 
 //    @GetMapping(value = "findStu")
 //    public List<KlassStudent> findByTeamId(Long teamId){
@@ -313,5 +315,15 @@ public class TeamController {
     @PostMapping(value = "queryMemberLimitStrategyById")
     public MemberLimitStrategy queryMemberLimitStrategyById(Long courseId){
         return organizeTeamService.queryMemberLimitStrategyById(organizeTeamService.queryMemberLimitStrategyId(courseId));
+    }
+
+    /**
+     * 提交valid申请
+     * @param teamValidApplication
+     * @return
+     */
+    @PostMapping(value = "{teamId}/saveTeamValidApplication")
+    public int saveTeamValidApplication(@PathVariable(value = "teamId")TeamValidApplication teamValidApplication,Long teamId,Long courseId){
+        return teamService.saveTeamValidApplication(teamValidApplication);
     }
 }

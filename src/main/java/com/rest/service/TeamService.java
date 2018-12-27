@@ -1,17 +1,15 @@
 package com.rest.service;
 
 import com.rest.dao.*;
+import com.rest.dao.TeamValidApplicationDao;
 import com.rest.entity.*;
-import org.apache.poi.ss.formula.functions.T;
 import com.rest.dao.KlassStudentDao;
 import com.rest.dao.KlassTeamDao;
 import com.rest.dao.TeamDao;
 import com.rest.dao.TeamStudentDao;
-import com.rest.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +25,10 @@ public class TeamService {
     private KlassTeamDao klassTeamDao;
     @Autowired
     private ConflictCourseStrategyDao conflictCourseStrategyDao;
+    @Autowired
+    private TeamValidApplicationDao teamValidApplicationDao;
+
+
     public Long findId(Long courseId){
         return conflictCourseStrategyDao.findId(courseId);
     }
@@ -187,4 +189,14 @@ public class TeamService {
     public int deleteKlassTeam(Long teamId){
         return klassTeamDao.deleteKlassTeamsByTeamId(teamId);
     }
+
+    /**
+     * 提交申请
+     * @param teamValidApplication
+     * @return
+     */
+    public  int saveTeamValidApplication(TeamValidApplication teamValidApplication){
+        return teamValidApplicationDao.saveTeamValidApplication(teamValidApplication);
+    }
+
 }

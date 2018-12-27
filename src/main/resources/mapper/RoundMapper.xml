@@ -33,4 +33,18 @@
     <select id="findByCourseId" parameterType="long" resultType="com.rest.entity.Round">
         SELECT * FROM standard_seminar_system.round WHERE course_id=#{courseId}
     </select>
+    <select id="queryRoundIdByCourseIdAndRoundSerial" resultType="Long">
+        SELECT id
+        FROM standard_seminar_system.round
+        WHERE
+        course_id=#{courseId}
+        AND
+        round_serial=#{roundSerial}
+    </select>
+    <select id="queryAllRoundSerialByCourseId" resultType="Integer">
+        SELECT round_serial
+        FROM standard_seminar_system.round
+        WHERE
+        course_id=#{courseId}
+    </select>
 </mapper>

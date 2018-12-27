@@ -116,6 +116,7 @@ public class StudentController {
         }
     }
 
+   //测试
     @GetMapping(value = "queryKlassByStudentIdCourseId")
     public Long queryKlassByStudentIdCourseId(Long studentId,Long courseId){
         return studentService.queryKlassByStudentIdCourseId(studentId,courseId);

@@ -11,6 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +21,10 @@ import java.util.List;
 public class MyUserDetailsService implements UserDetailsService {
 
     private final AdminService adminService;
+    public void HttpSet(String account,HttpServletRequest request, HttpServletResponse response)
+    {
+
+    }
 
     @Autowired
     MyUserDetailsService(AdminService adminService){

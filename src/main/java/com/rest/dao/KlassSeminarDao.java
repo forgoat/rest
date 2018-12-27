@@ -9,6 +9,7 @@ import java.util.List;
 @Mapper
 public interface KlassSeminarDao {
     public List<KlassSeminar> findBySeminar(Long seminarId);
+    List<KlassSeminar> queryByKlassId(@Param("klassId") Long klassId);
     public int save(KlassSeminar klassSeminar);
     public int delete(Long id);
     public int deleteBySeminarId(Long seminarId);
