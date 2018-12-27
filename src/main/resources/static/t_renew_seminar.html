@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>修改讨论课</title>
+<script src="laydate/laydate.js"></script>//日历
+
     <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0">
     <link type="text/css" rel="stylesheet" href=" css/base.css">
     <link type="text/css" rel="stylesheet" href=" css/home.css">
@@ -93,17 +95,7 @@
         界面原型图和所有界面原型设计
         讨论课每个小组15分钟
     </div>
-    <div class="div-auto1" >
-        <p>讨论课次序号：
-            <select>
-
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-        </p>
-    </div>
+   
 
     <div class="div-auto2" >
         <p>讨论课可见：
@@ -146,6 +138,19 @@
             </select>
         </p>
     </div>
+
+ <div class="div-auto1" >
+        书面报告提交截止时间：<input class="laydate-icon" id="demo" value="2014-6-20">
+
+    </div>
+<script>
+;!function(){
+laydate({
+   elem: '#demo'
+})
+}();
+</script>
+
 
     <a class="button-auto1" >
         删除该讨论课

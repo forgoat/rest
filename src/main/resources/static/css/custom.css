@@ -642,3 +642,13 @@ a {
     font-size: 10px !important;
     width: 50px !important;
 }
+.button-auto3{
+    background: #0c85b9a3;
+    height: 45px;
+    line-height: 45px;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    width: 30%;
+    font-size: 16px;
+}
