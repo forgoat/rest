@@ -1,9 +1,5 @@
 package com.rest.support;
 
-/**
- * @author JuboYu on 2018/12/17.
- * @version 1.0
- */
 public class HelloMessage {
     private String name;
 

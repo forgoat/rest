@@ -16,10 +16,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author JuboYu on 2018/12/5.
- * @version 1.0
- */
 public class Token {
     public static final String SECRET = "JKKLJOoasdlfj";
 
@@ -38,7 +34,7 @@ public class Token {
         // param backups {iss:Service, aud:APP}
         try {
         token = JWT.create().withHeader(map) // header
-                .withIssuer("CMS")
+                .withIssuer("REST")
                 .withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 60 * 100))
                 .withClaim("userId", info.getUserId())
                 .withClaim("userType", info.getUserType())
@@ -69,7 +65,7 @@ public class Token {
         DecodedJWT jwt = null;
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET))
-                    .withIssuer("CMS").build();
+                    .withIssuer("REST").build();
             jwt = verifier.verify(token);
         } catch (Exception e) {
             throw new UsernameIsExitedException("无效的令牌");

@@ -2,10 +2,6 @@ package com.rest.support;
 
 import java.io.Serializable;
 
-/**
- * @author JuboYu on 2018/12/4.
- * @version 1.0
- */
 public class JsonResult<T> implements Serializable {
     private T data;
     private String message = "";

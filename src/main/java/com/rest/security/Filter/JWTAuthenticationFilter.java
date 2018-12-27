@@ -1,6 +1,4 @@
-package com.rest.config.Filter;
-
-import com.auth0.jwt.JWT;
+package com.rest.security.Filter;
 
 import com.rest.support.Token;
 import com.rest.support.UserInfo;
@@ -18,13 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-/**
- * @author JuboYu on 2018/12/12.
- * @version 1.0
- */
 @Component
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {

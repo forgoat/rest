@@ -1,6 +1,6 @@
-package com.rest.config.Filter;
+package com.rest.security.Filter;
 
-import com.rest.config.handler.AuthenticationSuccessHandler;
+import com.rest.security.handler.AuthenticationSuccessHandler;
 import com.rest.support.Token;
 import com.rest.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * @author JuboYu on 2018/12/12.
- * @version 1.0
- */
 @Component
 public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 

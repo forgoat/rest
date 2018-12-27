@@ -1,5 +1,6 @@
-package com.rest.config;
+package com.rest.security.config;
 
+<<<<<<< HEAD:src/main/java/com/rest/config/MultiHttpSecurityConfiguration.java
 import com.rest.config.Filter.JWTAuthenticationFilter;
 import com.rest.config.Filter.JWTLoginFilter;
 import com.rest.config.handler.AuthenticationFailureHandler;
@@ -7,6 +8,14 @@ import com.rest.config.handler.AuthenticationSuccessHandler;
 import com.rest.support.AdminAuthorizedEntryPoint;
 import com.rest.support.UserAuthorizedEntryPoint;
 
+=======
+import com.rest.security.Filter.JWTAuthenticationFilter;
+import com.rest.security.Filter.JWTLoginFilter;
+import com.rest.security.JWTAuthenticationProvider;
+import com.rest.security.MyUserDetailsService;
+import com.rest.security.handler.AuthenticationFailureHandler;
+import com.rest.security.handler.AuthenticationSuccessHandler;
+>>>>>>> jwt:src/main/java/com/rest/security/config/MultiHttpSecurityConfig.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,12 +34,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-/**
- * @author JuboYu on 2018/12/4.
- * @version 1.0
- */
 @EnableWebSecurity
-public class MultiHttpSecurityConfiguration {
+public class MultiHttpSecurityConfig {
 
     @Configuration
     @Order(1)

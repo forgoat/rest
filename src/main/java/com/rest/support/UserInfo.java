@@ -1,11 +1,14 @@
 package com.rest.support;
 
+<<<<<<< HEAD
 import java.math.BigInteger;
 
 /**
  * @author JuboYu on 2018/12/5.
  * @version 1.0
  */
+=======
+>>>>>>> jwt
 public class UserInfo {
     private Long userId;
     private String userName;
