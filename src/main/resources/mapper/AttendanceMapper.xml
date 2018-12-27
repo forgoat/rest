@@ -7,7 +7,18 @@
         SELECT * FROM standard_seminar_system.attendance WHERE klass_seminar_id=#{klassSeminarId}
     </select>
     <insert id="saveAttendance" parameterType="com.rest.entity.Attendance" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO standard_seminar_system.attendance(klass_seminar_id,team_id,team_order,is_present) VALUE (#{klassSeminarId},#{teamId},#{teamOrder},0)
+         INSERT INTO standard_seminar_system.attendance
+        (klass_seminar_id,
+        team_id,
+        team_order,
+        is_present)
+        VALUE
+         (#{klassSeminarId},
+         #{teamId},
+         #{teamOrder},
+         0)
+         ON DULPLICATE KEY UPDATE
+         team_id=values(teamId)
     </insert>
     <delete id="deleteById" parameterType="long">
         DELETE FROM standard_seminar_system.attendance WHERE id=#{attendanceId}
@@ -15,4 +26,12 @@
     <update id="updateAttendanceStatus">
         UPDATE standard_seminar_system.attendance SET is_present=#{status} WHERE id=#{attendanceId}
     </update>
+    <select id="queryByKlassSeminarIdAndTeamId" resultType="com.rest.entity.Attendance">
+        SELECT *
+        FROM standard_seminar_system.attendance
+        WHERE
+        klass_seminar_id=#{klassSeminarId}
+        AND
+        team_id=#{teamId}
+    </select>
 </mapper>
