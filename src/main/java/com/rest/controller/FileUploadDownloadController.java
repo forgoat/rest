@@ -24,7 +24,7 @@ public class FileUploadDownloadController {
     AttendanceService attendanceService;
 //
 //    //  Excel导入数据到数据库
-//    @RequestMapping("/PPTUpload")
+//    @RequestMapping("/fileImport")
 //    @ResponseBody
 //    public String importExcel(@RequestParam("fileName1") MultipartFile myFile){
 //

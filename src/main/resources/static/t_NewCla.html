@@ -37,13 +37,14 @@
         <div class="div-auto2" >
         <label class="col-sm-2 control-label">班级名：</label>
 
-        <input type="text" class="form-control" placeholder="年级">
+        <input type="text" id="grade" class="form-control"style="width: 50px" placeholder="年级"/>
+            <input type="text" id="class" class="form-control"style="width: 50px"  placeholder="班级"/>
         </div>
 
         <div class="div-auto2" >
         <label class="col-sm-2 control-label">上课时间：</label>
-
-        <input type="text" class="form-control" placeholder=" ">
+        <input type="text" id="noon" class="form-control" style="width: 50px" placeholder=" "/>
+        <input type="text" id="time" class="form-control" style="width: 50px" placeholder=" "/>
         </div>
 
         <div class="div-auto2" >
@@ -53,14 +54,10 @@
         </div>
     </div>
 
-    <div class="div-auto2" >
-        班级学生名单：
-        <button>
-            选择文件
-        </button>
-    </div>
-
-
+    <form action="fileImport" method="post" enctype="multipart/form-data">
+        <p>班级学生名单： <input type="file" name="myFile"/></p>
+        <p><input type="submit" value="提交"/></p>
+    </form>
 
     </body>
     <section class="aui-scrollView">
@@ -75,6 +72,24 @@
         </div>
     </section>
 
+</section>
+<script>
+function create() {
 
+    $.ajax({
+        url: "/course/courseid/class",                //后端的API地址
+        type: 'POST',                                //http:POST/GET
+        data: {},                            //指客户端提交给后台的参数
+        dataType: 'json',                            //服务端返回类型text，JSON
+        timeout: 3000,
+        success: function (res) {
+            alert("success!");
+        }, error: function () {
+            alert("sorry!");
+        }
+    });
+
+}
+</script>
 </body>
 </html>
