@@ -102,9 +102,50 @@ public class AttendanceController {
         return scoreService.findQuestionById(id);
     }
 
+    /**
+     * 查看提问队列，不包含已提问
+     * @param klassSeminarId
+     * @param attendanceId
+     * @return
+     */
     @GetMapping(value = "{attendanceId}/questionList")
     public List<QuestionInfo> questionList(Long klassSeminarId,@PathVariable("attendanceId") Long attendanceId){
         return attendanceService.questionInfoList(klassSeminarId,attendanceId);
     }
 
+    /**
+     * 选中问题并改变其状态
+     * @param klassSeminarId
+     * @param attendanceId
+     * @return
+     */
+    @PutMapping(value = "{attendanceId}/quest")
+    public QuestionInfo questionInfo(Long klassSeminarId,@PathVariable("attendanceId")Long attendanceId){
+        List<QuestionInfo> questionInfoList=attendanceService.questionInfoList(klassSeminarId,attendanceId);
+        QuestionInfo questionInfo=questionInfoList.get(0);
+        Long questionId=questionInfo.getQuestionId();
+        attendanceService.selectQuestion(questionId);
+        return questionInfo;
+    }
+    /**
+     * 选中问题
+     * @param questionId
+     * @return
+     */
+    @PutMapping(value = "selectQuestion/{questionId}")
+    public HttpStatus selectQuestion(@PathVariable("questionId") Long questionId){
+        HttpStatus httpStatus=(attendanceService.selectQuestion(questionId)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
+    }
+    /**
+     * 开始和暂停展示
+     * @param attendanceId
+     * @param status
+     * @return
+     */
+    @PutMapping(value = "{attendanceId}/status")
+    public HttpStatus stopAttendance(@PathVariable("attendanceId") Long attendanceId,Integer status){
+        HttpStatus httpStatus=(attendanceService.updateAttendanceStatus(attendanceId,status)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
+    }
 }

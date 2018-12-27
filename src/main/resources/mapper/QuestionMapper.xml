@@ -15,4 +15,7 @@
     <select id="questionList" resultType="com.rest.entity.Question">
         SELECT * FROM standard_seminar_system.question WHERE klass_seminar_id=#{klassSeminarId} AND attendance_id=#{attendanceId} AND is_selected<![CDATA[!= ]]>1
     </select>
+    <update id="selectQuestion" parameterType="long">
+        UPDATE standard_seminar_system.question SET is_selected=1 WHERE id=#{questionId}
+    </update>
 </mapper>

@@ -89,4 +89,10 @@ public class AttendanceService {
     public int gradeQuestion(Long questionId,double score){
         return questionDao.gradeQuestion(questionId,score);
     }
+    public int updateAttendanceStatus(Long attendanceId,Integer status){
+        return attendanceDao.updateAttendanceStatus(attendanceId,status);
+    }
+    public int selectQuestion(Long questionId){
+        return questionDao.selectQuestion(questionId);
+    }
 }
