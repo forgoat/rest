@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>课程管理</title>
+    <title>我</title>
     <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0">
-    <link type="text/css" rel="stylesheet" href="css/base.css">
-    <link type="text/css" rel="stylesheet" href="css/home.css">
-    <link href="css/custom.css" rel="stylesheet" type="text/css"/>
+    <link type="text/css" rel="stylesheet" href=" css/base.css">
+    <link type="text/css" rel="stylesheet" href=" css/home.css">
+    <link href=" css/custom.css" rel="stylesheet" type="text/css"/>
     <script>
         var offWidth = window.screen.width / 30; //这里用宽度/30表示1rem取得的px
         document.getElementsByTagName("html")[0].style.fontSize = offWidth + 'px'; //把rem的值复制给顶级标签html的font-size
@@ -22,8 +22,8 @@
         ; border:solid 1px #fff; border-bottom:0;}
         .list ul li a{padding-left: 10px;color: black; font-size:14px; display: block;  height:36px;line-height: 36px;position: relative;
         }
-        .list ul li .inactive{ background:url(img/off.png) no-repeat 28rem center;}
-        .list ul li .inactives{ background:url(img/on.png) no-repeat 28rem center;}
+        .list ul li .inactive{ background:url( img/off.png) no-repeat 28rem center;}
+        .list ul li .inactives{ background:url( img/on.png) no-repeat 28rem center;}
         .list ul li ul{display: none;}
         .list ul li ul li { border-left:0; border-right:0; background-color:#e1f1fc; border-color:#fff;}
         .list ul li ul li ul{display: none;}
@@ -32,7 +32,7 @@
         .last{ background-color:#e2e2e2; border-color:#fff; }
         .list ul li ul li ul li a{ color:#e1f1fc; padding-left:30px;}
     </style>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src=" js/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('.inactive').click(function(){
@@ -67,81 +67,29 @@
         <i class="icon icon-return"></i>
     </a>
     <div class="aui-center">
-        <span class="aui-center-title">课程管理</span>
+        <span class="aui-center-title">我</span>
     </div>
     <a href="javascript:;" class="aui-navBar-item">
         <i class="icon icon-sys"></i>
     </a>
 </header>
 <body>
+ 
 
+<div class="list">
+    <ul class="yiji">
 
-<div class="list" id="myView"></div>
-
-
-<script>
-    function getUrlParam(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-        if (r != null) return unescape(r[2]); return null; //返回参数值
-    };
-    var myModel = {courseList:[]};
-    var sem = {semList:[]};
-    var id='';
-    teacherid=3;
-    function getData(){
-        var courseid=getUrlParam('teacherid');
-        $.ajax({
-            url: "/course/teacher/"+teacherid,                //后端的API地址
-            type: 'GET',                                //http:POST/GET
-            async:false,
-
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function(res){
-                myModel.courseList=res;
-                var htmlNav='';
-                $("#myView").empty();
-
-                if( myModel.courseList.length>0)
-                {
-
-                    htmlNav+='<ul class="yiji">';
-                    for(var i=0;i< myModel.courseList.length;i++)
-                    {
-                        htmlNav+='<li>' +'<a href="#" class="inactive">'+myModel.courseList[i].courseName+'</a>';
-                        htmlNav+='<ul style="display: none">';
-
-                        htmlNav+='<li><a href="#" class="inactive active">'+'学生成绩'+'</a>'+'</li>';
-                        htmlNav+='<li class="last"><a href="t_StuTea.html?courseid='+myModel.courseList[i].id+'">学生组队</a></li>';
-                        htmlNav+='<li class="last"><a href="t_CouInf.html?courseid='+myModel.courseList[i].id+'">课程信息</a></li>';
-                        htmlNav+='<li class="last"><a href="t_ClaInf.html?courseid='+myModel.courseList[i].id+'">班级信息</a></li>';
-                        htmlNav+='<li class="last"><a href="t_course_main.html?courseid='+myModel.courseList[i].id+'">讨论课设置</a></li>';
-                        htmlNav+='<li class="last"><a href="t_ShaSet.html?courseid='+myModel.courseList[i].id+'">共享设置</a></li>';
-                        htmlNav+='</ul>';
-                        htmlNav+='</li>';
-                    }
-                    htmlNav+='</ul>';
-                    $("#myView").html(htmlNav);
-                }
-            },
-            error: function(){
-                alert('服务器忙，请稍候');
-            }
-        });
-    }
-    getData();
-
-</script>
-
+        <li class="last"><a style="font-family:times;color:black" href="#">我的课程</a></li>
+        <li class="last"><a style="font-family:times;color:black" href="/teacher/set">账户与设置</a></li>
+    </ul>
+</div>
 
 <section class="aui-flexView">
     <div class="aui-code-box">
         <div class="aui-code-btn">
-            <button onclick="window.location.href='t_NewCou.html'">新建课程</button>
+
         </div>
     </div>
-<section>
-
+    <section>
 </body>
 </html>
