@@ -27,4 +27,7 @@
     <select id="findKlassSeminarById" resultType="com.rest.entity.KlassSeminar" parameterType="long">
         SELECT * FROM standard_seminar_system.klass_seminar WHERE id=#{klassSeminarId}
     </select>
+    <update id="startSeminar" parameterType="long">
+        UPDATE standard_seminar_system.klass_seminar SET status=1 WHERE id=#{klassSeminarId}
+    </update>
 </mapper>

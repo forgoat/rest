@@ -13,4 +13,4 @@ mybatis:
     map-underscore-to-camel-case: true   #开启驼峰命名转换
   type-aliases-package: com.rest.entity
 server:
-  port: 80
+  port: 8000

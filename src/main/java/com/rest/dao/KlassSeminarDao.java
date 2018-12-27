@@ -11,6 +11,7 @@ public interface KlassSeminarDao {
     public List<KlassSeminar> findBySeminar(Long seminarId);
     public KlassSeminar findKlassSeminarById(Long klassSeminarId);
     public int save(KlassSeminar klassSeminar);
+    public int startSeminar(Long klassSeminarId);
     public int delete(Long id);
     public int deleteBySeminarId(Long seminarId);
     public KlassSeminar findByKlassIdAndSeminarId(@Param("klassId") Long klassId,@Param("seminarId") Long seminarId);
