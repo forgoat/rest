@@ -155,13 +155,12 @@ public class SeminarController {
     /**
      * 设置班级讨论课状态
      * @param id
-     * @param classId
      * @param status
      * @return
      */
-    @PutMapping(value = "{seminarId}/class/{classId}/status")
-    public HttpStatus setStatus(@PathVariable("seminarId")Long id,@PathVariable("classId")Long classId,Integer status){
-        if(seminarService.changeStatus(id,classId,status)==1){
+    @PutMapping(value = "{klassSeminarId}/status")
+    public HttpStatus setStatus(@PathVariable("klassSeminarId")Long id,Integer status){
+        if(seminarService.changeStatus(id,status)==1){
             return HttpStatus.OK;
         }
         else {
