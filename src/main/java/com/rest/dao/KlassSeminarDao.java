@@ -17,4 +17,6 @@ public interface KlassSeminarDao {
     public KlassSeminar findByKlassIdAndSeminarId(@Param("klassId") Long klassId,@Param("seminarId") Long seminarId);
     public int changeStatus(@Param("seminarId") Long seminarId, @Param("classId") Long classId, @Param("status") Integer status);
     public int changeddl(@Param("seminarId")Long seminarId, @Param("classId")Long classId, @Param("reportDdl")Date reportDdl);
+    Long queryKlassSeminarIdByKlassIdAndSeminarId(@Param("klassId")Long klassId,@Param("seminarId")Long seminarId);
+    List<KlassSeminar> queryByKlassId(@Param("klassId") Long klassId);
 }

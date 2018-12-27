@@ -12,6 +12,14 @@
     <select id="findAllByKlassSeminarId" resultType="com.rest.entity.SeminarScore" parameterType="long">
         SELECT * FROM standard_seminar_system.seminar_score WHERE klass_seminar_id=#{classSeminarId}
     </select>
+    <select id="queryByKlassSeminarIdAndTeamId" resultType="com.rest.entity.SeminarScore">
+        SELECT *
+        FROM standard_seminar_system.seminar_score
+        WHERE
+        klass_seminar_id=#{klassSeminarId}
+        AND
+        team_id=#{teamId}
+    </select>
     <update id="updateSeminarQuestionScore">
         UPDATE standard_seminar_system.seminar_score SET question_score=#{questionScore} WHERE klass_seminar_id=#{klassSeminarId} AND team_id=#{teamId}
     </update>
