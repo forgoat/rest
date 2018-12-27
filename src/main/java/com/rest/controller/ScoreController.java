@@ -54,4 +54,18 @@ public class ScoreController {
         HttpStatus httpStatus=HttpStatus.OK;
         return new ResponseEntity<List<SeminarScore>>(seminarScoreList,httpStatus);
     }
+
+    /**
+     * 修改讨论课提问分数
+     * @param klassSeminarId
+     * @param teamId
+     * @param questionScore
+     * @return
+     */
+    @PutMapping(value = "questionScore")
+    public HttpStatus updateSeminarQuestionScore(Long klassSeminarId,Long teamId,Integer questionScore){
+        HttpStatus httpStatus=(scoreService.updateSeminarQuestionScore(klassSeminarId,teamId,questionScore)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
+    }
+
 }

@@ -1,9 +1,6 @@
 package com.rest.service;
 
-import com.rest.dao.AttendanceDao;
-import com.rest.dao.KlassSeminarDao;
-import com.rest.dao.SeminarDao;
-import com.rest.dao.TeamDao;
+import com.rest.dao.*;
 import com.rest.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +18,8 @@ public class AttendanceService {
     private SeminarDao seminarDao;
     @Autowired
     private KlassSeminarDao klassSeminarDao;
+    @Autowired
+    private QuestionDao questionDao;
     public List<Attendance> findAttendanceByKlassSeminarId(Long klassSeminarId){
         return attendanceDao.findAttendanceByKlassSeminarId(klassSeminarId);
     }
@@ -64,5 +63,11 @@ public class AttendanceService {
     }
     public int deleteAttendanceById(Long attendanceId){
         return attendanceDao.deleteById(attendanceId);
+    }
+    public int saveQuestion(Question question){
+        return questionDao.saveQuestion(question);
+    }
+    public int gradeQuestion(Long questionId,double score){
+        return questionDao.gradeQuestion(questionId,score);
     }
 }

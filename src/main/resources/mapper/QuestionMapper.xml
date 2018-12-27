@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.QuestionDao">
+    <insert id="saveQuestion" useGeneratedKeys="true" parameterType="com.rest.entity.Question" keyProperty="id">
+        INSERT INTO standard_seminar_system.question(klass_seminar_id,attendance_id,team_id,student_id,is_selected) VALUE (#{klassSeminarId},#{attendanceId},#{teamId},#{studentId},0)
+    </insert>
+    <update id="gradeQuestion">
+        UPDATE standard_seminar_system.question SET score=#{score} WHERE id=#{questionId}
+    </update>
+    <select id="findQuestionById" parameterType="long" resultType="com.rest.entity.Question">
+        SELECT * FROM standard_seminar_system.question WHERE id=#{questionId}
+    </select>
+</mapper>
