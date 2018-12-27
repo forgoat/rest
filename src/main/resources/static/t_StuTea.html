@@ -74,28 +74,111 @@
     </a>
 </header>
 <body>
-<div class="list">
-    <ul class="yiji">
+<div class="list" id="myView">
 
-        <li><a href="#" class="inactive">1-1 HHHH</a>
-            <ul style="display: none">
-                <li><a href="#">组长： 111</a></li>
-                <li class="last"><a href="#">组员：111</a></li>
-            </ul>
-        </li>
-        <li><a href="#" class="inactive">1-2 HHAAA</a>
-            <ul style="display: none">
-                <li><a href="#">组长：111</a></li>
-                <li><a href="#">组员：222</a></li>
-                <li><a href="#">组员：333</a></li>
-
-            </ul>
-        </li>
-
-    </ul>
 </div>
 
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var myModel = {teamList:[]};
+    var sem = {smallList:[]};
+    var id='';
+    var semid=16;
+    var htmlNav='';
+    function getTeam(teamid){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/team/"+teamid,                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
 
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+
+                htmlNav+='<li><a href="#">组长：'+ res.leader.account+'&nbsp; &nbsp;&nbsp; &nbsp;'+res.leader.studentName+'</a></li>';
+
+            },
+
+        });
+    }
+
+
+    function getMem(teamid){
+
+        $.ajax({
+            url: "/team/"+teamid+"/student",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.memList=res;
+
+                for(var i=0;i< myModel.memList.length;i++)
+                {
+                    if(i==0)
+                    htmlNav+='<li class="last"><a href="#">组员：'+myModel.memList[i].account+'&nbsp; &nbsp;&nbsp; &nbsp;'+myModel.memList[i].studentName+'</a></li>';
+                    else
+                        htmlNav+='<li class="last"><a href="#">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; '+myModel.memList[i].account+'&nbsp; &nbsp;&nbsp; &nbsp;'+myModel.memList[i].studentName+'</a></li>';
+
+                }
+
+            },
+
+        });
+    }
+
+    function getData(){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/course/"+courseid+"/team",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.teamList=res;
+
+                $("#myView").empty();
+
+                if( myModel.teamList.length>0)
+                {
+                    htmlNav+='<ul class="yiji">';
+                    for(var i=0;i< myModel.teamList.length;i++)
+                    {
+                        htmlNav+='<li><a href="#" class="inactive">'+myModel.teamList[i].klassSerial+'-'+myModel.teamList[i].teamSerial+'&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'+myModel.teamList[i].teamName+'</a>';
+
+                        htmlNav+='<ul style="display: none">';
+                        getTeam(myModel.teamList[i].id);
+                        getMem(myModel.teamList[i].id);
+
+
+
+                        htmlNav+='</ul>';
+                        htmlNav+='</li>';
+                    }
+                    htmlNav+='</ul>';
+                    $("#myView").html(htmlNav);
+                }
+            },
+            error: function(){
+        alert('服务器忙，请稍候');
+    }
+    });
+    }
+
+
+
+    getData();
+
+</script>
 
 </body>
 </html>
