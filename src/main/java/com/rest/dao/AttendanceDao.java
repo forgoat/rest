@@ -9,4 +9,5 @@ import java.util.List;
 public interface AttendanceDao {
     public List<Attendance> findAttendanceByKlassSeminarId(Long klassSeminarId);
     public int saveAttendance(Attendance attendance);
+    public int deleteById(Long attendanceId);
 }

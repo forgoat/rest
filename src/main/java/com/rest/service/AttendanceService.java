@@ -62,4 +62,7 @@ public class AttendanceService {
     public int saveAttendance(Attendance attendance){
         return attendanceDao.saveAttendance(attendance);
     }
+    public int deleteAttendanceById(Long attendanceId){
+        return attendanceDao.deleteById(attendanceId);
+    }
 }

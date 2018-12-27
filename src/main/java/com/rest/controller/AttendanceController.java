@@ -5,6 +5,7 @@ import com.rest.entity.AttendanceInfo;
 import com.rest.entity.AttendanceInfomation;
 import com.rest.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +27,20 @@ public class AttendanceController {
     public AttendanceInfomation findAttendanceInformationByKlassSeminarId(@PathVariable("klassSeminarId") Long klassSeminarId){
         return attendanceService.findAttendanceInformation(klassSeminarId);
     }
+
+    /**
+     * 保存报名
+     * @param attendance
+     * @return
+     */
     @PostMapping(value = "")
-    public int saveAttendance(Attendance attendance){
-        return attendanceService.saveAttendance(attendance);
+    public HttpStatus saveAttendance(Attendance attendance){
+        HttpStatus httpStatus=(attendanceService.saveAttendance(attendance)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
+    }
+    @DeleteMapping(value = "{attendanceId}")
+    public HttpStatus deleteAttendanceById(@PathVariable("attendanceId") Long id){
+        HttpStatus httpStatus=(attendanceService.deleteAttendanceById(id)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
     }
 }
