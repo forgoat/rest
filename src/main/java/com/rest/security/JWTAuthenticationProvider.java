@@ -65,7 +65,11 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
 //            authenticationToken.setDetails(new UserInfo(admin.getId(), admin.getAccount(), "admin"));
 //            return authenticationToken;
 //        }
+<<<<<<< HEAD
+//我注释的
+=======
 
+>>>>>>> master
         Teacher teacher = teacherService.findByAccount(username);
         if (null != teacher) {
             authorities.add(new SimpleGrantedAuthority("ROLE_TEACHER"));

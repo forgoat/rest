@@ -113,11 +113,34 @@
 </div>
 
 <script>
+    function quxiao(id)
+    {
+        alert("取消？");
+        $.ajax({
+            url: "/course/seminarshare",                //后端的API地址
+            type: 'POST',                                //http:POST/GET
+            async:false,
+            data:{shareSeminarId:id},     //指客户端提交给后台的参数
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res) {
+                alert("success");
+            },error:
+                function(){
+                alert("sorry");
+                }
+        });
+    }
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
     var myModel = {courseList:[]};
     function getData(){
         var courseid=getUrlParam('courseid');
         $.ajax({
-            url: "/course/"+semid+"/seminar",                //后端的API地址
+            url: "share",                //后端的API地址，待测试
             type: 'GET',                                //http:POST/GET
             async:false,
             data:{studentId:113},     //指客户端提交给后台的参数
@@ -133,30 +156,17 @@
                     htmlNav+='<ul class="yiji">';
                     for(var i=0;i< myModel.courseList.length;i++)
                     {
-                        htmlNav+='<li><a href="#" class="inactive">第'+ myModel.courseList[i].roundSerial+'轮</a>';
-                        htmlNav+='<ul style="display: none">';
-                        sem.semList=myModel.courseList[i].klassSeminarInfoList;
-                        if(sem.semList.length>0)
-                        {
-                            for(var j=0;j<sem.semList.length;j++) {
-                                if(sem.semList[j].status==0)
-                                {
-                                    id="s_SemInfoW.html";
-                                }else if(sem.semList[j].status==1)
-                                {
-                                    id="s_SemInfoZ.html";
-                                }else
-                                {
-                                    id="s_SemInfoY.html";
-                                }
-                                htmlNav += '<li><a href="';
-                                htmlNav+=id+'?klassseminarid='+sem.semList[j].id;
-                                htmlNav+='&seminarid='+sem.semList[j].seminarId;
-                                htmlNav+='" class="inactive active">';
-                                htmlNav+=sem.semList[j].seminarName ;
-                                htmlNav+='</a></li>';
-                            }
-                        }
+                        htmlNav+='<li><a href="#" class="inactive">课程名+老师</a>';
+                        if(myModel.courseList[i].shareStatus==0)
+                        htmlNav+='<li><a href="#">共享类型：组队分享</a></li>';
+                        else
+                            htmlNav+='<li><a href="#">共享类型：课程分享</a></li>';
+                        if(myModel.courseList[i].courseStatus==0)
+                        htmlNav+='<li class="last"><a href="#">共享情况：主课程</a></li>' ;
+                        else
+                            htmlNav+='<li class="last"><a href="#">共享情况：主课程</a></li>';
+                        htmlNav+='<div class="aui-code-box"><button onclick="quxiao(myModel.courseList[i].id)" >'+'>取消共享</button></div>';
+                        htmlNav+='</li>';
                         htmlNav+='</ul>';
                         htmlNav+='</li>';
                     }
@@ -169,6 +179,7 @@
             }
         });
     }
+    getData();
 </script>
 </body>
 </html>

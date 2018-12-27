@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+//package com.rest.security.config;
+=======
 package com.rest.security.config;//package com.rest.security.config;
+>>>>>>> master
 //
 //import com.rest.security.MyUserDetailsService;
 //import org.springframework.beans.factory.annotation.Autowired;
