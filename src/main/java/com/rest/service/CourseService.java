@@ -83,4 +83,7 @@ public class CourseService {
     public int acceptTeamMainCourseId(Long mainCourseId,Long subCourseId){
         return courseDao.acceptMainTeamCourseId(mainCourseId,subCourseId);
     }
+    public int acceptSeminarMainCourseId(Long mainCourseId,Long subCourseId){
+        return courseDao.acceptMainSeminarId(mainCourseId,subCourseId);
+    }
 }

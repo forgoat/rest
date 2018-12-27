@@ -259,6 +259,7 @@ public class CourseController {
             Long subCourseId=shareSeminarApplication.getSubCourseId();
             Long mainCourseId=shareSeminarApplication.getMainCourseId();
             List<Seminar> seminarList=seminarService.findByCourseId(subCourseId);
+            courseService.acceptSeminarMainCourseId(mainCourseId,subCourseId);
             for(Seminar seminar:seminarList){
                 Long roundId=seminar.getRoundId();
                 if(seminarService.deleteSeminar(seminar.getId())==1){

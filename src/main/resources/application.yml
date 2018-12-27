@@ -7,9 +7,10 @@ spring:
     username: 1010410164@qq.com
     password: shibfaeqmqkrbfgg
     host: smtp.qq.com
-
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true   #开启驼峰命名转换
   type-aliases-package: com.rest.entity
+server:
+  port: 8000

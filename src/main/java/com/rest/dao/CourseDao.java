@@ -16,6 +16,7 @@ public interface CourseDao {
     int saveCourse(Course course);
     Course findById(Long id);
     int deleteById(Long id);
+    public int acceptMainSeminarId(@Param("mainCourseId") Long mainCourseId,@Param("subCourseId") Long subCourseId);
     public List<Course> findByTeacherId(Long teacherId);
     public int acceptMainTeamCourseId(@Param("mainCourseId") Long mainCourseId, @Param("subCourseId") Long subCourseId);
 }

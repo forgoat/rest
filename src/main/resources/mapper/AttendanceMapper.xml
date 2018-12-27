@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.AttendanceDao">
+    <select id="findAttendanceByKlassSeminarId" parameterType="long" resultType="com.rest.entity.Attendance">
+        SELECT * FROM standard_seminar_system.attendance WHERE klass_seminar_id=#{klassSeminarId}
+    </select>
+    <insert id="saveAttendance" parameterType="com.rest.entity.Attendance" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO standard_seminar_system.attendance(klass_seminar_id,team_id,team_order,is_present) VALUE (#{klassSeminarId},#{teamId},#{teamOrder},0)
+    </insert>
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM standard_seminar_system.attendance WHERE id=#{attendanceId}
+    </delete>
+</mapper>

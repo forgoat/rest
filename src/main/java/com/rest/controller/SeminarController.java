@@ -195,12 +195,28 @@ public class SeminarController {
         return seminarService.findByCourseIdAndRoundId(courseId,roundId);
     }
     @GetMapping(value = "findByCourse")
-    public List<Seminar> findByCourseId(Long courseId){
+    public List<Seminar> findByCourseId(Long courseId)
+    {
         return seminarService.findByCourseId(courseId);
     }
     @DeleteMapping("deleteSeminar")
     public int deleteBySeminarId(Long seminarId)
     {
         return seminarService.deleteBySeminarId(seminarId);
+    }
+    @GetMapping(value = "classSeminar/{klassSeminarId}")
+    public KlassSeminar findKlassSeminarById(@PathVariable("klassSeminarId") Long klassSeminarId){
+        return seminarService.findKlassSeminarById(klassSeminarId);
+    }
+
+    /**
+     * 开始讨论课
+     * @param klassSeminarId
+     * @return
+     */
+    @PutMapping(value = "klassSeminar/{klassSeminarId}")
+    public HttpStatus startKlassSeminar(@PathVariable("klassSeminarId") Long klassSeminarId){
+        HttpStatus httpStatus=(seminarService.startKlassSeminar(klassSeminarId)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
     }
 }
