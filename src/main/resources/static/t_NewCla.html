@@ -43,14 +43,13 @@
 
         <div class="div-auto2" >
         <label class="col-sm-2 control-label">上课时间：</label>
-        <input type="text" id="noon" class="form-control" style="width: 50px" placeholder=" "/>
-        <input type="text" id="time" class="form-control" style="width: 50px" placeholder=" "/>
+        <input type="text" id="time" class="form-control" placeholder=" "/>
         </div>
 
         <div class="div-auto2" >
         <label class="col-sm-2 control-label">上课地点：</label>
 
-        <input type="text" class="form-control" placeholder=" ">
+        <input type="text" id="local" class="form-control" placeholder=" ">
         </div>
     </div>
 
@@ -64,7 +63,7 @@
         <div class="aui-code-box">
             <form action="">
                 <div class="aui-code-btn">
-                    <button>
+                    <button onclick="create()">
                         <a href="javascript:;">保存</a>
                     </button>
                 </div>
@@ -74,12 +73,21 @@
 
 </section>
 <script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
 function create() {
-
+    var courseid=getUrlParam("courseid");
+    var grade=$("#grade").val();
+    var klass=$("#class").val();
+    var time=$("#time").val();
+    var local=$("#local").val();
     $.ajax({
         url: "/course/courseid/class",                //后端的API地址
         type: 'POST',                                //http:POST/GET
-        data: {},                            //指客户端提交给后台的参数
+        data: {courseId:courseid,grade:grade,klassSerial:klass,klassTime:time,klassLocation:local},                            //指客户端提交给后台的参数
         dataType: 'json',                            //服务端返回类型text，JSON
         timeout: 3000,
         success: function (res) {
@@ -88,7 +96,6 @@ function create() {
             alert("sorry!");
         }
     });
-
 }
 </script>
 </body>
