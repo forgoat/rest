@@ -12,4 +12,7 @@
     <delete id="deleteById" parameterType="long">
         DELETE FROM standard_seminar_system.attendance WHERE id=#{attendanceId}
     </delete>
+    <update id="updateAttendanceStatus">
+        UPDATE standard_seminar_system.attendance SET is_present=#{status} WHERE id=#{attendanceId}
+    </update>
 </mapper>

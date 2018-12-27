@@ -77,7 +77,6 @@ private Long id;
         this.is_active = is_active;
     }
 
-//<<<<<<< HEAD
 //    public Student toStudent() {
 //        return new Student(id, account, password, is_active,email, name);
 //    }
@@ -85,7 +84,6 @@ private Long id;
 //    public Teacher toTeacher() {
 //        return new Teacher(id, account, password, is_active,email, name);
 //    }
-//=======
 //    public Student toStudent() {
 //        return new Student(id,account,password,is_active,email,name);
 //    }

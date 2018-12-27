@@ -121,4 +121,14 @@ public class StudentController {
         return studentService.queryKlassByStudentIdCourseId(studentId,courseId);
     }
 
+    /**
+     * 通过id查找学生
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "{studentId}")
+    public Student findStudentById(@PathVariable("studentId") Long id){
+        return studentService.findById(id);
+    }
+
 }
