@@ -9,7 +9,9 @@
     <meta content="telephone=no" name="format-detection"/>
     <link type="text/css" rel="stylesheet" href="css/base.css">
     <link type="text/css" rel="stylesheet" href="css/home.css">
-    <link href="/static/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <link href="css/child.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/tab.js"></script>
     <script type="text/javascript" src="js/slider.js"></script>
@@ -18,56 +20,52 @@
 <body>
 <section class="aui-flexView">
     <header class="aui-navBar aui-navBar-fixed b-line">
-        <a href="javascript:history.back(-1)" class="aui-navBar-item">
-            <i class="icon icon-return"></i>
-        </a>
-        <div class="aui-center">
-            <span class="aui-center-title">讨论课</span>
-        </div>
-        <a href="javascript:;" class="aui-navBar-item">
-            <i class="icon icon-sys"></i>
-        </a>
     </header>
     <body>
-    <div class="div-auto1" >
-        轮次：${round}
+    <div class="header">
+        <a class="return" onclick="javascript:history.back(-1);"></a>
+
+        <div class="icon">
+            <img class="menu-img" src="img/menu.png">
+        </div>
+        <div class="aui-center">
+            <span class="aui-center-title">我</span>
+        </div>
     </div>
-    <div class="div-auto2" >
-        主题：${theme}
+    <div class="div-auto1" id="myView1">
+        轮次：
     </div>
-    <div class="div-auto1" >
-        课次序号：${number}
+    <div class="div-auto2" id="myView2">
+        主题：
     </div>
-    <div class="div-auto2" >
-        要求：${require}
+    <div class="div-auto1" id="myView3">
+        课次序号：
     </div>
-    <div class="div-auto1" >
+    <div class="div-auto2"style="height: auto" id="myView4">
+        要求：
+    </div>
+    <div class="div-auto1" id="myView5">
         课程情况：未开始
         <a href="s_SemRegister.html">查看情况</a>
     </div>
-    <div class="div-auto2">
-        报名开始时间：${starttime}
+    <div class="div-auto2" id="myView6">
+        报名开始时间：/报名：
     </div>
-    <div class="div-auto2">
-        报名截止时间：${endtime}
+    <div class="div-auto2"id="myView7">
+        报名截止时间：/PPT：
     </div>
-    <div class="aui-code-btn">
-        <button>
-            <a href="/test/jump">报名</a>
-        </button>
-    </div>
+    <section class="aui-scrollView">
+        <div class="aui-code-box">
+            <div class="aui-code-btn"id="myView8">
+                <button>
+                    <a >报名/ppt提交</a>
+                </button>
+            </div>
+        </div>
+    </section>
     </body>
 </section>
-<div class="header">
-    <a class="return" onclick="javascript:history.back(-1);"></a>
 
-    <div class="icon">
-        <img class="menu-img" src="img/menu.png">
-    </div>
-    <div class="aui-center">
-        <span class="aui-center-title">讨论课</span>
-    </div>
-</div>
 
 <script>
     $(function(){
@@ -94,7 +92,7 @@
 </script>
 
 <div class="menu-box">
-    <img class="arrow" src="/static/img/jian-2.png">
+    <img class="arrow" src="img/jian-2.png">
     <ul>
 
         <li class="selected">
@@ -149,6 +147,86 @@
         )
     });
 </script>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var json='';
+    function emm() {
+        var seminarid=getUrlParam("seminarid");
+        var klassseminarid=getUrlParam("klassseminarid");
+        $.ajax({
+            url: "/seminar/"+seminarid,
+            type: "GET",
+            async:false,
+            dataType:'text',
+            success:function(data) {
+                json=eval("("+data+")");
+                $("#myView1").html("轮次： "+json.roundId);
+                $("#myView2").html("主题:"+json.seminarName);
+                $("#myView3").html("课次序号:"+json.seminarSerial);
+                $("#myView4").html("要求:"+json.introduction);
+                $("#myView5").html("课程情况：未开始"+'<a href="s_SemTeam.html?klassseminarid='+klassseminarid+'">查看情况</a>');
+            },error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+        $.ajax({
+            url: "/seminar/"+seminarid,//获取本组是否报名
+            type: "GET",
+            async:false,
+            dataType:'text',
+            success:function() {
+                var res='';
+                if(res=='')
+                {
+                    $("#myView6").html("报名开始时间： "+json.enrollStartTime);
+                    $("#myView7").html("报名截止时间:"+json.enrollEndTime);
+                    var ht=''
+                    ht+='<button><a href="s_SemRegister.html?klassseminarid='+klassseminarid+'">报名</a></button>';
+                    $("#myView8").html(ht);
+                }
+                else
+                {
+                    var attendence=eval(res);
+                    $("#myView6").html("报名： 第"+attendence.teamOrder+"组");
+                    var status='';
+                    if(attendence.pptName=='')
+                        status='未提交';
+                    else
+                        status='已提交';
+                    $("#myView7").html("PPT:"+status);
+                    var hy='';
+                    hy+='<form action="PPTUpload" method="post" enctype="multipart/form-data">\n' +
+                        '        <p>PPT提交 <input type="file" name="fileName1"/></p>\n' +
+                        '        <p><input type="submit" value="提交"/></p>\n' +
+                        '    </form>\n'
+                    $("#myView8").html(hy);
+                }
+            },error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
 
+    emm();
+</script>
+<script type="text/javascript">
+    $(function(){
+
+        $("input[type=file]").change(function(){
+            $(this).parents(".uploader").find(".filename").val($(this).val());
+        });
+
+        $("input[type=file]").each(function(){
+            if($(this).val()==""){
+                $(this).parents(".uploader").find(".filename").val("请选择文件...");
+            }
+        });
+
+    });
+</script>
 </body>
 </html>

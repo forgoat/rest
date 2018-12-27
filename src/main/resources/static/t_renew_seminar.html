@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>修改讨论课</title>
+    <title>修改讨论课ok</title>
+<script src="laydate/laydate.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0">
     <link type="text/css" rel="stylesheet" href=" css/base.css">
     <link type="text/css" rel="stylesheet" href=" css/home.css">
@@ -13,67 +15,14 @@
         .demo h3{line-height:24px}
         .demo p{line-height:20px}
     </style>
-    <script>
-        var offWidth = window.screen.width / 30; //这里用宽度/30表示1rem取得的px
-        document.getElementsByTagName("html")[0].style.fontSize = offWidth + 'px'; //把rem的值复制给顶级标签html的font-size
-    </script>
-    <style type="text/css">
-        *{margin: 0;padding: 0}
-        body{font-size: 14px
-        ;font-family: "微软雅黑";}
-        ul,li{list-style: none;}
-        a:link,a:visited{text-decoration: none;color: #fff;}
-        .list{width: 30rem;border-bottom:solid 1px #fff;margin:40px auto 0 auto;}
-        .list ul li{background-color:#0c85b9a3
-        ; border:solid 1px #fff; border-bottom:0;}
-        .list ul li a{padding-left: 10px;color: black; font-size:14px; display: block;  height:36px;line-height: 36px;position: relative;
-        }
-        .list ul li .inactive{ background:url( img/off.png) no-repeat 28rem center;}
-        .list ul li .inactives{ background:url( img/on.png) no-repeat 28rem center;}
-        .list ul li ul{display: none;}
-        .list ul li ul li { border-left:0; border-right:0; background-color:#e1f1fc; border-color:#fff;}
-        .list ul li ul li ul{display: none;}
-        .list ul li ul li a{ padding-left:20px;}
-        .list ul li ul li ul li { background-color:#0c85b9a3; border-color:#fff; }
-        .last{ background-color:#e2e2e2; border-color:#fff; }
-        .list ul li ul li ul li a{ color:#e1f1fc; padding-left:30px;}
-    </style>
     <script type="text/javascript" src=" js/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.inactive').click(function(){
-                if($(this).siblings('ul').css('display')=='none'){
-                    $(this).parent('li').siblings('li').removeClass('inactives');
-                    $(this).addClass('inactives');
-                    $(this).siblings('ul').slideDown(100).children('li');
-                    if($(this).parents('li').siblings('li').children('ul').css('display')=='block'){
-                        $(this).parents('li').siblings('li').children('ul').parent('li').children('a').removeClass('inactives');
-                        $(this).parents('li').siblings('li').children('ul').slideUp(100);
 
-                    }
-                }else{
-                    //控制自身变成+号
-                    $(this).removeClass('inactives');
-                    //控制自身菜单下子菜单隐藏
-                    $(this).siblings('ul').slideUp(100);
-                    //控制自身子菜单变成+号
-                    $(this).siblings('ul').children('li').children('ul').parent('li').children('a').addClass('inactives');
-                    //控制自身菜单下子菜单隐藏
-                    $(this).siblings('ul').children('li').children('ul').slideUp(100);
-
-                    // //控制同级菜单只保持一个是展开的（-号显示）
-                    // $(this).siblings('ul').children('li').children('a').removeClass('inactives');
-                }
-            })
-        });
-    </script>
 </head>
 
 <body>
 <section class="aui-flexView">
 
     <body>
-    section class="aui-flexView">
     <header class="aui-navBar aui-navBar-fixed b-line">
         <a href="javascript:history.back(-1)" class="aui-navBar-item">
             <i class="icon icon-return"></i>
@@ -86,88 +35,145 @@
         </a>
     </header>
     <body>
-    <div class="div-auto1" >
-        业务流程分析
+    <section>
+        <div class="div-auto1" id="trs1">
+            业务流程分析
+        </div>
+        <div class="div-auto2" id="trs2">
+            界面原型图和所有界面原型设计
+            讨论课每个小组15分钟
+        </div>
+
+
+        <div class="div-auto2" id="trs3">
+            <p>讨论课可见：
+                <label><input name="讨论课" type="radio" value="" />可见 </label>
+            </p>
+        </div>
+
+        <div class="div-auto1" id="trs4">
+            展示报告开始时间：  <input class="laydate-icon"onclick="laydate()" id="demo1" value="2018-12-27"/>
+        </div>
+        <div class="div-auto1" >
+            展示报告结束时间：  <input class="laydate-icon" onclick="laydate()"id="demo2" value="2018-12-27"/>
+        </div>
+
+        <div class="div-auto1" id="trs5">
+            报名小组数：<input id="max"name="讨论课" value="6"/>
+        </div>
+
+
+        <div class="div-auto2" id="trs6">
+            <p>报名顺序：
+                <label><input name="报名" id="is"type="radio" value="" />自定 </label>
+            </p>
+        </div>
+
+        <div class="div-auto1" id="trs7">
+            <p>所属Round：
+                <select>
+
+                    <option value="1">第一轮</option>
+                    <option value="2">第二轮</option>
+                    <option value="3">第三轮</option>
+                    <option value="4">第四轮</option>
+                    <option value="5">第五轮</option>
+                </select>
+            </p>
+        </div>
+
+        <div class="div-auto1" id="trs8">
+            书面报告提交截止时间：<input class="laydate-icon" onclick="laydate()" id="demo3" value="2018-6-20"/>
+
+        </div>
+    </section>
+
+<script>
+;!function(){
+laydate({
+   elem: '#demo1'
+})
+}();
+;!function(){
+    laydate({
+        elem: '#demo3'
+    })
+}();
+</script>
+    <div class="aui-code-box">
+        <button onclick="clink1()">
+            删除该讨论课
+        </button>
     </div>
-    <div class="div-auto2" >
-        界面原型图和所有界面原型设计
-        讨论课每个小组15分钟
-    </div>
-    <div class="div-auto1" >
-        <p>讨论课次序号：
-            <select>
-
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-        </p>
+    <div class="aui-code-box">
+        <button onclick="clink2()">
+            保存
+        </button>
     </div>
 
-    <div class="div-auto2" >
-        <p>讨论课可见：
-            <label><input name="讨论课" type="radio" value="" />可见 </label>
-        </p>
-    </div>
-
-    <div class="div-auto1" >
-        展示报告开始时间：   /年/月/日
-        展示报告结束时间：   /年/月/日
-    </div>
-
-    <div class="div-auto1" >
-        <p>报名小组数：
-            <select>
-
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-        </p>
-    </div>
-
-
-    <div class="div-auto2" >
-        <p>报名顺序：
-            <label><input name="报名" type="radio" value="" />自定 </label>
-        </p>
-    </div>
-
-    <div class="div-auto1" >
-        <p>所属Round：
-            <select>
-
-                <option value="1">第一轮</option>
-                <option value="2">第二轮</option>
-                <option value="3">第三轮</option>
-                <option value="4">第四轮</option>
-            </select>
-        </p>
-    </div>
-
-    <a class="button-auto1" >
-        删除该讨论课
-    </a>
-    <a class="button-auto1" >
-        保存
-    </a>
     </body>
 
-    <script type="text/javascript" src=" js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src=" js/jquery-1.7.1.js"></script>
     <script type='text/javascript' src=' js/jquery-ui.min.js'></script>
-    <script type="text/javascript" src=" js/jquery.alert.js"></script>
     <script type="text/javascript">
-        $(function(){
-
-            $("#a3").click(function(){
-                hiPrompt('新邮箱验证码:', ' ', ' ', function(r) {
-                    if( r ) hiOverAlert('你填入的内容是"' + r+'"');
-                });
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        };
+        var json='';
+        var seminarid = getUrlParam("seminarid");
+        var klassseminarid = getUrlParam("klassseminarid");
+        function f() {
+            $.ajax({
+                url: "/seminar/" + seminarid,
+                type: "GET",
+                async: false,
+                dataType: 'text',
+                success: function (data) {
+                    json = eval("(" + data + ")");
+                    $("#trs1").html('<input id="this" name="讨论课" value="'+json.seminarName+'"/>');
+                    $("#trs2").html('<textarea id="intro" rows="3"cols="45" name="要求" >'+json.introduction+'</textarea>');
+                }, error: function () {
+                    alert('服务器忙，请稍候');
+                }
             });
-
-        });
+        }
+        f();
+        function clink1() {
+            $.ajax({
+                url: "/seminar/" + seminarid,
+                type: "DELETE",
+                async: false,
+                dataType: 'text',
+                success: function (data) {
+                    alert("删除成功");
+                    window.location.href="t_Inf.html"
+                }, error: function () {
+                    alert('服务器忙，请稍候');
+                }
+            });
+        }
+        function clink2() {
+            var boo=0;
+            if($("#is").checked)
+                boo=1;
+            $.ajax({
+                url: "/seminar/" + seminarid,
+                type: "PUT",
+                async: false,
+                data:{seminarName:$("#this").val(),introduction:$("#intro").val(),maxTeam:$("#max").val(),isVisible:boo,enrollStartTime:$("#demo1").val(),enrollEndTime:$("#demo2").val()},
+                dataType: 'text',
+                success: function (data) {
+                    alert("成功");
+                    window.location.href="javascript:history.back(-1)";
+                }, error: function () {
+                    alert('服务器忙，请稍候');
+                }
+            });
+        }
     </script>
-
+    </body>
+</section>
+</body>
 </html>

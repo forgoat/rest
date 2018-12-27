@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -29,32 +29,71 @@
         </a>
     </header>
     <body>
-    <div class="div-auto1" >
-        轮次： 第二轮
+    <div class="div-auto1" id="myView1">
+        轮次：
     </div>
-    <div class="div-auto2" >
-        主题： 领域模型
+    <div class="div-auto2" id="myView2">
+        主题：
     </div>
-    <div class="div-auto1" >
-        课次序号：1
-
+    <div class="div-auto1" id="myView3">
+        课次序号：
     </div>
-
-    <div class="div-auto1" >
-        要求：界面导航图和所有原型设计...
-
+    <div class="div-auto2"style="height: auto" id="myView4">
+        要求：
     </div>
-
-    <div class="div-auto1" >
-        课程情况：未开始   <a style="font-family:times;color:green" href="/teacher/semminar/seminarppt">查看详情</a>
-
+    <div class="div-auto1" id="myView5">
+        课程情况：未开始
+        <a href="">查看情况</a>
     </div>
 
 
 
-    <button class="button-auto1" >
-        <a  style="font-family:times;color:black"  href="/teacher/semminar/taolunkezheng">  进入讨论课</a>
+    <button class="button-auto1" onclick="click1()" >
+       开始讨论课
+    </button>
+    <button class="button-auto1" onclick="click2()">
+       修改讨论课
     </button>
 
     </body>
+</section>
+</body>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var json='';
+    var seminarid = getUrlParam("seminarid");
+    var klassseminarid = getUrlParam("klassseminarid");
+    function emm() {
+        $.ajax({
+            url: "/seminar/" + seminarid,
+            type: "GET",
+            async: false,
+            dataType: 'text',
+            success: function (data) {
+                json = eval("(" + data + ")");
+                $("#myView1").html("轮次： " + json.roundId);
+                $("#myView2").html("主题:" + json.seminarName);
+                $("#myView3").html("课次序号:" + json.seminarSerial);
+                $("#myView4").html("要求:" + json.introduction);
+                $("#myView5").html("课程情况：未开始" + '<a href="t.html?klassseminarid=' + klassseminarid + '">查看情况</a>');
+            }, error: function () {
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+    function click1()
+    {
+
+    }
+    function click2()
+    {
+        window.location.href="t_renew_seminar.html?klassseminarid="+klassseminarid+'&semminarid='+seminarid;
+    }
+    emm();
+
+</script>
 </html>
