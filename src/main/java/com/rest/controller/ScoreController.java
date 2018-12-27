@@ -96,4 +96,22 @@ public class ScoreController {
         return httpStatus;
     }
 
+    /**
+     * 修改讨论课展示成绩
+     * @param klassSeminarId
+     * @param teamId
+     * @param presentationScore
+     * @return
+     */
+    @PutMapping(value = "presentationScore")
+    public HttpStatus updateSeminarScore(Long klassSeminarId,Long teamId,double presentationScore){
+        HttpStatus httpStatus=(scoreService.updateSeminarScore(klassSeminarId,teamId,presentationScore)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
+    }
+
+    @PutMapping(value = "reportScore")
+    public HttpStatus updateReportScore(Long klassSeminarId,Long teamId,double reportScore){
+        HttpStatus httpStatus=(scoreService.updateReportScore(klassSeminarId,teamId,reportScore)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
+    }
 }

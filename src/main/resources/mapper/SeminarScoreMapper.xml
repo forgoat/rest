@@ -23,4 +23,10 @@
     <update id="updateSeminarQuestionScore">
         UPDATE standard_seminar_system.seminar_score SET question_score=#{questionScore} WHERE klass_seminar_id=#{klassSeminarId} AND team_id=#{teamId}
     </update>
+    <update id="updateSeminarPresentationScore">
+        UPDATE standard_seminar_system.seminar_score SET presentation_score=#{presentationScore} WHERE klass_seminar_id=#{klassSeminarId} AND team_id=#{teamId}
+    </update>
+    <update id="updateSeminarReportScore">
+        UPDATE standard_seminar_system.seminar_score SET report_score=#{reportScore} WHERE klass_seminar_id=#{klassSeminarId} AND team_id=#{teamId}
+    </update>
 </mapper>
