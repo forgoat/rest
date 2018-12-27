@@ -195,12 +195,17 @@ public class SeminarController {
         return seminarService.findByCourseIdAndRoundId(courseId,roundId);
     }
     @GetMapping(value = "findByCourse")
-    public List<Seminar> findByCourseId(Long courseId){
+    public List<Seminar> findByCourseId(Long courseId)
+    {
         return seminarService.findByCourseId(courseId);
     }
     @DeleteMapping("deleteSeminar")
     public int deleteBySeminarId(Long seminarId)
     {
         return seminarService.deleteBySeminarId(seminarId);
+    }
+    @GetMapping(value = "classSeminar/{klassSeminarId}")
+    public KlassSeminar findKlassSeminarById(@PathVariable("klassSeminarId") Long klassSeminarId){
+        return seminarService.findKlassSeminarById(klassSeminarId);
     }
 }

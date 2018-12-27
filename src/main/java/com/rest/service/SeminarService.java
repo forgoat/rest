@@ -16,6 +16,9 @@ public class SeminarService {
     private SeminarDao seminarDao;
     @Autowired
     private KlassSeminarDao klassSeminarDao;
+    public KlassSeminar findKlassSeminarById(Long klassSeminarId){
+        return klassSeminarDao.findKlassSeminarById(klassSeminarId);
+    }
     public int save(Seminar seminar){
         return seminarDao.save(seminar);
     }
