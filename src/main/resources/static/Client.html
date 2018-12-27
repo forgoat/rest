@@ -11,6 +11,10 @@
     <input type="button" id="btnConnection" value="Connect" />
     <input type="button" id="btnClose" value="Close" />
     <input type="button" id="btnSend" value="Send" />
+    <form>
+    <input type="text" id="teamSerial" value="teamSerial">
+
+    </form>
 </div>
 <script src="js/jquery-1.7.1.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
@@ -46,7 +50,7 @@
 
     //发送消息
     $("#btnSend").click(function() {
-        socket.send("这是来自客户端的消息" + location.href + new Date());
+        socket.send("这是来自客户端的消息" + location.href + new Date()+teamSerial.value);
         alert("这是来自客户端的消息");
     });
 
