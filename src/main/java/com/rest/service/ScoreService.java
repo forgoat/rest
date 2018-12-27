@@ -184,7 +184,4 @@ public class ScoreService {
         }
     }
 
-    public Question findQuestionById(Long id){
-        return questionDao.findQuestionById(id);
-    }
 }
