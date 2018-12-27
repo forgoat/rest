@@ -1,5 +1,6 @@
 package com.rest.controller;
 
+import com.rest.entity.ScorePage;
 import com.rest.entity.SeminarScore;
 import com.rest.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "seminarscore")
+@RequestMapping(value = "score")
 public class ScoreController {
     @Autowired
     private ScoreService scoreService;
@@ -54,6 +55,33 @@ public class ScoreController {
         HttpStatus httpStatus=HttpStatus.OK;
         return new ResponseEntity<List<SeminarScore>>(seminarScoreList,httpStatus);
     }
+
+    /**
+     * 此课程所有的轮次序列号 例如：第几次讨论课
+     * @param courseId
+     * @return
+     */
+    @GetMapping(value = "queryAllRoundSerialByCourseId")
+    public ResponseEntity<List<Integer>> queryAllRoundSerialByCourseId(Long courseId){
+        List<Integer> roundSerialList=scoreService.queryAllRoundSerialByCourseId(courseId);
+        HttpStatus httpStatus=HttpStatus.OK;
+        return new ResponseEntity<List<Integer>>(roundSerialList,httpStatus);
+    }
+
+    /**
+     * 查询ScorePage所需信息
+     * @param courseId
+     * @param studentId
+     * @param roundSerial
+     * @return
+     */
+    @GetMapping(value = "queryScorePage")
+    public ResponseEntity<ScorePage> queryScorePage(Long courseId,Long studentId,Integer roundSerial){
+        ScorePage scorePage=scoreService.queryScorePage(courseId,studentId,roundSerial);
+        HttpStatus httpStatus=HttpStatus.OK;
+        return new ResponseEntity<ScorePage>(scorePage,httpStatus);
+    }
+
 
     /**
      * 修改讨论课提问分数

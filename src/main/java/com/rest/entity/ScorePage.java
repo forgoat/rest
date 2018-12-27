@@ -5,10 +5,11 @@ import java.util.Map;
 
 public class ScorePage {
     private Long roundId;
-    private String roundSerial;
-    //讨论课成绩Map
-    private Map<Seminar,SeminarScore> seminarScoreMap;
+    private Integer roundSerial;
     private RoundScore roundScore;
+    private List<Seminar> seminarList;
+    private List<SeminarScore>seminarScoreList;
+
 
     public Long getRoundId() {
         return roundId;
@@ -18,20 +19,12 @@ public class ScorePage {
         this.roundId = roundId;
     }
 
-    public String getRoundSerial() {
+    public Integer getRoundSerial() {
         return roundSerial;
     }
 
-    public void setRoundSerial(String roundSerial) {
+    public void setRoundSerial(Integer roundSerial) {
         this.roundSerial = roundSerial;
-    }
-
-    public Map<Seminar, SeminarScore> getSeminarScoreMap() {
-        return seminarScoreMap;
-    }
-
-    public void setSeminarScoreMap(Map<Seminar, SeminarScore> seminarScoreMap) {
-        this.seminarScoreMap = seminarScoreMap;
     }
 
     public RoundScore getRoundScore() {
@@ -40,5 +33,21 @@ public class ScorePage {
 
     public void setRoundScore(RoundScore roundScore) {
         this.roundScore = roundScore;
+    }
+
+    public List<Seminar> getSeminarList() {
+        return seminarList;
+    }
+
+    public void setSeminarList(List<Seminar> seminarList) {
+        this.seminarList = seminarList;
+    }
+
+    public List<SeminarScore> getSeminarScoreList() {
+        return seminarScoreList;
+    }
+
+    public void setSeminarScoreList(List<SeminarScore> seminarScoreList) {
+        this.seminarScoreList = seminarScoreList;
     }
 }
