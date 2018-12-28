@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OOAD讨论课</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0">
+    <link type="text/css" rel="stylesheet" href="css/base.css">
+    <link type="text/css" rel="stylesheet" href="css/home.css">
+    <link href="css/custom.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="css/alert.css" />
+    <style type="text/css">
+        .demo{width:400px; margin:20px auto}
+        .demo h3{line-height:24px}
+        .demo p{line-height:20px}
+    </style>
+
+    <style>
+        body{margin:0;padding:0;}
+        .box{margin:10px auto;width:400px;}
+        #showtime{margin:10px;margin-bottom: 10px;text-align: center;}
+        span{font-size: 10px;}
+        button{width:50px;height:50px;border-radius: 50px;border:0;outline:none ;margin:0 68px;font-size:10px;}
+        #record{margin-top:20px;}
+        #record div{width:400px;height:30px;border-bottom:1px dotted #666;}
+        #record span{font-size:20px;}
+        .left{float:left;}
+        .right{float:right;}
+    </style>
+</head>
+<header class="aui-navBar aui-navBar-fixed b-line">
+    <a href="javascript:history.back(-1)" class="aui-navBar-item">
+        <i class="icon icon-return"></i>
+    </a>
+    <div class="aui-center">
+        <span class="aui-center-title">OOAD讨论课</span>
+    </div>
+    <a href="javascript:;" class="aui-navBar-item">
+        <i class="icon icon-sys"></i>
+    </a>
+</header>
+<body>
+<section class="aui-flexView">
+
+    <body>
+    <div class="div-auto2" >
+        业务流程分析
+    </div>
+    <div class="div-auto1" >
+     1-3组展示：已进行5分钟       已有1位同学提问
+    </div>
+
+    <div class="div-auto2" >
+        <a  style="font-family:times;color:black"  href="#" id="a1">  1-1</a>
+    </div>
+
+    <div class="div-auto2" >
+        <a  style="font-family:times;color:black"  href="#" id="a2">  1-2</a>
+    </div>
+
+
+    <div class="div-auto2" >
+        <a  style="font-family:times;color:black"  href="#" id="a3">  1-3</a>
+    </div>
+
+
+    <div class="div-auto2" >
+        <a  style="font-family:times;color:black"  href="#" id="a4">  1-4</a>
+    </div>
+
+
+    <section class="aui-flexView">
+        <div class="aui-code-box">
+            <div class="aui-code-btn">
+                <button class="button-auto1" >
+                    <a  style="font-family:times;color:black"  href="#"> 下个提问</a>
+                </button>
+                <button class="button-auto1" >
+                    <a  style="font-family:times;color:black"  href="#"> 下组展示</a>
+                </button>
+                `
+            </div>
+        </div>
+        </section>
+    </body>
+
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type='text/javascript' src='js/jquery-ui.min.js'></script>
+    <script type="text/javascript" src="js/jquery.alert.js"></script>
+    <script type="text/javascript">
+        $(function(){
+
+            $("#a1").click(function(){
+                hiPrompt('提问分数:', ' ', ' ', function(r) {
+                    if( r ) hiOverAlert('你填入的内容是"' + r+'"');
+                });
+            });
+
+            $("#a2").click(function(){
+                hiPrompt('提问分数:', ' ', ' ', function(r) {
+                    if( r ) hiOverAlert('你填入的内容是"' + r+'"');
+                });
+            });
+
+            $("#a3").click(function(){
+                hiPrompt('提问分数:', ' ', ' ', function(r) {
+                    if( r ) hiOverAlert('你填入的内容是"' + r+'"');
+                });
+            });
+
+            $("#a4").click(function(){
+                hiPrompt('提问分数:', ' ', ' ', function(r) {
+                    if( r ) hiOverAlert('你填入的内容是"' + r+'"');
+                });
+            });
+
+        });
+    </script>
+</section>
+</body>
+
+</html>

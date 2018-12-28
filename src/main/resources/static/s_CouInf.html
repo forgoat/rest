@@ -29,25 +29,65 @@
         </a>
     </header>
 
-    <div class="div-auto2" >
-        课程简介：
-    </div>
-    <div class="div-auto1" >
-        成绩计算规则：
-    </div>
-    <div class="div-auto2" >
-        组队开始时间：
-    </div>
-    <div class="div-auto1" >
-        组队截止时间：
-    </div>
-    <div class="div-auto2" >
-        组队要求
-    </div>
+    <div class="list" id="myView"></div>
 
 
 
 </section>
+
+
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var myModel = {teamList:[]};
+    var sem = {smallList:[]};
+    var id='';
+    var semid=16;
+    var htmlNav='';
+    function getData(){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/course/"+courseid,                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+
+
+                htmlNav+='<ul class="yiji">';
+
+                htmlNav+='<div class="div-auto2" >课程简介：'+res.introduction+'</div>';
+                htmlNav+='<div class="div-auto1" >成绩计算规则：课堂展示：'+res.presentationPercentage+'%</div>';
+                htmlNav+='<div class="div-auto1" >&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;课堂提问：'+res.questionPercentage+'%</div>';
+
+
+                htmlNav+='<div class="div-auto1" >&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;书面报告：'+res.reportPercentage+'%</div>';
+
+                htmlNav+='<div class="div-auto2" >组队开始时间：'+res.teamStartTime+'</div>';
+                htmlNav+='<div class="div-auto1" >组队截止时间：'+res.teamEndTime+'</div>';
+                htmlNav+='<div class="div-auto2" ><a href="t_TeaReqSee.html?courseid='+courseid+'">组队要求：</a></div>';
+                $("#myView").html(htmlNav);
+
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+
+
+    getData();
+
+</script>
+
+
+
+
 </body>
 
 </html>
