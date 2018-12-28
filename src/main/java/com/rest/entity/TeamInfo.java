@@ -7,6 +7,7 @@ public class TeamInfo {
     private Long courseId;
     private Long classId;
     private Integer teamSerial;
+    private Integer klassSerial;
     private String teamName;
     private Student leader;
     private List<Student> member;
@@ -68,5 +69,27 @@ public class TeamInfo {
 
     public void setMember(List<Student> member) {
         this.member = member;
+    }
+
+    public Integer getKlassSerial() {
+        return klassSerial;
+    }
+
+    public void setKlassSerial(Integer klassSerial) {
+        this.klassSerial = klassSerial;
+    }
+
+    @Override
+    public String toString() {
+        return "TeamInfo{" +
+                "teamId=" + teamId +
+                ", courseId=" + courseId +
+                ", classId=" + classId +
+                ", teamSerial=" + teamSerial +
+                ", klassSerial=" + klassSerial +
+                ", teamName='" + teamName + '\'' +
+                ", leader=" + leader +
+                ", member=" + member +
+                '}';
     }
 }

@@ -16,13 +16,11 @@
     <update id="updateAttendanceStatus">
         UPDATE standard_seminar_system.attendance SET is_present=#{status} WHERE id=#{attendanceId}
     </update>
-    <update id="updateAttendance" parameterType="com.rest.entity.Attendance">
+    <update id="updateAttendance" parameterType="Long">
         UPDATE standard_seminar_system.attendance
         SET
         ppt_name=#{pptName},
-        ppt_url=#{pptUrl},
-        report_name=#{reportName},
-        report_url=#{reportUrl}
+        ppt_url=#{pptUrl}
         WHERE
         id=#{id}
     </update>
@@ -33,5 +31,12 @@
         klass_seminar_id=#{klassSeminarId}
         AND
         team_id=#{teamId}
+    </select>
+
+    <select id="queryAttendanceById" resultType="com.rest.entity.Attendance">
+        SELECT *
+        FROM standard_seminar_system.attendance
+        WHERE
+        id=#{id}
     </select>
 </mapper>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>课程信息</title>
+    <title>组队要求</title>
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
@@ -22,7 +22,7 @@
             <i class="icon icon-return"></i>
         </a>
         <div class="aui-center">
-            <span class="aui-center-title">课程信息</span>
+            <span class="aui-center-title">组队要求</span>
         </div>
         <a href="javascript:;" class="aui-navBar-item">
             <i class="icon icon-sys"></i>
@@ -81,13 +81,13 @@
 
 
                     if(res=='')
-                        htmlNav+='<div class="div-auto2" >无</div>';
+                        htmlNav+='无';
                     else
-                        htmlNav+='<div class="div-auto2" >'+res.courseName+'</div>';
+                        htmlNav+=res.courseName;
 
                 },
                 error: function(){
-                    htmlNav+='<div class="div-auto2" >无</div>';
+                    htmlNav+='无';
                 }
 
             });
@@ -106,16 +106,58 @@
                 success: function(res){
                     myModel.courseList=res;
 
-                    alert(myModel.courseList.length);
+
                     for(var i=0;i< myModel.courseList.length;i++)
                     {
+                        htmlNav+='<div class="div-auto2" >';
                         getCourse(myModel.courseList[i]);
+                        htmlNav+='</div>';
                     }
 
                 },
 
             });
         }
+
+        function getOtherMem(){
+            var courseid=getUrlParam('courseid');
+            $.ajax({
+                url: "/team/queryCourseMemberLimitStrategyById",                //后端的API地址
+                type: 'POST',                                //http:POST/GET
+                async:false,
+                data:{courseId:courseid},
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+                    myModel.MemList=res;
+
+
+                    htmlNav+='<div class="div-auto2" >组内选修课程人数：</div>';
+
+
+                    htmlNav+='<div class="div-auto2" >';
+                    getCourse(res.courseId);
+                    htmlNav+='：'+res.minMember+'-'+res.maxMember+'</div>';
+
+
+
+                    // for(var i=0;i< myModel.MemList.length;i++)
+                    // {
+                    //
+                    //     alert(myModel.MemList[i].courseId);
+                    //     htmlNav+='<div class="div-auto2" >';
+                    //     getCourse(myModel.MemList[i].courseId);
+                    //     htmlNav+='：'+myModel.MemList[i].minMember+'-'+myModel.MemList[i].maxMember+'</div>';
+                    //
+                    //
+                    // }
+
+                },
+
+            });
+        }
+
+
 
         function getData(){
             var courseid=getUrlParam('courseid');
@@ -132,7 +174,8 @@
 
                     htmlNav+='<div class="div-auto1" > 组员基本要求：</div>';
                     htmlNav+='<div class="div-auto2" > 小组总人数（含组长）：'+res.minMember+'-'+res.maxMember+'</div>';
-                    htmlNav+='<div class="div-auto2" >组内选修课程人数：</div>';
+
+                    getOtherMem();
                     htmlNav+='<div class="div-auto1" >冲突课程：无</div>';
                     getConflict(courseid);
 
