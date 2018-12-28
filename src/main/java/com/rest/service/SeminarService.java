@@ -86,23 +86,24 @@ public class SeminarService {
      * @return
      */
     public Long queryKlassSeminarId(Long studentId,Long courseId,Long seminarId){
+        System.out.println(seminarId+"  "+courseId+"  "+seminarId);
         Long teamId=teamStudentDao.findByStudentId(studentId);
-        System.out.println("teamId:"+teamId);
+        System.out.println("------teamId:"+teamId);
 
         List<Long> klassIdList=klassTeamDao.findByTeamId(teamId);
-        System.out.println("klassIdList:"+klassIdList);
+        System.out.println("------klassIdList:"+klassIdList);
 
         List<Klass> klassList=klassDao.findByCourseId(courseId);
-        System.out.println("klassList:"+klassList);
+        System.out.println("------klassList:"+klassList);
 
         Long klassId=null;
         for(Long a: klassIdList){
-            System.out.println("a:"+a);
+            System.out.println("-----a:"+a);
             for(Klass b:klassList){
-                System.out.println("b:"+b);
+                System.out.println("-----b:"+b);
                 if(a==b.getId()){
                     klassId=a;
-                    System.out.println("klassId"+a);
+                    System.out.println("------klassId"+a);
                     break;
                 }
             }
