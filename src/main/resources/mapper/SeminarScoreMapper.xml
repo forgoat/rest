@@ -44,4 +44,10 @@
         </set>
         WHERE klass_seminar_id=#{klassSeminarId} AND team_id=#{teamId}
     </update>
+    <select id="queryKlassStudentIdByTeamId" resultType="Long">
+        SELECT klass_seminar_id
+        FROM standard_seminar_system.seminar_score
+        WHERE
+        team_id=#{teamId}
+    </select>
 </mapper>

@@ -13,4 +13,5 @@ public interface TeamStudentDao {
     List<Long> queryByTeamId(Long teamId);
     public int deleteByTeamId(Long teamId);
     public List<TeamStudent> findByTeamId(Long teamId);
+
 }

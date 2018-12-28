@@ -29,6 +29,8 @@ public class TeamService {
     private ConflictCourseStrategyDao conflictCourseStrategyDao;
     @Autowired
     private TeamValidApplicationDao teamValidApplicationDao;
+    @Autowired
+    private SeminarScoreDao seminarScoreDao;
 
 
     @Autowired
@@ -46,10 +48,6 @@ public class TeamService {
         return teamDao.queryStudentNoTeam();
     }
 
-
-    public List<KlassStudent> findStuByTeamId(Long teamId){
-        return klassStudentDao.findByTeamId(teamId);
-    }
     public Team findTeamByTeamId(Long teamId){
         return teamDao.findById(teamId);
     }
