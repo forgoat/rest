@@ -78,4 +78,18 @@ public class TeamInfo {
     public void setKlassSerial(Integer klassSerial) {
         this.klassSerial = klassSerial;
     }
+
+    @Override
+    public String toString() {
+        return "TeamInfo{" +
+                "teamId=" + teamId +
+                ", courseId=" + courseId +
+                ", classId=" + classId +
+                ", teamSerial=" + teamSerial +
+                ", klassSerial=" + klassSerial +
+                ", teamName='" + teamName + '\'' +
+                ", leader=" + leader +
+                ", member=" + member +
+                '}';
+    }
 }

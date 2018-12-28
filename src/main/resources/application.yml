@@ -1,6 +1,6 @@
 spring:
   datasource:
-    username: root
+    username: hanlei
     password: 12345678
     url: jdbc:mysql://127.0.0.1:3306/standard_seminar_system?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
   mail:

@@ -58,6 +58,7 @@ public class ScoreService {
         return roundDao.queryAllRoundSerialByCourseId(courseId);
     }
 
+
     /**
      * 查找讨论课成绩
      * @param courseId
@@ -123,6 +124,33 @@ public class ScoreService {
     }
 
     /**
+     * 按轮次查询讨论课成绩
+     * @param seminarScoreList
+     * @param roundId
+     * @param courseId
+     * @param teamId
+     * @return
+     */
+    public List<SeminarScore> querySeminarScoreByRoundId(List<SeminarScore> seminarScoreList,Long roundId,Long courseId,Long teamId){
+        List<Seminar> seminarList=seminarDao.findByCourseIdAndRoundId(courseId,roundId);//一轮的seminar
+        List<Long> klassIdList=klassTeamDao.findByTeamId(teamId);
+        List<Long> klassSeminarIdList=new ArrayList<>();
+        for(Seminar seminar:seminarList){
+            for(Long klassId:klassIdList){
+                klassSeminarIdList.add(klassSeminarDao.queryKlassSeminarIdByKlassIdAndSeminarId(klassId,seminar.getId()));
+            }
+        }
+        List<SeminarScore> seminarScoreList1=new ArrayList<>();
+        for(Long klassSeminarId:klassSeminarIdList){
+            for(SeminarScore seminarScore:seminarScoreList){
+                if(klassSeminarId==seminarScore.getKlassSeminarId()) seminarScoreList1.add(seminarScore);
+            }
+        }
+        return seminarScoreList1;
+    }
+
+
+    /**
      * 查询ScorePage所需信息
      * @param courseId
      * @param studentId
@@ -130,10 +158,15 @@ public class ScoreService {
      * @return
      */
     public ScorePage queryScorePage(Long courseId,Long studentId,Integer roundSerial){
-
+        Long teamId=teamStudentDao.findByStudentId(studentId);
+        System.out.println("teamId"+teamId);
         List<SeminarScore> seminarScoreList=queryByCourseIdStudentId(courseId,studentId);
+        System.out.println("seminarScoreList"+seminarScoreList);
         Long roundId=roundDao.queryRoundIdByCourseIdAndRoundSerial(courseId,roundSerial);
+        System.out.println("roundId"+roundId);
         List<Seminar> seminarList=seminarDao.findByCourseIdAndRoundId(courseId,roundId);
+        System.out.println("seminarList"+seminarList);
+        List<SeminarScore> seminarScoreList1=querySeminarScoreByRoundId(seminarScoreList,roundId,courseId,teamId);
 
         ScorePage scorePage=new ScorePage();
         scorePage.setRoundId(roundId);
@@ -141,7 +174,7 @@ public class ScoreService {
         scorePage.setRoundScore(queryRoundScore(courseId,studentId,roundSerial));
         scorePage.setRoundSerial(roundSerial);
         scorePage.setSeminarList(seminarList);
-        scorePage.setSeminarScoreList(seminarScoreList);
+        scorePage.setSeminarScoreList(seminarScoreList1);
         return scorePage;
     }
 
