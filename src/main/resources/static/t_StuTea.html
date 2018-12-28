@@ -91,6 +91,9 @@
     var htmlNav='';
 
 
+
+
+
     function getStudent(studentid){
         var courseid=getUrlParam('courseid');
         $.ajax({
@@ -109,46 +112,19 @@
     }
 
 
-    function getClass(courseid){
+    function getTeam(teamid){
         var courseid=getUrlParam('courseid');
         $.ajax({
-            url: "/class/findByCourseId",                //后端的API地址
-            type: 'GET',                                //http:POST/GET
-            async:false,
-            data:{courseId:courseid},
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function(res){
-                myModel.classList=res;
-
-                for(var i=0;i< myModel.memList.length;i++) {
-                    getTeam(myModel.memList[i].id);
-                }
-
-
-            },
-
-        });
-    }
-
-
-
-    function getTeam(classid){
-        var courseid=getUrlParam('courseid');
-        $.ajax({
-            url: "/team/"+teamid,                //需要修改
+            url: "/team/"+teamid,                //后端的API地址
             type: 'GET',                                //http:POST/GET
             async:false,
 
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success: function(res){
-                myModel.teaList=res;
-                for(var i=0;i< myModel.memList.length;i++) //找到了class下的所有team
-                {
-                    htmlNav += '<li><a href="#">组长：' + res.leader.account + '&nbsp; &nbsp;&nbsp; &nbsp;' + res.leader.studentName + '</a></li>';
 
-                }
+                htmlNav+='<li><a href="#">组长：'+ res.leader.account+'&nbsp; &nbsp;&nbsp; &nbsp;'+res.leader.studentName+'</a></li>';
+
             },
 
         });
@@ -190,6 +166,59 @@
         });
     }
 
+
+    //通过课程id查到team id
+    function getTeamId(classid){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/class/"+classid+"/team",                //需要修改
+            type: 'GET',                                //http:POST/GET
+            async:false,
+
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                //teaList里存放teamid
+                myModel.teaList=res;
+                for(var i=0;i< myModel.teaList.length;i++) //找到了class下的所有team
+                {
+                    //通过teamid查到组长信息
+                    getTeam(myModel.teaList[i]);
+                    //通过teamid查到组员信息
+                    getMem(myModel.teaList[i]);
+                }
+            },
+
+        });
+    }
+
+
+    //查询课程下的所有班级id存在classList.id里
+    function getClass(courseid){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/class/findByCourseId",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+            data:{courseId:courseid},
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.classList=res;
+
+                //通过每个班级id查询team
+                for(var i=0;i< myModel.classList.length;i++) {
+                    getTeamId(myModel.classList[i].id);
+                }
+
+
+            },
+
+        });
+    }
+
+
+
     function getData(){
         var courseid=getUrlParam('courseid');
         $.ajax({
@@ -212,8 +241,7 @@
                         htmlNav+='<li><a href="#" class="inactive">'+myModel.teamList[i].klassSerial+'-'+myModel.teamList[i].teamSerial+'&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'+myModel.teamList[i].teamName+'</a>';
 
                         htmlNav+='<ul style="display: none">';
-                        getClass(myModel.teamList[i].id);
-                        getMem(myModel.teamList[i].id);
+                        getClass(courseid);
 
 
 
@@ -225,9 +253,9 @@
                 }
             },
             error: function(){
-        alert('服务器忙，请稍候');
-    }
-    });
+                alert('服务器忙，请稍候');
+            }
+        });
     }
 
 
