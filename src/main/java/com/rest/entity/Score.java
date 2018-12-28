@@ -49,4 +49,15 @@ public class Score {
     public void setReportScore(Double reportScore) {
         this.reportScore = reportScore;
     }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "seminarTotalScore=" + seminarTotalScore +
+                ", roundTotalScore=" + roundTotalScore +
+                ", presentatonScore=" + presentatonScore +
+                ", questionScore=" + questionScore +
+                ", reportScore=" + reportScore +
+                '}';
+    }
 }

@@ -133,17 +133,24 @@ public class ScoreService {
      */
     public List<SeminarScore> querySeminarScoreByRoundId(List<SeminarScore> seminarScoreList,Long roundId,Long courseId,Long teamId){
         List<Seminar> seminarList=seminarDao.findByCourseIdAndRoundId(courseId,roundId);//一轮的seminar
+        System.out.println("seminarList"+seminarList);
         List<Long> klassIdList=klassTeamDao.findByTeamId(teamId);
+        System.out.println("klassIdList"+klassIdList);
         List<Long> klassSeminarIdList=new ArrayList<>();
         for(Seminar seminar:seminarList){
             for(Long klassId:klassIdList){
+                System.out.println("for循环："+seminar+" "+klassId);
                 klassSeminarIdList.add(klassSeminarDao.queryKlassSeminarIdByKlassIdAndSeminarId(klassId,seminar.getId()));
             }
         }
         List<SeminarScore> seminarScoreList1=new ArrayList<>();
         for(Long klassSeminarId:klassSeminarIdList){
-            for(SeminarScore seminarScore:seminarScoreList){
-                if(klassSeminarId==seminarScore.getKlassSeminarId()) seminarScoreList1.add(seminarScore);
+            for(SeminarScore seminarScore:seminarScoreList) {
+                System.out.println("klassSeminarId:" + klassSeminarId + " seminarScore:" + seminarScore);
+                if (seminarScore != null&&klassSeminarId!=null) {
+                    if (klassSeminarId.equals(seminarScore.getKlassSeminarId())) seminarScoreList1.add(seminarScore);
+                }
+                else continue;
             }
         }
         return seminarScoreList1;
@@ -159,14 +166,15 @@ public class ScoreService {
      */
     public ScorePage queryScorePage(Long courseId,Long studentId,Integer roundSerial){
         Long teamId=teamStudentDao.findByStudentId(studentId);
-        System.out.println("teamId"+teamId);
+        System.out.println("teamId: "+teamId);
         List<SeminarScore> seminarScoreList=queryByCourseIdStudentId(courseId,studentId);
-        System.out.println("seminarScoreList"+seminarScoreList);
+        System.out.println("seminarScoreList: "+seminarScoreList);
         Long roundId=roundDao.queryRoundIdByCourseIdAndRoundSerial(courseId,roundSerial);
-        System.out.println("roundId"+roundId);
+        System.out.println("roundId: "+roundId);
         List<Seminar> seminarList=seminarDao.findByCourseIdAndRoundId(courseId,roundId);
-        System.out.println("seminarList"+seminarList);
+        System.out.println("seminarList: "+seminarList);
         List<SeminarScore> seminarScoreList1=querySeminarScoreByRoundId(seminarScoreList,roundId,courseId,teamId);
+        System.out.println("seminarScoreList1: "+seminarScoreList1);
 
         ScorePage scorePage=new ScorePage();
         scorePage.setRoundId(roundId);

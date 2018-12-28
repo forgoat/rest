@@ -77,4 +77,17 @@ public class ShareList {
     public void setShareId(Long shareId) {
         this.shareId = shareId;
     }
+
+    @Override
+    public String toString() {
+        return "ShareList{" +
+                "shareId=" + shareId +
+                ", courseId=" + courseId +
+                ", shareCourseName='" + shareCourseName + '\'' +
+                ", shareTeacherId=" + shareTeacherId +
+                ", shareTeacherName='" + shareTeacherName + '\'' +
+                ", courseStatus=" + courseStatus +
+                ", shareStatus=" + shareStatus +
+                '}';
+    }
 }
