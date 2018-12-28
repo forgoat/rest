@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>用户登录</title>
@@ -51,7 +51,7 @@
     </section>
 </section>
 <script>
-    function login() {
+        function login() {
         var account = $("#account").val();
         var password = $("#password").val();
         if(account==''|| password == '')
@@ -67,7 +67,9 @@
             dataType:'text',
             success:function(data) {
                 var json=eval("("+data+")");
-                alert(json.role);
+                sessionStorage.setItem('account', json.account);
+                sessionStorage.setItem('rolename',json.role);
+                sessionStorage.setItem('id',json.id);
                 if (json.role == 'teacher') {
                     if(json.isActive==1)
                     window.location.href="t_Inf.html";

@@ -3,6 +3,15 @@ spring:
     username: cylin
     password: Abcd1234!
     url: jdbc:mysql://127.0.0.1:3306/standard_seminar_system?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/
+    suffix: ".html"
+    encoding: UTF-8
+    mode: HTML5
+
   mail:
     username: 1010410164@qq.com
     password: shibfaeqmqkrbfgg
@@ -14,3 +23,5 @@ mybatis:
   type-aliases-package: com.rest.entity
 server:
   port: 8080
+
+

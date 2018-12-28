@@ -108,9 +108,9 @@
                         '                        <label >展示打分:</label>\n' +
                         '                    </div>\n' +
                         '                    <div class="input-group">\n' +
-                        '                        <input id="pi" type="text" class="form-control" placeholder="0~5分">\n' +
+                        '                        <input id="pi'+j+'" type="text" class="form-control" placeholder="0~5分">\n' +
                         '                        <span class="input-group-btn">\n' +
-                        '                        <button class="btn btn-default " type="button" >\n' +
+                        '                        <button class="btn btn-default " type="button" onclick="savepscore('+myModel.courseList[j].attendanceId+','+j+')">\n' +
                         '                            <span class="glyphicon glyphicon-ok"></span>\n' +
                         '                        </button>\n' +
                         '                    </span>\n' +
@@ -121,9 +121,9 @@
                         '                        <label >提问打分:</label>\n' +
                         '                    </div>\n' +
                         '                    <div class="input-group">\n' +
-                        '                        <input type="text" class="form-control" placeholder="0~5分">\n' +
+                        '                        <input id="ai'+j+'" type="text" class="form-control" placeholder="0~5分">\n' +
                         '                        <span class="input-group-btn">\n' +
-                        '                        <button class="btn btn-default" type="button">\n' +
+                        '                        <button class="btn btn-default" type="button"onclick="saveascore('+j+')">\n' +
                         '                            <span class="glyphicon glyphicon-ok"></span>\n' +
                         '                        </button>\n' +
                         '                    </span>\n' +
@@ -144,7 +144,7 @@
                                 htmlNav+='<ul class="nav nav-pills  text-center">';
                                 for(var i=0;i<youModel.questList.length;i++)
                                 {
-                                    htmlNav+='<li role="presentation" ><a href="#">第'+youModel.questList[i].teamId+'组 </a></li>';
+                                    htmlNav+='<li class="myList" role="presentation" id="qul+'+i+j+'" value="'+youModel.questList[i].id+'" ><a href="#">第'+youModel.questList[i].teamId+'组 </a></li>';
                                 }
                                 htmlNav+='</ul>'
                             }
@@ -163,7 +163,6 @@
                         '\n' +
                         '            </div><!--div控制模块-->';
                 }
-
                 $("#isbody").html(htmlNav);
 
                 //var seminarid = getUrlParam("seminarid");
@@ -223,11 +222,42 @@
                 //save一下问题成绩
 
             })
-            function savepscore() {
-                
+            var qteam='';
+            $("ul li.myList").click(function(){
+                qteam =  $(this).val();
+
+            });
+            function savepscore(attendanceId,j) {
+                var score=$("#pi"+j).val();
+                alert(score);
+                $.ajax({
+                    url: "/score/presentationScore",
+                    data:{klassSeminarId:klassseminarid,teamId:myModel.courseList[j].teamId,presentationScore:score},
+                    type: "GET",
+                    async: false,
+                    dataType: 'json',
+                    success: function () {
+                        alert("ok");
+                    },error:function () {
+                        alert("sorry!");
+                    }
+                    });
             }
-            function saveascore() {
-                
+            function saveascore(j) {
+                var score=$("#ai"+j).val();
+                alert(score);
+                $.ajax({
+                    url: "attendance/question/"+questionId,
+                    data:{score:score},
+                    type: "GET",
+                    async: false,
+                    dataType: 'json',
+                    success: function () {
+                        alert("ok");
+                    },error:function () {
+                        alert("sorry!");
+                    }
+                });
             }
           
         </script>

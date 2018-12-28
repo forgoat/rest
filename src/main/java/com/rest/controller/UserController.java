@@ -36,17 +36,14 @@ public class UserController {
      * @param request
      * @return
      */
-    @PostMapping(value = "login",produces = "application/json;charset=UTF-8")
+
+    @RequestMapping(value = "login",produces = "application/json;charset=UTF-8")
     @ResponseBody
     public ResponseEntity<Object> Login(String account, String password, HttpServletRequest request){
         Teacher teacher=teacherService.findByAccount(account);
         if(teacher!=null&&teacher.getPassword().equals(password)){
             User user=new User(teacher);
-//            HttpSession session=request.getSession();//这就是session的创建
-//            session.setAttribute("id",user.getId());
-//            session.setAttribute("account",user.getAccount());
-//            session.setAttribute("rolename",user.getRole());
-//            Object acc=session.getAttribute("account");
+
 //
 //            System.out.println(acc);
             HttpStatus httpStatus=HttpStatus.OK;
@@ -56,12 +53,12 @@ public class UserController {
             Student student=studentService.findByAccount(account);
             if(student!=null&&student.getPassword().equals(password)){
                 User user=new User(student);
-//                HttpSession session=request.getSession();//这就是session的创建
-//                session.setAttribute("id",user.getId());
-//                session.setAttribute("account",user.getAccount());
-//                session.setAttribute("rolename",user.getRole());
-//                Object acc=session.getAttribute("account");
-//                System.out.println(acc);
+                HttpSession session=request.getSession();//这就是session的创建
+                session.setAttribute("id",user.getId());
+                session.setAttribute("account",user.getAccount());
+                session.setAttribute("rolename",user.getRole());
+                Object acc=session.getAttribute("account");
+                System.out.println(acc);
                 HttpStatus httpStatus=HttpStatus.OK;
                 return new ResponseEntity<Object>(user,httpStatus);
             }

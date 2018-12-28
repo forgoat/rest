@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>重设密码</title>
@@ -8,7 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="css/custom.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
 
 </head>
 <body>
@@ -46,14 +46,16 @@
                     <button onclick="fstlog()">
                         确认提交
                     </button>
+                    <div style="height: 20px" th:text="${session.account}"></div>
                 </div>
             </form>
         </div>
     </section>
 </section>
-<script >
+<script language="JavaScript">
+    var id = sessionStorage.getItem('id');
+    alert(id);
     function  fstlog() {
-        var id=113;
         var psw1=$("#sfli1").val();
         var psw2=$("#sfli2").val();
         var email=$("#sfli3").val();
