@@ -194,4 +194,14 @@ public class KlassController {
     public Long findByCourseIdAndStudentId(Long courseId,Long studentId){
         return klassService.findKlassIdByCourseIdAndStudentId(courseId,studentId);
     }
+
+    /**
+     * 查找班级下的队伍
+     * @param klassId
+     * @return
+     */
+    @GetMapping("{klassId}/team")
+    public List<Long> findTeamList(@PathVariable("klassId") Long klassId){
+        return klassService.findTeamList(klassId);
+    }
 }

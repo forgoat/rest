@@ -21,4 +21,7 @@
     <select id="questionScores" resultType="Double">
         SELECT score FROM standard_seminar_system.question WHERE klass_seminar_id=#{KlassSeminarId} AND team_id=#{teamId}
     </select>
+    <select id="questions" resultType="com.rest.entity.Question">
+        SELECT * FROM standard_seminar_system.question WHERE klass_seminar_id=#{klassSeminarId} AND attendance_id=#{attendanceId} AND is_selected=1
+    </select>
 </mapper>

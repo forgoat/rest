@@ -135,5 +135,8 @@ public class AttendanceService {
 
         return attendanceDao.queryAttendanceById(id);
     }
+    public List<Question> questions(Long klassSeminarId,Long attendanceId){
+        return questionDao.questions(klassSeminarId,attendanceId);
+    }
 
 }

@@ -114,4 +114,19 @@ public class KlassService {
         }
         return classId;
     }
+
+    /**
+     * 通过klass找所有队伍
+     * @param klassId
+     * @return
+     */
+    public List<Long> findTeamList(Long klassId){
+        List<Long> teamList=new ArrayList<Long>();
+        List<KlassTeam> klassTeamList=klassTeamDao.findByKlassId(klassId);
+        for(KlassTeam klassTeam:klassTeamList){
+            Long teamId=klassTeam.getTeamId();
+            teamList.add(teamId);
+        }
+        return teamList;
+    }
 }
