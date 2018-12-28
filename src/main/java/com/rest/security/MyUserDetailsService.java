@@ -21,10 +21,7 @@ import java.util.List;
 public class MyUserDetailsService implements UserDetailsService {
 
     private final AdminService adminService;
-    public void HttpSet(String account,HttpServletRequest request, HttpServletResponse response)
-    {
 
-    }
 
     @Autowired
     MyUserDetailsService(AdminService adminService){
