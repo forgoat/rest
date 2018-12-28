@@ -58,6 +58,7 @@ public class ScoreService {
         return roundDao.queryAllRoundSerialByCourseId(courseId);
     }
 
+
     /**
      * 查找讨论课成绩
      * @param courseId
@@ -121,6 +122,33 @@ public class ScoreService {
         }
         return roundScoreList;
     }
+
+    /**
+     * 按轮次查询讨论课成绩
+     * @param seminarScoreList
+     * @param roundId
+     * @param courseId
+     * @param teamId
+     * @return
+     */
+    public List<SeminarScore> querySeminarScoreByRoundId(List<SeminarScore> seminarScoreList,Long roundId,Long courseId,Long teamId){
+        List<Seminar> seminarList=seminarDao.findByCourseIdAndRoundId(courseId,roundId);//一轮的seminar
+        List<Long> klassIdList=klassTeamDao.findByTeamId(teamId);
+        List<Long> klassSeminarIdList=new ArrayList<>();
+        for(Seminar seminar:seminarList){
+            for(Long klassId:klassIdList){
+                klassSeminarIdList.add(klassSeminarDao.queryKlassSeminarIdByKlassIdAndSeminarId(klassId,seminar.getId()));
+            }
+        }
+        List<SeminarScore> seminarScoreList1=new ArrayList<>();
+        for(Long klassSeminarId:klassSeminarIdList){
+            for(SeminarScore seminarScore:seminarScoreList){
+                if(klassSeminarId==seminarScore.getKlassSeminarId()) seminarScoreList1.add(seminarScore);
+            }
+        }
+        return seminarScoreList1;
+    }
+
 
     /**
      * 查询ScorePage所需信息

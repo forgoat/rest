@@ -231,7 +231,7 @@ public class TeamController {
     }
 
     /**
-     * 保存分组
+     * 创建小组
      * @param team
      * @param teamId
      * @param courseId
