@@ -129,8 +129,8 @@ public class ScoreController {
      * @return
      */
     @GetMapping(value = "roundScore")
-    public Double roundTotalScore(Long roundId,Long teamId){
-        Double score=scoreService.roundTotalScore(roundId,teamId);
+    public Double roundTotalScore(Long roundId,Long teamId,Long courseId){
+        Double score=scoreService.findRoundScore(courseId,roundId,teamId);
         return score;
     }
 
@@ -138,5 +138,26 @@ public class ScoreController {
     public HttpStatus updateSeminarScore(Long klassSeminarId,Long teamId,Double presentationScore,Double questionScore,Double reportScore){
         HttpStatus httpStatus=(scoreService.updateSeminarScore(klassSeminarId,teamId,presentationScore,questionScore,reportScore)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
         return httpStatus;
+    }
+
+    /**
+     * 查找提问成绩
+     * @param klassSeminarId
+     * @param teamId
+     * @return
+     */
+    @GetMapping("questionScoreList")
+    public List<Double> findQuestionScores(Long klassSeminarId,Long teamId){
+        return scoreService.findQuestionScore(klassSeminarId,teamId);
+    }
+    /**
+     * 查找队伍的所在班级
+     * @param courseId
+     * @param teamId
+     * @return
+     */
+    @GetMapping(value = "klass")
+    public Long findKlassForTeam(Long courseId,Long teamId){
+        return scoreService.findKlassForTeam(courseId,teamId);
     }
 }

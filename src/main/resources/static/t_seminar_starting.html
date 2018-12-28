@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>OOAD-讨论课</title>
+    <title>OOAD-讨论课(已开始)ok</title>
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
@@ -45,7 +45,7 @@
         课程情况：进行中
         <a>查看情况</a>
     </div>
-    <button class="button-auto1" id="myView6">
+    <button class="button-auto1" id="myView6" onclick="clickme()">
         <a href="t_seminarzhong.html">
             进入讨论课
         </a>
@@ -80,8 +80,22 @@
                 alert('服务器忙，请稍候');
             }
         });
-        $("#myView6").html('<a href="t_seminarzhong.html?klassklassseminarid='+klassseminarid+'">进入讨论课 </a>')
+        $("#myView6").html('<a href="seminar_presentation.html?klassklassseminarid='+klassseminarid+'">进入讨论课 </a>')
     }
     emm();
+    function clickme() {
+        $.ajax({
+            url: "/seminar/" + klassseminarid+"/status",
+            type: "PUT",
+            data:{status:1},
+            async: false,
+            dataType: 'text',
+            success: function () {
+                alert("success!");
+            },error:function () {
+                alert("sorry!");
+            }
+            });
+    }
 </script>
 </html>
