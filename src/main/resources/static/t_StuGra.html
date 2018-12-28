@@ -92,10 +92,11 @@
     var htmlNav='';
 
 
+    htmlNav+='<ul class="yiji">';
     function getRound(){
         var courseid=getUrlParam('courseid');
         $.ajax({
-            url: "/score/queryAllRoundSerialByCourseId",                //后端的API地址
+            url: "/round/findByCourseId",                //后端的API地址
             type: 'GET',                                //http:POST/GET
             async:false,
             data:{courseId:courseid},
@@ -103,119 +104,60 @@
             timeout: 3000,
             success: function(res){
                 myModel.roundList=res;
-                htmlNav+='<div class="list">';
-                htmlNav+='<ul class="yiji">';
+
                 for(var i=0;i< myModel.roundList.length;i++)
                 {
 
-                        htmlNav+='<li><a href="#" class="inactive">第'+myModel.roundList[i]+'轮</a>';
+                        htmlNav+='<li><a href="#" class="inactive">第'+myModel.roundList[i].roundSerial+'轮</a>';
                     htmlNav+='<ul style="display: none">';
-                }
-            },
+                    getTeam(myModel.roundList[i].id);
 
-        });
-    }
-
-
-    function getTeam(){
-        var courseid=getUrlParam('courseid');
-        $.ajax({
-            url: "/course/"+courseid+"/team",                //后端的API地址
-            type: 'GET',                                //http:POST/GET
-            async:false,
-
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function(res){
-                myModel.teamList=res;
-
-
-                if( myModel.teamList.length>0)
-                {
-
-                    for(var i=0;i< myModel.teamList.length;i++)
-                    {
-                        htmlNav+='<li><a href="#" class="inactive active">'+myModel.teamList[i].klassSerial+'-'+myModel.teamList[i].teamSerial+'&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;</a>';
-                        htmlNav+='<ul>';
-
-                    }
-
-                }
-            },
-            error: function(){
-                alert('服务器忙，请稍候');
-            }
-        });
-    }
-
-
-    function getMem(teamid){
-
-        $.ajax({
-            url: "/team/"+teamid+"/student",                //后端的API地址
-            type: 'GET',                                //http:POST/GET
-            async:false,
-
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function(res){
-                myModel.memList=res;
-
-                for(var i=0;i< myModel.memList.length;i++)
-                {
-                    if(i==0)
-                    {
-                        htmlNav+='<li class="last"><a href="#">组员：';
-                        getStudent(myModel.memList[i].studentId);
-                        htmlNav+='</a></li>';
-                    }
-
-                    else
-                    {
-                        htmlNav+='<li class="last"><a href="#">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; ';
-                        getStudent(myModel.memList[i].studentId);
-                        htmlNav+='</a></li>';
-                    }
-
-                }
-
-            },
-
-        });
-    }
-
-    function getData(){
-        var courseid=getUrlParam('courseid');
-        $.ajax({
-            url: "/course/"+courseid+"/team",                //后端的API地址
-            type: 'GET',                                //http:POST/GET
-            async:false,
-
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function(res){
-                myModel.teamList=res;
-
-                $("#myView").empty();
-
-                if( myModel.teamList.length>0)
-                {
-                    htmlNav+='<ul class="yiji">';
-                    for(var i=0;i< myModel.teamList.length;i++)
-                    {
-                        htmlNav+='<li><a href="#" class="inactive">'+myModel.teamList[i].klassSerial+'-'+myModel.teamList[i].teamSerial+'&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'+myModel.teamList[i].teamName+'</a>';
-
-                        htmlNav+='<ul style="display: none">';
-                        getTeam(myModel.teamList[i].id);
-                        getMem(myModel.teamList[i].id);
-
-
-
-                        htmlNav+='</ul>';
-                        htmlNav+='</li>';
-                    }
                     htmlNav+='</ul>';
-                    $("#myView").html(htmlNav);
+                    htmlNav+='</li>';
+
+                }
+                $("#myView").html(htmlNav);
+            },
+
+        });
+    }
+
+
+
+
+
+    function getTeam(roundid){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/course/"+courseid+"/team",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.teamList=res;
+
+
+
+                if( myModel.teamList.length>0)
+                {
+
+                    for(var i=0;i< myModel.teamList.length;i++)
+
+                    {
+                        // alert(i+'='+myModel.teamList.length);
+                        htmlNav+='<li class="last"><a href="#">'+myModel.teamList[i].klassSerial+'-'+myModel.teamList[i].teamSerial+'&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;';
+
+
+
+                        getOnlyScore(roundid,myModel.teamList[i].id);
+
+                        htmlNav+='分</a>';
+
+                        htmlNav+='</li>'
+                    }
+
                 }
             },
             error: function(){
@@ -226,7 +168,31 @@
 
 
 
-    getData();
+
+
+    function getOnlyScore(roundid,teamid){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/score/roundScore",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+            data:{roundId:roundid,teamId:teamid,courseId:courseid},
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+
+                htmlNav+=res;
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+
+
+
+    getRound();
+    htmlNav+='<ul>';
 
 </script>
 
@@ -234,38 +200,38 @@
 
 
 
-<div class="list">
-    <ul class="yiji">
-        <li><a href="#" class="inactive">第一轮</a>
-            <ul style="display: none">
-                <li><a href="#" class="inactive active">组号+分数</a>
-                    <ul>
+<!--<div class="list">-->
+    <!--<ul class="yiji">-->
+        <!--<li><a href="#" class="inactive">第一轮</a>-->
+            <!--<ul style="display: none">-->
+                <!--<li><a href="#" class="inactive active">组号+分数</a>-->
+                    <!--<ul>-->
 
-                        <li><a href="#">用例分析：<span>展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</span></a></li>
-                        <li><a href="#">界面原型：<span>展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</span></a></li>
-                        <li><a href="#">总成绩：<span>展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</span></a></li>
+                        <!--<li><a href="#">用例分析：<span>展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</span></a></li>-->
+                        <!--<li><a href="#">界面原型：<span>展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</span></a></li>-->
+                        <!--<li><a href="#">总成绩：<span>展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</span></a></li>-->
 
-                    </ul>
-                </li>
-                <li class="last"><a href="#">组号+分数</a></li>
-            </ul>
-        </li>
-        <li><a href="#" class="inactive">第二轮</a>
-            <ul style="display: none">
-                <li><a href="#" class="inactive active">组号+分数</a>
-                    <ul>
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li class="last"><a href="#">组号+分数</a></li>-->
+            <!--</ul>-->
+        <!--</li>-->
+        <!--<li><a href="#" class="inactive">第二轮</a>-->
+            <!--<ul style="display: none">-->
+                <!--<li><a href="#" class="inactive active">组号+分数</a>-->
+                    <!--<ul>-->
 
-                        <li><a href="#">用例分析：<span>展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</span></a></li>
-                        <li><a href="#">界面原型：<span>展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</span></a></li>
-                        <li><a href="#">总成绩：<span>展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</span></a></li>
+                        <!--<li><a href="#">用例分析：<span>展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</span></a></li>-->
+                        <!--<li><a href="#">界面原型：<span>展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</span></a></li>-->
+                        <!--<li><a href="#">总成绩：<span>展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</span></a></li>-->
 
-                    </ul>
-                </li>
-                <li class="last"><a href="#">组号+分数</a></li>
-            </ul>
-        </li>
-    </ul>
-</div>
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li class="last"><a href="#">组号+分数</a></li>-->
+            <!--</ul>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</div>-->
 
 <div class="aui-code-box">
     <button >

@@ -54,6 +54,7 @@ public class TeamController {
         teamInfo.setCourseId(team.getCourseId());
         teamInfo.setTeamName(team.getTeamName());
         teamInfo.setTeamSerial(team.getTeamSerial());
+        teamInfo.setKlassSerial(team.getKlassSerial());
         Student leader=studentService.findById(team.getLeaderId());
         teamInfo.setLeader(leader);
         List<KlassStudent> klassStudentList=teamService.findStuByTeamId(teamId);
