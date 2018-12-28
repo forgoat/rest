@@ -567,4 +567,24 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
     public int acceptTeamMainCourseId(Long mainCourseId,@PathVariable("courseId") Long subCourseId){
         return courseService.acceptTeamMainCourseId(mainCourseId,subCourseId);
     }
+
+    /**
+     * 查找所有相关分组共享
+     * @param courseId
+     * @return
+     */
+    @GetMapping(value = "teamShareAll")
+    public List<ShareTeamApplication> findTeamShareAll(Long courseId){
+        return courseService.findTeamShare(courseId);
+    }
+
+    /**
+     * 查看共享情况
+     * @param courseId
+     * @return
+     */
+    @GetMapping(value = "{courseId}/shareList")
+    public List<ShareList> findShareListByCourseId(@PathVariable("courseId") Long courseId){
+        return courseService.findShareListByCourseId(courseId);
+    }
 }

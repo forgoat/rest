@@ -290,4 +290,5 @@ public class TeamService {
     public int deleteByTeamIdAndKlassId(Long teamId,Long klassId){
         return klassTeamDao.deleteByTeamIdAndKlassId(teamId,klassId);
     }
+
 }

@@ -4,6 +4,7 @@ import com.rest.dao.*;
 import com.rest.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,4 +140,13 @@ public class AttendanceService {
         return questionDao.questions(klassSeminarId,attendanceId);
     }
 
+    /**
+     * 删除提问队列
+     * @param klassSeminarId
+     * @param attendanceId
+     * @return
+     */
+    public int deleteQuestionList(Long klassSeminarId,Long attendanceId){
+        return questionDao.deleteQuestionList(klassSeminarId,attendanceId);
+    }
 }

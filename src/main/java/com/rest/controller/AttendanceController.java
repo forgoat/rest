@@ -170,4 +170,15 @@ public class AttendanceController {
     public List<Question> questions(Long klassSeminarId,Long attendanceId){
         return attendanceService.questions(klassSeminarId,attendanceId);
     }
+
+    /**
+     * 删除提问队列
+     * @param klassSeminarId
+     * @param attendanceId
+     * @return
+     */
+    @DeleteMapping(value = "question")
+    public int deleteQuestionList(Long klassSeminarId,Long attendanceId){
+        return attendanceService.deleteQuestionList(klassSeminarId,attendanceId);
+    }
 }
