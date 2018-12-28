@@ -157,11 +157,12 @@ public class ScoreService {
      * @param roundSerial
      * @return
      */
-    public ScorePage queryScorePage(Long courseId,Long studentId,Integer roundSerial){
+    public ScorePage queryScorePage(Long courseId,Long studentId,Integer roundSerial,Long teamId){
 
         List<SeminarScore> seminarScoreList=queryByCourseIdStudentId(courseId,studentId);
         Long roundId=roundDao.queryRoundIdByCourseIdAndRoundSerial(courseId,roundSerial);
         List<Seminar> seminarList=seminarDao.findByCourseIdAndRoundId(courseId,roundId);
+        List<SeminarScore> seminarScoreList1=querySeminarScoreByRoundId(seminarScoreList,roundId,courseId,teamId);
 
         ScorePage scorePage=new ScorePage();
         scorePage.setRoundId(roundId);
