@@ -76,8 +76,8 @@ public class ScoreController {
      * @return
      */
     @GetMapping(value = "queryScorePage")
-    public ResponseEntity<ScorePage> queryScorePage(Long courseId,Long studentId,Integer roundSerial,Long teamId){
-        ScorePage scorePage=scoreService.queryScorePage(courseId,studentId,roundSerial,teamId);
+    public ResponseEntity<ScorePage> queryScorePage(Long courseId,Long studentId,Integer roundSerial){
+        ScorePage scorePage=scoreService.queryScorePage(courseId,studentId,roundSerial);
         HttpStatus httpStatus=HttpStatus.OK;
         return new ResponseEntity<ScorePage>(scorePage,httpStatus);
     }

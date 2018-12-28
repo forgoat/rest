@@ -157,8 +157,8 @@ public class ScoreService {
      * @param roundSerial
      * @return
      */
-    public ScorePage queryScorePage(Long courseId,Long studentId,Integer roundSerial,Long teamId){
-
+    public ScorePage queryScorePage(Long courseId,Long studentId,Integer roundSerial){
+        Long teamId=teamStudentDao.findByStudentId(studentId);
         List<SeminarScore> seminarScoreList=queryByCourseIdStudentId(courseId,studentId);
         Long roundId=roundDao.queryRoundIdByCourseIdAndRoundSerial(courseId,roundSerial);
         List<Seminar> seminarList=seminarDao.findByCourseIdAndRoundId(courseId,roundId);
