@@ -36,6 +36,8 @@ public class ScoreService {
     private RoundScoreDao roundScoreDao;
     @Autowired
     private QuestionDao questionDao;
+    @Autowired
+    private AttendanceDao attendanceDao;
 
     public int saveSeminarScore(SeminarScore seminarScore){
         return  seminarScoreDao.save(seminarScore);
@@ -215,9 +217,134 @@ public class ScoreService {
      */
     public Double roundTotalScore(Long roundId,Long teamId){
         RoundScore roundScore=roundScoreDao.findRoundByRoundIdAndTeamId(roundId,teamId);
-        return roundScore.getTotalScore();
+        Double score=roundScore.getTotalScore();
+        return score;
+    }
+
+    /**
+     * 查轮次分数
+     * @param courseId
+     * @param roundId
+     * @param teamId
+     * @return
+     */
+    public Double findRoundScore(Long courseId,Long roundId,Long teamId){
+        RoundScore roundScore=roundScoreDao.findRoundByRoundIdAndTeamId(roundId,teamId);
+        Double score=roundScore.getTotalScore();
+        if(score==null){
+            Round round=roundDao.find(roundId);
+            Double pScore=new Double(0),rScore=new Double(0),qScore=new Double(0);
+            Integer presentationScoreMethod=round.getPresentationScoreMethod();
+            Integer reportScoreMethod=round.getReportScoreMethod();
+            Integer questionScoreMethod=round.getQuestionScoreMethod();
+            System.out.println(presentationScoreMethod+reportScoreMethod+questionScoreMethod);
+            Long klassId=findKlassForTeam(courseId,teamId);
+            Integer enrollNumber=klassRoundDao.findByRoundIdAndClassId(roundId,klassId);
+            List<Seminar> seminars=seminarDao.findByRoundId(roundId);
+            Integer num=new Integer(0);
+            List<Double> questionScores=new ArrayList<Double>();
+            List<Double> presentationScores=new ArrayList<Double>();
+            List<Double> reportScores=new ArrayList<Double>();
+            for (Seminar seminar:seminars){
+                Long seminarId=seminar.getId();
+                Long klassSeminarId=klassSeminarDao.findByKlassIdAndSeminarId(klassId,seminarId).getId();
+                List<Double> doubles=questionDao.questionScores(klassSeminarId,teamId);
+                for (Double d:doubles){
+                    questionScores.add(d);
+                }
+                Attendance attendance=attendanceDao.queryByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
+                if(attendance!=null){
+                    num+=1;
+                    SeminarScore seminarScore=seminarScoreDao.findByTeamIdAndSeminarId(teamId,klassSeminarId);
+                    Double presentationScore=seminarScore.getPresentationScore();
+                    Double reportScore=seminarScore.getReportScore();
+                    if(presentationScore!=null){
+                        presentationScores.add(presentationScore);
+                    }
+                    if(reportScore!=null){
+                        reportScores.add(reportScore);
+                    }
+                }
+            }
+            if(num<enrollNumber){
+                score=new Double(0);
+            }
+            else {
+                if(presentationScoreMethod==1){
+                    pScore=presentationScores.get(0);
+                    for(int i=1;i<presentationScores.size();i++){
+                        if(presentationScores.get(i)>pScore){
+                            pScore=presentationScores.get(i);
+                        }
+                    }
+                }
+                else {
+                    pScore=new Double(0);
+                    for(Double d:presentationScores){
+                        pScore+=d;
+                    }
+                    pScore/=presentationScores.size();
+                }
+                if(reportScoreMethod==1){
+                    rScore=reportScores.get(0);
+                    for (int i=1;i<reportScores.size();i++){
+                        if(reportScores.get(i)>rScore){
+                            rScore=reportScores.get(i);
+                        }
+                    }
+                }
+                else {
+                    rScore=new Double(0);
+                    for (Double d:reportScores){
+                        rScore+=d;
+                    }
+                    rScore/=reportScores.size();
+                }
+                if(questionScoreMethod==1){
+                    qScore=questionScores.get(0);
+                    for(int i=1;i<questionScores.size();i++){
+                        if(questionScores.get(i)>qScore){
+                            qScore=questionScores.get(i);
+                        }
+                    }
+                }
+                else {
+                    qScore=new Double(0);
+                    for(Double d:questionScores){
+                        qScore+=d;
+                    }
+                    qScore/=questionScores.size();
+                }
+            }
+            score=(pScore+rScore+qScore)/3;
+
+        }
+        return score;
     }
    public int updateSeminarScore(Long klassSeminarId,Long teamId,Double presentationScore,Double questionScore,Double reportScore){
         return seminarScoreDao.updateSeminarScore(klassSeminarId,teamId,presentationScore,questionScore,reportScore);
+   }
+
+    /**
+     * 查找每个队伍的所在班级
+     * @param courseId
+     * @param teamId
+     * @return
+     */
+   public Long findKlassForTeam(Long courseId,Long teamId){
+        List<Klass> klassList=klassDao.findByCourseId(courseId);
+        List<Long> klassTeamList=klassTeamDao.findByTeamId(teamId);
+        Long classId=new Long(0);
+        for (Klass klass:klassList){
+            for(Long id:klassTeamList){
+                if(klass.getId().equals(id)){
+                    classId=id;
+                }
+            }
+        }
+        return classId;
+   }
+   public List<Double> findQuestionScore(Long klassSeminarId,Long teamId){
+       return questionDao.questionScores(klassSeminarId,teamId);
    }
 }
