@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>个人信息综合管理平台</title>
+    <link rel="stylesheet" href=" layui/css/layui.css">
+    <link rel="stylesheet" href=" css/global.css">
+    <link rel="stylesheet" href=" css/red.css">
+    <script type="text/javascript" src=" js/jquery.min.js"></script>
+    <script type="text/javascript" src=" layui/layui.js"></script>
+    <script type="text/javascript" src=" js/icheck.js"></script>
+    <script type="text/javascript" src=" js/dw.js"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">翻转课堂管理平台</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item"><a href="/teacher/pcinput">导入学生名单</a></li>
+                <li class="layui-nav-item"><a href="/teacher/pcseminar">讨论课</a></li>
+                <li class="layui-nav-item"><a href="/teacher/pcscorecopy">导出成绩</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <div style="padding: 15px;">
+            <fieldset class="layui-elem-field">
+                <div style="text-align:right" class="layui-field-box">
+                    <a href="/teacher/pcafterindex"   class="layui-btn">选择课程</a>    <button class="layui-btn"> 退出</button>
+                </div>
+                <legend>   <button class="layui-btn"> <i class="layui-icon">&#xe603;</i></button> 个人信息综合管理平台</legend>
+                <legend>  OOAD--第一轮讨论课--第一次讨论课</legend>
+                <div class="layui-field-box">
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item" style="text-align:center;">
+                            <fieldset class="layui-elem-field layui-field-title">
+                                <legend>第一轮讨论课</legend>
+                                <div class="layui-field-box">
+                                    主题：项目需求说明书
+
+                                </div>
+                                <div class="layui-field-box">
+                                    报名情况：
+                                </div>
+                                <div class="layui-field-box">
+                                    报名起止日期：
+                                </div>
+                                <div class="layui-field-box">
+                                  内容：
+                                </div>
+                            </fieldset>
+
+
+                            <fieldset class="layui-elem-field layui-field-title">
+                                <legend>已报名小组</legend>
+                            </fieldset>
+
+
+                            <table class="layui-table" lay-data="{width: 892, height:332, url:'/demo/table/user/', page:true, id:'idTest'}" lay-filter="demo">
+                                <thead>
+                                <tr>
+
+                                    <th lay-data="{field:'username', width:200}">展示次序</th>
+                                    <th lay-data="{field:'username', width:200}">小组序号</th>
+                                    <th lay-data="{field:'username', width:200}">组长</th>
+                                    <th lay-data="{field:'right', width:200,toolbar: '#barDemo'} ">展示材料</th>
+
+
+
+                                </tr>
+                                </thead>
+                            </table>
+
+
+
+                            <script type="text/html" id="barDemo">
+                                <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="wei">未提交</a>
+                                <a class="layui-btn layui-btn-xs" lay-event="load">下载</a>
+
+                            </script>
+
+
+
+
+
+                            <script src=" layui/layui.js" charset="utf-8"></script>
+                            <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+                            <script>
+                                layui.use('table', function(){
+                                    var table = layui.table;
+                                    //监听表格复选框选择
+                                    table.on('checkbox(demo)', function(obj){
+                                        console.log(obj)
+                                    });
+                                    //监听工具条
+                                    table.on('tool(demo)', function(obj){
+                                        var data = obj.data;
+                                        if(obj.event === 'del'){
+                                            layer.confirm('真的删除行么', function(index){
+                                                obj.del();
+                                                layer.close(index);
+                                            });
+                                        } else if(obj.event === 'edit'){
+                                            layer.alert('编辑行：<br>'+ JSON.stringify(data))
+                                        }
+                                    });
+
+                                    var $ = layui.$, active = {
+                                        getCheckData: function(){ //获取选中数据
+                                            var checkStatus = table.checkStatus('idTest')
+                                                    ,data = checkStatus.data;
+                                            layer.alert(JSON.stringify(data));
+                                        }
+                                        ,getCheckLength: function(){ //获取选中数目
+                                            var checkStatus = table.checkStatus('idTest')
+                                                    ,data = checkStatus.data;
+                                            layer.msg('选中了：'+ data.length + ' 个');
+                                        }
+                                        ,isAll: function(){ //验证是否全选
+                                            var checkStatus = table.checkStatus('idTest');
+                                            layer.msg(checkStatus.isAll ? '全选': '未全选')
+                                        }
+                                    };
+
+                                    $('.demoTable .layui-btn').on('click', function(){
+                                        var type = $(this).data('type');
+                                        active[type] ? active[type].call(this) : '';
+                                    });
+                                });
+
+
+
+                            </script>
+                            </table>
+
+
+
+
+
+
+
+                        </div>
+                    </form>
+
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+</body>
+</html>

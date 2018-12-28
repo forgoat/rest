@@ -22,8 +22,8 @@
         ; border:solid 1px #fff; border-bottom:0;}
         .list ul li a{padding-left: 10px;color: black; font-size:14px; display: block;  height:36px;line-height: 36px;position: relative;
         }
-        .list ul li .inactive{ background:url(/static/img/off.png) no-repeat 28rem center;}
-        .list ul li .inactives{ background:url(/static/img/on.png) no-repeat 28rem center;}
+        .list ul li .inactive{ background:url(img/off.png) no-repeat 28rem center;}
+        .list ul li .inactives{ background:url(img/on.png) no-repeat 28rem center;}
         .list ul li ul{display: none;}
         .list ul li ul li { border-left:0; border-right:0; background-color:#e1f1fc; border-color:#fff;}
         .list ul li ul li ul{display: none;}
@@ -74,33 +74,66 @@
     </a>
 </header>
 <body>
-<div class="list">
-    <ul class="yiji">
 
-        <li><a href="#" class="inactive">OOAD （主）</a>
-            <ul style="display: none">
-                <li><a href="#" class="inactive active">学生成绩</a></li>
-                <li class="last"><a href="#">学生组队</a></li>
-                <li class="last"><a href="#">课程信息</a></li>
-                <li class="last"><a href="#">班级信息</a></li>
-                <li class="last"><a href="#">讨论课信息</a></li>
-                <li class="last"><a href="#">共享设置</a></li>
-            </ul>
-        </li>
-        <li><a href="#" class="inactive">J2EE</a>
-            <ul style="display: none">
-                <li><a href="#" class="inactive active">学生成绩</a></li>
-                <li class="last"><a href="#">学生组队</a></li>
-                <li class="last"><a href="#">课程信息</a></li>
-                <li class="last"><a href="#">班级信息</a></li>
-                <li class="last"><a href="#">讨论课信息</a></li>
-                <li class="last"><a href="#">共享设置</a></li>
 
-            </ul>
-        </li>
+<div class="list" id="myView"></div>
 
-    </ul>
-</div>
+
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var myModel = {courseList:[]};
+    var sem = {semList:[]};
+    var id='';
+    teacherid=3;
+    function getData(){
+        var courseid=getUrlParam('teacherid');
+        $.ajax({
+            url: "/course/teacher/"+teacherid,                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.courseList=res;
+                var htmlNav='';
+                $("#myView").empty();
+
+                if( myModel.courseList.length>0)
+                {
+
+                    htmlNav+='<ul class="yiji">';
+                    for(var i=0;i< myModel.courseList.length;i++)
+                    {
+                        htmlNav+='<li>' +'<a href="#" class="inactive">'+myModel.courseList[i].courseName+'</a>';
+                        htmlNav+='<ul style="display: none">';
+
+                        htmlNav+='<li><a href="#" class="inactive active">'+'学生成绩'+'</a>'+'</li>';
+                        htmlNav+='<li class="last"><a href="t_StuTea.html?courseid='+myModel.courseList[i].id+'">学生组队</a></li>';
+                        htmlNav+='<li class="last"><a href="t_CouInf.html?courseid='+myModel.courseList[i].id+'">课程信息</a></li>';
+                        htmlNav+='<li class="last"><a href="t_ClaInf.html?courseid='+myModel.courseList[i].id+'">班级信息</a></li>';
+                        htmlNav+='<li class="last"><a href="t_course_main.html?courseid='+myModel.courseList[i].id+'">讨论课设置</a></li>';
+                        htmlNav+='<li class="last"><a href="t_ShaSet.html?courseid='+myModel.courseList[i].id+'">共享设置</a></li>';
+                        htmlNav+='</ul>';
+                        htmlNav+='</li>';
+                    }
+                    htmlNav+='</ul>';
+                    $("#myView").html(htmlNav);
+                }
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+    getData();
+
+</script>
+
 
 <section class="aui-flexView">
     <div class="aui-code-box">
@@ -108,7 +141,7 @@
             <button onclick="window.location.href='t_NewCou.html'">新建课程</button>
         </div>
     </div>
-    <section>
+<section>
 
 </body>
 </html>
