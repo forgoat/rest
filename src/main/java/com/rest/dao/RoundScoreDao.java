@@ -10,4 +10,5 @@ import java.util.List;
 @Mapper
 public interface RoundScoreDao {
     RoundScore queryByRoundIdTeamId(@Param("roundId")Long roundId, @Param("teamId")Long teamId);
+    public RoundScore findRoundByRoundIdAndTeamId(@Param("roundId") Long roundId,@Param("teamId") Long teamId);
 }

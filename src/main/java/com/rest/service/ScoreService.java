@@ -5,6 +5,7 @@ import com.rest.entity.*;
 import com.sun.javafx.collections.MappingChange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -184,4 +185,39 @@ public class ScoreService {
         }
     }
 
+    /**
+     * 修改讨论课展示成绩
+     * @param klassSeminarId
+     * @param teamId
+     * @param presentationScore
+     * @return
+     */
+    public int updateSeminarScore(Long klassSeminarId,Long teamId,double presentationScore){
+        return seminarScoreDao.updateSeminarPresentationScore(klassSeminarId,teamId,presentationScore);
+    }
+
+    /**
+     * 修改讨论课报告成绩
+     * @param klassSeminarId
+     * @param teamId
+     * @param reportScore
+     * @return
+     */
+    public int updateReportScore(Long klassSeminarId,Long teamId,double reportScore){
+        return seminarScoreDao.updateSeminarReportScore(klassSeminarId,teamId,reportScore);
+    }
+
+    /**
+     * 直接查轮次的总分
+     * @param roundId
+     * @param teamId
+     * @return
+     */
+    public Double roundTotalScore(Long roundId,Long teamId){
+        RoundScore roundScore=roundScoreDao.findRoundByRoundIdAndTeamId(roundId,teamId);
+        return roundScore.getTotalScore();
+    }
+   public int updateSeminarScore(Long klassSeminarId,Long teamId,Double presentationScore,Double questionScore,Double reportScore){
+        return seminarScoreDao.updateSeminarScore(klassSeminarId,teamId,presentationScore,questionScore,reportScore);
+   }
 }
