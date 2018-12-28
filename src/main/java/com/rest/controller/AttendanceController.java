@@ -148,4 +148,15 @@ public class AttendanceController {
         HttpStatus httpStatus=(attendanceService.updateAttendanceStatus(attendanceId,status)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
         return httpStatus;
     }
+
+    /**
+     * 查找报名
+     * @param teamId
+     * @param klassSeminarId
+     * @return
+     */
+    @GetMapping(value = "")
+    public Attendance findAttendanceByKlassSeminarIdAndTeamId(Long teamId,Long klassSeminarId){
+        return attendanceService.findAttendanceByKlassSeminarAndTeamId(klassSeminarId,teamId);
+    }
 }

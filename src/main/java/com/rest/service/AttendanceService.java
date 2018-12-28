@@ -31,6 +31,9 @@ public class AttendanceService {
     public List<Attendance> findAttendanceByKlassSeminarId(Long klassSeminarId){
         return attendanceDao.findAttendanceByKlassSeminarId(klassSeminarId);
     }
+    public Attendance findAttendanceByKlassSeminarAndTeamId(Long klassSeminarId,Long teamId){
+        return attendanceDao.queryByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
+    }
     public Team findTeamByTeamId(Long teamId){
         return teamDao.findById(teamId);
     }

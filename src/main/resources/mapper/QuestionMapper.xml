@@ -18,4 +18,7 @@
     <update id="selectQuestion" parameterType="long">
         UPDATE standard_seminar_system.question SET is_selected=1 WHERE id=#{questionId}
     </update>
+    <select id="questionScores" resultType="Double">
+        SELECT score FROM standard_seminar_system.question WHERE klass_seminar_id=#{KlassSeminarId} AND team_id=#{teamId}
+    </select>
 </mapper>
