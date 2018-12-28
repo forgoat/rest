@@ -105,60 +105,35 @@ public class AttendanceService {
         return questionDao.selectQuestion(questionId);
     }
 
+
     /**
-     *（上传）保存PPT
+     * （上传）保存PPT
+     * @param id
      * @param pptName
      * @param pptUrl
-     * @param studentId
-     * @param courseId
-     * @return
      */
-    public void savePPT(String pptName,String pptUrl,Long studentId,Long courseId,Long seminarId){
-        System.out.println("pptName:"+pptName+" pptUrl:"+pptUrl);
-        SeminarService seminarService=new SeminarService();
-        Long teamId=teamStudentDao.findByStudentId(studentId);
-        System.out.println("teamId:"+teamId);
-        Long klassSeminarId=seminarService.queryKlassSeminarId(studentId,courseId,seminarId);
-        System.out.println("klassSeminarId:"+klassSeminarId);
-        Long it=new Long(9);
-        Attendance attendance=attendanceDao.queryByKlassSeminarIdAndTeamId(it,teamId);
-        System.out.println("attendance:"+attendance);
-        attendance.setPptName(pptName);
-        attendance.setPptUrl(pptUrl);
-        attendanceDao.updateAttendance(attendance);
+    public void savePPT(Long id,String pptName,String pptUrl){
+        attendanceDao.updateAttendance(id,pptName,pptUrl);
     }
 
     /**
-     *（上传）保存report
-     * @param reportName
-     * @param reportUrl
-     * @param studentId
-     * @param courseId
-     * @param seminarId
+     * （上传）保存report
+     * @param id
+     * @param pptName
+     * @param pptUrl
      */
-    public void saveReport(String reportName,String reportUrl,Long studentId,Long courseId,Long seminarId){
-        SeminarService seminarService=new SeminarService();
-        Long teamId=teamStudentDao.findByStudentId(studentId);
-        Long klassSeminarId=seminarService.queryKlassSeminarId(studentId,courseId,seminarId);
-        Attendance attendance=attendanceDao.queryByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
-        attendance.setReportName(reportName);
-        attendance.setReportUrl(reportUrl);
-        attendanceDao.saveAttendance(attendance);
+    public void saveReport(Long id,String pptName,String pptUrl){
+        attendanceDao.updateAttendance(id,pptName,pptUrl);
     }
 
     /**
      * （下载）获取attendance类->地址文件名
-     * @param studentId
-     * @param courseId
-     * @param seminarId
+     * @param id
      * @return
      */
-    public Attendance getFile(Long studentId,Long courseId,Long seminarId){
-        SeminarService seminarService=new SeminarService();
-        Long teamId=teamStudentDao.findByStudentId(studentId);
-        Long klassSeminarId=seminarService.queryKlassSeminarId(studentId,courseId,seminarId);
-        Attendance attendance=attendanceDao.queryByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
-        return attendance;
+    public Attendance getFile(Long id){
+
+        return attendanceDao.queryAttendanceById(id);
     }
 
 }
