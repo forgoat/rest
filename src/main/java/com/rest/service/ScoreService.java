@@ -159,9 +159,13 @@ public class ScoreService {
      */
     public ScorePage queryScorePage(Long courseId,Long studentId,Integer roundSerial){
         Long teamId=teamStudentDao.findByStudentId(studentId);
+        System.out.println("teamId"+teamId);
         List<SeminarScore> seminarScoreList=queryByCourseIdStudentId(courseId,studentId);
+        System.out.println("seminarScoreList"+seminarScoreList);
         Long roundId=roundDao.queryRoundIdByCourseIdAndRoundSerial(courseId,roundSerial);
+        System.out.println("roundId"+roundId);
         List<Seminar> seminarList=seminarDao.findByCourseIdAndRoundId(courseId,roundId);
+        System.out.println("seminarList"+seminarList);
         List<SeminarScore> seminarScoreList1=querySeminarScoreByRoundId(seminarScoreList,roundId,courseId,teamId);
 
         ScorePage scorePage=new ScorePage();
@@ -170,7 +174,7 @@ public class ScoreService {
         scorePage.setRoundScore(queryRoundScore(courseId,studentId,roundSerial));
         scorePage.setRoundSerial(roundSerial);
         scorePage.setSeminarList(seminarList);
-        scorePage.setSeminarScoreList(seminarScoreList);
+        scorePage.setSeminarScoreList(seminarScoreList1);
         return scorePage;
     }
 

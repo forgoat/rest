@@ -18,7 +18,8 @@ public class ShareList {
 
     }
     public ShareList(ShareSeminarApplication shareSeminarApplication){
-
+        shareStatus=1;
+        shareId=shareSeminarApplication.getId();
     }
     public Long getCourseId() {
         return courseId;
