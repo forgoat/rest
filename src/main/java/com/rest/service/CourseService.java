@@ -3,13 +3,13 @@ package com.rest.service;
 import com.rest.dao.CourseDao;
 import com.rest.dao.ShareSeminarApplicationDao;
 import com.rest.dao.ShareTeamApplicationDao;
-import com.rest.entity.Course;
-import com.rest.entity.ShareSeminarApplication;
-import com.rest.entity.ShareTeamApplication;
+import com.rest.dao.TeacherDao;
+import com.rest.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,6 +20,8 @@ public class CourseService {
     private ShareSeminarApplicationDao shareSeminarApplicationDao;
     @Autowired
     private ShareTeamApplicationDao shareTeamApplicationDao;
+    @Autowired
+    private TeacherDao teacherDao;
 
     public List<Course> queryCourseByStudentId(Long id){
         return courseDao.queryCourseByStudentId(id);
@@ -86,4 +88,62 @@ public class CourseService {
     public int acceptSeminarMainCourseId(Long mainCourseId,Long subCourseId){
         return courseDao.acceptMainSeminarId(mainCourseId,subCourseId);
     }
+
+    public List<ShareList> findShareListByCourseId(Long courseId){
+        List<ShareSeminarApplication> shareSeminarApplications=shareSeminarApplicationDao.findByCourseId(courseId);
+        List<ShareList> shareLists=new ArrayList<ShareList>();
+        if(!shareSeminarApplications.isEmpty()) {
+            for (ShareSeminarApplication shareSeminarApplication : shareSeminarApplications) {
+                ShareList shareList = new ShareList(shareSeminarApplication);
+                if (shareSeminarApplication.getSubCourseId().equals(courseId)) {
+                    //说明本身是从课程
+                    shareList.setCourseStatus(1);
+                    shareList.setCourseId(shareSeminarApplication.getMainCourseId());
+                    Course course = courseDao.findById(shareSeminarApplication.getMainCourseId());
+                    Long teacherId=course.getTeacherId();
+                    shareList.setShareCourseName(course.getCourseName());
+                    shareList.setShareTeacherId(teacherId);
+                    Teacher teacher=teacherDao.findById(teacherId);
+                    shareList.setShareTeacherName(teacher.getTeacherName());
+                } else {
+                    //说明本身是主课程
+                    shareList.setCourseStatus(0);
+                    shareList.setCourseId(shareSeminarApplication.getSubCourseId());
+                    Course course=courseDao.findById(shareSeminarApplication.getSubCourseId());
+                    shareList.setShareCourseName(course.getCourseName());
+                    shareList.setShareTeacherId(shareSeminarApplication.getSubCourseTeacherId());
+                    Teacher teacher=teacherDao.findById(shareSeminarApplication.getSubCourseTeacherId());
+                    shareList.setShareTeacherName(teacher.getTeacherName());
+                }
+                shareLists.add(shareList);
+            }
+        }
+        List<ShareTeamApplication> shareTeamApplicationList=shareTeamApplicationDao.findByCourseId(courseId);
+        if(!shareTeamApplicationList.isEmpty()){
+            for (ShareTeamApplication shareTeamApplication:shareTeamApplicationList){
+                ShareList shareList=new ShareList(shareTeamApplication);
+                if(shareTeamApplication.getSubCourseId().equals(courseId)){
+                    //从课程
+                    shareList.setCourseStatus(1);
+                    shareList.setCourseId(shareTeamApplication.getMainCourseId());
+                    Course course=courseDao.findById(shareTeamApplication.getMainCourseId());
+                    shareList.setShareTeacherId(course.getTeacherId());
+                    Teacher teacher=teacherDao.findById(course.getTeacherId());
+                    shareList.setShareTeacherName(teacher.getTeacherName());
+                }
+                else {
+                    shareList.setCourseStatus(0);
+                    shareList.setCourseId(shareTeamApplication.getSubCourseId());
+                    Course course=courseDao.findById(shareTeamApplication.getSubCourseId());
+                    shareList.setShareCourseName(course.getCourseName());
+                    shareList.setShareTeacherId(shareTeamApplication.getSubCourseTeacherId());
+                    Teacher teacher=teacherDao.findById(shareTeamApplication.getSubCourseId());
+                    shareList.setShareTeacherName(teacher.getTeacherName());
+                }
+                shareLists.add(shareList);
+            }
+        }
+        return shareLists;
+    }
+
 }
