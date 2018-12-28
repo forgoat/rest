@@ -318,6 +318,16 @@ public class TeamController {
     }
 
     /**
+     * 查找CourseMemberLimitStrategy
+     * @param courseId
+     * @return
+     */
+    @PostMapping(value = "queryCourseMemberLimitStrategyById")
+    public CourseMemberLimitStrategy queryCourseMemberLimitStrategyById(Long courseId){
+        return organizeTeamService.queryCourseMemberLimitStrategy(organizeTeamService.queryCourseMemberLimitStrategyId(courseId));
+    }
+
+    /**
      * 提交valid申请
      * @param teamValidApplication
      * @return

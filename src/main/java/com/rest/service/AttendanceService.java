@@ -111,10 +111,14 @@ public class AttendanceService {
      * @return
      */
     public void savePPT(String pptName,String pptUrl,Long studentId,Long courseId,Long seminarId){
+        System.out.println("pptName:"+pptName+" pptUrl:"+pptUrl);
         SeminarService seminarService=new SeminarService();
         Long teamId=teamStudentDao.findByStudentId(studentId);
+        System.out.println("teamId:"+teamId);
         Long klassSeminarId=seminarService.queryKlassSeminarId(studentId,courseId,seminarId);
+        System.out.println("klassSeminarId:"+klassSeminarId);
         Attendance attendance=attendanceDao.queryByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
+        System.out.println("attendance:"+attendance);
         attendance.setPptName(pptName);
         attendance.setPptUrl(pptUrl);
         attendanceDao.saveAttendance(attendance);
@@ -152,7 +156,5 @@ public class AttendanceService {
         Attendance attendance=attendanceDao.queryByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
         return attendance;
     }
-
-
 
 }
