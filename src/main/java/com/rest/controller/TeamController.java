@@ -336,4 +336,13 @@ public class TeamController {
     public int saveTeamValidApplication(@PathVariable(value = "teamId")TeamValidApplication teamValidApplication,Long teamId,Long courseId){
         return teamService.saveTeamValidApplication(teamValidApplication);
     }
+
+    /**
+     * 未组队小组
+     * @return
+     */
+    @PostMapping(value = "queryStudentNoTeam")
+    public List<Student> queryStudentNoTeam (){
+        return teamService.queryStudentNoTeam();
+    }
 }

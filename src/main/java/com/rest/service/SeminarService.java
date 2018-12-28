@@ -86,7 +86,7 @@ public class SeminarService {
      * @return
      */
     public Long queryKlassSeminarId(Long studentId,Long courseId,Long seminarId){
-        System.out.println(seminarId+"  "+courseId+"  "+seminarId);
+        System.out.println(studentId+"  "+courseId+"  "+seminarId);
         Long teamId=teamStudentDao.findByStudentId(studentId);
         System.out.println("------teamId:"+teamId);
 
