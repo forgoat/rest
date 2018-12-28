@@ -29,6 +29,8 @@ public class TeamController {
     private TeacherService teacherService;
     @Autowired
     private OrganizeTeamService organizeTeamService;
+    @Autowired
+    private TeamStudentDao teamStudentDao;
 
 
 //    @GetMapping(value = "findStu")
@@ -57,17 +59,13 @@ public class TeamController {
         teamInfo.setKlassSerial(team.getKlassSerial());
         Student leader=studentService.findById(team.getLeaderId());
         teamInfo.setLeader(leader);
-        List<KlassStudent> klassStudentList=teamService.findStuByTeamId(teamId);
-        List<Student> member=new ArrayList<Student>();
-        for(KlassStudent klassStudent:klassStudentList){
-            if(klassStudent.getStudentId().equals(team.getLeaderId())){
-            }
-            else {
-                Student student = studentService.findById(klassStudent.getStudentId());
-                member.add(student);
-            }
+        List<Long> memberIdList=new ArrayList<>();
+        memberIdList=teamStudentDao.queryByTeamId(teamId);
+        List<Student> memberList=new ArrayList<>();
+        for(Long id:memberIdList){
+            memberList.add(studentService.findById(id));
         }
-        teamInfo.setMember(member);
+        teamInfo.setMember(memberList);
         return new ResponseEntity<TeamInfo>(teamInfo, HttpStatus.OK);
     }
 
