@@ -67,41 +67,164 @@
         <i class="icon icon-return"></i>
     </a>
     <div class="aui-center">
-        <span class="aui-center-title">OOAD 2016(1)</span>
+        <span class="aui-center-title">课程名</span>
     </div>
     <a href="javascript:;" class="aui-navBar-item">
         <i class="icon icon-sys"></i>
     </a>
 </header>
 <body>
-<div class="list">
-    <ul class="yiji">
-        <li><a href="#" class="inactive">第一轮 5.0分</a>
-            <ul style="display: none">
-                <li><a href="#" class="inactive active">用例分析</a>
-                    <ul>
-                        <li><a href="#">展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</a></li>
-                        <li><a href="#">本轮成绩：5.0</a></li>
-                    </ul>
-                </li>
-                <li class="last"><a href="#">业务流程</a></li>
-            </ul>
-        </li>
 
-        <li><a href="#" class="inactive">第二轮5.0分</a>
-            <ul style="display: none">
-                <li><a href="#" class="inactive active">用例分析</a>
-                    <ul>
-                        <li><a href="#">展示：5.0 &nbsp;&nbsp;&nbsp;&nbsp;提问：5.0 &nbsp;&nbsp;&nbsp;&nbsp;书面报告：5.0</a></li>
-                        <li><a href="#">本轮成绩：5.0</a></li>
-                    </ul>
-                </li>
-                <li class="last"><a href="#">业务流程</a></li>
-            </ul>
-        </li>
 
-    </ul>
-</div>
+
+<div class="list" id="myView"></div>
+
+
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var myModel = {teamList:[]};
+    var sem = {smallList:[]};
+    var id='';
+    var semid=16;
+    var htmlNav='';
+    var courseid=getUrlParam('courseid');
+    var studentid=getUrlParam('studentid');
+
+    function getRound(){
+        var courseid=getUrlParam('courseid');
+        var studentid=getUrlParam('studentid');
+        $.ajax({
+            url: "/score/queryAllRoundSerialByCourseId",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+            data:{courseId:courseid},
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.roundList=res;
+
+                htmlNav+='<ul class="yiji">';
+                for(var i=0;i< myModel.roundList.length;i++)
+                {
+                    alert(myModel.roundList[i]);
+
+                    htmlNav+='<li><a href="#" class="inactive">第'+myModel.roundList[i]+'轮</a>';
+                    htmlNav+='<ul style="display: none">';
+                    getTeam(myModel.roundList[i]);
+
+                }
+                htmlNav+='</ul>';
+            },
+
+        });
+    }
+
+
+    function getTeam(roundserial){
+        var courseid=getUrlParam('courseid');
+        var studentid=getUrlParam('studentid');
+        $.ajax({
+            url: "/course/"+courseid+"/team",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.teamList=res;
+
+
+
+                if( myModel.teamList.length>0)
+                {
+
+                    for(var i=0;i< myModel.teamList.length;i++)
+                    {
+                        htmlNav+='<li><a href="#" class="inactive active">'+myModel.teamList[i].klassSerial+'-'+myModel.teamList[i].teamSerial+'&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;';
+                        getScore(courseid,studentid,roundserial);
+                        htmlNav+='</a><ul>';
+                        getScoreList(courseid,studentid,roundserial);
+                        htmlNav+='</ul></li>';
+
+                    }
+
+                }
+            },
+            error: function(){
+                alert('getTeam');
+            }
+        });
+    }
+
+
+    function getScore(courseid,studentid,roundserial){
+        var courseid=getUrlParam('courseid');
+        var studentid=getUrlParam('studentid');
+        $.ajax({
+            url: "/score/queryScorePage",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+            data:{courseId:courseid,studentId:studentid,roundSerial:roundserial},
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+
+
+                htmlNav+=res.roundScore.totalScore;
+
+            },
+            error: function(){
+                alert('getScore');
+            }
+        });
+    }
+
+    function getScoreList(courseid,studentid,roundserial){
+        var courseid=getUrlParam('courseid');
+        var studentid=getUrlParam('studentid');
+        $.ajax({
+            url: "/score/queryScorePage",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+            data:{courseId:courseid,studentId:studentid,roundSerial:roundserial},
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.scoreList=res.seminarList;
+
+                for(var i=0;i< myModel.scoreList.length;i++) {
+
+                    htmlNav+='<li><a href="#">'+myModel.scoreList[i].seminarName+'<span>' +
+                        '展示：'+myModel.scoreList[i].presentationScore+'&nbsp;&nbsp;&nbsp;&nbsp;提问：'
+                    +myModel.scoreList[i].questionScore+'&nbsp;&nbsp;&nbsp;&nbsp;报告：'+
+                        myModel.scoreList[i].reportScore+'</span></a></li>';
+                }
+
+            },
+            error: function(){
+                alert('getScoreList');
+            }
+
+        });
+    }
+
+
+    getRound();
+
+</script>
+
+
+
+
+
+
+
+
+
 
 
 

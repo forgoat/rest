@@ -89,6 +89,26 @@
     var id='';
     var semid=16;
     var htmlNav='';
+
+
+    function getStudent(studentid){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/student/"+studentid,                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+
+                htmlNav+=res.account+'&nbsp; &nbsp;&nbsp; &nbsp;'+res.studentName;
+            },
+
+        });
+    }
+
+
     function getTeam(teamid){
         var courseid=getUrlParam('courseid');
         $.ajax({
@@ -123,9 +143,18 @@
                 for(var i=0;i< myModel.memList.length;i++)
                 {
                     if(i==0)
-                    htmlNav+='<li class="last"><a href="#">组员：'+myModel.memList[i].account+'&nbsp; &nbsp;&nbsp; &nbsp;'+myModel.memList[i].studentName+'</a></li>';
+                    {
+                        htmlNav+='<li class="last"><a href="#">组员：';
+                        getStudent(myModel.memList[i].studentId);
+                        htmlNav+='</a></li>';
+                    }
+
                     else
-                        htmlNav+='<li class="last"><a href="#">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; '+myModel.memList[i].account+'&nbsp; &nbsp;&nbsp; &nbsp;'+myModel.memList[i].studentName+'</a></li>';
+                    {
+                        htmlNav+='<li class="last"><a href="#">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; ';
+                        getStudent(myModel.memList[i].studentId);
+                        htmlNav+='</a></li>';
+                    }
 
                 }
 
