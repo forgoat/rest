@@ -9,11 +9,22 @@
     <insert id="saveAttendance" parameterType="com.rest.entity.Attendance" useGeneratedKeys="true" keyProperty="id">
          INSERT INTO standard_seminar_system.attendance(klass_seminar_id,team_id,team_order,is_present)VALUE(#{klassSeminarId},#{teamId},#{teamOrder},0)
     </insert>
+
     <delete id="deleteById" parameterType="long">
         DELETE FROM standard_seminar_system.attendance WHERE id=#{attendanceId}
     </delete>
     <update id="updateAttendanceStatus">
         UPDATE standard_seminar_system.attendance SET is_present=#{status} WHERE id=#{attendanceId}
+    </update>
+    <update id="updateAttendance" parameterType="com.rest.entity.Attendance">
+        UPDATE standard_seminar_system.attendance
+        SET
+        ppt_name=#{pptName},
+        ppt_url=#{pptUrl},
+        report_name=#{reportName},
+        report_url=#{reportUrl}
+        WHERE
+        id=#{id}
     </update>
     <select id="queryByKlassSeminarIdAndTeamId" resultType="com.rest.entity.Attendance">
         SELECT *

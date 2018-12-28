@@ -31,6 +31,9 @@ public class AttendanceService {
     public List<Attendance> findAttendanceByKlassSeminarId(Long klassSeminarId){
         return attendanceDao.findAttendanceByKlassSeminarId(klassSeminarId);
     }
+    public Attendance findAttendanceByKlassSeminarAndTeamId(Long klassSeminarId,Long teamId){
+        return attendanceDao.queryByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
+    }
     public Team findTeamByTeamId(Long teamId){
         return teamDao.findById(teamId);
     }
@@ -111,13 +114,18 @@ public class AttendanceService {
      * @return
      */
     public void savePPT(String pptName,String pptUrl,Long studentId,Long courseId,Long seminarId){
+        System.out.println("pptName:"+pptName+" pptUrl:"+pptUrl);
         SeminarService seminarService=new SeminarService();
         Long teamId=teamStudentDao.findByStudentId(studentId);
+        System.out.println("teamId:"+teamId);
         Long klassSeminarId=seminarService.queryKlassSeminarId(studentId,courseId,seminarId);
-        Attendance attendance=attendanceDao.queryByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
+        System.out.println("klassSeminarId:"+klassSeminarId);
+        Long it=new Long(9);
+        Attendance attendance=attendanceDao.queryByKlassSeminarIdAndTeamId(it,teamId);
+        System.out.println("attendance:"+attendance);
         attendance.setPptName(pptName);
         attendance.setPptUrl(pptUrl);
-        attendanceDao.saveAttendance(attendance);
+        attendanceDao.updateAttendance(attendance);
     }
 
     /**
@@ -152,7 +160,8 @@ public class AttendanceService {
         Attendance attendance=attendanceDao.queryByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
         return attendance;
     }
-
-
+    public List<Question> questions(Long klassSeminarId,Long attendanceId){
+        return questionDao.questions(klassSeminarId,attendanceId);
+    }
 
 }

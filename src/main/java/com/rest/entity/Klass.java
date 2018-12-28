@@ -5,6 +5,7 @@ public class Klass {
     private Long courseId;
     private Integer grade;
     private Integer klassSerial;
+    private Integer teamSerial;
     private String klassTime;
     private String klassLocation;
 
@@ -61,6 +62,14 @@ public class Klass {
         this.klassLocation = klassLocation;
     }
 
+    public Integer getTeamSerial() {
+        return teamSerial;
+    }
+
+    public void setTeamSerial(Integer teamSerial) {
+        this.teamSerial = teamSerial;
+    }
+
     @Override
     public String toString() {
         return "Klass{" +
@@ -68,6 +77,7 @@ public class Klass {
                 ", courseId=" + courseId +
                 ", grade=" + grade +
                 ", klassSerial=" + klassSerial +
+                ", teamSerial=" + teamSerial +
                 ", klassTime='" + klassTime + '\'' +
                 ", klassLocation='" + klassLocation + '\'' +
                 '}';

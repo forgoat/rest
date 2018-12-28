@@ -96,4 +96,68 @@ public class ScoreController {
         return httpStatus;
     }
 
+    /**
+     * 修改讨论课展示成绩
+     * @param klassSeminarId
+     * @param teamId
+     * @param presentationScore
+     * @return
+     */
+    @PutMapping(value = "presentationScore")
+    public HttpStatus updateSeminarScore(Long klassSeminarId,Long teamId,double presentationScore){
+        HttpStatus httpStatus=(scoreService.updateSeminarScore(klassSeminarId,teamId,presentationScore)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
+    }
+
+    /**
+     * 修改讨论课报告成绩
+     * @param klassSeminarId
+     * @param teamId
+     * @param reportScore
+     * @return
+     */
+    @PutMapping(value = "reportScore")
+    public HttpStatus updateReportScore(Long klassSeminarId,Long teamId,double reportScore){
+        HttpStatus httpStatus=(scoreService.updateReportScore(klassSeminarId,teamId,reportScore)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
+    }
+
+    /**
+     * 查看轮次总分
+     * @param roundId
+     * @param teamId
+     * @return
+     */
+    @GetMapping(value = "roundScore")
+    public Double roundTotalScore(Long roundId,Long teamId,Long courseId){
+        Double score=scoreService.findRoundScore(courseId,roundId,teamId);
+        return score;
+    }
+
+    @PutMapping(value = "seminarScore")
+    public HttpStatus updateSeminarScore(Long klassSeminarId,Long teamId,Double presentationScore,Double questionScore,Double reportScore){
+        HttpStatus httpStatus=(scoreService.updateSeminarScore(klassSeminarId,teamId,presentationScore,questionScore,reportScore)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
+    }
+
+    /**
+     * 查找提问成绩
+     * @param klassSeminarId
+     * @param teamId
+     * @return
+     */
+    @GetMapping("questionScoreList")
+    public List<Double> findQuestionScores(Long klassSeminarId,Long teamId){
+        return scoreService.findQuestionScore(klassSeminarId,teamId);
+    }
+    /**
+     * 查找队伍的所在班级
+     * @param courseId
+     * @param teamId
+     * @return
+     */
+    @GetMapping(value = "klass")
+    public Long findKlassForTeam(Long courseId,Long teamId){
+        return scoreService.findKlassForTeam(courseId,teamId);
+    }
 }

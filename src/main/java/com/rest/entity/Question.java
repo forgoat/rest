@@ -9,7 +9,7 @@ public class Question {
     private Long teamId;
     private Long studentId;
     private Integer isSelected;
-    private double score;
+    private Double score;
 
     public Question() {
     }
@@ -62,15 +62,11 @@ public class Question {
         this.isSelected = isSelected;
     }
 
-    public double getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(double score) {
-        this.score = score;
-    }
-
-    public void setScore(float score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 }

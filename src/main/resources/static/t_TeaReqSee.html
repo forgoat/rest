@@ -30,20 +30,135 @@
     </header>
 
 
-    <div class="div-auto1" >
-        组员基本要求：
-    </div>
-    <div class="div-auto2" >
-        小组总人数（含组长）：
-        <br>
-        组内选修课程人数：
-    </div>
-    <div class="div-auto1" >
-        冲突课程：
-    </div>
-    <div class="div-auto2" >
-        J2EE（**老师）
-    </div>
+    <!--<div class="div-auto1" >-->
+    <!--组员基本要求：-->
+    <!--</div>-->
+    <!--<div class="div-auto2" >-->
+    <!--小组总人数（含组长）：-->
+    <!--</div>-->
+    <!--<div class="div-auto2" >-->
+    <!--组内选修课程人数：-->
+    <!--</div>-->
+    <!--<div class="div-auto1" >-->
+    <!--冲突课程：-->
+    <!--</div>-->
+    <!--<div class="div-auto2" >-->
+    <!--J2EE（**老师）-->
+    <!--</div>-->
+
+
+
+
+    <div class="list" id="myView"></div>
+
+
+
+
+
+
+
+    <script>
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        };
+        var myModel = {courseList:[]};
+        var sem = {smallList:[]};
+        var id='';
+
+        var htmlNav='';
+        function getCourse(courseID){
+            var courseid=getUrlParam('courseid');
+            $.ajax({
+                url: "/course/"+courseID,                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                async:false,
+
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+
+
+                    if(res=='')
+                        htmlNav+='<div class="div-auto2" >无</div>';
+                    else
+                        htmlNav+='<div class="div-auto2" >'+res.courseName+'</div>';
+
+                },
+                error: function(){
+                    htmlNav+='<div class="div-auto2" >无</div>';
+                }
+
+            });
+        }
+
+
+        function getConflict(courseid){
+
+            $.ajax({
+                url: "/team/findConflict",                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                async:false,
+                data:{courseId:courseid},
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+                    myModel.courseList=res;
+
+                    alert(myModel.courseList.length);
+                    for(var i=0;i< myModel.courseList.length;i++)
+                    {
+                        getCourse(myModel.courseList[i]);
+                    }
+
+                },
+
+            });
+        }
+
+        function getData(){
+            var courseid=getUrlParam('courseid');
+            $.ajax({
+                url: "/team/queryMemberLimitStrategyById",                //后端的API地址
+                type: 'POST',                                //http:POST/GET
+                async:false,
+                data:{courseId:courseid},
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+
+                success: function(res){
+
+
+                    htmlNav+='<div class="div-auto1" > 组员基本要求：</div>';
+                    htmlNav+='<div class="div-auto2" > 小组总人数（含组长）：'+res.minMember+'-'+res.maxMember+'</div>';
+                    htmlNav+='<div class="div-auto2" >组内选修课程人数：</div>';
+                    htmlNav+='<div class="div-auto1" >冲突课程：无</div>';
+                    getConflict(courseid);
+
+
+
+                    $("#myView").html(htmlNav);
+
+                },
+                error: function(){
+
+                    htmlNav+='<div class="div-auto1" > 组员基本要求：无</div>';
+
+                    htmlNav+='<div class="div-auto1" >冲突课程：</div>';
+                    getConflict(courseid);
+                    $("#myView").html(htmlNav);
+                }
+            });
+        }
+
+
+
+        getData();
+
+
+
+    </script>
 
 
 

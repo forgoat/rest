@@ -148,4 +148,26 @@ public class AttendanceController {
         HttpStatus httpStatus=(attendanceService.updateAttendanceStatus(attendanceId,status)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
         return httpStatus;
     }
+
+    /**
+     * 查找报名
+     * @param teamId
+     * @param klassSeminarId
+     * @return
+     */
+    @GetMapping(value = "")
+    public Attendance findAttendanceByKlassSeminarIdAndTeamId(Long teamId,Long klassSeminarId){
+        return attendanceService.findAttendanceByKlassSeminarAndTeamId(klassSeminarId,teamId);
+    }
+
+    /**
+     * 已提问队列
+     * @param klassSeminarId
+     * @param attendanceId
+     * @return
+     */
+    @GetMapping(value = "questions")
+    public List<Question> questions(Long klassSeminarId,Long attendanceId){
+        return attendanceService.questions(klassSeminarId,attendanceId);
+    }
 }
