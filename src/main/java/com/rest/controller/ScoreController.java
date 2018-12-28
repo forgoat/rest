@@ -109,9 +109,34 @@ public class ScoreController {
         return httpStatus;
     }
 
+    /**
+     * 修改讨论课报告成绩
+     * @param klassSeminarId
+     * @param teamId
+     * @param reportScore
+     * @return
+     */
     @PutMapping(value = "reportScore")
     public HttpStatus updateReportScore(Long klassSeminarId,Long teamId,double reportScore){
         HttpStatus httpStatus=(scoreService.updateReportScore(klassSeminarId,teamId,reportScore)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
+    }
+
+    /**
+     * 查看轮次总分
+     * @param roundId
+     * @param teamId
+     * @return
+     */
+    @GetMapping(value = "roundScore")
+    public Double roundTotalScore(Long roundId,Long teamId){
+        Double score=scoreService.roundTotalScore(roundId,teamId);
+        return score;
+    }
+
+    @PutMapping(value = "seminarScore")
+    public HttpStatus updateSeminarScore(Long klassSeminarId,Long teamId,Double presentationScore,Double questionScore,Double reportScore){
+        HttpStatus httpStatus=(scoreService.updateSeminarScore(klassSeminarId,teamId,presentationScore,questionScore,reportScore)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
         return httpStatus;
     }
 }

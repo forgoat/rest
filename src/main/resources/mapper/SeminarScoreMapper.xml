@@ -29,4 +29,19 @@
     <update id="updateSeminarReportScore">
         UPDATE standard_seminar_system.seminar_score SET report_score=#{reportScore} WHERE klass_seminar_id=#{klassSeminarId} AND team_id=#{teamId}
     </update>
+    <update id="updateSeminarScore">
+        UPDATE standard_seminar_system.seminar_score
+        <set>
+            <if test="presentationScore!=null">
+                presentation_Score=#{presentationScore},
+            </if>
+            <if test="questionScore!=null">
+                question_score=#{questionScore},
+            </if>
+            <if test="reportScore!=null">
+                report_score=#{reportScore}
+            </if>
+        </set>
+        WHERE klass_seminar_id=#{klassSeminarId} AND team_id=#{teamId}
+    </update>
 </mapper>

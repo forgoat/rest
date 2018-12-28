@@ -207,4 +207,17 @@ public class ScoreService {
         return seminarScoreDao.updateSeminarReportScore(klassSeminarId,teamId,reportScore);
     }
 
+    /**
+     * 直接查轮次的总分
+     * @param roundId
+     * @param teamId
+     * @return
+     */
+    public Double roundTotalScore(Long roundId,Long teamId){
+        RoundScore roundScore=roundScoreDao.findRoundByRoundIdAndTeamId(roundId,teamId);
+        return roundScore.getTotalScore();
+    }
+   public int updateSeminarScore(Long klassSeminarId,Long teamId,Double presentationScore,Double questionScore,Double reportScore){
+        return seminarScoreDao.updateSeminarScore(klassSeminarId,teamId,presentationScore,questionScore,reportScore);
+   }
 }

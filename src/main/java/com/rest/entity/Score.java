@@ -1,52 +1,52 @@
 package com.rest.entity;
 
 public class Score {
-    private double seminarTotalScore;
-    private double roundTotalScore;
-    private double presentatonScore;
-    private double questionScore;
-    private double reportScore;
+    private Double seminarTotalScore;
+    private Double roundTotalScore;
+    private Double presentatonScore;
+    private Double questionScore;
+    private Double reportScore;
 
     public Score() {
     }
 
-    public double getSeminarTotalScore() {
+    public Double getSeminarTotalScore() {
         return seminarTotalScore;
     }
 
-    public void setSeminarTotalScore(double seminarTotalScore) {
+    public void setSeminarTotalScore(Double seminarTotalScore) {
         this.seminarTotalScore = seminarTotalScore;
     }
 
-    public double getRoundTotalScore() {
+    public Double getRoundTotalScore() {
         return roundTotalScore;
     }
 
-    public void setRoundTotalScore(double roundTotalScore) {
+    public void setRoundTotalScore(Double roundTotalScore) {
         this.roundTotalScore = roundTotalScore;
     }
 
-    public double getPresentatonScore() {
+    public Double getPresentatonScore() {
         return presentatonScore;
     }
 
-    public void setPresentatonScore(double presentatonScore) {
+    public void setPresentatonScore(Double presentatonScore) {
         this.presentatonScore = presentatonScore;
     }
 
-    public double getQuestionScore() {
+    public Double getQuestionScore() {
         return questionScore;
     }
 
-    public void setQuestionScore(double questionScore) {
+    public void setQuestionScore(Double questionScore) {
         this.questionScore = questionScore;
     }
 
-    public double getReportScore() {
+    public Double getReportScore() {
         return reportScore;
     }
 
-    public void setReportScore(double reportScore) {
+    public void setReportScore(Double reportScore) {
         this.reportScore = reportScore;
     }
 }

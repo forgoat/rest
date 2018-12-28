@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper
 public interface SeminarScoreDao {
     public int save(SeminarScore seminarScore);
+    public int updateSeminarScore(@Param("klassSeminarId") Long klassSeminarId,@Param("teamId") Long teamId,@Param("presentationScore") Double presentationScore,@Param("questionScore") Double questionScore,@Param("reportScore") Double reportScore);
     public int updateSeminarReportScore(Long klassSeminarId,Long teamId,double reportScore);
     public int updateSeminarPresentationScore(@Param("klassSeminarId") Long klassSeminarId,@Param("teamId") Long teamId,@Param("presentationScore") double presentationScore);
     public SeminarScore findByTeamIdAndSeminarId(@Param("teamId") Long teamId, @Param("seminarId") Long seminarId);
