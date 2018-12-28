@@ -159,4 +159,15 @@ public class AttendanceController {
     public Attendance findAttendanceByKlassSeminarIdAndTeamId(Long teamId,Long klassSeminarId){
         return attendanceService.findAttendanceByKlassSeminarAndTeamId(klassSeminarId,teamId);
     }
+
+    /**
+     * 已提问队列
+     * @param klassSeminarId
+     * @param attendanceId
+     * @return
+     */
+    @GetMapping(value = "questions")
+    public List<Question> questions(Long klassSeminarId,Long attendanceId){
+        return attendanceService.questions(klassSeminarId,attendanceId);
+    }
 }
