@@ -96,6 +96,7 @@
             var klassseminarid = getUrlParam("klassseminarid");
 
             function quest() {//每次点下个提问调用
+                alert("loading");
                 var htmlNav='';
                 $("#isbody").empty();
                 for(var j=0;j<myModel.courseList.length;j++)
@@ -109,7 +110,7 @@
                         '                    <div class="input-group">\n' +
                         '                        <input id="pi" type="text" class="form-control" placeholder="0~5分">\n' +
                         '                        <span class="input-group-btn">\n' +
-                        '                        <button class="btn btn-default " type="button" onclick="some('+j+')">\n' +
+                        '                        <button class="btn btn-default " type="button" >\n' +
                         '                            <span class="glyphicon glyphicon-ok"></span>\n' +
                         '                        </button>\n' +
                         '                    </span>\n' +
@@ -129,19 +130,21 @@
                         '                    </div><!-- /input-group --><br>';
                     htmlNav+='<div class="row margin-3p" id="questionlist'+j+'">';
                     $.ajax({
-                        url: "/attendance/" + myModel.courseList[j].attendanceId+"/questionList",
+                        url: "/attendance/questions",
                         type: "GET",
-                        data:{klassSeminarId:klassseminarid},
+                        data:{klassSeminarId:klassseminarid,attendanceId:myModel.courseList[j].attendanceId},
                         async: false,
                         dataType: 'json',
                         success: function (res) {
+                            youModel.questList=[];
                             youModel.questList=res;
+                            //alert(youModel.questList.length)
                             if(youModel.questList.length>0)
                             {
                                 htmlNav+='<ul class="nav nav-pills  text-center">';
                                 for(var i=0;i<youModel.questList.length;i++)
                                 {
-                                    htmlNav+='<li role="presentation" ><a href="#">第'+youModel.questList[i].teamSerial+'组 </a></li>';
+                                    htmlNav+='<li role="presentation" ><a href="#">第'+youModel.questList[i].teamId+'组 </a></li>';
                                 }
                                 htmlNav+='</ul>'
                             }
@@ -160,6 +163,7 @@
                         '\n' +
                         '            </div><!--div控制模块-->';
                 }
+
                 $("#isbody").html(htmlNav);
 
                 //var seminarid = getUrlParam("seminarid");
