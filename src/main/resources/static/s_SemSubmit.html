@@ -91,30 +91,30 @@
         书面报告：未提交
     </div>
     <br>
-    <!--<div class="uploader blue">-->
-        <!--<input type="text" class="filename" readonly/>-->
-        <!--<input type="button" name="file" class="button" value="ppt提交"/>-->
-        <!--<input type="file" size="30"/>-->
-    <!--</div>-->
-    <!--<div class="uploader blue">-->
-        <!--<input type="text" class="filename" readonly/>-->
-        <!--<input type="button" name="file" class="button" value="报告提交"/>-->
-        <!--<input type="file" size="30"/>-->
-    <!--</div>-->
+    <div class="uploader blue">
+        <input type="text" class="filename" readonly/>
+        <input type="submit" name="fileName1" class="button" value="ppt提交"/>
+        <input type="file" size="30"/>
+    </div>
+    <div class="uploader blue">
+        <input type="text" class="filename" readonly/>
+        <input type="submit" name="fileName2" class="button" value="报告提交"/>
+        <input type="file" size="30"/>
+    </div>
 
-    <!--<button onclick="/fileUpload">-->
-        <!--提交-->
-    <!--</button>-->
+    <button onclick="/fileUpload">
+        提交
+    </button>
 
-    <form action="PPTUpload" method="post" enctype="multipart/form-data">
-        <p>上传PPT: <input type="file" name="fileName1"/></p>
-        <p><input type="submit" value="提交"/></p>
-    </form>
+    <!--<form action="PPTUpload" method="post" enctype="multipart/form-data">-->
+        <!--<p>上传PPT: <input type="file" name="fileName1"/></p>-->
+        <!--<p><input type="submit" value="提交"/></p>-->
+    <!--</form>-->
 
-    <form action="ReportUpload" method="post" enctype="multipart/form-data">
-        <p>上传报告: <input type="file" name="fileName2"/></p>
-        <p><input type="submit" value="提交"/></p>
-    </form>
+    <!--<form action="ReportUpload" method="post" enctype="multipart/form-data">-->
+        <!--<p>上传报告: <input type="file" name="fileName2"/></p>-->
+        <!--<p><input type="submit" value="提交"/></p>-->
+    <!--</form>-->
 
 
     </body>
