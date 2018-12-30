@@ -50,4 +50,15 @@ public class ScorePage {
     public void setSeminarScoreList(List<SeminarScore> seminarScoreList) {
         this.seminarScoreList = seminarScoreList;
     }
+
+    @Override
+    public String toString() {
+        return "ScorePage{" +
+                "roundId=" + roundId +
+                ", roundSerial=" + roundSerial +
+                ", roundScore=" + roundScore +
+                ", seminarList=" + seminarList +
+                ", seminarScoreList=" + seminarScoreList +
+                '}';
+    }
 }

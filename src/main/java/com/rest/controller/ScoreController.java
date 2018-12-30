@@ -77,9 +77,14 @@ public class ScoreController {
      */
     @GetMapping(value = "queryScorePage")
     public ResponseEntity<ScorePage> queryScorePage(Long courseId,Long studentId,Integer roundSerial){
-        ScorePage scorePage=scoreService.queryScorePage(courseId,studentId,roundSerial);
+        System.out.println("queryScorePage:");
+        ScorePage scorePage=new ScorePage();
+        if(scoreService.queryScorePage(courseId,studentId,roundSerial)!=null)
+            scorePage=scoreService.queryScorePage(courseId,studentId,roundSerial);
         HttpStatus httpStatus=HttpStatus.OK;
+        if(scorePage!=null)
         return new ResponseEntity<ScorePage>(scorePage,httpStatus);
+        else return null;
     }
 
 

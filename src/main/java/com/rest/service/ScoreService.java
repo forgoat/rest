@@ -3,6 +3,7 @@ package com.rest.service;
 import com.rest.dao.*;
 import com.rest.entity.*;
 import com.sun.javafx.collections.MappingChange;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -68,23 +69,27 @@ public class ScoreService {
     public List<SeminarScore> queryByCourseIdStudentId(Long courseId,Long studentId){
         Long teamId=teamStudentDao.findByStudentId(studentId);
         System.out.println("teamId:"+teamId);
+        //一个team包括主从课程的班级
         List<Long> klassIdList=klassTeamDao.findByTeamId(teamId);
         System.out.println("klassIdList:"+klassIdList);
+        //一个课程里所有的班级
         List<Klass> klassList=klassDao.findByCourseId(courseId);
         System.out.println("klassList:"+klassList);
         Long klassId=null;
+        //查找出一个相同的klassId
         for(Long a: klassIdList){
             System.out.println("a:"+a);
             for(Klass b:klassList){
                 System.out.println("b:"+b);
-                if(a==b.getId()){
+                if(a.equals(b.getId())){
                     klassId=a;
-                    System.out.println("klassId"+a);
+                    System.out.println("klassId: "+a);
                     break;
                 }
             }
             if(klassId!=null) break;
         }
+        //找seminarId
         List<KlassSeminar> klassSeminarList=klassSeminarDao.queryByKlassId(klassId);
         System.out.println("klassSeminarList: "+klassSeminarList);
         List<SeminarScore> seminarScoreList=new ArrayList<>();
@@ -104,23 +109,38 @@ public class ScoreService {
      */
     public List<RoundScore> queryByCourseId(Long courseId,Long studentId){
         Long teamId=teamStudentDao.findByStudentId(studentId);
+        System.out.println("$ teamId:"+teamId);
         List<Long> klassIdList=klassTeamDao.findByTeamId(teamId);
+        System.out.println("$ klassIdList:"+klassIdList);
         List<Klass> klassList=klassDao.findByCourseId(courseId);
+        System.out.println("$ klassList:"+klassList);
         Long klassId=null;
         for(Long a: klassIdList){
             for(Klass b:klassList){
-                if(a==b.getId()){
+                if(a.equals(b.getId())&&a!=null&&b!=null){
                     klassId=a;
+                    System.out.println("$ klassId:"+klassId);
                     break;
                 }
             }
         }
+
         List<KlassRound> klassRoundList=klassRoundDao.findByKlassId(klassId);
-        List<RoundScore> roundScoreList=new ArrayList<>();
-        for(KlassRound klassRound:klassRoundList){
-            roundScoreList.add(roundScoreDao.queryByRoundIdTeamId(klassRound.getRoundId(),teamId));
-        }
+        System.out.println("$ klassRoundList:"+klassRoundList);
+        if(klassRoundList.size()!=0&&klassRoundList!=null){
+            List<RoundScore> roundScoreList=new ArrayList<>();
+            for(KlassRound klassRound:klassRoundList){
+                if(klassRound!=null)
+                    roundScoreList.add(roundScoreDao.queryByRoundIdTeamId(klassRound.getRoundId(),teamId));
+                System.out.println("$ roundScoreList"+roundScoreList);
+            }
         return roundScoreList;
+        }
+        else{
+            System.out.println("$ return null");
+            return null;
+        }
+
     }
 
     /**
@@ -138,21 +158,27 @@ public class ScoreService {
         System.out.println("klassIdList"+klassIdList);
         List<Long> klassSeminarIdList=new ArrayList<>();
         for(Seminar seminar:seminarList){
+            System.out.println("for循环：seminar: "+seminar);
             for(Long klassId:klassIdList){
-                System.out.println("for循环："+seminar+" "+klassId);
+                System.out.println("klassId: "+klassId);
                 klassSeminarIdList.add(klassSeminarDao.queryKlassSeminarIdByKlassIdAndSeminarId(klassId,seminar.getId()));
+                System.out.println("klassSeminarIdList: "+klassSeminarIdList);
             }
         }
         List<SeminarScore> seminarScoreList1=new ArrayList<>();
         for(Long klassSeminarId:klassSeminarIdList){
             for(SeminarScore seminarScore:seminarScoreList) {
-                System.out.println("klassSeminarId:" + klassSeminarId + " seminarScore:" + seminarScore);
+                System.out.println("klassSeminarId:" + klassSeminarId + " " + seminarScore);
                 if (seminarScore != null&&klassSeminarId!=null) {
-                    if (klassSeminarId.equals(seminarScore.getKlassSeminarId())) seminarScoreList1.add(seminarScore);
+                    if (klassSeminarId.equals(seminarScore.getKlassSeminarId())) {
+                        seminarScoreList1.add(seminarScore);
+                        System.out.println("+seminarScoreList1: "+seminarScoreList1);
+                    }
                 }
                 else continue;
             }
         }
+        System.out.println("seminarScoreList1: "+seminarScoreList1);
         return seminarScoreList1;
     }
 
@@ -167,6 +193,7 @@ public class ScoreService {
     public ScorePage queryScorePage(Long courseId,Long studentId,Integer roundSerial){
         Long teamId=teamStudentDao.findByStudentId(studentId);
         System.out.println("teamId: "+teamId);
+        //！！！SeminarScore不能用课程查 因为要考虑从课程 需要用klassId查找
         List<SeminarScore> seminarScoreList=queryByCourseIdStudentId(courseId,studentId);
         System.out.println("seminarScoreList: "+seminarScoreList);
         Long roundId=roundDao.queryRoundIdByCourseIdAndRoundSerial(courseId,roundSerial);
@@ -176,13 +203,32 @@ public class ScoreService {
         List<SeminarScore> seminarScoreList1=querySeminarScoreByRoundId(seminarScoreList,roundId,courseId,teamId);
         System.out.println("seminarScoreList1: "+seminarScoreList1);
 
+
         ScorePage scorePage=new ScorePage();
+        if(roundId!=null)
         scorePage.setRoundId(roundId);
+        else scorePage.setRoundId(null);
+        System.out.println("scorePage: "+scorePage);
         //RoundScore为roundSerial的
-        scorePage.setRoundScore(queryRoundScore(courseId,studentId,roundSerial));
-        scorePage.setRoundSerial(roundSerial);
-        scorePage.setSeminarList(seminarList);
-        scorePage.setSeminarScoreList(seminarScoreList1);
+        if(roundSerial!=null)
+            scorePage.setRoundSerial(roundSerial);
+        else scorePage.setRoundSerial(null);
+        System.out.println("scorePage: "+scorePage);
+
+        if(queryRoundScore(courseId,studentId,roundSerial)!=null&&!queryRoundScore(courseId,studentId,roundSerial).equals(null))
+            scorePage.setRoundScore(queryRoundScore(courseId,studentId,roundSerial));
+        else scorePage.setRoundScore(null);
+        System.out.println("scorePage: "+scorePage);
+
+        if(seminarList.size()!=0&&seminarList!=null)
+            scorePage.setSeminarList(seminarList);
+        else scorePage.setRoundScore(null);
+        System.out.println("scorePage: "+scorePage);
+
+        if(seminarScoreList1.size()!=0&&seminarScoreList1!=null)
+            scorePage.setSeminarScoreList(seminarScoreList1);
+        else scorePage.setRoundScore(null);
+        System.out.println("scorePage: "+scorePage);
         return scorePage;
     }
 
@@ -194,8 +240,15 @@ public class ScoreService {
      * @return
      */
     public RoundScore queryRoundScore(Long courseId,Long studentId,Integer roundSerial){
-        List<RoundScore> roundScoreList=queryByCourseId(courseId,studentId);
-        return roundScoreList.get(roundSerial);
+        if(queryByCourseId(courseId,studentId)!=null){
+            List<RoundScore> roundScoreList=queryByCourseId(courseId,studentId);
+            if(roundSerial!=null) {
+                if (roundScoreList.get(roundSerial) != null && roundScoreList.size() != 0)
+                    return roundScoreList.get(roundSerial);
+                else return null;
+            }
+        }
+        return null;
     }
 
     public Question findQuestionById(Long id){
