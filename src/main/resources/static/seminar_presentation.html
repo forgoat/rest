@@ -251,7 +251,8 @@
 
             })
             var qteam='';
-            $("ul li").on("click",function(){
+            $(document).on('click','ul li',function(){
+            //$("ul li").on("click",function(){
                 qteam =  $(this).val();
                 if($(this).hasClass("myList")) {
                     $(this).addClass("active").siblings().removeClass("active");
