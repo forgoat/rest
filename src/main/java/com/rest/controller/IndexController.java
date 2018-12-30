@@ -9,4 +9,8 @@ public class IndexController {
     public String index(){
         return "index.html";
     }
+    @RequestMapping(value = "/login")
+    public String adminLogin(){
+        return "a_Login.html";
+    }
 }
