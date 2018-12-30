@@ -1,8 +1,8 @@
 package com.rest.controller;
 
-import com.rest.entity.Klass;
-import com.rest.entity.KlassSeminar;
-import com.rest.entity.Seminar;
+import com.rest.po.Klass;
+import com.rest.po.KlassSeminar;
+import com.rest.po.Seminar;
 import com.rest.service.KlassService;
 import com.rest.service.RoundService;
 import com.rest.service.SeminarService;

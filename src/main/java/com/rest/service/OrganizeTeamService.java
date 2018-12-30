@@ -1,24 +1,26 @@
 package com.rest.service;
 
-import com.rest.dao.CourseDao;
-import com.rest.dao.TeamDao;
-import com.rest.dao.TeamStudentDao;
+import com.rest.mapper.CourseMapper;
+import com.rest.mapper.TeamMapper;
+import com.rest.mapper.TeamStudentMapper;
 import com.rest.entity.*;
+import com.rest.po.Course;
+import com.rest.po.KlassStudent;
+import com.rest.po.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OrganizeTeamService {
     @Autowired
-    TeamDao teamDao;
+    TeamMapper teamMapper;
     @Autowired
-    CourseDao courseDao;
+    CourseMapper courseMapper;
     @Autowired
-    TeamStudentDao teamStudentDao;
+    TeamStudentMapper teamStudentMapper;
 
     /**
      * 更新小组关联表
@@ -29,8 +31,8 @@ public class OrganizeTeamService {
      */
     public int updateTeamTable(Team team, KlassStudent klassStudent, TeamValidApplication teamValidApplication) {
 
-        int count=teamDao.updateKlassStudent(klassStudent);
-        teamDao.updateTeamValidApplication(teamValidApplication);
+        int count= teamMapper.updateKlassStudent(klassStudent);
+        teamMapper.updateTeamValidApplication(teamValidApplication);
         return count;
     }
 
@@ -58,7 +60,7 @@ public class OrganizeTeamService {
         Long courseId=courseMemberLimitStrategy.getCourseId();
         int count=0;
         for(Long a:teamStudentList){
-            List<Course> courseList=courseDao.queryCourseByStudentId(a);
+            List<Course> courseList= courseMapper.queryCourseByStudentId(a);
             for(Course b: courseList){
                 if(b.getId()==courseId)
                     count++;
@@ -87,7 +89,7 @@ public class OrganizeTeamService {
             }
         }
         for(Long a:teamStudentList){
-            List<Course> courseList=courseDao.queryCourseByStudentId(a);
+            List<Course> courseList= courseMapper.queryCourseByStudentId(a);
             for(Course b: courseList){
                 for(Long c: courseIdList){
                     if(b.getId()==c) return false;
@@ -109,21 +111,21 @@ public class OrganizeTeamService {
             if (c.getStrategyName().equals("TeamAndStrategy")) {
                 System.out.println("b TeamAndStrategy");
                 Long id_c = c.getStrategyId();
-                List<TeamAndStrategy> teamAndStrategies = teamDao.queryTeamAndStrategy(id_c);
+                List<TeamAndStrategy> teamAndStrategies = teamMapper.queryTeamAndStrategy(id_c);
                 isTeamAndStrategy(teamAndStrategies,teamStudentList,courseId);
 
             } else if (c.getStrategyName().equals("MemberLimitStrategy")) {
                 System.out.println("c MemberLimitStrategy");
-                MemberLimitStrategy memberLimitStrategy=teamDao.queryMemberLimit(c.getStrategyId());
+                MemberLimitStrategy memberLimitStrategy= teamMapper.queryMemberLimit(c.getStrategyId());
                 if(isMemberLimitStrategy(memberLimitStrategy,num)) return true;
 
             } else if (c.getStrategyName().equals("CourseMemberLimitStrategy")) {
                 System.out.println("c CourseMemberLimitStrategy");
-                CourseMemberLimitStrategy courseMemberLimitStrategy=teamDao.queryCourseMemberLimitStrategy(c.getStrategyId());
+                CourseMemberLimitStrategy courseMemberLimitStrategy= teamMapper.queryCourseMemberLimitStrategy(c.getStrategyId());
                 if(isCourseMemberLimitStrategy(courseMemberLimitStrategy,teamStudentList))return true;
             }else if (c.getStrategyName().equals("ConflictCourseStrategy")){
                 System.out.println("a ConflictCourseStrategy");
-                List<ConflictCourseStrategy> conflictCourseStrategyList=teamDao.queryConflictCourseStrategy(c.getStrategyId());
+                List<ConflictCourseStrategy> conflictCourseStrategyList= teamMapper.queryConflictCourseStrategy(c.getStrategyId());
                 if(isConflictCourseStrategy(conflictCourseStrategyList,teamStudentList,courseId)) return true;
             }
         }
@@ -144,22 +146,22 @@ public class OrganizeTeamService {
             if (c.getStrategyName().equals("TeamOrStrategy")) {
                 System.out.println("b TeamOrStrategy");
                 Long id_c=c.getStrategyId();
-                List<TeamOrStrategy> teamOrStrategies=teamDao.queryTeamOrStrategy(id_c);
+                List<TeamOrStrategy> teamOrStrategies= teamMapper.queryTeamOrStrategy(id_c);
                 isTeamOrStrategy(teamOrStrategies,teamStudentList,courseId);
             }
             else if (c.getStrategyName().equals("MemberLimitStrategy")) {
                 System.out.println("c MemberLimitStrategy");
-                MemberLimitStrategy memberLimitStrategy=teamDao.queryMemberLimit(c.getStrategyId());
+                MemberLimitStrategy memberLimitStrategy= teamMapper.queryMemberLimit(c.getStrategyId());
                 if(isMemberLimitStrategy(memberLimitStrategy,num))count++;
 
             } else if (c.getStrategyName().equals("CourseMemberLimitStrategy")) {
                 System.out.println("c CourseMemberLimitStrategy");
-                CourseMemberLimitStrategy courseMemberLimitStrategy=teamDao.queryCourseMemberLimitStrategy(c.getStrategyId());
+                CourseMemberLimitStrategy courseMemberLimitStrategy= teamMapper.queryCourseMemberLimitStrategy(c.getStrategyId());
                 if(isCourseMemberLimitStrategy(courseMemberLimitStrategy,teamStudentList))count++;
 
             }else if (c.getStrategyName().equals("ConflictCourseStrategy")){
                 System.out.println("a ConflictCourseStrategy");
-                List<ConflictCourseStrategy> conflictCourseStrategyList=teamDao.queryConflictCourseStrategy(c.getStrategyId());
+                List<ConflictCourseStrategy> conflictCourseStrategyList= teamMapper.queryConflictCourseStrategy(c.getStrategyId());
                 if(isConflictCourseStrategy(conflictCourseStrategyList,teamStudentList,courseId))count++;
             }
         }
@@ -174,42 +176,42 @@ public class OrganizeTeamService {
      */
     public boolean isValid(Long teamId,Long courseId){
         System.out.println("teamId"+teamId+" courseId"+courseId);
-        List<Long> teamStudentList=teamStudentDao.queryByTeamId(teamId);
+        List<Long> teamStudentList= teamStudentMapper.queryByTeamId(teamId);
         System.out.println("teamStudentList"+teamStudentList.toString());
         int num=teamStudentList.size();
         if(num==0) return false;//不存在此队伍
 
-        List<TeamStrategy> teamStrategies=teamDao.queryTeamStrategy(courseId);
+        List<TeamStrategy> teamStrategies= teamMapper.queryTeamStrategy(courseId);
         if(teamStrategies.size()==0) return false;//不存在该班级或其teamStrategies
 
         for(TeamStrategy a: teamStrategies){
             if(a.getStrategyName().equals("TeamAndStrategy")){
                 System.out.println("a TeamAndStrategy");
                 Long id = a.getStrategyId();
-                List<TeamAndStrategy> teamAndStrategies = teamDao.queryTeamAndStrategy(id);
+                List<TeamAndStrategy> teamAndStrategies = teamMapper.queryTeamAndStrategy(id);
                 isTeamAndStrategy(teamAndStrategies,teamStudentList,courseId);
             }
 
             else if(a.getStrategyName().equals("TeamOrStrategy")) {
                 System.out.println("a TeamOrStrategy");
                 Long id = a.getStrategyId();
-                List<TeamOrStrategy> teamOrStrategies = teamDao.queryTeamOrStrategy(id);
+                List<TeamOrStrategy> teamOrStrategies = teamMapper.queryTeamOrStrategy(id);
                 isTeamOrStrategy(teamOrStrategies,teamStudentList,courseId);
             }
 
             else if(a.getStrategyName().equals("MemberLimitStrategy")){
                 System.out.println("a MemberLimitStrategy");
-                MemberLimitStrategy memberLimitStrategy=teamDao.queryMemberLimit(a.getStrategyId());
+                MemberLimitStrategy memberLimitStrategy= teamMapper.queryMemberLimit(a.getStrategyId());
                 isMemberLimitStrategy(memberLimitStrategy,num);
             }
             else if(a.getStrategyName().equals("CourseMemberLimitStrategy")){
                 System.out.println("a CourseMemberLimitStrategy");
-                CourseMemberLimitStrategy courseMemberLimitStrategy=teamDao.queryCourseMemberLimitStrategy(a.getStrategyId());
+                CourseMemberLimitStrategy courseMemberLimitStrategy= teamMapper.queryCourseMemberLimitStrategy(a.getStrategyId());
                 isCourseMemberLimitStrategy(courseMemberLimitStrategy,teamStudentList);
             }
             else if(a.getStrategyName().equals("ConflictCourseStrategy")){
                 System.out.println("a ConflictCourseStrategy");
-                List<ConflictCourseStrategy> conflictCourseStrategyList=teamDao.queryConflictCourseStrategy(a.getStrategyId());
+                List<ConflictCourseStrategy> conflictCourseStrategyList= teamMapper.queryConflictCourseStrategy(a.getStrategyId());
                 isConflictCourseStrategy(conflictCourseStrategyList,teamStudentList,courseId);
             }
         }
@@ -226,7 +228,7 @@ public class OrganizeTeamService {
             if (c.getStrategyName().equals("TeamAndStrategy")) {
                 System.out.println("b TeamAndStrategy");
                 Long id_c = c.getStrategyId();
-                List<TeamAndStrategy> teamAndStrategies = teamDao.queryTeamAndStrategy(id_c);
+                List<TeamAndStrategy> teamAndStrategies = teamMapper.queryTeamAndStrategy(id_c);
                 queryTeamAndStrategy(teamAndStrategies);
 
             } else if (c.getStrategyName().equals("MemberLimitStrategy")) {
@@ -243,7 +245,7 @@ public class OrganizeTeamService {
                     System.out.println("b TeamOrStrategy");
                     Long id_c=c.getStrategyId();
                     System.out.println("TeamOrStrategy: "+id_c);
-                    List<TeamOrStrategy> teamOrStrategies=teamDao.queryTeamOrStrategy(id_c);
+                    List<TeamOrStrategy> teamOrStrategies= teamMapper.queryTeamOrStrategy(id_c);
                     queryTeamOrStrategy(teamOrStrategies);
                 }
                 else if (c.getStrategyName().equals("MemberLimitStrategy")) {
@@ -259,21 +261,21 @@ public class OrganizeTeamService {
      * @return
      */
     public Long queryMemberLimitStrategyId(Long courseId){
-        List<TeamStrategy> teamStrategies=teamDao.queryTeamStrategy(courseId);
+        List<TeamStrategy> teamStrategies= teamMapper.queryTeamStrategy(courseId);
 
         for(TeamStrategy a: teamStrategies){
             if(a.getStrategyName().equals("TeamAndStrategy")){
                 System.out.println("a TeamAndStrategy");
                 Long id = a.getStrategyId();
                 System.out.println("TeamAndStrategy: "+id);
-                List<TeamAndStrategy> teamAndStrategies = teamDao.queryTeamAndStrategy(id);
+                List<TeamAndStrategy> teamAndStrategies = teamMapper.queryTeamAndStrategy(id);
                 if(queryTeamAndStrategy(teamAndStrategies)!=null) return queryTeamAndStrategy(teamAndStrategies);
             }
 
             else if(a.getStrategyName().equals("TeamOrStrategy")) {
                 System.out.println("a TeamOrStrategy");
                 Long id = a.getStrategyId();
-                List<TeamOrStrategy> teamOrStrategies = teamDao.queryTeamOrStrategy(id);
+                List<TeamOrStrategy> teamOrStrategies = teamMapper.queryTeamOrStrategy(id);
                 if(queryTeamOrStrategy(teamOrStrategies)!=null) return queryTeamOrStrategy(teamOrStrategies);
             }
 
@@ -292,7 +294,7 @@ public class OrganizeTeamService {
      */
     public MemberLimitStrategy queryMemberLimitStrategyById(Long id){
         System.out.println("queryMemberLimitStrategyById: "+id);
-        return teamDao.queryMemberLimitStrategyById(id);
+        return teamMapper.queryMemberLimitStrategyById(id);
     }
 
 
@@ -304,7 +306,7 @@ public class OrganizeTeamService {
             if (c.getStrategyName().equals("TeamAndStrategy")) {
                 System.out.println("b TeamAndStrategy");
                 Long id_c = c.getStrategyId();
-                List<TeamAndStrategy> teamAndStrategies = teamDao.queryTeamAndStrategy(id_c);
+                List<TeamAndStrategy> teamAndStrategies = teamMapper.queryTeamAndStrategy(id_c);
                 queryTeamAndStrategy(teamAndStrategies);
 
             } else if (c.getStrategyName().equals("CourseMemberLimitStrategy")) {
@@ -321,7 +323,7 @@ public class OrganizeTeamService {
                 System.out.println("b TeamOrStrategy");
                 Long id_c=c.getStrategyId();
                 System.out.println("TeamOrStrategy: "+id_c);
-                List<TeamOrStrategy> teamOrStrategies=teamDao.queryTeamOrStrategy(id_c);
+                List<TeamOrStrategy> teamOrStrategies= teamMapper.queryTeamOrStrategy(id_c);
                 queryTeamOrStrategy(teamOrStrategies);
             }
             else if (c.getStrategyName().equals("CourseMemberLimitStrategy")) {
@@ -337,21 +339,21 @@ public class OrganizeTeamService {
      * @return
      */
     public Long queryCourseMemberLimitStrategyId(Long courseId){
-        List<TeamStrategy> teamStrategies=teamDao.queryTeamStrategy(courseId);
+        List<TeamStrategy> teamStrategies= teamMapper.queryTeamStrategy(courseId);
 
         for(TeamStrategy a: teamStrategies){
             if(a.getStrategyName().equals("TeamAndStrategy")){
                 System.out.println("a TeamAndStrategy");
                 Long id = a.getStrategyId();
                 System.out.println("TeamAndStrategy: "+id);
-                List<TeamAndStrategy> teamAndStrategies = teamDao.queryTeamAndStrategy(id);
+                List<TeamAndStrategy> teamAndStrategies = teamMapper.queryTeamAndStrategy(id);
                 if(queryTeamAndStrategy(teamAndStrategies)!=null) return queryTeamAndStrategy(teamAndStrategies);
             }
 
             else if(a.getStrategyName().equals("TeamOrStrategy")) {
                 System.out.println("a TeamOrStrategy");
                 Long id = a.getStrategyId();
-                List<TeamOrStrategy> teamOrStrategies = teamDao.queryTeamOrStrategy(id);
+                List<TeamOrStrategy> teamOrStrategies = teamMapper.queryTeamOrStrategy(id);
                 if(queryTeamOrStrategy(teamOrStrategies)!=null) return queryTeamOrStrategy(teamOrStrategies);
             }
 
@@ -371,7 +373,7 @@ public class OrganizeTeamService {
      */
     public CourseMemberLimitStrategy queryCourseMemberLimitStrategy(Long id ){
         System.out.println("queryCourseMemberLimitStrategy"+id);
-        return teamDao.queryCourseMemberLimitStrategy(id);
+        return teamMapper.queryCourseMemberLimitStrategy(id);
     }
 
 }

@@ -1,13 +1,11 @@
 package com.rest.controller;
 
-import com.rest.entity.Student;
+import com.rest.po.Student;
 import com.rest.entity.StudentData;
 import com.rest.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

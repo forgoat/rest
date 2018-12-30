@@ -1,7 +1,7 @@
 package com.rest.service;
 
-import com.rest.dao.StudentDao;
-import com.rest.entity.Student;
+import com.rest.mapper.StudentMapper;
+import com.rest.po.Student;
 import com.rest.exception.ImportExcelException;
 import com.rest.exception.ResultEnum;
 
@@ -34,7 +34,7 @@ public class ImportExcelService {
     private final static Logger logger = LoggerFactory.getLogger(ImportExcelService.class);
 
     @Autowired
-    private StudentDao studentDao;
+    private StudentMapper studentMapper;
 
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
@@ -48,7 +48,7 @@ public class ImportExcelService {
         * 还未完成：（数据库未定）
         * 系统同时删除该班级与未出现在新名单的学生账户的所有关联
         * */
-        studentDao.deleteAll();
+        studentMapper.deleteAll();
 
         List<Student> studentList = new ArrayList<>();
         Workbook workbook = null;
@@ -100,7 +100,7 @@ public class ImportExcelService {
             }
 
         }
-        studentDao.batchSaveStudent(studentList);  //  批量插入 五秒完成
+        studentMapper.batchSaveStudent(studentList);  //  批量插入 五秒完成
         long endTime = System.currentTimeMillis();
         long totaltime = endTime - startTime;
         logger.info("【消耗时间为】{}",totaltime);  //  将近两万条数据 3秒解析完成

@@ -1,5 +1,7 @@
 package com.rest.entity;
 
+import com.rest.po.KlassSeminar;
+
 import java.sql.Date;
 
 public class KlassSeminarInfo {

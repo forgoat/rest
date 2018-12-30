@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rest.dao.KlassDao">
+<mapper namespace="com.rest.mapper.KlassMapper">
     <delete id="deleteById" parameterType="long">
         DELETE FROM standard_seminar_system.klass WHERE id=#{id}
     </delete>
-    <select id="findByCourseId" resultType="com.rest.entity.Klass">
+    <select id="findByCourseId" resultType="com.rest.po.Klass">
         SELECT * FROM standard_seminar_system.klass WHERE course_id=#{courseId}
     </select>
-    <insert id="saveKlass" parameterType="com.rest.entity.Klass">
+    <insert id="saveKlass" parameterType="com.rest.po.Klass">
         INSERT INTO klass(
         course_id,
         grade,

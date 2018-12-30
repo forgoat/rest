@@ -1,10 +1,9 @@
 package com.rest.controller;
 
-import com.rest.entity.Student;
-import com.rest.entity.Teacher;
+import com.rest.po.Student;
+import com.rest.po.Teacher;
 import com.rest.service.StudentService;
 import com.rest.service.TeacherService;
-import com.rest.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;

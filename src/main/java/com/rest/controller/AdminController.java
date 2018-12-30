@@ -2,17 +2,9 @@ package com.rest.controller;
 
 import com.rest.entity.Admin;
 import com.rest.service.AdminService;
-import lombok.AllArgsConstructor;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigInteger;
-import java.security.Principal;
 import java.util.List;
 
 @RestController

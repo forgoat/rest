@@ -1,8 +1,7 @@
 package com.rest.service;
 
-import com.rest.dao.TeacherDao;
-import com.rest.entity.Teacher;
-import org.apache.ibatis.annotations.Param;
+import com.rest.mapper.TeacherMapper;
+import com.rest.po.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,34 +10,34 @@ import java.util.List;
 @Service
 public class TeacherService {
     @Autowired
-    private TeacherDao teacherDao;
+    private TeacherMapper teacherMapper;
 
     public List<Teacher> teacherList() {
-        return teacherDao.teacherlist();
+        return teacherMapper.teacherlist();
     }
 
     public int createTeacher(Teacher teacher)
     {
         teacher.setIsActive(0);
         teacher.setPassword("123456");
-        return teacherDao.save(teacher);
+        return teacherMapper.save(teacher);
     }
     public Teacher findByAccount(String account)
     {
-        return teacherDao.findByAccount(account);
+        return teacherMapper.findByAccount(account);
     }
     public Teacher findById(Long id){
-        return teacherDao.findById(id);
+        return teacherMapper.findById(id);
     }
     public int updatePassword(Long id,String password){
-        return teacherDao.updatePassword(id,password);
+        return teacherMapper.updatePassword(id,password);
     }
     public int updateEmail(Long id, String email) {
-        return teacherDao.updateEmail(id, email);
+        return teacherMapper.updateEmail(id, email);
     }
     public int actival(Long id,String password)
     {
-        if(teacherDao.updatePassword(id,password)==1&&teacherDao.actival(id)==1) {
+        if(teacherMapper.updatePassword(id,password)==1&& teacherMapper.actival(id)==1) {
             return 1;
         }
         else {
@@ -47,13 +46,13 @@ public class TeacherService {
     }
     public int delete(Long id)
     {
-        return teacherDao.delete(id);
+        return teacherMapper.delete(id);
     }
     public List<Teacher> search(String account,String teacherName)
     {
-        return teacherDao.search(account,teacherName);
+        return teacherMapper.search(account,teacherName);
     }
     public int updateInfo(Long id,String account,String email,String teacherName){
-        return teacherDao.updateInfo(id,account,email,teacherName);
+        return teacherMapper.updateInfo(id,account,email,teacherName);
     }
 }

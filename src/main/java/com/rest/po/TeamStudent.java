@@ -1,0 +1,33 @@
+package com.rest.po;
+
+public class TeamStudent {
+    private Long teamId;
+    private Long studentId;
+
+    public TeamStudent() {
+    }
+
+    public Long getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
+    @Override
+    public String toString() {
+        return "TeamStudent{" +
+                "teamId=" + teamId +
+                ", studentId=" + studentId +
+                '}';
+    }
+}

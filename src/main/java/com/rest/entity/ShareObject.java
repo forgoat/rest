@@ -1,5 +1,7 @@
 package com.rest.entity;
 
+import com.rest.po.Course;
+
 public class ShareObject {
     private Long courseId;
     private String courseName;

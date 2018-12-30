@@ -1,5 +1,7 @@
 package com.rest.entity;
 
+import com.rest.po.Question;
+
 public class QuestionInfo {
     private Long questionId;
     private Long teamId;

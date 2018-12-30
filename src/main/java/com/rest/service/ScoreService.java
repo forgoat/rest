@@ -1,444 +1,439 @@
 package com.rest.service;
 
-import com.rest.dao.*;
+import com.rest.mapper.*;
 import com.rest.entity.*;
-import com.sun.javafx.collections.MappingChange;
-import org.apache.ibatis.jdbc.Null;
+import com.rest.po.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PutMapping;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@Service
-public class ScoreService {
-
-    @Autowired
-    private SeminarScoreDao seminarScoreDao;
-    @Autowired
-    private SeminarDao seminarDao;
-    @Autowired
-    private KlassSeminarDao klassSeminarDao;
-    @Autowired
-    private TeamStudentDao teamStudentDao;
-    @Autowired
-    private KlassTeamDao klassTeamDao;
-    @Autowired
-    private KlassDao klassDao;
-    @Autowired
-    private RoundDao roundDao;
-    @Autowired
-    private KlassRoundDao klassRoundDao;
-    @Autowired
-    private RoundScoreDao roundScoreDao;
-    @Autowired
-    private QuestionDao questionDao;
-    @Autowired
-    private AttendanceDao attendanceDao;
-
-    public int saveSeminarScore(SeminarScore seminarScore){
-        return  seminarScoreDao.save(seminarScore);
-    }
-    public SeminarScore findByTeamIdAndSeminarId(Long teamId,Long seminarId){
-        return seminarScoreDao.findByTeamIdAndSeminarId(teamId,seminarId);
-    }
-    public List<SeminarScore> findByKlassSeminarId(Long classSeminarId){
-        return seminarScoreDao.findAllByKlassSeminarId(classSeminarId);
-    }
-
-    /**
-     * 此课程所有的轮次序列号 例如：第几次讨论课
-     * @param courseId
-     * @return
-     */
-    public List<Integer> queryAllRoundSerialByCourseId(Long courseId){
-        return roundDao.queryAllRoundSerialByCourseId(courseId);
-    }
-
-
-    /**
-     * 查找讨论课成绩
-     * @param courseId
-     * @param studentId
-     * @return
-     */
-    public List<SeminarScore> queryByCourseIdStudentId(Long courseId,Long studentId){
-        Long teamId=teamStudentDao.findByStudentId(studentId);
-        System.out.println("teamId:"+teamId);
-        //一个team包括主从课程的班级
-        List<Long> klassIdList=klassTeamDao.findByTeamId(teamId);
-        System.out.println("klassIdList:"+klassIdList);
-        //一个课程里所有的班级
-        List<Klass> klassList=klassDao.findByCourseId(courseId);
-        System.out.println("klassList:"+klassList);
-        Long klassId=null;
-        //查找出一个相同的klassId
-        for(Long a: klassIdList){
-            System.out.println("a:"+a);
-            for(Klass b:klassList){
-                System.out.println("b:"+b);
-                if(a.equals(b.getId())){
-                    klassId=a;
-                    System.out.println("klassId: "+a);
-                    break;
-                }
-            }
-            if(klassId!=null) break;
-        }
-        //找seminarId
-        List<KlassSeminar> klassSeminarList=klassSeminarDao.queryByKlassId(klassId);
-        System.out.println("klassSeminarList: "+klassSeminarList);
-        List<SeminarScore> seminarScoreList=new ArrayList<>();
-        for(KlassSeminar klassSeminar:klassSeminarList) {
-            seminarScoreList.add(seminarScoreDao.queryByKlassSeminarIdAndTeamId(klassSeminar.getId(), teamId));
-            System.out.println("===="+seminarScoreDao.queryByKlassSeminarIdAndTeamId(klassSeminar.getId(), teamId));
-        }
-        System.out.println("seminarScoreList: "+seminarScoreList);
-        return seminarScoreList;
-    }
-
-    /**
-     * 查找轮次成绩
-     * @param courseId
-     * @param studentId
-     * @return
-     */
-    public List<RoundScore> queryByCourseId(Long courseId,Long studentId){
-        Long teamId=teamStudentDao.findByStudentId(studentId);
-        System.out.println("$ teamId:"+teamId);
-        List<Long> klassIdList=klassTeamDao.findByTeamId(teamId);
-        System.out.println("$ klassIdList:"+klassIdList);
-        List<Klass> klassList=klassDao.findByCourseId(courseId);
-        System.out.println("$ klassList:"+klassList);
-        Long klassId=null;
-        for(Long a: klassIdList){
-            for(Klass b:klassList){
-                if(a.equals(b.getId())&&a!=null&&b!=null){
-                    klassId=a;
-                    System.out.println("$ klassId:"+klassId);
-                    break;
-                }
-            }
-        }
-
-        List<KlassRound> klassRoundList=klassRoundDao.findByKlassId(klassId);
-        System.out.println("$ klassRoundList:"+klassRoundList);
-        if(klassRoundList.size()!=0&&klassRoundList!=null){
-            List<RoundScore> roundScoreList=new ArrayList<>();
-            for(KlassRound klassRound:klassRoundList){
-                if(klassRound!=null)
-                    roundScoreList.add(roundScoreDao.queryByRoundIdTeamId(klassRound.getRoundId(),teamId));
-                System.out.println("$ roundScoreList"+roundScoreList);
-            }
-        return roundScoreList;
-        }
-        else{
-            System.out.println("$ return null");
-            return null;
-        }
-
-    }
-
-    /**
-     * 按轮次查询讨论课成绩
-     * @param seminarScoreList
-     * @param roundId
-     * @param courseId
-     * @param teamId
-     * @return
-     */
-    public List<SeminarScore> querySeminarScoreByRoundId(List<SeminarScore> seminarScoreList,Long roundId,Long courseId,Long teamId){
-        List<Seminar> seminarList=seminarDao.findByCourseIdAndRoundId(courseId,roundId);//一轮的seminar
-        System.out.println("seminarList"+seminarList);
-        List<Long> klassIdList=klassTeamDao.findByTeamId(teamId);
-        System.out.println("klassIdList"+klassIdList);
-        List<Long> klassSeminarIdList=new ArrayList<>();
-        for(Seminar seminar:seminarList){
-            System.out.println("for循环：seminar: "+seminar);
-            for(Long klassId:klassIdList){
-                System.out.println("klassId: "+klassId);
-                klassSeminarIdList.add(klassSeminarDao.queryKlassSeminarIdByKlassIdAndSeminarId(klassId,seminar.getId()));
-                System.out.println("klassSeminarIdList: "+klassSeminarIdList);
-            }
-        }
-        List<SeminarScore> seminarScoreList1=new ArrayList<>();
-        for(Long klassSeminarId:klassSeminarIdList){
-            for(SeminarScore seminarScore:seminarScoreList) {
-                System.out.println("klassSeminarId:" + klassSeminarId + " " + seminarScore);
-                if (seminarScore != null&&klassSeminarId!=null) {
-                    if (klassSeminarId.equals(seminarScore.getKlassSeminarId())) {
-                        seminarScoreList1.add(seminarScore);
-                        System.out.println("+seminarScoreList1: "+seminarScoreList1);
-                    }
-                }
-                else continue;
-            }
-        }
-        System.out.println("seminarScoreList1: "+seminarScoreList1);
-        return seminarScoreList1;
-    }
-
-
-    /**
-     * 查询ScorePage所需信息
-     * @param courseId
-     * @param studentId
-     * @param roundSerial
-     * @return
-     */
-    public ScorePage queryScorePage(Long courseId,Long studentId,Integer roundSerial){
-        Long teamId=teamStudentDao.findByStudentId(studentId);
-        System.out.println("teamId: "+teamId);
-        //！！！SeminarScore不能用课程查 因为要考虑从课程 需要用klassId查找
-        List<SeminarScore> seminarScoreList=queryByCourseIdStudentId(courseId,studentId);
-        System.out.println("seminarScoreList: "+seminarScoreList);
-        Long roundId=roundDao.queryRoundIdByCourseIdAndRoundSerial(courseId,roundSerial);
-        System.out.println("roundId: "+roundId);
-        List<Seminar> seminarList=seminarDao.findByCourseIdAndRoundId(courseId,roundId);
-        System.out.println("seminarList: "+seminarList);
-        List<SeminarScore> seminarScoreList1=querySeminarScoreByRoundId(seminarScoreList,roundId,courseId,teamId);
-        System.out.println("seminarScoreList1: "+seminarScoreList1);
-
-
-        ScorePage scorePage=new ScorePage();
-        if(roundId!=null)
-        scorePage.setRoundId(roundId);
-        else scorePage.setRoundId(null);
-        System.out.println("scorePage: "+scorePage);
-        //RoundScore为roundSerial的
-        if(roundSerial!=null)
-            scorePage.setRoundSerial(roundSerial);
-        else scorePage.setRoundSerial(null);
-        System.out.println("scorePage: "+scorePage);
-
-        if(queryRoundScore(courseId,studentId,roundSerial)!=null&&!queryRoundScore(courseId,studentId,roundSerial).equals(null))
-            scorePage.setRoundScore(queryRoundScore(courseId,studentId,roundSerial));
-        else scorePage.setRoundScore(null);
-        System.out.println("scorePage: "+scorePage);
-
-        if(seminarList.size()!=0&&seminarList!=null)
-            scorePage.setSeminarList(seminarList);
-        else scorePage.setRoundScore(null);
-        System.out.println("scorePage: "+scorePage);
-
-        if(seminarScoreList1.size()!=0&&seminarScoreList1!=null)
-            scorePage.setSeminarScoreList(seminarScoreList1);
-        else scorePage.setRoundScore(null);
-        System.out.println("scorePage: "+scorePage);
-        return scorePage;
-    }
-
-    /**
-     * 按roundSerial查找RoundScore
-     * @param courseId
-     * @param studentId
-     * @param roundSerial
-     * @return
-     */
-    public RoundScore queryRoundScore(Long courseId,Long studentId,Integer roundSerial){
-        if(queryByCourseId(courseId,studentId)!=null){
-            List<RoundScore> roundScoreList=queryByCourseId(courseId,studentId);
-            if(roundSerial!=null) {
-                if (roundScoreList.get(roundSerial) != null && roundScoreList.size() != 0)
-                    return roundScoreList.get(roundSerial);
-                else return null;
-            }
-        }
-        return null;
-    }
-
-    public Question findQuestionById(Long id){
-        return questionDao.findQuestionById(id);
-    }
-    public int updateSeminarQuestionScore(Long klassSeminarId,Long teamId,Integer questionScore){
-        return seminarScoreDao.updateSeminarQuestionScore(klassSeminarId,teamId,questionScore);
-    }
-
-    /**
-     * 给提问打分并记入seminarScore
-     * @param questionId
-     * @param questionScore
-     * @return
-     */
-    public int gradeQuestion(Long questionId,double questionScore){
-        Question question=questionDao.findQuestionById(questionId);
-        Long klassSeminarId=question.getKlassSeminarId();
-        Long teamId=question.getTeamId();
-        if(questionDao.gradeQuestion(questionId,questionScore)==1){
-            if(seminarScoreDao.updateSeminarQuestionScore(klassSeminarId,teamId,questionScore)==1)
-                return 1;
-            else {
-                questionDao.gradeQuestion(questionId,0);
-                return 0;
-            }
-        }
-        else {
-            return 0;
-        }
-    }
-
-    /**
-     * 修改讨论课展示成绩
-     * @param klassSeminarId
-     * @param teamId
-     * @param presentationScore
-     * @return
-     */
-    public int updateSeminarScore(Long klassSeminarId,Long teamId,double presentationScore){
-        return seminarScoreDao.updateSeminarPresentationScore(klassSeminarId,teamId,presentationScore);
-    }
-
-    /**
-     * 修改讨论课报告成绩
-     * @param klassSeminarId
-     * @param teamId
-     * @param reportScore
-     * @return
-     */
-    public int updateReportScore(Long klassSeminarId,Long teamId,double reportScore){
-        return seminarScoreDao.updateSeminarReportScore(klassSeminarId,teamId,reportScore);
-    }
-
-    /**
-     * 直接查轮次的总分
-     * @param roundId
-     * @param teamId
-     * @return
-     */
-    public Double roundTotalScore(Long roundId,Long teamId){
-        RoundScore roundScore=roundScoreDao.findRoundByRoundIdAndTeamId(roundId,teamId);
-        Double score=roundScore.getTotalScore();
-        return score;
-    }
-
-    /**
-     * 查轮次分数
-     * @param courseId
-     * @param roundId
-     * @param teamId
-     * @return
-     */
-    public Double findRoundScore(Long courseId,Long roundId,Long teamId){
-        RoundScore roundScore=roundScoreDao.findRoundByRoundIdAndTeamId(roundId,teamId);
-        Double score=roundScore.getTotalScore();
-        if(score==null){
-            Round round=roundDao.find(roundId);
-            Double pScore=new Double(0),rScore=new Double(0),qScore=new Double(0);
-            Integer presentationScoreMethod=round.getPresentationScoreMethod();
-            Integer reportScoreMethod=round.getReportScoreMethod();
-            Integer questionScoreMethod=round.getQuestionScoreMethod();
-            System.out.println(presentationScoreMethod+reportScoreMethod+questionScoreMethod);
-            Long klassId=findKlassForTeam(courseId,teamId);
-            Integer enrollNumber=klassRoundDao.findByRoundIdAndClassId(roundId,klassId);
-            List<Seminar> seminars=seminarDao.findByRoundId(roundId);
-            Integer num=new Integer(0);
-            List<Double> questionScores=new ArrayList<Double>();
-            List<Double> presentationScores=new ArrayList<Double>();
-            List<Double> reportScores=new ArrayList<Double>();
-            for (Seminar seminar:seminars){
-                Long seminarId=seminar.getId();
-                Long klassSeminarId=klassSeminarDao.findByKlassIdAndSeminarId(klassId,seminarId).getId();
-                List<Double> doubles=questionDao.questionScores(klassSeminarId,teamId);
-                for (Double d:doubles){
-                    questionScores.add(d);
-                }
-                Attendance attendance=attendanceDao.queryByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
-                if(attendance!=null){
-                    num+=1;
-                    SeminarScore seminarScore=seminarScoreDao.findByTeamIdAndSeminarId(teamId,klassSeminarId);
-                    Double presentationScore=seminarScore.getPresentationScore();
-                    Double reportScore=seminarScore.getReportScore();
-                    if(presentationScore!=null){
-                        presentationScores.add(presentationScore);
-                    }
-                    if(reportScore!=null){
-                        reportScores.add(reportScore);
-                    }
-                }
-            }
-            if(num<enrollNumber){
-                score=new Double(0);
-            }
-            else {
-                if(presentationScoreMethod==1){
-                    pScore=presentationScores.get(0);
-                    for(int i=1;i<presentationScores.size();i++){
-                        if(presentationScores.get(i)>pScore){
-                            pScore=presentationScores.get(i);
-                        }
-                    }
-                }
-                else {
-                    pScore=new Double(0);
-                    for(Double d:presentationScores){
-                        pScore+=d;
-                    }
-                    pScore/=presentationScores.size();
-                }
-                if(reportScoreMethod==1){
-                    rScore=reportScores.get(0);
-                    for (int i=1;i<reportScores.size();i++){
-                        if(reportScores.get(i)>rScore){
-                            rScore=reportScores.get(i);
-                        }
-                    }
-                }
-                else {
-                    rScore=new Double(0);
-                    for (Double d:reportScores){
-                        rScore+=d;
-                    }
-                    rScore/=reportScores.size();
-                }
-                if(questionScoreMethod==1){
-                    qScore=questionScores.get(0);
-                    for(int i=1;i<questionScores.size();i++){
-                        if(questionScores.get(i)>qScore){
-                            qScore=questionScores.get(i);
-                        }
-                    }
-                }
-                else {
-                    qScore=new Double(0);
-                    for(Double d:questionScores){
-                        qScore+=d;
-                    }
-                    qScore/=questionScores.size();
-                }
-            }
-            score=(pScore+rScore+qScore)/3;
-
-        }
-        return score;
-    }
-   public int updateSeminarScore(Long klassSeminarId,Long teamId,Double presentationScore,Double questionScore,Double reportScore){
-        return seminarScoreDao.updateSeminarScore(klassSeminarId,teamId,presentationScore,questionScore,reportScore);
-   }
-
-    /**
-     * 查找每个队伍的所在班级
-     * @param courseId
-     * @param teamId
-     * @return
-     */
-   public Long findKlassForTeam(Long courseId,Long teamId){
-        List<Klass> klassList=klassDao.findByCourseId(courseId);
-        List<Long> klassTeamList=klassTeamDao.findByTeamId(teamId);
-        Long classId=new Long(0);
-        for (Klass klass:klassList){
-            for(Long id:klassTeamList){
-                if(klass.getId().equals(id)){
-                    classId=id;
-                }
-            }
-        }
-        return classId;
-   }
-   public List<Double> findQuestionScore(Long klassSeminarId,Long teamId){
-       return questionDao.questionScores(klassSeminarId,teamId);
-   }
-}
+//@Service
+//public class ScoreService {
+//
+//    @Autowired
+//    private SeminarScoreMapper seminarScoreMapper;
+//    @Autowired
+//    private SeminarMapper seminarMapper;
+//    @Autowired
+//    private KlassSeminarMapper klassSeminarMapper;
+//    @Autowired
+//    private TeamStudentMapper teamStudentMapper;
+//    @Autowired
+//    private KlassTeamMapper klassTeamMapper;
+//    @Autowired
+//    private KlassMapper klassMapper;
+//    @Autowired
+//    private RoundMapper roundMapper;
+//    @Autowired
+//    private KlassRoundMapper klassRoundMapper;
+//    @Autowired
+//    private RoundScoreMapper roundScoreMapper;
+//    @Autowired
+//    private QuestionMapper questionMapper;
+//    @Autowired
+//    private AttendanceMapper attendanceMapper;
+//
+//    public int saveSeminarScore(SeminarScore seminarScore){
+//        return  seminarScoreMapper.save(seminarScore);
+//    }
+//    public SeminarScore findByTeamIdAndSeminarId(Long teamId,Long seminarId){
+//        return seminarScoreMapper.findByTeamIdAndSeminarId(teamId,seminarId);
+//    }
+//    public List<SeminarScore> findByKlassSeminarId(Long classSeminarId){
+//        return seminarScoreMapper.findAllByKlassSeminarId(classSeminarId);
+//    }
+//
+//    /**
+//     * 此课程所有的轮次序列号 例如：第几次讨论课
+//     * @param courseId
+//     * @return
+//     */
+//    public List<Integer> queryAllRoundSerialByCourseId(Long courseId){
+//        return roundMapper.queryAllRoundSerialByCourseId(courseId);
+//    }
+//
+//
+//    /**
+//     * 查找讨论课成绩
+//     * @param courseId
+//     * @param studentId
+//     * @return
+//     */
+//    public List<SeminarScore> queryByCourseIdStudentId(Long courseId,Long studentId){
+//        Long teamId= teamStudentMapper.findByStudentId(studentId);
+//        System.out.println("teamId:"+teamId);
+//        //一个team包括主从课程的班级
+//        List<Long> klassIdList= klassTeamMapper.findByTeamId(teamId);
+//        System.out.println("klassIdList:"+klassIdList);
+//        //一个课程里所有的班级
+//        List<Klass> klassList= klassMapper.findByCourseId(courseId);
+//        System.out.println("klassList:"+klassList);
+//        Long klassId=null;
+//        //查找出一个相同的klassId
+//        for(Long a: klassIdList){
+//            System.out.println("a:"+a);
+//            for(Klass b:klassList){
+//                System.out.println("b:"+b);
+//                if(a.equals(b.getId())){
+//                    klassId=a;
+//                    System.out.println("klassId: "+a);
+//                    break;
+//                }
+//            }
+//            if(klassId!=null) break;
+//        }
+//        //找seminarId
+//        List<KlassSeminar> klassSeminarList= klassSeminarMapper.queryByKlassId(klassId);
+//        System.out.println("klassSeminarList: "+klassSeminarList);
+//        List<SeminarScore> seminarScoreList=new ArrayList<>();
+//        for(KlassSeminar klassSeminar:klassSeminarList) {
+//            seminarScoreList.add(seminarScoreMapper.queryByKlassSeminarIdAndTeamId(klassSeminar.getId(), teamId));
+//            System.out.println("===="+ seminarScoreMapper.queryByKlassSeminarIdAndTeamId(klassSeminar.getId(), teamId));
+//        }
+//        System.out.println("seminarScoreList: "+seminarScoreList);
+//        return seminarScoreList;
+//    }
+//
+//    /**
+//     * 查找轮次成绩
+//     * @param courseId
+//     * @param studentId
+//     * @return
+//     */
+//    public List<RoundScore> queryByCourseId(Long courseId,Long studentId){
+//        Long teamId= teamStudentMapper.findByStudentId(studentId);
+//        System.out.println("$ teamId:"+teamId);
+//        List<Long> klassIdList= klassTeamMapper.findByTeamId(teamId);
+//        System.out.println("$ klassIdList:"+klassIdList);
+//        List<Klass> klassList= klassMapper.findByCourseId(courseId);
+//        System.out.println("$ klassList:"+klassList);
+//        Long klassId=null;
+//        for(Long a: klassIdList){
+//            for(Klass b:klassList){
+//                if(a.equals(b.getId())&&a!=null&&b!=null){
+//                    klassId=a;
+//                    System.out.println("$ klassId:"+klassId);
+//                    break;
+//                }
+//            }
+//        }
+//
+//        List<KlassRound> klassRoundList= klassRoundMapper.findByKlassId(klassId);
+//        System.out.println("$ klassRoundList:"+klassRoundList);
+//        if(klassRoundList.size()!=0&&klassRoundList!=null){
+//            List<RoundScore> roundScoreList=new ArrayList<>();
+//            for(KlassRound klassRound:klassRoundList){
+//                if(klassRound!=null)
+//                    roundScoreList.add(roundScoreMapper.queryByRoundIdTeamId(klassRound.getRoundId(),teamId));
+//                System.out.println("$ roundScoreList"+roundScoreList);
+//            }
+//        return roundScoreList;
+//        }
+//        else{
+//            System.out.println("$ return null");
+//            return null;
+//        }
+//
+//    }
+//
+//    /**
+//     * 按轮次查询讨论课成绩
+//     * @param seminarScoreList
+//     * @param roundId
+//     * @param courseId
+//     * @param teamId
+//     * @return
+//     */
+//    public List<SeminarScore> querySeminarScoreByRoundId(List<SeminarScore> seminarScoreList,Long roundId,Long courseId,Long teamId){
+//        List<Seminar> seminarList= seminarMapper.findByCourseIdAndRoundId(courseId,roundId);//一轮的seminar
+//        System.out.println("seminarList"+seminarList);
+//        List<Long> klassIdList= klassTeamMapper.findByTeamId(teamId);
+//        System.out.println("klassIdList"+klassIdList);
+//        List<Long> klassSeminarIdList=new ArrayList<>();
+//        for(Seminar seminar:seminarList){
+//            System.out.println("for循环：seminar: "+seminar);
+//            for(Long klassId:klassIdList){
+//                System.out.println("klassId: "+klassId);
+//                klassSeminarIdList.add(klassSeminarMapper.queryKlassSeminarIdByKlassIdAndSeminarId(klassId,seminar.getId()));
+//                System.out.println("klassSeminarIdList: "+klassSeminarIdList);
+//            }
+//        }
+//        List<SeminarScore> seminarScoreList1=new ArrayList<>();
+//        for(Long klassSeminarId:klassSeminarIdList){
+//            for(SeminarScore seminarScore:seminarScoreList) {
+//                System.out.println("klassSeminarId:" + klassSeminarId + " " + seminarScore);
+//                if (seminarScore != null&&klassSeminarId!=null) {
+//                    if (klassSeminarId.equals(seminarScore.getKlassSeminarId())) {
+//                        seminarScoreList1.add(seminarScore);
+//                        System.out.println("+seminarScoreList1: "+seminarScoreList1);
+//                    }
+//                }
+//                else continue;
+//            }
+//        }
+//        System.out.println("seminarScoreList1: "+seminarScoreList1);
+//        return seminarScoreList1;
+//    }
+//
+//
+//    /**
+//     * 查询ScorePage所需信息
+//     * @param courseId
+//     * @param studentId
+//     * @param roundSerial
+//     * @return
+//     */
+//    public ScorePage queryScorePage(Long courseId,Long studentId,Integer roundSerial){
+//        Long teamId= teamStudentMapper.findByStudentId(studentId);
+//        System.out.println("teamId: "+teamId);
+//        //！！！SeminarScore不能用课程查 因为要考虑从课程 需要用klassId查找
+//        List<SeminarScore> seminarScoreList=queryByCourseIdStudentId(courseId,studentId);
+//        System.out.println("seminarScoreList: "+seminarScoreList);
+//        Long roundId= roundMapper.queryRoundIdByCourseIdAndRoundSerial(courseId,roundSerial);
+//        System.out.println("roundId: "+roundId);
+//        List<Seminar> seminarList= seminarMapper.findByCourseIdAndRoundId(courseId,roundId);
+//        System.out.println("seminarList: "+seminarList);
+//        List<SeminarScore> seminarScoreList1=querySeminarScoreByRoundId(seminarScoreList,roundId,courseId,teamId);
+//        System.out.println("seminarScoreList1: "+seminarScoreList1);
+//
+//
+//        ScorePage scorePage=new ScorePage();
+//        if(roundId!=null)
+//        scorePage.setRoundId(roundId);
+//        else scorePage.setRoundId(null);
+//        System.out.println("scorePage: "+scorePage);
+//        //RoundScore为roundSerial的
+//        if(roundSerial!=null)
+//            scorePage.setRoundSerial(roundSerial);
+//        else scorePage.setRoundSerial(null);
+//        System.out.println("scorePage: "+scorePage);
+//
+//        if(queryRoundScore(courseId,studentId,roundSerial)!=null&&!queryRoundScore(courseId,studentId,roundSerial).equals(null))
+//            scorePage.setRoundScore(queryRoundScore(courseId,studentId,roundSerial));
+//        else scorePage.setRoundScore(null);
+//        System.out.println("scorePage: "+scorePage);
+//
+//        if(seminarList.size()!=0&&seminarList!=null)
+//            scorePage.setSeminarList(seminarList);
+//        else scorePage.setRoundScore(null);
+//        System.out.println("scorePage: "+scorePage);
+//
+//        if(seminarScoreList1.size()!=0&&seminarScoreList1!=null)
+//            scorePage.setSeminarScoreList(seminarScoreList1);
+//        else scorePage.setRoundScore(null);
+//        System.out.println("scorePage: "+scorePage);
+//        return scorePage;
+//    }
+//
+//    /**
+//     * 按roundSerial查找RoundScore
+//     * @param courseId
+//     * @param studentId
+//     * @param roundSerial
+//     * @return
+//     */
+//    public RoundScore queryRoundScore(Long courseId,Long studentId,Integer roundSerial){
+//        if(queryByCourseId(courseId,studentId)!=null){
+//            List<RoundScore> roundScoreList=queryByCourseId(courseId,studentId);
+//            if(roundSerial!=null) {
+//                if (roundScoreList.get(roundSerial) != null && roundScoreList.size() != 0)
+//                    return roundScoreList.get(roundSerial);
+//                else return null;
+//            }
+//        }
+//        return null;
+//    }
+//
+//    public Question findQuestionById(Long id){
+//        return questionMapper.findQuestionById(id);
+//    }
+//    public int updateSeminarQuestionScore(Long klassSeminarId,Long teamId,Integer questionScore){
+//        return seminarScoreMapper.updateSeminarQuestionScore(klassSeminarId,teamId,questionScore);
+//    }
+//
+//    /**
+//     * 给提问打分并记入seminarScore
+//     * @param questionId
+//     * @param questionScore
+//     * @return
+//     */
+//    public int gradeQuestion(Long questionId,double questionScore){
+//        Question question= questionMapper.findQuestionById(questionId);
+//        Long klassSeminarId=question.getKlassSeminarId();
+//        Long teamId=question.getTeamId();
+//        if(questionMapper.gradeQuestion(questionId,questionScore)==1){
+//            if(seminarScoreMapper.updateSeminarQuestionScore(klassSeminarId,teamId,questionScore)==1)
+//                return 1;
+//            else {
+//                questionMapper.gradeQuestion(questionId,0);
+//                return 0;
+//            }
+//        }
+//        else {
+//            return 0;
+//        }
+//    }
+//
+//    /**
+//     * 修改讨论课展示成绩
+//     * @param klassSeminarId
+//     * @param teamId
+//     * @param presentationScore
+//     * @return
+//     */
+//    public int updateSeminarScore(Long klassSeminarId,Long teamId,double presentationScore){
+//        return seminarScoreMapper.updateSeminarPresentationScore(klassSeminarId,teamId,presentationScore);
+//    }
+//
+//    /**
+//     * 修改讨论课报告成绩
+//     * @param klassSeminarId
+//     * @param teamId
+//     * @param reportScore
+//     * @return
+//     */
+//    public int updateReportScore(Long klassSeminarId,Long teamId,double reportScore){
+//        return seminarScoreMapper.updateSeminarReportScore(klassSeminarId,teamId,reportScore);
+//    }
+//
+//    /**
+//     * 直接查轮次的总分
+//     * @param roundId
+//     * @param teamId
+//     * @return
+//     */
+//    public Double roundTotalScore(Long roundId,Long teamId){
+//        RoundScore roundScore= roundScoreMapper.findRoundByRoundIdAndTeamId(roundId,teamId);
+//        Double score=roundScore.getTotalScore();
+//        return score;
+//    }
+//
+//    /**
+//     * 查轮次分数
+//     * @param courseId
+//     * @param roundId
+//     * @param teamId
+//     * @return
+//     */
+//    public Double findRoundScore(Long courseId,Long roundId,Long teamId){
+//        RoundScore roundScore= roundScoreMapper.findRoundByRoundIdAndTeamId(roundId,teamId);
+//        Double score=roundScore.getTotalScore();
+//        if(score==null){
+//            Round round= roundMapper.find(roundId);
+//            Double pScore=new Double(0),rScore=new Double(0),qScore=new Double(0);
+//            Integer presentationScoreMethod=round.getPresentationScoreMethod();
+//            Integer reportScoreMethod=round.getReportScoreMethod();
+//            Integer questionScoreMethod=round.getQuestionScoreMethod();
+//            System.out.println(presentationScoreMethod+reportScoreMethod+questionScoreMethod);
+//            Long klassId=findKlassForTeam(courseId,teamId);
+//            Integer enrollNumber= klassRoundMapper.findByRoundIdAndClassId(roundId,klassId);
+//            List<Seminar> seminars= seminarMapper.findByRoundId(roundId);
+//            Integer num=new Integer(0);
+//            List<Double> questionScores=new ArrayList<Double>();
+//            List<Double> presentationScores=new ArrayList<Double>();
+//            List<Double> reportScores=new ArrayList<Double>();
+//            for (Seminar seminar:seminars){
+//                Long seminarId=seminar.getId();
+//                Long klassSeminarId= klassSeminarMapper.findByKlassIdAndSeminarId(klassId,seminarId).getId();
+//                List<Double> doubles= questionMapper.questionScores(klassSeminarId,teamId);
+//                for (Double d:doubles){
+//                    questionScores.add(d);
+//                }
+//                Attendance attendance= attendanceMapper.queryByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
+//                if(attendance!=null){
+//                    num+=1;
+//                    SeminarScore seminarScore= seminarScoreMapper.findByTeamIdAndSeminarId(teamId,klassSeminarId);
+//                    Double presentationScore=seminarScore.getPresentationScore();
+//                    Double reportScore=seminarScore.getReportScore();
+//                    if(presentationScore!=null){
+//                        presentationScores.add(presentationScore);
+//                    }
+//                    if(reportScore!=null){
+//                        reportScores.add(reportScore);
+//                    }
+//                }
+//            }
+//            if(num<enrollNumber){
+//                score=new Double(0);
+//            }
+//            else {
+//                if(presentationScoreMethod==1){
+//                    pScore=presentationScores.get(0);
+//                    for(int i=1;i<presentationScores.size();i++){
+//                        if(presentationScores.get(i)>pScore){
+//                            pScore=presentationScores.get(i);
+//                        }
+//                    }
+//                }
+//                else {
+//                    pScore=new Double(0);
+//                    for(Double d:presentationScores){
+//                        pScore+=d;
+//                    }
+//                    pScore/=presentationScores.size();
+//                }
+//                if(reportScoreMethod==1){
+//                    rScore=reportScores.get(0);
+//                    for (int i=1;i<reportScores.size();i++){
+//                        if(reportScores.get(i)>rScore){
+//                            rScore=reportScores.get(i);
+//                        }
+//                    }
+//                }
+//                else {
+//                    rScore=new Double(0);
+//                    for (Double d:reportScores){
+//                        rScore+=d;
+//                    }
+//                    rScore/=reportScores.size();
+//                }
+//                if(questionScoreMethod==1){
+//                    qScore=questionScores.get(0);
+//                    for(int i=1;i<questionScores.size();i++){
+//                        if(questionScores.get(i)>qScore){
+//                            qScore=questionScores.get(i);
+//                        }
+//                    }
+//                }
+//                else {
+//                    qScore=new Double(0);
+//                    for(Double d:questionScores){
+//                        qScore+=d;
+//                    }
+//                    qScore/=questionScores.size();
+//                }
+//            }
+//            score=(pScore+rScore+qScore)/3;
+//
+//        }
+//        return score;
+//    }
+//   public int updateSeminarScore(Long klassSeminarId,Long teamId,Double presentationScore,Double questionScore,Double reportScore){
+//        return seminarScoreMapper.updateSeminarScore(klassSeminarId,teamId,presentationScore,questionScore,reportScore);
+//   }
+//
+//    /**
+//     * 查找每个队伍的所在班级
+//     * @param courseId
+//     * @param teamId
+//     * @return
+//     */
+//   public Long findKlassForTeam(Long courseId,Long teamId){
+//        List<Klass> klassList= klassMapper.findByCourseId(courseId);
+//        List<Long> klassTeamList= klassTeamMapper.findByTeamId(teamId);
+//        Long classId=new Long(0);
+//        for (Klass klass:klassList){
+//            for(Long id:klassTeamList){
+//                if(klass.getId().equals(id)){
+//                    classId=id;
+//                }
+//            }
+//        }
+//        return classId;
+//   }
+//   public List<Double> findQuestionScore(Long klassSeminarId,Long teamId){
+//       return questionMapper.questionScores(klassSeminarId,teamId);
+//   }
+//}

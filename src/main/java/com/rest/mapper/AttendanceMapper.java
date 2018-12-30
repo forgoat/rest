@@ -1,0 +1,18 @@
+package com.rest.mapper;
+
+import com.rest.po.Attendance;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+@Mapper
+public interface AttendanceMapper {
+    public List<Attendance> findAttendanceByKlassSeminarId(Long klassSeminarId);
+    public int saveAttendance(Attendance attendance);
+    int updateAttendance(@Param("id") Long id,@Param("pptName") String pptName,@Param("pptUrl") String pptUrl);
+    public int deleteById(Long attendanceId);
+    Attendance queryByKlassSeminarIdAndTeamId(@Param("klassSeminarId")Long klassSeminarId,@Param("teamId")Long teamId);
+    public int updateAttendanceStatus(@Param("attendanceId") Long attendanceId,@Param("status") Integer status);
+    Attendance queryAttendanceById(Long id);
+}

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rest.dao.TeamDao">
-    <select id="queryAllTeam" resultType="com.rest.entity.Team">
+<mapper namespace="com.rest.mapper.TeamMapper">
+    <select id="queryAllTeam" resultType="com.rest.po.Team">
         SELECT *
         FROM standard_seminar_system.team
         WHERE
@@ -11,7 +11,7 @@
         GROUP BY klass_id
     </select>
 
-    <select id="queryStudentNoTeam" resultType="com.rest.entity.Student">
+    <select id="queryStudentNoTeam" resultType="com.rest.po.Student">
         SELECT *
         FROM standard_seminar_system.student,klass_student
         WHERE
@@ -62,7 +62,7 @@
 
 
     </select>
-    <insert id="createTeam" parameterType="com.rest.entity.Team">
+    <insert id="createTeam" parameterType="com.rest.po.Team">
         INSERT INTO standard_seminar_system.team(
         klass_id,
         course_id,
@@ -109,7 +109,7 @@
         status=values(status)
     </insert>
 
-    <insert id="updateKlassStudent" parameterType="com.rest.entity.KlassStudent">
+    <insert id="updateKlassStudent" parameterType="com.rest.po.KlassStudent">
          INSERT INTO standard_seminar_system.klass_student(
         klass_id,
         student_id,
@@ -124,7 +124,7 @@
         )ON DULPLICATE KEY UPDATE
         team_id=values(teamId)
     </insert>
-    <select id="findById" parameterType="long" resultType="com.rest.entity.Team">
+    <select id="findById" parameterType="long" resultType="com.rest.po.Team">
         SELECT * FROM standard_seminar_system.team WHERE id=#{id}
     </select>
     <update id="setValid" parameterType="long">
@@ -145,10 +145,10 @@
     <delete id="deleteTeam" parameterType="long">
         DELETE FROM standard_seminar_system.team WHERE id=#{id}
     </delete>
-    <insert id="save" parameterType="com.rest.entity.Team" keyProperty="id" useGeneratedKeys="true">
+    <insert id="save" parameterType="com.rest.po.Team" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO standard_seminar_system.team(klass_id,course_id,leader_id,team_name,team_serial,status) VALUE (#{klassId},#{courseId},#{leaderId},#{teamName},#{teamSerial},1)
     </insert>
-    <select id="findByCourseId" resultType="com.rest.entity.Team" parameterType="long">
+    <select id="findByCourseId" resultType="com.rest.po.Team" parameterType="long">
         SELECT * FROM standard_seminar_system.team WHERE course_id=#{CourseId}
     </select>
     <delete id="deleteTeamByCourseId" parameterType="long">

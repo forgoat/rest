@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rest.dao.StudentDao">
-    <select id="findAllStudent" resultType="com.rest.entity.Student">
+<mapper namespace="com.rest.mapper.StudentMapper">
+    <select id="findAllStudent" resultType="com.rest.po.Student">
         SELECT * FROM standard_seminar_system.student
     </select>
-    <select id="findByAccountOrStudentName" resultType="com.rest.entity.Student">
+    <select id="findByAccountOrStudentName" resultType="com.rest.po.Student">
         SELECT * FROM standard_seminar_system.student
         WHERE
         <if test="param1!=null and param2==null ">
@@ -19,7 +19,7 @@
             account=#{param1} AND student_name=#{param2}
         </if>
     </select>
-    <insert id="add" parameterType="com.rest.entity.Student" useGeneratedKeys="true" keyProperty="id">
+    <insert id="add" parameterType="com.rest.po.Student" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO standard_seminar_system.student(
         id,
         account,
@@ -39,7 +39,7 @@
         #{sex}
         )
     </insert>
-    <insert id="batchSaveStudent" parameterType="com.rest.entity.Student">
+    <insert id="batchSaveStudent" parameterType="com.rest.po.Student">
          INSERT INTO standard_seminar_system.student(
         account,
         password,
@@ -55,10 +55,10 @@
         )
         </foreach>
     </insert>
-    <select id="findByAccount" parameterType="string" resultType="com.rest.entity.Student">
+    <select id="findByAccount" parameterType="string" resultType="com.rest.po.Student">
         SELECT * FROM standard_seminar_system.student WHERE account=#{account}
     </select>
-    <select id="findById" parameterType="long" resultType="com.rest.entity.Student">
+    <select id="findById" parameterType="long" resultType="com.rest.po.Student">
         SELECT * FROM standard_seminar_system.student WHERE id=#{id}
     </select>
     <update id="updatePassword">

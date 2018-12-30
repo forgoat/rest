@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rest.dao.TeamValidApplicationDao">
+<mapper namespace="com.rest.mapper.TeamValidApplicationMapper">
     <insert id="saveTeamValidApplication" parameterType="com.rest.entity.TeamValidApplication">
         INSERT INTO standard_seminar_system.team_valid_application
         (

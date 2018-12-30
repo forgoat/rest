@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rest.dao.RoundDao">
-    <insert id="saveRound" parameterType="com.rest.entity.Round" keyProperty="id" useGeneratedKeys="true">
+<mapper namespace="com.rest.mapper.RoundMapper">
+    <insert id="saveRound" parameterType="com.rest.po.Round" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO standard_seminar_system.round(course_id,round_serial,presentation_score_method,report_score_method,question_score_method) VALUE(#{courseId},#{roundSerial},#{presentationScoreMethod},#{reportScoreMethod},#{questionScoreMethod})
     </insert>
-    <select id="find" parameterType="long" resultType="com.rest.entity.Round">
+    <select id="find" parameterType="long" resultType="com.rest.po.Round">
         SELECT * FROM standard_seminar_system.round WHERE id=#{id}
     </select>
     <update id="updateRoundSelective">
@@ -30,7 +30,7 @@
     <update id="updateSerial">
         UPDATE standard_seminar_system.round SET round_serial=#{param2} where id=#{param1}
     </update>
-    <select id="findByCourseId" parameterType="long" resultType="com.rest.entity.Round">
+    <select id="findByCourseId" parameterType="long" resultType="com.rest.po.Round">
         SELECT * FROM standard_seminar_system.round WHERE course_id=#{courseId}
     </select>
     <select id="queryRoundIdByCourseIdAndRoundSerial" resultType="Long">

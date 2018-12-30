@@ -1,7 +1,8 @@
 package com.rest.entity;
 
+import com.rest.po.Seminar;
+
 import java.util.List;
-import java.util.Map;
 
 public class ScorePage {
     private Long roundId;

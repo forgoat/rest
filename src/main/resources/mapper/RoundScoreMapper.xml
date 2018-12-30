@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rest.dao.RoundScoreDao">
+<mapper namespace="com.rest.mapper.RoundScoreMapper">
     <select id="queryByRoundIdTeamId" resultType="com.rest.entity.RoundScore">
         SELECT *
         FROM standard_seminar_system.round_score

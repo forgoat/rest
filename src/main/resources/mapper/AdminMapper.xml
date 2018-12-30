@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rest.dao.AdminDao">
+<mapper namespace="com.rest.mapper.AdminMapper">
     <select id="adminlist" resultType="com.rest.entity.Admin">
         SELECT * FROM standard_seminar_system.admin;
     </select>

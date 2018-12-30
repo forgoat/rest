@@ -1,5 +1,7 @@
 package com.rest.entity;
 
+import com.rest.po.Attendance;
+
 public class AttendanceInfo {
     private Long teamId;
     private Integer teamOrder;

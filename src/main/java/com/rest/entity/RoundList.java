@@ -1,5 +1,7 @@
 package com.rest.entity;
 
+import com.rest.po.Round;
+
 import java.util.List;
 
 public class RoundList {

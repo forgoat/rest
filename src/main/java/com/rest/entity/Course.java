@@ -1,6 +1,5 @@
 package com.rest.entity;
 
-import java.math.BigInteger;
 import java.sql.Date;
 
 public class Course {

@@ -1,12 +1,12 @@
 package com.rest.service;
 
-import com.rest.dao.KlassDao;
-import com.rest.dao.KlassStudentDao;
-import com.rest.dao.KlassTeamDao;
-import com.rest.dao.TeamStudentDao;
-import com.rest.entity.Klass;
-import com.rest.entity.KlassStudent;
-import com.rest.entity.KlassTeam;
+import com.rest.mapper.KlassMapper;
+import com.rest.mapper.KlassStudentMapper;
+import com.rest.mapper.KlassTeamMapper;
+import com.rest.mapper.TeamStudentMapper;
+import com.rest.po.Klass;
+import com.rest.po.KlassStudent;
+import com.rest.po.KlassTeam;
 import com.rest.entity.TeamStudent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,45 +16,45 @@ import java.util.*;
 @Service
 public class KlassService {
     @Autowired
-    private KlassDao klassDao;
+    private KlassMapper klassMapper;
     @Autowired
-    private KlassStudentDao klassStudentDao;
+    private KlassStudentMapper klassStudentMapper;
     @Autowired
-    private KlassTeamDao klassTeamDao;
+    private KlassTeamMapper klassTeamMapper;
     @Autowired
-    private TeamStudentDao teamStudentDao;
+    private TeamStudentMapper teamStudentMapper;
     public Long findKlassIdByCourseIdAndStudentId(Long studentId,Long courseId){
-        Long id=klassStudentDao.findKlass(courseId,studentId);
+        Long id= klassStudentMapper.findKlass(courseId,studentId);
         System.out.println(id);
-        Long id2=klassStudentDao.findKlass(studentId,courseId);
+        Long id2= klassStudentMapper.findKlass(studentId,courseId);
         System.out.println(id2);
-        return klassStudentDao.findKlass(studentId,courseId);
+        return klassStudentMapper.findKlass(studentId,courseId);
     }
     public KlassStudent findByCourseIdAndStudentId(Long courseId,Long studentId){
-        return klassStudentDao.findByCourseIdAndStudentId(courseId,studentId);
+        return klassStudentMapper.findByCourseIdAndStudentId(courseId,studentId);
     }
     public int deleteById(Long id){
-        return klassDao.deleteById(id);
+        return klassMapper.deleteById(id);
     }
     public List<Klass> findByCourseId(Long courseId)
     {
-        return klassDao.findByCourseId(courseId);
+        return klassMapper.findByCourseId(courseId);
     }
     public int saveKlass(Klass klass){
-        return klassDao.saveKlass(klass);
+        return klassMapper.saveKlass(klass);
     }
     public Long findTeam(Long courseId,Long studentId)
     {
-        return klassStudentDao.findTeam(courseId,studentId);
+        return klassStudentMapper.findTeam(courseId,studentId);
     }
     public Long findSubCourseTeamKlassId(Long courseId, Long teamId){
         System.out.println("start ");
-        List<TeamStudent> teamStudentList=teamStudentDao.findByTeamId(teamId);
+        List<TeamStudent> teamStudentList= teamStudentMapper.findByTeamId(teamId);
         List<Long> klassList=new ArrayList<Long>();
         for(TeamStudent teamStudent:teamStudentList){
             Long studentId=teamStudent.getStudentId();
-            System.out.println(klassStudentDao.findByCourseIdAndStudentId(courseId,studentId).getKlassId());
-            klassList.add(klassStudentDao.findKlass(courseId,studentId));
+            System.out.println(klassStudentMapper.findByCourseIdAndStudentId(courseId,studentId).getKlassId());
+            klassList.add(klassStudentMapper.findKlass(courseId,studentId));
         }
         System.out.println("Find students' classId");
         HashMap<Long,Integer> hashMap=new HashMap<Long, Integer>();
@@ -88,11 +88,11 @@ public class KlassService {
         }
         System.out.println("Now classId is "+classId+" the number is "+max+" And flag of AllSame is "+sameFlag);
         if (sameFlag){
-            List<Klass> klasses=klassDao.findByCourseId(courseId);
+            List<Klass> klasses= klassMapper.findByCourseId(courseId);
             HashMap<Long,Integer> hashMap1=new HashMap<>();
             for (Klass klass:klasses){
                 Long id=klass.getId();
-                List<KlassTeam> klassTeamList=klassTeamDao.findByKlassId(id);
+                List<KlassTeam> klassTeamList= klassTeamMapper.findByKlassId(id);
                 Integer num=klassTeamList.size();
                 hashMap1.put(id,num);
             }
@@ -122,7 +122,7 @@ public class KlassService {
      */
     public List<Long> findTeamList(Long klassId){
         List<Long> teamList=new ArrayList<Long>();
-        List<KlassTeam> klassTeamList=klassTeamDao.findByKlassId(klassId);
+        List<KlassTeam> klassTeamList= klassTeamMapper.findByKlassId(klassId);
         for(KlassTeam klassTeam:klassTeamList){
             Long teamId=klassTeam.getTeamId();
             teamList.add(teamId);

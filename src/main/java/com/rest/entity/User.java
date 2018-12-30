@@ -1,6 +1,8 @@
 package com.rest.entity;
-import com.rest.entity.Teacher;
-import com.rest.entity.Student;
+
+import com.rest.po.Student;
+import com.rest.po.Teacher;
+
 public class User {
     private Long id;
     private String account;
@@ -11,7 +13,7 @@ public class User {
     private String role;
     public User() {
     }
-    public User(Teacher teacher){
+    public User(com.rest.po.Teacher teacher){
         id=teacher.getId();
         account=teacher.getAccount();
         password=teacher.getPassword();
@@ -20,7 +22,7 @@ public class User {
         email=teacher.getEmail();
         role="teacher";
     }
-    public User(Student student){
+    public User(com.rest.po.Student student){
         id=student.getId();
         account=student.getAccount();
         password=student.getPassword();

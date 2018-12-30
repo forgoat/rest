@@ -1,10 +1,14 @@
 package com.rest.service;
 
-import com.rest.dao.KlassRoundDao;
-import com.rest.dao.KlassSeminarDao;
-import com.rest.dao.RoundDao;
-import com.rest.dao.SeminarDao;
+import com.rest.mapper.KlassRoundMapper;
+import com.rest.mapper.KlassSeminarMapper;
+import com.rest.mapper.RoundMapper;
+import com.rest.mapper.SeminarMapper;
 import com.rest.entity.*;
+import com.rest.po.KlassRound;
+import com.rest.po.KlassSeminar;
+import com.rest.po.Round;
+import com.rest.po.Seminar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +18,15 @@ import java.util.List;
 @Service
 public class RoundService {
     @Autowired
-    private RoundDao roundDao;
+    private RoundMapper roundMapper;
     @Autowired
-    private KlassRoundDao klassRoundDao;
+    private KlassRoundMapper klassRoundMapper;
     @Autowired
-    private SeminarDao seminarDao;
+    private SeminarMapper seminarMapper;
     @Autowired
-    private KlassSeminarDao klassSeminarDao;
+    private KlassSeminarMapper klassSeminarMapper;
     public int saveRound(Round round){
-        List<Round> roundList=roundDao.findByCourseId(round.getCourseId());
+        List<Round> roundList= roundMapper.findByCourseId(round.getCourseId());
         if(roundList.isEmpty()){
             Integer integer=new Integer(1);
             round.setRoundSerial(integer);
@@ -36,17 +40,17 @@ public class RoundService {
             }
             round.setRoundSerial(integer+1);
         }
-        return roundDao.saveRound(round);
+        return roundMapper.saveRound(round);
     }
     public Round find(Long id){
-        return roundDao.find(id);
+        return roundMapper.find(id);
     }
     public int updateInfo(Long id,Integer presentationScoreMethod,Integer reportScoreMethod,Integer questionScoreMethod){
-        return roundDao.updateRoundSelective(id,presentationScoreMethod,reportScoreMethod,questionScoreMethod);
+        return roundMapper.updateRoundSelective(id,presentationScoreMethod,reportScoreMethod,questionScoreMethod);
     }
 
     public List<Round> findByCourseId(Long courseId){
-        return roundDao.findByCourseId(courseId);
+        return roundMapper.findByCourseId(courseId);
     }
 
     /**
@@ -55,17 +59,17 @@ public class RoundService {
      * @return
      */
     public List<RoundList> findListByCourseId(Long courseId){
-        List<Round> roundList=roundDao.findByCourseId(courseId);
+        List<Round> roundList= roundMapper.findByCourseId(courseId);
         List<RoundList> roundLists=new ArrayList<RoundList>();
         for (Round round:roundList){
             RoundList roundList1=new RoundList(round);
             Long roundId=roundList1.getRoundId();
             List<SeminarList> seminarListList=new ArrayList<SeminarList>();
-            List<Seminar> seminars=seminarDao.findByRoundId(roundId);
+            List<Seminar> seminars= seminarMapper.findByRoundId(roundId);
             for (Seminar seminar:seminars){
                 SeminarList seminarList=new SeminarList(seminar);
                 Long seminarId=seminar.getId();
-                List<KlassSeminar> klassSeminars=klassSeminarDao.findBySeminar(seminarId);
+                List<KlassSeminar> klassSeminars= klassSeminarMapper.findBySeminar(seminarId);
                 seminarList.setKlassSeminarList(klassSeminars);
                 seminarListList.add(seminarList);
             }
@@ -75,21 +79,21 @@ public class RoundService {
         return roundLists;
     }
     public List<KlassRound> findKlassRound(Long klassId){
-        return klassRoundDao.findByKlassId(klassId);
+        return klassRoundMapper.findByKlassId(klassId);
     }
     public int deleteKlassRoundByRoundId(Long roundId){
-        return klassRoundDao.deleteByRoundId(roundId);
+        return klassRoundMapper.deleteByRoundId(roundId);
     }
     public int deleteRound(Long roundId){
-        Round round=roundDao.find(roundId);
+        Round round= roundMapper.find(roundId);
         Long courseId=round.getCourseId();
-        if(roundDao.deleteById(roundId)==1){
-            klassRoundDao.deleteByRoundId(roundId);
-            List<Round> roundList=roundDao.findByCourseId(courseId);
+        if(roundMapper.deleteById(roundId)==1){
+            klassRoundMapper.deleteByRoundId(roundId);
+            List<Round> roundList= roundMapper.findByCourseId(courseId);
             if(!roundList.isEmpty()){
                 for(Round round1:roundList){
                     if(round1.getRoundSerial()>round.getRoundSerial()){
-                        roundDao.updateSerial(round1.getId(),round1.getRoundSerial()-1);
+                        roundMapper.updateSerial(round1.getId(),round1.getRoundSerial()-1);
                     }
                 }
             }
@@ -100,13 +104,13 @@ public class RoundService {
         }
     }
     public Integer findEnrollNumber(Long roundId,Long klassId){
-        return klassRoundDao.findByRoundIdAndClassId(roundId,klassId);
+        return klassRoundMapper.findByRoundIdAndClassId(roundId,klassId);
     }
     public int updateSerial(Long id,Integer serial)
     {
-        return roundDao.updateSerial(id,serial);
+        return roundMapper.updateSerial(id,serial);
     }
     public int save(KlassRound klassRound){
-        return klassRoundDao.save(klassRound);
+        return klassRoundMapper.save(klassRound);
     }
 }

@@ -2,17 +2,17 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rest.dao.KlassTeamDao">
+<mapper namespace="com.rest.mapper.KlassTeamMapper">
     <select id="findByTeamId" parameterType="long" resultType="long">
         SELECT klass_id FROM standard_seminar_system.klass_team WHERE team_id=#{teamId}
     </select>
     <delete id="deleteKlassTeamsByTeamId" parameterType="long">
         DELETE FROM standard_seminar_system.klass_team WHERE team_id=#{teamId}
     </delete>
-    <insert id="save" parameterType="com.rest.entity.KlassTeam">
+    <insert id="save" parameterType="com.rest.po.KlassTeam">
         INSERT INTO standard_seminar_system.klass_team(klass_id,team_id) VALUE (#{klassId},#{teamId})
     </insert>
-    <select id="findByKlassId" resultType="com.rest.entity.KlassTeam" parameterType="long">
+    <select id="findByKlassId" resultType="com.rest.po.KlassTeam" parameterType="long">
         SELECT * FROM standard_seminar_system.klass_team WHERE klass_id=#{klassId}
     </select>
     <delete id="deleteByTeamIdAndKlassId">

@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rest.dao.ShareTeamApplicationDao">
-    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.rest.entity.ShareTeamApplication">
+<mapper namespace="com.rest.mapper.ShareTeamApplicationMapper">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.rest.po.ShareTeamApplication">
         INSERT INTO standard_seminar_system.share_team_application(main_course_id,sub_course_id,sub_course_teacher_id) VALUE (#{mainCourseId},#{subCourseId},#{subCourseTeacherId})
     </insert>
-    <select id="findBySubCourseId" parameterType="long" resultType="com.rest.entity.ShareTeamApplication">
+    <select id="findBySubCourseId" parameterType="long" resultType="com.rest.po.ShareTeamApplication">
         SELECT * FROM standard_seminar_system.share_team_application WHERE sub_course_id=#{courseId}
     </select>
-    <select id="findByCourseId" resultType="com.rest.entity.ShareTeamApplication">
+    <select id="findByCourseId" resultType="com.rest.po.ShareTeamApplication">
         SELECT * FROM standard_seminar_system.share_team_application WHERE status=1 AND (sub_course_id=#{courseId} OR main_course_id=#{courseId})
     </select>
     <update id="acceptTeamShare" parameterType="long">
@@ -18,10 +18,10 @@
     <update id="rejectTeamShare" parameterType="long">
         UPDATE standard_seminar_system.share_team_application SET status=0 WHERE id=#{id}
     </update>
-    <select id="findShareTeamApplication" parameterType="long" resultType="com.rest.entity.ShareTeamApplication">
+    <select id="findShareTeamApplication" parameterType="long" resultType="com.rest.po.ShareTeamApplication">
         SELECT * FROM standard_seminar_system.share_team_application WHERE id=#{id}
     </select>
-    <select id="findAll" resultType="com.rest.entity.ShareTeamApplication">
+    <select id="findAll" resultType="com.rest.po.ShareTeamApplication">
         SELECT * FROM standard_seminar_system.share_team_application
     </select>
 </mapper>

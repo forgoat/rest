@@ -1,9 +1,9 @@
 package com.rest.service;
 
-import com.rest.dao.*;
-import com.rest.entity.Klass;
-import com.rest.entity.KlassSeminar;
-import com.rest.entity.Seminar;
+import com.rest.mapper.*;
+import com.rest.po.Klass;
+import com.rest.po.KlassSeminar;
+import com.rest.po.Seminar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,68 +13,68 @@ import java.util.List;
 @Service
 public class SeminarService {
     @Autowired
-    private SeminarDao seminarDao;
+    private SeminarMapper seminarMapper;
     @Autowired
-    private TeamStudentDao teamStudentDao;
+    private TeamStudentMapper teamStudentMapper;
     @Autowired
-    private KlassSeminarDao klassSeminarDao;
+    private KlassSeminarMapper klassSeminarMapper;
     @Autowired
-    private KlassTeamDao klassTeamDao;
+    private KlassTeamMapper klassTeamMapper;
     @Autowired
-    private KlassDao klassDao;
+    private KlassMapper klassMapper;
 
     public KlassSeminar findKlassSeminarById(Long klassSeminarId){
-        return klassSeminarDao.findKlassSeminarById(klassSeminarId);
+        return klassSeminarMapper.findKlassSeminarById(klassSeminarId);
     }
     public int save(Seminar seminar){
-        return seminarDao.save(seminar);
+        return seminarMapper.save(seminar);
     }
     public List<KlassSeminar> findClass(Long seminarId){
-        return klassSeminarDao.findBySeminar(seminarId);
+        return klassSeminarMapper.findBySeminar(seminarId);
     }
     public int saveKlassSeminar(KlassSeminar klassSeminar){
-        return klassSeminarDao.save(klassSeminar);
+        return klassSeminarMapper.save(klassSeminar);
     }
     public Seminar findById(Long id){
-        return seminarDao.findById(id);
+        return seminarMapper.findById(id);
     }
     public int deleteSeminar(Long id){
-        return seminarDao.delete(id);
+        return seminarMapper.delete(id);
     }
     public int updateInfo(Long seminarId, Long courseId, Long roundId, String seminarName, String introducation, Integer maxTeam, Integer isVisible, Integer seminarSerial, Date enrollStartTime, Date enrollEndTime){
-        return seminarDao.updateSelective(seminarId,courseId,roundId,seminarName,introducation,maxTeam,isVisible,seminarSerial,enrollStartTime,enrollEndTime);
+        return seminarMapper.updateSelective(seminarId,courseId,roundId,seminarName,introducation,maxTeam,isVisible,seminarSerial,enrollStartTime,enrollEndTime);
     }
     public int deleteKlassSeminar(Long id){
-        return klassSeminarDao.delete(id);
+        return klassSeminarMapper.delete(id);
     }
     public int changeStatus(Long klassSeminarId,Integer status){
-        return klassSeminarDao.changeStatus(klassSeminarId,status);
+        return klassSeminarMapper.changeStatus(klassSeminarId,status);
     }
     public int changeddl(Long seminarId,Long classId,Date reportDdl){
-        return klassSeminarDao.changeddl(seminarId,classId,reportDdl);
+        return klassSeminarMapper.changeddl(seminarId,classId,reportDdl);
     }
     public List<Seminar> findByRoundId(Long roundId)
     {
-        return seminarDao.findByRoundId(roundId);
+        return seminarMapper.findByRoundId(roundId);
     }
     public KlassSeminar findKlassSeminar(Long klassId,Long seminarId){
-        return klassSeminarDao.findByKlassIdAndSeminarId(klassId,seminarId);
+        return klassSeminarMapper.findByKlassIdAndSeminarId(klassId,seminarId);
     }
     public List<Seminar> findAll(){
-        return seminarDao.findAll();
+        return seminarMapper.findAll();
     }
     public List<Seminar> findByCourseId(Long courseId){
-        return seminarDao.findByCourseId(courseId);
+        return seminarMapper.findByCourseId(courseId);
     }
     public List<Seminar> findByCourseIdAndRoundId(Long courseId,Long roundId){
-        return seminarDao.findByCourseIdAndRoundId(courseId,roundId);
+        return seminarMapper.findByCourseIdAndRoundId(courseId,roundId);
     }
     public int startKlassSeminar(Long klassSeminarId){
-        System.out.println(klassSeminarId+" "+klassSeminarDao.startSeminar(klassSeminarId));
-        return klassSeminarDao.startSeminar(klassSeminarId);
+        System.out.println(klassSeminarId+" "+ klassSeminarMapper.startSeminar(klassSeminarId));
+        return klassSeminarMapper.startSeminar(klassSeminarId);
     }
     public int deleteBySeminarId(Long seminarId){
-        return klassSeminarDao.deleteBySeminarId(seminarId);
+        return klassSeminarMapper.deleteBySeminarId(seminarId);
     }
 
 
@@ -87,13 +87,13 @@ public class SeminarService {
      */
     public Long queryKlassSeminarId(Long studentId,Long courseId,Long seminarId){
         System.out.println(studentId+"  "+courseId+"  "+seminarId);
-        Long teamId=teamStudentDao.findByStudentId(studentId);
+        Long teamId= teamStudentMapper.findByStudentId(studentId);
         System.out.println("------teamId:"+teamId);
 
-        List<Long> klassIdList=klassTeamDao.findByTeamId(teamId);
+        List<Long> klassIdList= klassTeamMapper.findByTeamId(teamId);
         System.out.println("------klassIdList:"+klassIdList);
 
-        List<Klass> klassList=klassDao.findByCourseId(courseId);
+        List<Klass> klassList= klassMapper.findByCourseId(courseId);
         System.out.println("------klassList:"+klassList);
 
         Long klassId=null;
@@ -109,7 +109,7 @@ public class SeminarService {
             }
             if(klassId!=null) break;
         }
-        Long klassSeminarId=klassSeminarDao.queryKlassSeminarIdByKlassIdAndSeminarId(klassId,seminarId);
+        Long klassSeminarId= klassSeminarMapper.queryKlassSeminarIdByKlassIdAndSeminarId(klassId,seminarId);
         return klassSeminarId;
     }
 

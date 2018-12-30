@@ -1,5 +1,8 @@
 package com.rest.entity;
 
+import com.rest.po.ShareSeminarApplication;
+import com.rest.po.ShareTeamApplication;
+
 public class ShareList {
     private Long shareId;
     private Long courseId;

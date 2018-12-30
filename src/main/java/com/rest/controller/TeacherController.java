@@ -1,5 +1,5 @@
 package com.rest.controller;
-import com.rest.entity.Teacher;
+import com.rest.po.Teacher;
 import com.rest.entity.TeacherData;
 import com.rest.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;

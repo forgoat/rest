@@ -1,6 +1,10 @@
 package com.rest.controller;
 
 import com.rest.entity.*;
+import com.rest.po.Klass;
+import com.rest.po.KlassRound;
+import com.rest.po.Round;
+import com.rest.po.Seminar;
 import com.rest.service.KlassService;
 import com.rest.service.RoundService;
 import com.rest.service.SeminarService;

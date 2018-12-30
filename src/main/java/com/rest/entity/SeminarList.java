@@ -1,5 +1,8 @@
 package com.rest.entity;
 
+import com.rest.po.KlassSeminar;
+import com.rest.po.Seminar;
+
 import java.util.List;
 
 public class SeminarList {
