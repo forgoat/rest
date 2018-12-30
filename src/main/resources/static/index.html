@@ -64,9 +64,9 @@
             url: "/user/login",
             data:{account:account,password:password},
             type: "POST",
-            dataType:'text',
+            dataType:'json',
             success:function(data) {
-                var json=eval("("+data+")");
+                var json=data;
                 alert(json.role);
                 if (json.role == 'teacher') {
                     if(json.isActive==1)

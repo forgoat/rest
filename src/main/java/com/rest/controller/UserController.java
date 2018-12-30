@@ -33,12 +33,10 @@ public class UserController {
      * 用户登录
      * @param account
      * @param password
-     * @param request
      * @return
      */
-    @PostMapping(value = "login",produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public ResponseEntity<Object> Login(String account, String password, HttpServletRequest request){
+    @PostMapping(value = "login")
+    public ResponseEntity<User> Login(String account,String password){
         Teacher teacher=teacherService.findByAccount(account);
         if(teacher!=null&&teacher.getPassword().equals(password)){
             User user=new User(teacher);
@@ -50,7 +48,7 @@ public class UserController {
 //
 //            System.out.println(acc);
             HttpStatus httpStatus=HttpStatus.OK;
-            return new ResponseEntity<Object>(user,httpStatus);
+            return new ResponseEntity<User>(user,httpStatus);
         }
         else{
             Student student=studentService.findByAccount(account);
@@ -63,11 +61,11 @@ public class UserController {
 //                Object acc=session.getAttribute("account");
 //                System.out.println(acc);
                 HttpStatus httpStatus=HttpStatus.OK;
-                return new ResponseEntity<Object>(user,httpStatus);
+                return new ResponseEntity<User>(user,httpStatus);
             }
             else{
                 HttpStatus httpStatus=HttpStatus.NOT_FOUND;
-                return new ResponseEntity<Object>(null,httpStatus);
+                return new ResponseEntity<User>(new User(),httpStatus);
             }
         }
     }
