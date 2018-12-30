@@ -1,6 +1,7 @@
 package com.rest.controller;
 
 import com.rest.dao.TeamStudentDao;
+import com.rest.dao.TeamValidApplicationDao;
 import com.rest.entity.*;
 import com.rest.service.*;
 import org.apache.poi.ss.formula.functions.T;
@@ -28,6 +29,9 @@ public class TeamController {
     private TeacherService teacherService;
     @Autowired
     private OrganizeTeamService organizeTeamService;
+    @Autowired
+    private TeamStudentDao teamStudentDao;
+
 
 //    @GetMapping(value = "findStu")
 //    public List<KlassStudent> findByTeamId(Long teamId){
@@ -52,19 +56,16 @@ public class TeamController {
         teamInfo.setCourseId(team.getCourseId());
         teamInfo.setTeamName(team.getTeamName());
         teamInfo.setTeamSerial(team.getTeamSerial());
+        teamInfo.setKlassSerial(team.getKlassSerial());
         Student leader=studentService.findById(team.getLeaderId());
         teamInfo.setLeader(leader);
-        List<KlassStudent> klassStudentList=teamService.findStuByTeamId(teamId);
-        List<Student> member=new ArrayList<Student>();
-        for(KlassStudent klassStudent:klassStudentList){
-            if(klassStudent.getStudentId().equals(team.getLeaderId())){
-            }
-            else {
-                Student student = studentService.findById(klassStudent.getStudentId());
-                member.add(student);
-            }
+        List<Long> memberIdList=new ArrayList<>();
+        memberIdList=teamStudentDao.queryByTeamId(teamId);
+        List<Student> memberList=new ArrayList<>();
+        for(Long id:memberIdList){
+            memberList.add(studentService.findById(id));
         }
-        teamInfo.setMember(member);
+        teamInfo.setMember(memberList);
         return new ResponseEntity<TeamInfo>(teamInfo, HttpStatus.OK);
     }
 
@@ -228,7 +229,7 @@ public class TeamController {
     }
 
     /**
-     * 保存分组
+     * 创建小组
      * @param team
      * @param teamId
      * @param courseId
@@ -313,5 +314,34 @@ public class TeamController {
     @PostMapping(value = "queryMemberLimitStrategyById")
     public MemberLimitStrategy queryMemberLimitStrategyById(Long courseId){
         return organizeTeamService.queryMemberLimitStrategyById(organizeTeamService.queryMemberLimitStrategyId(courseId));
+    }
+
+    /**
+     * 查找CourseMemberLimitStrategy
+     * @param courseId
+     * @return
+     */
+    @PostMapping(value = "queryCourseMemberLimitStrategyById")
+    public CourseMemberLimitStrategy queryCourseMemberLimitStrategyById(Long courseId){
+        return organizeTeamService.queryCourseMemberLimitStrategy(organizeTeamService.queryCourseMemberLimitStrategyId(courseId));
+    }
+
+    /**
+     * 提交valid申请
+     * @param teamValidApplication
+     * @return
+     */
+    @PostMapping(value = "{teamId}/saveTeamValidApplication")
+    public int saveTeamValidApplication(@PathVariable(value = "teamId")TeamValidApplication teamValidApplication,Long teamId,Long courseId){
+        return teamService.saveTeamValidApplication(teamValidApplication);
+    }
+
+    /**
+     * 未组队小组
+     * @return
+     */
+    @PostMapping(value = "queryStudentNoTeam")
+    public List<Student> queryStudentNoTeam (){
+        return teamService.queryStudentNoTeam();
     }
 }

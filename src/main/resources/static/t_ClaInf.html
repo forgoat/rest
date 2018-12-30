@@ -29,78 +29,87 @@
         </a>
     </header>
     <body>
-    <h2>2016-1</h2>
-    <div class="div-auto1" >
-        讨论课时间：
-    </div>
-    <div class="div-auto2" >
-        讨论课地点：
-    </div>
-    <div class="div-auto1" >
-        班级学生名单：
-        <button>
-            选择文件
-        </button>
-    </div>
-
-        <div class="aui-code-box">
-    <div>
-        <div style="font-size:14px;height:35px;width:100px;float: left;margin-right: 30px;">
-            <button >
-                提交
-            </button>
-        </div>
-        <div style="font-size:14px;height:35px;width:100px;float: left;margin-right: 30px;">
-            <button >
-                删除班级
-            </button>
-        </div>
-
-    </div>
-        </div>
 
 
 
-    <h2>2016-2</h2>
-    <div class="div-auto1" >
-        讨论课时间：
-    </div>
-    <div class="div-auto2" >
-        讨论课地点：
-    </div>
-    <div class="div-auto1" >
-        班级学生名单：
-        <button>
-            选择文件
-        </button>
+    <div class="list"id="myView">
     </div>
 
-    <div class="aui-code-box">
-        <div>
-            <div style="font-size:14px;height:35px;width:100px;float: left;margin-right: 30px;">
-                <button >
-                    提交
-                </button>
-            </div>
-            <div style="font-size:14px;height:35px;width:100px;float: left;margin-right: 30px;">
-                <button >
-                    删除班级
-                </button>
-            </div>
 
-        </div>
-    </div>
+
+    <script>
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        };
+        var myModel = {courseList:[]};
+        var sem = {semList:[]};
+        var id='';
+        teacherid=3;
+        function getData(){
+            var courseid=getUrlParam('courseid');
+            $.ajax({
+                url: "/class/findByCourseId",                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                async:false,
+                data:{courseId:courseid},
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+                    myModel.courseList=res;
+                    var htmlNav='';
+                    $("#myView").empty();
+
+                    if( myModel.courseList.length>0)
+                    {
+
+
+                        for(var i=0;i< myModel.courseList.length;i++)
+                        {
+
+                            htmlNav+='<br><br><br>'
+                            // htmlNav+='<div class="div-auto1" >'+myModel.courseList[i].grade+myModel.courseList[i].klassSerial+'</div>';
+                            htmlNav+='<div class="div-auto2" >'+myModel.courseList[i].grade+'-'+myModel.courseList[i].klassSerial+'&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;讨论课时间：'+myModel.courseList[i].klassTime+'</div>';
+
+                            htmlNav+='<div class="div-auto1" > &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;讨论课地点：'+myModel.courseList[i].klassLocation+'</div>';
+                            htmlNav+='<div class="div-auto2" >&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;班级学生名单：<button>选择文件</button></div>';
+
+                            htmlNav+='<div class="aui-code-box"><div><div style="font-size:14px;height:35px;width:100px;float: left;margin-right: 30px;">' +
+                                '<button >提交</button> </div>';
+                                htmlNav+='<div style="font-size:14px;height:15px;width:100px;float: left;margin-right: 30px;">\n' +
+                                    '<button >删除班级</button></div></div></div>';
+
+
+
+                        }
+
+
+                        $("#myView").html(htmlNav);
+                    }
+                },
+                error: function(){
+                    alert('服务器忙，请稍候');
+                }
+            });
+        }
+        getData();
+
+    </script>
+
+
+
 
     </body>
     <section class="aui-scrollView">
         <div class="aui-code-box">
-            <form action="">
+
                 <div class="aui-code-btn">
                     <button>
                         <a href="javascript:;">新增班级</a>
                     </button>
                 </div>
-            </form>
+
         </div>
     </section>
 

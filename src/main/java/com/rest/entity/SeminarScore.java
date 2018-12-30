@@ -3,10 +3,10 @@ package com.rest.entity;
 public class SeminarScore {
     private Long klassSeminarId;
     private Long teamId;
-    private double totalScore;
-    private double presentationScore;
-    private double questionScore;
-    private double reportScore;
+    private Double totalScore;
+    private Double presentationScore;
+    private Double questionScore;
+    private Double reportScore;
 
     public SeminarScore() {
     }
@@ -27,35 +27,47 @@ public class SeminarScore {
         this.teamId = teamId;
     }
 
-    public double getTotalScore() {
+    public Double getTotalScore() {
         return totalScore;
     }
 
-    public void setTotalScore(double totalScore) {
+    public void setTotalScore(Double totalScore) {
         this.totalScore = totalScore;
     }
 
-    public double getPresentationScore() {
+    public Double getPresentationScore() {
         return presentationScore;
     }
 
-    public void setPresentationScore(double presentationScore) {
+    public void setPresentationScore(Double presentationScore) {
         this.presentationScore = presentationScore;
     }
 
-    public double getQuestionScore() {
+    public Double getQuestionScore() {
         return questionScore;
     }
 
-    public void setQuestionScore(double questionScore) {
+    public void setQuestionScore(Double questionScore) {
         this.questionScore = questionScore;
     }
 
-    public double getReportScore() {
+    public Double getReportScore() {
         return reportScore;
     }
 
-    public void setReportScore(double reportScore) {
+    public void setReportScore(Double reportScore) {
         this.reportScore = reportScore;
+    }
+
+    @Override
+    public String toString() {
+        return "SeminarScore{" +
+                "klassSeminarId=" + klassSeminarId +
+                ", teamId=" + teamId +
+                ", totalScore=" + totalScore +
+                ", presentationScore=" + presentationScore +
+                ", questionScore=" + questionScore +
+                ", reportScore=" + reportScore +
+                '}';
     }
 }

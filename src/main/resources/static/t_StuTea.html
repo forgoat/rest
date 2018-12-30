@@ -1,3 +1,271 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>学生组队</title>-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0">-->
+    <!--<link type="text/css" rel="stylesheet" href="css/base.css">-->
+    <!--<link type="text/css" rel="stylesheet" href="css/home.css">-->
+    <!--<link href="css/custom.css" rel="stylesheet" type="text/css"/>-->
+    <!--<script>-->
+        <!--var offWidth = window.screen.width / 30; //这里用宽度/30表示1rem取得的px-->
+        <!--document.getElementsByTagName("html")[0].style.fontSize = offWidth + 'px'; //把rem的值复制给顶级标签html的font-size-->
+    <!--</script>-->
+    <!--<style type="text/css">-->
+        <!--*{margin: 0;padding: 0}-->
+        <!--body{font-size: 14px-->
+        <!--;font-family: "微软雅黑";}-->
+        <!--ul,li{list-style: none;}-->
+        <!--a:link,a:visited{text-decoration: none;color: #fff;}-->
+        <!--.list{width: 30rem;border-bottom:solid 1px #fff;margin:40px auto 0 auto;}-->
+        <!--.list ul li{background-color:#0c85b9a3-->
+        <!--; border:solid 1px #fff; border-bottom:0;}-->
+        <!--.list ul li a{padding-left: 10px;color: black; font-size:14px; display: block;  height:36px;line-height: 36px;position: relative;-->
+        <!--}-->
+        <!--.list ul li .inactive{ background:url(img/off.png) no-repeat 28rem center;}-->
+        <!--.list ul li .inactives{ background:url(img/on.png) no-repeat 28rem center;}-->
+        <!--.list ul li ul{display: none;}-->
+        <!--.list ul li ul li { border-left:0; border-right:0; background-color:#e1f1fc; border-color:#fff;}-->
+        <!--.list ul li ul li ul{display: none;}-->
+        <!--.list ul li ul li a{ padding-left:20px;}-->
+        <!--.list ul li ul li ul li { background-color:#0c85b9a3; border-color:#fff; }-->
+        <!--.last{ background-color:#e2e2e2; border-color:#fff; }-->
+        <!--.list ul li ul li ul li a{ color:#e1f1fc; padding-left:30px;}-->
+    <!--</style>-->
+    <!--<script type="text/javascript" src="js/jquery.min.js"></script>-->
+    <!--<script type="text/javascript">-->
+        <!--$(document).ready(function() {-->
+            <!--$('.inactive').click(function(){-->
+                <!--if($(this).siblings('ul').css('display')=='none'){-->
+                    <!--$(this).parent('li').siblings('li').removeClass('inactives');-->
+                    <!--$(this).addClass('inactives');-->
+                    <!--$(this).siblings('ul').slideDown(100).children('li');-->
+                    <!--if($(this).parents('li').siblings('li').children('ul').css('display')=='block'){-->
+                        <!--$(this).parents('li').siblings('li').children('ul').parent('li').children('a').removeClass('inactives');-->
+                        <!--$(this).parents('li').siblings('li').children('ul').slideUp(100);-->
+
+                    <!--}-->
+                <!--}else{-->
+                    <!--//控制自身变成+号-->
+                    <!--$(this).removeClass('inactives');-->
+                    <!--//控制自身菜单下子菜单隐藏-->
+                    <!--$(this).siblings('ul').slideUp(100);-->
+                    <!--//控制自身子菜单变成+号-->
+                    <!--$(this).siblings('ul').children('li').children('ul').parent('li').children('a').addClass('inactives');-->
+                    <!--//控制自身菜单下子菜单隐藏-->
+                    <!--$(this).siblings('ul').children('li').children('ul').slideUp(100);-->
+
+                    <!--// //控制同级菜单只保持一个是展开的（-号显示）-->
+                    <!--// $(this).siblings('ul').children('li').children('a').removeClass('inactives');-->
+                <!--}-->
+            <!--})-->
+        <!--});-->
+    <!--</script>-->
+<!--</head>-->
+<!--<header class="aui-navBar aui-navBar-fixed b-line">-->
+    <!--<a href="javascript:history.back(-1)" class="aui-navBar-item">-->
+        <!--<i class="icon icon-return"></i>-->
+    <!--</a>-->
+    <!--<div class="aui-center">-->
+        <!--<span class="aui-center-title">学生组队</span>-->
+    <!--</div>-->
+    <!--<a href="javascript:;" class="aui-navBar-item">-->
+        <!--<i class="icon icon-sys"></i>-->
+    <!--</a>-->
+<!--</header>-->
+<!--<body>-->
+<!--<div class="list" id="myView">-->
+
+<!--</div>-->
+
+<!--<script>-->
+    <!--function getUrlParam(name) {-->
+        <!--var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象-->
+        <!--var r = window.location.search.substr(1).match(reg);  //匹配目标参数-->
+        <!--if (r != null) return unescape(r[2]); return null; //返回参数值-->
+    <!--};-->
+    <!--var myModel = {teamList:[]};-->
+    <!--var sem = {smallList:[]};-->
+    <!--var id='';-->
+    <!--var semid=16;-->
+    <!--var htmlNav='';-->
+
+
+
+
+
+    <!--function getStudent(studentid){-->
+        <!--var courseid=getUrlParam('courseid');-->
+        <!--$.ajax({-->
+            <!--url: "/student/"+studentid,                //后端的API地址-->
+            <!--type: 'GET',                                //http:POST/GET-->
+            <!--async:false,-->
+
+            <!--dataType: 'json',                            //服务端返回类型text，JSON-->
+            <!--timeout: 3000,-->
+            <!--success: function(res){-->
+
+                <!--htmlNav+=res.account+'&nbsp; &nbsp;&nbsp; &nbsp;'+res.studentName;-->
+            <!--},-->
+
+        <!--});-->
+    <!--}-->
+
+
+    <!--function getTeam(teamid){-->
+        <!--var courseid=getUrlParam('courseid');-->
+        <!--$.ajax({-->
+            <!--url: "/team/"+teamid,                //后端的API地址-->
+            <!--type: 'GET',                                //http:POST/GET-->
+            <!--async:false,-->
+
+            <!--dataType: 'json',                            //服务端返回类型text，JSON-->
+            <!--timeout: 3000,-->
+            <!--success: function(res){-->
+
+                <!--htmlNav+='<li><a href="#">组长：'+ res.leader.account+'&nbsp; &nbsp;&nbsp; &nbsp;'+res.leader.studentName+'</a></li>';-->
+
+            <!--},-->
+
+        <!--});-->
+    <!--}-->
+
+
+    <!--function getMem(teamid){-->
+
+        <!--$.ajax({-->
+            <!--url: "/team/"+teamid+"/student",                //后端的API地址-->
+            <!--type: 'GET',                                //http:POST/GET-->
+            <!--async:false,-->
+
+            <!--dataType: 'json',                            //服务端返回类型text，JSON-->
+            <!--timeout: 3000,-->
+            <!--success: function(res){-->
+                <!--myModel.memList=res;-->
+
+                <!--for(var i=0;i< myModel.memList.length;i++)-->
+                <!--{-->
+                    <!--if(i==0)-->
+                    <!--{-->
+                        <!--htmlNav+='<li class="last"><a href="#">组员：';-->
+                        <!--getStudent(myModel.memList[i].studentId);-->
+                        <!--htmlNav+='</a></li>';-->
+                    <!--}-->
+
+                    <!--else-->
+                    <!--{-->
+                        <!--htmlNav+='<li class="last"><a href="#">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; ';-->
+                        <!--getStudent(myModel.memList[i].studentId);-->
+                        <!--htmlNav+='</a></li>';-->
+                    <!--}-->
+
+                <!--}-->
+
+            <!--},-->
+
+        <!--});-->
+    <!--}-->
+
+
+    <!--//通过课程id查到team id-->
+    <!--function getTeamId(classid){-->
+        <!--var courseid=getUrlParam('courseid');-->
+        <!--$.ajax({-->
+            <!--url: "/class/"+classid+"/team",                //需要修改-->
+            <!--type: 'GET',                                //http:POST/GET-->
+            <!--async:false,-->
+
+            <!--dataType: 'json',                            //服务端返回类型text，JSON-->
+            <!--timeout: 3000,-->
+            <!--success: function(res){-->
+                <!--//teaList里存放teamid-->
+                <!--myModel.teaList=res;-->
+                <!--for(var i=0;i< myModel.teaList.length;i++) //找到了class下的所有team-->
+                <!--{-->
+                    <!--//通过teamid查到组长信息-->
+                    <!--getTeam(myModel.teaList[i]);-->
+                    <!--//通过teamid查到组员信息-->
+                    <!--getMem(myModel.teaList[i]);-->
+                <!--}-->
+            <!--},-->
+
+        <!--});-->
+    <!--}-->
+
+
+    <!--//查询课程下的所有班级id存在classList.id里-->
+    <!--function getClass(courseid){-->
+        <!--var courseid=getUrlParam('courseid');-->
+        <!--$.ajax({-->
+            <!--url: "/class/findByCourseId",                //后端的API地址-->
+            <!--type: 'GET',                                //http:POST/GET-->
+            <!--async:false,-->
+            <!--data:{courseId:courseid},-->
+            <!--dataType: 'json',                            //服务端返回类型text，JSON-->
+            <!--timeout: 3000,-->
+            <!--success: function(res){-->
+                <!--myModel.classList=res;-->
+
+                <!--//通过每个班级id查询team-->
+                <!--for(var i=0;i< myModel.classList.length;i++) {-->
+                    <!--getTeamId(myModel.classList[i].id);-->
+                <!--}-->
+
+
+            <!--},-->
+
+        <!--});-->
+    <!--}-->
+
+
+
+    <!--function getData(){-->
+        <!--var courseid=getUrlParam('courseid');-->
+        <!--$.ajax({-->
+            <!--url: "/course/"+courseid+"/team",                //后端的API地址-->
+            <!--type: 'GET',                                //http:POST/GET-->
+            <!--async:false,-->
+
+            <!--dataType: 'json',                            //服务端返回类型text，JSON-->
+            <!--timeout: 3000,-->
+            <!--success: function(res){-->
+                <!--myModel.teamList=res;-->
+
+                <!--$("#myView").empty();-->
+
+                <!--if( myModel.teamList.length>0)-->
+                <!--{-->
+                    <!--htmlNav+='<ul class="yiji">';-->
+                    <!--for(var i=0;i< myModel.teamList.length;i++)-->
+                    <!--{-->
+                        <!--htmlNav+='<li><a href="#" class="inactive">'+myModel.teamList[i].klassSerial+'-'+myModel.teamList[i].teamSerial+'&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'+myModel.teamList[i].teamName+'</a>';-->
+
+                        <!--htmlNav+='<ul style="display: none">';-->
+                        <!--getClass(courseid);-->
+
+
+
+                        <!--htmlNav+='</ul>';-->
+                        <!--htmlNav+='</li>';-->
+                    <!--}-->
+                    <!--htmlNav+='</ul>';-->
+                    <!--$("#myView").html(htmlNav);-->
+                <!--}-->
+            <!--},-->
+            <!--error: function(){-->
+                <!--alert('服务器忙，请稍候');-->
+            <!--}-->
+        <!--});-->
+    <!--}-->
+
+
+
+    <!--getData();-->
+
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,26 +342,152 @@
     </a>
 </header>
 <body>
-<div class="list">
-    <ul class="yiji">
 
-        <li><a href="#" class="inactive">1-1 HHHH</a>
-            <ul style="display: none">
-                <li><a href="#">组长： 111</a></li>
-                <li class="last"><a href="#">组员：111</a></li>
-            </ul>
-        </li>
-        <li><a href="#" class="inactive">1-2 HHAAA</a>
-            <ul style="display: none">
-                <li><a href="#">组长：111</a></li>
-                <li><a href="#">组员：222</a></li>
-                <li><a href="#">组员：333</a></li>
 
-            </ul>
-        </li>
+<div class="list" id="myView"></div>
 
-    </ul>
-</div>
+
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var myModel = {courseList:[]};
+    var sem = {semList:[]};
+    var id='';
+    var htmlNav='';
+
+
+    function getTeam(classid){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/class/"+classid+"/team",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.teamList=res;
+
+                $("#myView").empty();
+
+                //通过classid查询teamid存在List[i]里
+                if( myModel.teamList.length>0)
+                {
+                    for(var i=0;i< myModel.teamList.length;i++) {
+
+                        getMem(myModel.teamList[i]);
+                    }
+                }
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+
+
+    function getClass(){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/class/findByCourseId",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+            data:{courseId:courseid},
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.classList=res;
+
+                $("#myView").empty();
+                htmlNav+='<ul class="yiji">';
+
+                //通过courseid查询classid存在List[i].id里
+                if( myModel.classList.length>0)
+                {
+                    for(var i=0;i< myModel.classList.length;i++)
+                    {
+                        getTeam(myModel.classList[i].id);
+                    }
+                }
+                htmlNav+='</ul>';
+
+                $("#myView").html(htmlNav);
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+
+    function getMem(teamid){
+
+        $.ajax({
+            url: "/team/"+teamid,                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+
+
+                $("#myView").empty();
+
+                //通过teamid查询member信息存在List[i].id里
+
+                        htmlNav+='<li><a href="#" class="inactive">'+res.klassSerial
+                +'-'+res.teamSerial+'&nbsp;&nbsp;&nbsp;&nbsp;'+res.teamName+'</a>';
+                        htmlNav+='<ul style="display: none">';
+                        htmlNav+='<li><a href="#">组长：'+ res.leader.account+'&nbsp;&nbsp;&nbsp;&nbsp;'+res.leader.studentName+'</a></li>';
+                for(var i=0;i< res.member.length;i++)
+                {
+                    if(i==0)
+                    htmlNav+='<li class="last"><a href="#">组员：'+ res.member[i].account+'&nbsp;&nbsp;&nbsp;&nbsp;'+res.member[i].studentName+'</a></li>';
+
+                    else
+                        htmlNav+='<li class="last"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ res.member[i].account+'&nbsp;&nbsp;&nbsp;&nbsp;'+res.member[i].studentName+'</a></li>';
+
+                }
+
+                        htmlNav+='</ul></li>'
+
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+
+    }
+
+    getClass();
+
+</script>
+
+
+
+<!--<div class="list">-->
+    <!--<ul class="yiji">-->
+
+        <!--<li><a href="#" class="inactive">1-1 HHHH</a>-->
+            <!--<ul style="display: none">-->
+                <!--<li><a href="#">组长： 111</a></li>-->
+                <!--<li class="last"><a href="#">组员：111</a></li>-->
+            <!--</ul>-->
+        <!--</li>-->
+        <!--<li><a href="#" class="inactive">1-2 HHAAA</a>-->
+            <!--<ul style="display: none">-->
+                <!--<li><a href="#">组长：111</a></li>-->
+                <!--<li><a href="#">组员：222</a></li>-->
+                <!--<li><a href="#">组员：333</a></li>-->
+
+            <!--</ul>-->
+        <!--</li>-->
+
+    <!--</ul>-->
+<!--</div>-->
 
 
 

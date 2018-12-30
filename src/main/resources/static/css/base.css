@@ -344,7 +344,7 @@ a {
 .div-auto1{
     background:#e1f1fc;
     color: #000000;
-    height:50px;
+    height:auto;
     font-size: 14px;
     padding:16px 12px 5px;
     font-family: "微软雅黑";
@@ -355,7 +355,7 @@ a {
 .div-auto2{
     background:#ffffff;
     color: #000000;
-    height:50px;
+    height:auto;
     font-size: 14px;
     padding:16px 12px 5px;
     font-family: "微软雅黑";

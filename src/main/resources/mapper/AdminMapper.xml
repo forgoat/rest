@@ -6,10 +6,10 @@
     <select id="adminlist" resultType="com.rest.entity.Admin">
         SELECT * FROM standard_seminar_system.admin;
     </select>
-    <select id="findAdminById" resultType="com.rest.entity.Admin" parameterType="long">
+    <select id="findAdminById" resultType="com.rest.entity.Admin" parameterType="Long">
         SELECT * FROM standard_seminar_system.admin where id=#{id};
     </select>
-    <select id="findByName" resultType="com.rest.entity.Admin" parameterType="string">
+    <select id="findByName" resultType="com.rest.entity.Admin" parameterType="String">
         SELECT * FROM standard_seminar_system.admin WHERE account=#{account};
     </select>
 </mapper>

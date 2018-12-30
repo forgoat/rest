@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>OOAD-讨论课</title>
+    <title>OOAD-讨论课(已开始)ok</title>
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
@@ -29,32 +29,73 @@
         </a>
     </header>
     <body>
-    <div class="div-auto1" >
-        轮次： 第二轮
+    <div class="div-auto1" id="myView1">
+        轮次：
     </div>
-    <div class="div-auto2" >
-       主题： 领域模型
+    <div class="div-auto2" id="myView2">
+        主题：
     </div>
-    <div class="div-auto1" >
+    <div class="div-auto1" id="myView3">
         课次序号：
-
     </div>
-
-    <div class="div-auto1" >
-        要求：界面导航图和所有原型设计...
-
+    <div class="div-auto2"style="height: auto" id="myView4">
+        要求：
     </div>
-
-    <div class="div-auto1" >
-        课程情况：正在进行   <a style="font-family:times;color:green" href=" /teacher/semminar/taolunkeyi">查看详情</a>
-
+    <div class="div-auto1" id="myView5">
+        课程情况：进行中
+        <a>查看情况</a>
     </div>
-
-
-
-    <button class="button-auto1" >
-        进入讨论课
+    <button class="button-auto1" id="myView6" onclick="clickme()">
+        <a href="t_seminarzhong.html">
+            进入讨论课
+        </a>
     </button>
 
     </body>
+</section>
+</body>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var json='';
+    function emm() {
+        var seminarid = getUrlParam("seminarid");
+        var klassseminarid = getUrlParam("klassseminarid");
+        $.ajax({
+            url: "/seminar/" + seminarid,
+            type: "GET",
+            async: false,
+            dataType: 'text',
+            success: function (data) {
+                json = eval("(" + data + ")");
+                $("#myView1").html("轮次： " + json.roundId);
+                $("#myView2").html("主题:" + json.seminarName);
+                $("#myView3").html("课次序号:" + json.seminarSerial);
+                $("#myView4").html("要求:" + json.introduction);
+                $("#myView5").html("课程情况：进行中" + '<a href="t_seminarPPT.html?klassseminarid=' + klassseminarid + '">查看情况</a>');
+            }, error: function () {
+                alert('服务器忙，请稍候');
+            }
+        });
+        $("#myView6").html('<a href="seminar_presentation.html?klassklassseminarid='+klassseminarid+'">进入讨论课 </a>')
+    }
+    emm();
+    function clickme() {
+        $.ajax({
+            url: "/seminar/" + klassseminarid+"/status",
+            type: "PUT",
+            data:{status:1},
+            async: false,
+            dataType: 'text',
+            success: function () {
+                alert("success!");
+            },error:function () {
+                alert("sorry!");
+            }
+            });
+    }
+</script>
 </html>

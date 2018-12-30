@@ -1,17 +1,18 @@
 package com.rest.service;
 
 import com.rest.dao.*;
+import com.rest.dao.TeamValidApplicationDao;
 import com.rest.entity.*;
-import org.apache.poi.ss.formula.functions.T;
 import com.rest.dao.KlassStudentDao;
 import com.rest.dao.KlassTeamDao;
 import com.rest.dao.TeamDao;
 import com.rest.dao.TeamStudentDao;
-import com.rest.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.*;
 
 @Service
@@ -27,6 +28,12 @@ public class TeamService {
     @Autowired
     private ConflictCourseStrategyDao conflictCourseStrategyDao;
     @Autowired
+    private TeamValidApplicationDao teamValidApplicationDao;
+    @Autowired
+    private SeminarScoreDao seminarScoreDao;
+
+
+    @Autowired
     private KlassDao klassDao;
 
     public Long findId(Long courseId){
@@ -41,10 +48,6 @@ public class TeamService {
         return teamDao.queryStudentNoTeam();
     }
 
-
-    public List<KlassStudent> findStuByTeamId(Long teamId){
-        return klassStudentDao.findByTeamId(teamId);
-    }
     public Team findTeamByTeamId(Long teamId){
         return teamDao.findById(teamId);
     }
@@ -189,6 +192,16 @@ public class TeamService {
     public int deleteKlassTeam(Long teamId){
         return klassTeamDao.deleteKlassTeamsByTeamId(teamId);
     }
+
+    /**
+     * 提交申请
+     * @param teamValidApplication
+     * @return
+     */
+    public  int saveTeamValidApplication(TeamValidApplication teamValidApplication){
+        return teamValidApplicationDao.saveTeamValidApplication(teamValidApplication);
+    }
+
     public Integer numberOfKlassTeam(Long klassId){
         List<KlassTeam> klassTeamList=klassTeamDao.findByKlassId(klassId);
         Integer num=klassTeamList.size();
@@ -275,4 +288,5 @@ public class TeamService {
     public int deleteByTeamIdAndKlassId(Long teamId,Long klassId){
         return klassTeamDao.deleteByTeamIdAndKlassId(teamId,klassId);
     }
+
 }

@@ -1,9 +1,6 @@
 package com.rest.controller;
 
-import com.rest.entity.Klass;
-import com.rest.entity.KlassRound;
-import com.rest.entity.Round;
-import com.rest.entity.Seminar;
+import com.rest.entity.*;
 import com.rest.service.KlassService;
 import com.rest.service.RoundService;
 import com.rest.service.SeminarService;
@@ -124,5 +121,15 @@ public class RoundController {
     @PutMapping(value = "updateSerial")
     public int updateSerial(Long id,Integer serial){
         return roundService.updateSerial(id,serial);
+    }
+
+    /**
+     * 需求list
+     * @param courseId
+     * @return
+     */
+    @GetMapping(value = "/course/{courseId}")
+    public List<RoundList> roundListList(@PathVariable("courseId") Long courseId){
+        return roundService.findListByCourseId(courseId);
     }
 }

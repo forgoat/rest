@@ -14,4 +14,6 @@ public interface RoundDao {
     public int deleteById(Long id);
     public int updateSerial(@Param("id") Long id,@Param("serial") Integer serial);
     public int updateRoundSelective(@Param("id")Long id,@Param("presentationScoreMethod")Integer presentationScoreMethod,@Param("reportScoreMethod")Integer reportScoreMethod,@Param("questionScoreMethod")Integer questionScoreMethod);
+    Long queryRoundIdByCourseIdAndRoundSerial(@Param("courseId")Long courseId,@Param("roundSerial")Integer roundSerial);
+    List<Integer> queryAllRoundSerialByCourseId(Long courseId);
 }

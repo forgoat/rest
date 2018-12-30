@@ -4,7 +4,6 @@ import com.rest.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.math.BigInteger;
 import java.util.List;
 
 @Mapper
@@ -17,7 +16,7 @@ public interface TeamDao {
      */
     int createTeam(@Param("team") Team team); //insert team表
     int addTeammate(@Param("teamId")Long teamId,@Param("studentId")Long studentId);//添加成员 team_student表
-    int updateTeamValidApplication(@Param("teamValidApplication")TeamValidApplication teamValidApplication);//小组更新表
+    int updateTeamValidApplication(@Param("teamValidApplication") TeamValidApplication teamValidApplication);//小组更新表
     int updateKlassStudent(@Param("klassStudent") KlassStudent klassStudent);//小组更新表
     /**
      * 查询组队规则

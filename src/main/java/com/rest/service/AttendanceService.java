@@ -4,6 +4,7 @@ import com.rest.dao.*;
 import com.rest.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,17 @@ public class AttendanceService {
     private QuestionDao questionDao;
     @Autowired
     private StudentDao studentDao;
+    @Autowired
+    private TeamStudentDao teamStudentDao;
+    @Autowired
+    private KlassTeamDao klassTeamDao;
+    @Autowired
+    private KlassDao klassDao;
     public List<Attendance> findAttendanceByKlassSeminarId(Long klassSeminarId){
         return attendanceDao.findAttendanceByKlassSeminarId(klassSeminarId);
+    }
+    public Attendance findAttendanceByKlassSeminarAndTeamId(Long klassSeminarId,Long teamId){
+        return attendanceDao.queryByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
     }
     public Team findTeamByTeamId(Long teamId){
         return teamDao.findById(teamId);
@@ -94,5 +104,49 @@ public class AttendanceService {
     }
     public int selectQuestion(Long questionId){
         return questionDao.selectQuestion(questionId);
+    }
+
+
+    /**
+     * （上传）保存PPT
+     * @param id
+     * @param pptName
+     * @param pptUrl
+     */
+    public void savePPT(Long id,String pptName,String pptUrl){
+        attendanceDao.updateAttendance(id,pptName,pptUrl);
+    }
+
+    /**
+     * （上传）保存report
+     * @param id
+     * @param pptName
+     * @param pptUrl
+     */
+    public void saveReport(Long id,String pptName,String pptUrl){
+        attendanceDao.updateAttendance(id,pptName,pptUrl);
+    }
+
+    /**
+     * （下载）获取attendance类->地址文件名
+     * @param id
+     * @return
+     */
+    public Attendance getFile(Long id){
+
+        return attendanceDao.queryAttendanceById(id);
+    }
+    public List<Question> questions(Long klassSeminarId,Long attendanceId){
+        return questionDao.questions(klassSeminarId,attendanceId);
+    }
+
+    /**
+     * 删除提问队列
+     * @param klassSeminarId
+     * @param attendanceId
+     * @return
+     */
+    public int deleteQuestionList(Long klassSeminarId,Long attendanceId){
+        return questionDao.deleteQuestionList(klassSeminarId,attendanceId);
     }
 }

@@ -1,13 +1,14 @@
 package com.rest.service;
 
 import com.rest.dao.KlassRoundDao;
+import com.rest.dao.KlassSeminarDao;
 import com.rest.dao.RoundDao;
-import com.rest.entity.Klass;
-import com.rest.entity.KlassRound;
-import com.rest.entity.Round;
+import com.rest.dao.SeminarDao;
+import com.rest.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,6 +17,10 @@ public class RoundService {
     private RoundDao roundDao;
     @Autowired
     private KlassRoundDao klassRoundDao;
+    @Autowired
+    private SeminarDao seminarDao;
+    @Autowired
+    private KlassSeminarDao klassSeminarDao;
     public int saveRound(Round round){
         List<Round> roundList=roundDao.findByCourseId(round.getCourseId());
         if(roundList.isEmpty()){
@@ -42,6 +47,32 @@ public class RoundService {
 
     public List<Round> findByCourseId(Long courseId){
         return roundDao.findByCourseId(courseId);
+    }
+
+    /**
+     * 需求roundList
+     * @param courseId
+     * @return
+     */
+    public List<RoundList> findListByCourseId(Long courseId){
+        List<Round> roundList=roundDao.findByCourseId(courseId);
+        List<RoundList> roundLists=new ArrayList<RoundList>();
+        for (Round round:roundList){
+            RoundList roundList1=new RoundList(round);
+            Long roundId=roundList1.getRoundId();
+            List<SeminarList> seminarListList=new ArrayList<SeminarList>();
+            List<Seminar> seminars=seminarDao.findByRoundId(roundId);
+            for (Seminar seminar:seminars){
+                SeminarList seminarList=new SeminarList(seminar);
+                Long seminarId=seminar.getId();
+                List<KlassSeminar> klassSeminars=klassSeminarDao.findBySeminar(seminarId);
+                seminarList.setKlassSeminarList(klassSeminars);
+                seminarListList.add(seminarList);
+            }
+            roundList1.setSeminarLists(seminarListList);
+            roundLists.add(roundList1);
+        }
+        return roundLists;
     }
     public List<KlassRound> findKlassRound(Long klassId){
         return klassRoundDao.findByKlassId(klassId);

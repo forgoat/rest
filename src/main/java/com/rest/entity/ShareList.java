@@ -1,51 +1,34 @@
 package com.rest.entity;
 
 public class ShareList {
-    private Integer courseId;
-    private Integer shareCourseId;
+    private Long shareId;
+    private Long courseId;
     private String shareCourseName;
-    private Integer shareTeacherId;
+    private Long shareTeacherId;
     private String shareTeacherName;
     private Integer courseStatus;//主课程是0，从课程是1
     private Integer shareStatus;//共享分组是0，共享课程是1
 
-    public ShareList()
-    {
-        courseId=0;
-        shareCourseId=0;
-        shareCourseName=null;
-        shareTeacherId=0;
-        shareTeacherName=null;
-        courseStatus=0;
-        shareStatus=0;
-    }
-    public ShareList(Integer courseId)
-    {
-        this.courseId=courseId;
-        shareCourseId=0;
-        shareCourseName=null;
-        shareTeacherId=0;
-        shareTeacherName=null;
-        courseStatus=0;
-        shareStatus=0;
+    public ShareList() {
     }
 
-    public Integer getCourseId() {
+    public ShareList(ShareTeamApplication shareTeamApplication){
+        shareStatus=0;
+        shareId=shareTeamApplication.getId();
+
+    }
+    public ShareList(ShareSeminarApplication shareSeminarApplication){
+        shareStatus=1;
+        shareId=shareSeminarApplication.getId();
+    }
+    public Long getCourseId() {
         return courseId;
     }
 
-
-    public void setCourseId(Integer courseId) {
+    public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
 
-    public Integer getShareCourseId() {
-        return shareCourseId;
-    }
-
-    public void setShareCourseId(Integer shareCourseId) {
-        this.shareCourseId = shareCourseId;
-    }
 
     public String getShareCourseName() {
         return shareCourseName;
@@ -55,11 +38,11 @@ public class ShareList {
         this.shareCourseName = shareCourseName;
     }
 
-    public Integer getShareTeacherId() {
+    public Long getShareTeacherId() {
         return shareTeacherId;
     }
 
-    public void setShareTeacherId(Integer shareTeacherId) {
+    public void setShareTeacherId(Long shareTeacherId) {
         this.shareTeacherId = shareTeacherId;
     }
 
@@ -85,5 +68,26 @@ public class ShareList {
 
     public void setShareStatus(Integer shareStatus) {
         this.shareStatus = shareStatus;
+    }
+
+    public Long getShareId() {
+        return shareId;
+    }
+
+    public void setShareId(Long shareId) {
+        this.shareId = shareId;
+    }
+
+    @Override
+    public String toString() {
+        return "ShareList{" +
+                "shareId=" + shareId +
+                ", courseId=" + courseId +
+                ", shareCourseName='" + shareCourseName + '\'' +
+                ", shareTeacherId=" + shareTeacherId +
+                ", shareTeacherName='" + shareTeacherName + '\'' +
+                ", courseStatus=" + courseStatus +
+                ", shareStatus=" + shareStatus +
+                '}';
     }
 }

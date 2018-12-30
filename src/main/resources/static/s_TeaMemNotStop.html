@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>组员</title>
+    <title>我的组队</title>
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
@@ -22,24 +22,134 @@
             <i class="icon icon-return"></i>
         </a>
         <div class="aui-center">
-            <span class="aui-center-title">课程名</span>
+            <span class="aui-center-title">我的组队</span>
         </div>
         <a href="javascript:;" class="aui-navBar-item">
             <i class="icon icon-sys"></i>
         </a>
     </header>
     <body>
-    <div align="center" >
-        组号+组名
-    </div>
 
-    <div class="div-auto1" >
-        组长：
-    </div>
-    <hr>
-    <div class="div-auto1" >
-        组员：
-    </div>
+
+    <div class="list" id="myView"></div>
+
+    <script>
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        };
+        var myModel = {teamList:[]};
+        var sem = {smallList:[]};
+        var id='';
+
+        var htmlNav='';
+        function getStudent(studentid){
+            var courseid=getUrlParam('courseid');
+            $.ajax({
+                url: "/student/"+studentid,                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                async:false,
+
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+
+                    htmlNav+=res.account+'&nbsp; &nbsp;&nbsp; &nbsp;'+res.studentName;
+                },
+
+            });
+        }
+
+
+        function getTeam(teamid){
+            var courseid=getUrlParam('courseid');
+            $.ajax({
+                url: "/team/"+teamid,                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                async:false,
+
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+                    htmlNav+='<div class="div-auto1" >小组：'+res.klassSerial+'-'+res.teamSerial+' &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'+res.teamName+'</div>';
+
+
+                    htmlNav+='<div class="div-auto2" >组长：'+ res.leader.account+'&nbsp; &nbsp;&nbsp; &nbsp;'+res.leader.studentName+'</div>';
+
+                },
+
+            });
+        }
+
+
+        function getMem(teamid){
+
+            $.ajax({
+                url: "/team/"+teamid+"/student",                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                async:false,
+
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+                    myModel.memList=res;
+
+                    for(var i=0;i< myModel.memList.length;i++)
+                    {
+                        if(i==0)
+                        {
+                            htmlNav+='<div class="div-auto2" >组员：';
+                            getStudent(myModel.memList[i].studentId);
+                            htmlNav+='</div>';
+                        }
+
+                        else
+                        {
+                            htmlNav+='<div class="div-auto2" >&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; ';
+                            getStudent(myModel.memList[i].studentId);
+                            htmlNav+='</div>';
+                        }
+
+                    }
+
+                },
+
+            });
+        }
+
+        function getData(){
+            var studentid=getUrlParam('studentid');
+
+            $.ajax({
+                url: "/team",                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                async:false,
+                data:{studentId:studentid},
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+
+                            getTeam(res);
+                            getMem(res);
+
+                        $("#myView").html(htmlNav);
+
+                },
+                error: function(){
+                    alert('服务器忙，请稍候');
+                }
+            });
+        }
+
+
+
+        getData();
+
+    </script>
+
+
+
 
     <div class="aui-code-box">
         <button >

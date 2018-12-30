@@ -6,6 +6,11 @@
     <select id="findBySeminar" parameterType="long" resultType="com.rest.entity.KlassSeminar">
         SELECT * FROM standard_seminar_system.klass_seminar WHERE seminar_id=#{seminarId}
     </select>
+    <select id="queryByKlassId" resultType="com.rest.entity.KlassSeminar">
+        SELECT *
+        FROM standard_seminar_system.klass_seminar
+        WHERE klass_id=#{klassId}
+    </select>
     <insert id="save" parameterType="com.rest.entity.KlassSeminar" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO standard_seminar_system.klass_seminar(klass_id,seminar_id,status) VALUE(#{klassId},#{seminarId},0)
     </insert>
@@ -13,7 +18,7 @@
         DELETE FROM standard_seminar_system.klass_seminar WHERE id=#{id}
     </delete>
     <update id="changeStatus">
-        UPDATE standard_seminar_system.klass_seminar SET seminar_status=#{param3} WHERE seminar_id=#{param1} AND klass_id=#{param2}
+        UPDATE standard_seminar_system.klass_seminar SET status=#{param2} WHERE id=#{klassSeminarId}
     </update>
     <update id="changeddl">
         UPDATE standard_seminar_system.klass_seminar SET report_ddl=#{param3} WHERE seminar_id=#{param1} AND klass_id=#{param2}
@@ -24,6 +29,14 @@
     <delete id="deleteBySeminarId" parameterType="long">
         DELETE FROM standard_seminar_system.klass_seminar WHERE seminar_id=#{seminarId}
     </delete>
+    <select id="queryKlassSeminarIdByKlassIdAndSeminarId" resultType="long">
+        SELECT id
+        FROM standard_seminar_system.klass_seminar
+        WHERE
+        klass_id=#{klassId}
+        AND
+        seminar_id=#{seminarId}
+    </select>
     <select id="findKlassSeminarById" resultType="com.rest.entity.KlassSeminar" parameterType="long">
         SELECT * FROM standard_seminar_system.klass_seminar WHERE id=#{klassSeminarId}
     </select>

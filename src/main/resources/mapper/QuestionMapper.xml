@@ -18,4 +18,13 @@
     <update id="selectQuestion" parameterType="long">
         UPDATE standard_seminar_system.question SET is_selected=1 WHERE id=#{questionId}
     </update>
+    <select id="questionScores" resultType="Double">
+        SELECT score FROM standard_seminar_system.question WHERE klass_seminar_id=#{KlassSeminarId} AND team_id=#{teamId}
+    </select>
+    <select id="questions" resultType="com.rest.entity.Question">
+        SELECT * FROM standard_seminar_system.question WHERE klass_seminar_id=#{klassSeminarId} AND attendance_id=#{attendanceId} AND is_selected=1
+    </select>
+    <delete id="deleteQuestionList">
+        DELETE FROM standard_seminar_system.question WHERE klass_seminar_id=#{klassSeminarId} AND attendance_Id=#{attendanceId} AND is_selected=0
+    </delete>
 </mapper>
