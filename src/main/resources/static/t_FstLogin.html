@@ -53,8 +53,8 @@
 <script>
     function tfstlog() {
         var psw1=$("#tfli1").val();
-        var psw2=$("#tfli2").val()
-        var id=3;
+        var psw2=$("#tfli2").val();
+        var id=sessionStorage.getItem("id");
         if(psw1==''||psw2=='')
             alert("请填写完整！");
         else if(psw1.length<6)

@@ -9,21 +9,13 @@
     <meta content="telephone=no" name="format-detection"/>
     <link type="text/css" rel="stylesheet" href="css/base.css">
     <link type="text/css" rel="stylesheet" href="css/home.css">
-    <link href="/static/css/custom.css" rel="stylesheet" type="text/css"/>
+    <!--<link type="text/css" rel="stylesheet" href="css/custom.css">-->
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/tab.js"></script>
     <script type="text/javascript" src="js/slider.js"></script>
-    <!--可无视-->
-    <link rel="stylesheet" type="text/css" href="/static/css/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/demo.css" />
 
-    <!-- 公共对话框样式 -->
-    <link rel="stylesheet" type="text/css" href="/static/css/dialog.css" />
+    <!--<link rel="stylesheet" type="text/css" href="/static/css/demo.css" />-->
 
-    <!-- css3弹出动画样式 -->
-    <link rel="stylesheet" type="text/css" href="/static/css/dialog-sandra.css" />
-
-    <script type="text/javascript" src="/static/js/modernizr.custom.js"></script>
 </head>
 <body>
 
@@ -46,36 +38,111 @@
     <div class="div-auto3" id="ssp2">
         第x组展示
     </div>
-    <div class="div-auto3" id="ssp3">
-        已有x名提问
-    </div>
-    <div>
-    <div class="div-auto1" id="ssp4">
-        第一组：3-4
-    </div>
-    <div class="div-auto2" >
-        第二组：3-7
-    </div>
-    <div class="div-auto1" >
-        第三组：3-6
-    </div>
-    <div class="div-auto2" >
-        第四组：3-2
-    </div>
-    <div class="div-auto1" >
-        第五组：
-    </div>
-    <div class="div-auto2" >
-        第六组：3-1
-    </div>
+    <div id="ssp4">
+        <div class="div-auto1" style="color:red">
+            第一组：3-4
+        </div>
+        <div class="div-auto2" >
+            第二组：3-7
+        </div>
+        <div class="div-auto1" >
+            第三组：3-6
+        </div>
+        <div class="div-auto2" >
+            第四组：3-2
+        </div>
+        <div class="div-auto1" >
+            第五组：
+        </div>
+        <div class="div-auto2" >
+            第六组：3-1
+        </div>
     </div>
     <div class="aui-code-box">
-        <button>
+        <button class="button-auto4" onclick="clickme()">
             Q&A
         </button>
     </div>
     </body>
 
 </section>
+<script>
+    //var id=sessionStorage.getItem('id');
+    var id=113;
+    //var teamid=sessionStorage.getItem('teamid');
+    var teamid=19;
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var klassseminarid = getUrlParam("klassseminarid");
+    var myModel = {courseList:[]};
+    var youModel={questList:[]};
+    var askmember=0;
+    function loading() {
+        $.ajax({
+            url: "/attendance/" + klassseminarid+"/info",
+            type: "GET",
+            async: false,
+            dataType: 'json',
+            success: function (res) {
+                myModel.courseList=res;
+                var htmlNav='';
+                $("#ssp4").empty();
+                if(myModel.courseList.length>0)
+                {
+                    for(var i=0;i<myModel.courseList.length;i++)
+                    {
+                        // alert(myModel.courseList[i].teamName);
+                        htmlNav+='<div class="div-auto1" id="qul'+i+'">NO'+myModel.courseList[i].teamOrder+myModel.courseList[i].teamName+'</div>'
+                    }
+                    $("#ssp4").html(htmlNav);
+                }
+            },error:function () {
+                alert("服务超时，请重试");
+            }
+        });
+    }
+    loading();
+    $("#qul0").css("color","red");
+    socket = new WebSocket("ws://localhost:8080/websocket");
+    //打开事件
+    var index=0;
+    socket.onmessage = function(msg) {
+        var dat=msg.data-1
+        if(msg.data>0&&msg.data<10)
+        {
+            index=msg.data;
+            $("#qul"+msg.data).css("color","red");
+            $("#qul"+dat).css("color","black");
+        }else if(msg.data=true)
+        {
+            askmember++;
+            $("#ssp2").html(askmember+"人准备回答");
+        }else if(msg.data=false)
+        {
+            askmember=0;
+            $("#ssp2").html(askmember+"人准备回答");
+        }
+        else
+            alert(msg.data);
+    };
+    function clickme() {
+        $.ajax({
+            url: "/attendance/question" ,
+            type: "POST",
+            async: false,
+            data:{klassSeminarId:klassseminarid,attendanceId:myModel.courseList[index].attendanceId,teamId:teamid,studentId:id},
+            dataType: 'json',
+            success: function (res) {
+                alert("提问成功");
+                socket.send(true);
+            },error:function () {
+                alert("服务器繁忙，请稍后")
+            }
+        });
+    }
+</script>
 </body>
 </html>
