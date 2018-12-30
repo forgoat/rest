@@ -69,12 +69,14 @@
                 var json=data;
                 alert(json.role);
                 if (json.role == 'teacher') {
+                    sessionStorage.setItem("id",json.id);
                     if(json.isActive==1)
                     window.location.href="t_Inf.html";
                     else
                         window.location.href="t_FstLogin.html";
                 }
                 else if(json.role=='student'){
+                    sessionStorage.setItem("id",json.id);
                     if(json.isActive==1)
                         window.location.href="s_Inf.html";
                     else
