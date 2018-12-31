@@ -37,8 +37,6 @@ public class TeamService {
     @Autowired
     private SeminarScoreDao seminarScoreDao;
     @Autowired
-    private TeamDao teamDao;
-    @Autowired
     private KlassDao klassDao;
 
     public Long findId(Long courseId){
