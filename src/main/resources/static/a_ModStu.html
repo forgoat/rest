@@ -68,6 +68,7 @@
 
 <script src="layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
 <script>
     function getUrlParam(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -81,17 +82,18 @@
         var email=$("#email").val();
         var id=getUrlParam("id");
         $.ajax({
-            url:"/"+id+"/information",
+            url:"/student/"+id+"/information",
             data:{account:tnumber,studentName:account,email:email},
             type: "PUT",
             dataType:'text',
             success:function(data) {
 
-                var edata=eval("("+data+")");
-                if(edata.id>0)
+                if(data=="OK")
                 {
                     alert("success!");
                     window.location.href="a_ConTea.html";
+                }else {
+                    alert("sorry");
                 }
             },
             error: function(){
