@@ -146,4 +146,15 @@ public class CourseService {
         return shareLists;
     }
 
+    /**
+     * 判断是不是从课程
+     * @param courseId
+     * @return
+     */
+    public Boolean isSubCourse(Long courseId){
+        if(courseDao.queryTeamMainCourseIdByCourseId(courseId)!=0&&courseDao.queryTeamMainCourseIdByCourseId(courseId)!=null)
+            return true;
+        return false;
+    }
+
 }

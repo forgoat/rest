@@ -4,6 +4,7 @@ import com.rest.dao.TeamStudentDao;
 import com.rest.dao.TeamValidApplicationDao;
 import com.rest.entity.*;
 import com.rest.service.*;
+import org.apache.ibatis.annotations.Param;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,28 +51,28 @@ public class TeamController {
        return teamService.teamInfo(teamId);
     }
 
-    /**
-     * 通过小组认证
-     * @param teamId
-     * @return
-     */
-    @PutMapping(value = "{teamId}/approve")
-    public HttpStatus setValid(@PathVariable("teamId") Long teamId){
-        Team team=teamService.findTeamByTeamId(teamId);
-        if(team==null){
-            return HttpStatus.NOT_FOUND;
-        }
-        else {
-            if (team.getStatus().equals(1)) {
-                return HttpStatus.CONFLICT;
-            } else {
-                if (teamService.setValid(teamId) == 1) {
-                    return HttpStatus.OK;
-                }
-                return HttpStatus.FORBIDDEN;
-            }
-        }
-    }
+//    /**
+//     * 通过小组认证
+//     * @param teamId
+//     * @return
+//     */
+//    @PutMapping(value = "{teamId}/approve")
+//    public HttpStatus setValid(@PathVariable("teamId") Long teamId){
+//        Team team=teamService.findTeamByTeamId(teamId);
+//        if(team==null){
+//            return HttpStatus.NOT_FOUND;
+//        }
+//        else {
+//            if (team.getStatus().equals(1)) {
+//                return HttpStatus.CONFLICT;
+//            } else
+//                if (teamService.setValid(teamId) == 1) {
+//                    return HttpStatus.OK;
+//                }
+//                return HttpStatus.FORBIDDEN;
+//            }
+//        }
+//    }
 
     /**
      *动态修改分组
@@ -225,6 +226,7 @@ public class TeamController {
      * @param teamStudentList
      * @return
      */
+    @PostMapping(value = "insertTeammate")
     public HttpStatus insertTeammate(List<TeamStudent> teamStudentList,Long teamId){
         HttpStatus httpStatus=(teamService.batchInsertTeamStudent(teamStudentList)==1?HttpStatus.OK:HttpStatus.BAD_REQUEST);
         return httpStatus;
@@ -235,6 +237,7 @@ public class TeamController {
      * @param studentId
      * @return
      */
+    @PostMapping(value = "deleteByStudentId")
     public HttpStatus deleteByStudentId(Long studentId){
         HttpStatus httpStatus=(teamService.deleteByStudentId(studentId)==1?HttpStatus.OK:HttpStatus.BAD_REQUEST);
         return httpStatus;
@@ -245,6 +248,7 @@ public class TeamController {
      * @param teamId
      * @return
      */
+    @PostMapping(value = "setStatus")
     public HttpStatus setStatus(Long teamId){
         HttpStatus httpStatus=(teamService.setValid(teamId)==1?HttpStatus.OK:HttpStatus.BAD_REQUEST);
         return httpStatus;

@@ -19,6 +19,16 @@ public class KlassController {
     @Autowired
     private TeamService teamService;
 
+
+    /**
+     * 按courseId查找班级
+     * @param courseId
+     * @return
+     */
+    public List<Klass>queryKlassByCourseId(Long courseId){
+        return klassService.queryByCourseId(courseId);
+    }
+
     /**
      * 删除班级
      * @param id

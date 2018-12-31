@@ -38,7 +38,7 @@
         <label class="col-sm-2 control-label">班级名：</label>
 
         <input type="text" id="grade" class="form-control"style="width: 50px" placeholder="年级"/>
-            <input type="text" id="class" class="form-control"style="width: 50px"  placeholder="班级"/>
+            <input type="text" id="klass" class="form-control"style="width: 50px"  placeholder="班级"/>
         </div>
 
         <div class="div-auto2" >
@@ -53,17 +53,12 @@
         </div>
     </div>
 
-
-        <p>班级学生名单： <input type="file" name="myFile"/></p>
-        <p><input type="submit" value="提交"/></p>
-
-
     </body>
     <section class="aui-scrollView">
         <div class="aui-code-box">
 
                 <div class="aui-code-btn">
-                    <button onclick="create()">
+                    <button onclick="fileload()">
                         <a href="javascript:;">保存</a>
                     </button>
                 </div>
@@ -78,25 +73,26 @@
         var r = window.location.search.substr(1).match(reg);  //匹配目标参数
         if (r != null) return unescape(r[2]); return null; //返回参数值
     };
-function create() {
-    var courseid=getUrlParam("courseid");
-    var grade=$("#grade").val();
-    var klass=$("#class").val();
-    var time=$("#time").val();
-    var local=$("#local").val();
-    $.ajax({
-        url: "/course/courseid/class",                //后端的API地址
-        type: 'POST',                                //http:POST/GET
-        data: {courseId:courseid,grade:grade,klassSerial:klass,klassTime:time,klassLocation:local},                            //指客户端提交给后台的参数
-        dataType: 'json',                            //服务端返回类型text，JSON
-        timeout: 3000,
-        success: function (res) {
-            alert("success!");
-        }, error: function () {
-            alert("sorry!");
-        }
-    });
-}
+    function fileload() {
+        var grade=$("#grade").val();
+        var klass=$("#klass").val();
+        var time=$("#time").val();
+        var local=$("#local").val();
+        var id=getUrlParam("course");
+        var formData = new FormData($('#file1')[0]);
+        $.ajax({
+            url: "/course/" + id + "/class",
+            data: {courseId:id,grade:grade, klassSerial:klass,klassTime:time,klassLocation:local},
+            type: "PUT" ,
+            dataType:'text',
+           success:function(data) {
+              alert("success");
+              window.location.href="a_Inf.html";
+           },error:function () {
+                alert("sorry");
+            }
+        });
+    }
 </script>
 </body>
 </html>
