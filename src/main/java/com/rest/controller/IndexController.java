@@ -10,10 +10,6 @@ public class IndexController {
     public String index(){
         return "index.html";
     }
-    @RequestMapping(value = "/login")
-    public String adminLogin(){
-        return "a_Login.html";
-    }
     @GetMapping("/admin")
     public String user(){
         return "a_ConStu.html";
@@ -23,7 +19,6 @@ public class IndexController {
     {
         return "a_Login.html";
     }
-
     @GetMapping("/studentListPage")
     public String admin(){
         return "a_ConStu.html";

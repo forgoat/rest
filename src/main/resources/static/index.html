@@ -24,7 +24,6 @@
     </header>
     <section class="aui-scrollView">
         <div class="aui-code-box">
-
                 <p class="aui-code-line">
                     <input  class="aui-code-line-input"  type="text" placeholder="账号" id="account">
                 </p>
@@ -46,7 +45,6 @@
                             登录
                     </button>
                 </div>
-
         </div>
     </section>
 </section>
@@ -61,7 +59,7 @@
             return false;
         }
         $.ajax({
-            url: "/user/login",
+            url: "/admin/login",
             data:{account:account,password:password},
             type: "POST",
             dataType:'json',
