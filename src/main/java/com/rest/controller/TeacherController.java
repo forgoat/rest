@@ -2,6 +2,7 @@ package com.rest.controller;
 import com.rest.entity.Teacher;
 import com.rest.entity.TeacherData;
 import com.rest.service.TeacherService;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,12 +32,14 @@ public class TeacherController {
      * @return
      */
     @PostMapping(value = "")
-    public ResponseEntity<Object> createTeacher(Teacher teacher) {
+    public ResponseEntity<Teacher> createTeacher(Teacher teacher) {
+        System.out.println(teacher.getTeacherName());
         if(teacherService.createTeacher(teacher)==1){
-            return new ResponseEntity<Object>(teacher, HttpStatus.OK);
+            return new ResponseEntity<Teacher>(teacher, HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<Object>(null,HttpStatus.BAD_REQUEST);
+            Teacher teacher1=new Teacher();
+            return new ResponseEntity<Teacher>(teacher1,HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -115,13 +118,13 @@ public class TeacherController {
      * @return
      */
     @PutMapping(value = "{teacherId}/information")
-    public ResponseEntity<Object> updateInfo(@PathVariable("teacherId")Long teacherId,String account,String email,String teacherName){
+    public HttpStatus updateInfo(@PathVariable("teacherId")Long teacherId,String account,String email,String teacherName){
         if(teacherService.updateInfo(teacherId,account,email,teacherName)==1){
             Teacher teacher=teacherService.findById(teacherId);
-            return new ResponseEntity<Object>(teacher,HttpStatus.OK);
+            return HttpStatus.OK;
         }
         else {
-            return new ResponseEntity<Object>(null,HttpStatus.NOT_FOUND);
+            return HttpStatus.BAD_REQUEST;
         }
     }
 }

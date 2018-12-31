@@ -99,7 +99,7 @@ public class StudentController {
     }
 
     /**
-     * 修改学生信息
+     * 动态修改学生信息
      * @param studentId
      * @param account
      * @param email

@@ -10,7 +10,7 @@
         INSERT INTO standard_seminar_system.teacher(account,password,is_active,teacher_name,email) VALUE
         (#{account},#{password},#{isActive},#{teacherName},#{email})
     </insert>
-    <select id="findByAccount" parameterType="String" resultType="com.rest.entity.Teacher">
+    <select id="findByAccount" parameterType="string" resultType="com.rest.entity.Teacher">
         SELECT * FROM standard_seminar_system.teacher WHERE account=#{account}
     </select>
     <select id="findById" parameterType="long" resultType="com.rest.entity.Teacher">
