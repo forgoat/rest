@@ -23,6 +23,15 @@ public class KlassService {
     private KlassTeamDao klassTeamDao;
     @Autowired
     private TeamStudentDao teamStudentDao;
+
+    /**
+     * 按courseId查找所有班级
+     * @param courseId
+     * @return
+     */
+    public List<Klass> queryByCourseId(Long courseId){
+        return klassDao.queryByCourseId(courseId);
+    }
     public Long findKlassIdByCourseIdAndStudentId(Long studentId,Long courseId){
         Long id=klassStudentDao.findKlass(courseId,studentId);
         System.out.println(id);
