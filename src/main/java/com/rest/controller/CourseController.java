@@ -126,8 +126,8 @@ public class CourseController {
      */
     @PostMapping(value = "{courseId}/class")
     public ResponseEntity<Long> saveKlass(@PathVariable("courseId")Long courseId,
-                                          Klass klass,
-                                          @RequestParam("myFile") MultipartFile myFile){
+                                           MultipartFile myFile,
+                                          Klass klass){
 
         if(klassService.saveKlass(klass)==1){
             //  Excel导入数据到数据库

@@ -106,10 +106,10 @@
         提交
     </button>
 
-    <!--<form action="PPTUpload" method="post" enctype="multipart/form-data">-->
-        <!--<p>上传PPT: <input type="file" name="fileName1"/></p>-->
-        <!--<p><input type="submit" value="提交"/></p>-->
-    <!--</form>-->
+    <form action="PPTUpload" method="post" enctype="multipart/form-data">
+        <p>上传PPT: <input type="file" name="fileName1" id="file1"/></p>
+        <p><input type="button" value="提交" onclick="fileload()"/></p>
+    </form>
 
     <!--<form action="ReportUpload" method="post" enctype="multipart/form-data">-->
         <!--<p>上传报告: <input type="file" name="fileName2"/></p>-->
@@ -122,4 +122,15 @@
 
 </section>
 </body>
+<script>
+    // function fileload() {
+    //     var filename=$("#file1").val();
+    //     $.ajax({
+    //         url:"/course/"+id+"/class",
+    //         data:{account:tnumber,studentName:account,email:email},
+    //         type: "PUT",
+    //         dataType:'text',
+    //         success:function(data) {
+    // }
+</script>
 </html>
