@@ -40,24 +40,24 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">姓名</label>
                             <div class="layui-input-block">
-                                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" id="account">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">教工号</label>
                             <div class="layui-input-block">
-                                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" id="tnumber">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">电子邮箱</label>
                             <div class="layui-input-block">
-                                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" id="">
                             </div>
                         </div>
 
                     <div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
-                        <button data-method="offset" data-type="auto" class="layui-btn layui-btn-normal">确认</button>
+                        <button data-method="offset" data-type="auto" class="layui-btn layui-btn-normal" onclick="">确认</button>
                         <button class="layui-btn"><a style="color: white" href="a_ConTea.html">取消</a></button>
                     </div>
                 </div>
@@ -70,6 +70,38 @@
 <script src="layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    function exm()
+    {
+        var account = $("#account").val();
+        var tnumber=$("#tnumber").val();
+        var email=$("#email").val();
+        var id=getUrlParam("id");
+            $.ajax({
+                url:"/"+id+"/information",
+                data:{account:tnumber,teacherName:account,email:email},
+                type: "PUT",
+                dataType:'text',
+                success:function(data) {
+
+                    var edata=eval("("+data+")");
+                    if(edata.id>0)
+                    {
+                        alert("success!");
+                        window.location.href="a_ConTea.html";
+                    }
+                },
+                error: function(){
+                    alert('服务器忙，请稍候');
+                }
+            });
+
+    }
+
     layui.use('layer', function(){ //独立版的layer无需执行这一句
         var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
 
