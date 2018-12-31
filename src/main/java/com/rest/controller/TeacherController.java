@@ -31,12 +31,14 @@ public class TeacherController {
      * @return
      */
     @PostMapping(value = "")
-    public ResponseEntity<Object> createTeacher(Teacher teacher) {
+    public ResponseEntity<Teacher> createTeacher(Teacher teacher) {
+        System.out.println(teacher.getTeacherName());
         if(teacherService.createTeacher(teacher)==1){
-            return new ResponseEntity<Object>(teacher, HttpStatus.OK);
+            return new ResponseEntity<Teacher>(teacher, HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<Object>(null,HttpStatus.BAD_REQUEST);
+            Teacher teacher1=new Teacher();
+            return new ResponseEntity<Teacher>(teacher1,HttpStatus.BAD_REQUEST);
         }
     }
 
