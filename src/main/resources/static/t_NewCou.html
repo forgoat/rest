@@ -146,5 +146,34 @@
     </section>
 </section>
 
+
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    function create() {
+        var courseid=getUrlParam("courseid");
+        var grade=$("#grade").val();
+        var klass=$("#class").val();
+        var time=$("#time").val();
+        var local=$("#local").val();
+        $.ajax({
+            url: "/course/courseid/class",                //后端的API地址
+            type: 'POST',                                //http:POST/GET
+            data: {courseId:courseid,grade:grade,klassSerial:klass,klassTime:time,klassLocation:local},                            //指客户端提交给后台的参数
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function (res) {
+                alert("success!");
+            }, error: function () {
+                alert("sorry!");
+            }
+        });
+    }
+</script>
+
+
 </body>
 </html>

@@ -103,13 +103,18 @@
                             htmlNav+='<div class="div-auto2" >组员：';
                             getStudent(myModel.memList[i].studentId);
                             htmlNav+='</div>';
+                            htmlNav+='<p onclick="DeleMem(myModel.memList[i].studentId)"><input type="submit" value="删除"/></p>';
                         }
 
                         else
                         {
                             htmlNav+='<div class="div-auto2" >&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; ';
                             getStudent(myModel.memList[i].studentId);
+
                             htmlNav+='</div>';
+
+                            htmlNav+='<p onclick="DeleMem(myModel.memList[i].studentId)"><input type="submit" value="删除"/></p>';
+
                         }
 
                     }
@@ -120,40 +125,28 @@
         }
 
 
-        function getNoTeamMem(){
-            var courseid=getUrlParam('courseid');
+
+
+        function DeleMem(studentid){
 
             $.ajax({
-                url: "/team/queryStudentNoTeam",                //后端的API地址
-                type: 'POST',                                //http:POST/GET
+                url: "/team/deleteByStudentId",                //后端的API地址
+                // type: 'GET',                                //http:POST/GET
                 async:false,
-                data:{courseId:courseid},
+                data:{studentId:studentid},
+
                 dataType: 'json',                            //服务端返回类型text，JSON
                 timeout: 3000,
                 success: function(res){
-                    myModel.memList=res;
-                    for(var i=0;i< myModel.memList.length;i++)
-                    {
-                        if(i==0)
-                        {
-                            htmlNav+='<div class="div-auto1" >未组队学生：';
-                            htmlNav+=myModel.memList[i].account+'&nbsp; &nbsp;&nbsp; &nbsp;'+myModel.memList[i].studentName;
-                            htmlNav+='</div>';
-                        }
 
-                        else
-                        {
-                            htmlNav+='<div class="div-auto2" >&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; ';
-                            htmlNav+=myModel.memList[i].account+'&nbsp; &nbsp;&nbsp; &nbsp;'+myModel.memList[i].studentName;
-                            htmlNav+='</div>';
-                        }
 
-                    }
-
+                    alert('ok');
                 },
 
             });
         }
+
+
 
         function getData(){
             var studentid=getUrlParam('studentid');
@@ -170,7 +163,7 @@
 
                     getTeam(res);
                     getMem(res);
-                    getNoTeamMem();
+
 
 
 
@@ -179,7 +172,7 @@
                     htmlNav+='<button >创建小组</button></a></div>';
 
 
-                        $("#myView").html(htmlNav);
+                    $("#myView").html(htmlNav);
 
                 },
                 error: function(){
