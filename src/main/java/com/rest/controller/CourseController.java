@@ -126,7 +126,7 @@ public class CourseController {
      */
     @PostMapping(value = "{courseId}/class")
     public ResponseEntity<Long> saveKlass(@PathVariable("courseId")Long courseId,
-                                          @RequestParam("myFile") MultipartFile myFile,
+                                           MultipartFile myFile,
                                           Klass klass){
 
         if(klassService.saveKlass(klass)==1){

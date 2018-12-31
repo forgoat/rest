@@ -37,21 +37,21 @@
                         <input  class="aui-code-line-input"  type="text" placeholder="课程要求" name="userid"/>
                     </p>
                     <br>
-                    <div class="form-group">
+                    <div class="form-group" id="div1">
                         <label class="col-sm-2 control-label">成绩计算规则：</label>
                         <br>
                         <label class="col-sm-2 control-label">课堂展示：</label>
 
-                        <input type="text" class="form-control" placeholder="50%">
+                        <input type="text" class="form-control" placeholder="50%" id="score1">
 
                         <br>
                         <label class="col-sm-2 control-label">课堂提问：</label>
 
-                        <input type="text" class="form-control" placeholder="20%">
+                        <input type="text" class="form-control" placeholder="20%" id="score2">
                         <br>
                         <label class="col-sm-2 control-label">书面报告：</label>
 
-                        <input type="text" class="form-control" placeholder="30%">
+                        <input type="text" class="form-control" placeholder="30%" id="score3">
                     </div>
                     <hr>
                     <br>
@@ -59,19 +59,19 @@
                         <label class="col-sm-2 control-label">小组人数：</label>
 
                         <br>
-                        <input type="text" class="form-control" placeholder="上限">
-                        <input type="text" class="form-control" placeholder="下限">
+                        <input type="text" class="form-control" placeholder="上限" id="member1">
+                        <input type="text" class="form-control" placeholder="下限" id="member2">
                         <br>
                         <br>
 
                         <div>
                             <label class="col-sm-2 control-label">组内选修课程人数：</label>
                             <br>
-                            <select name="dept" data-placeholder="冲突课程" style="width:200px;height:25px" id="dep" class="dept_select">
+                            <select name="dept" data-placeholder="冲突课程" style="width:200px;height:25px" id="dep1" class="dept_select">
 
-                                <option value="课程名称+老师">课程名称+老师</option>
-                                <option value="课程名称+老师">课程名称+老师</option>
-                                <option value="课程名称+老师">课程名称+老师</option>
+                                <option value="1">课程名称+老师</option>
+                                <option value="2">课程名称+老师</option>
+                                <option value="3">课程名称+老师</option>
 
                             </select>
                             <br>
@@ -84,8 +84,14 @@
                                 新增
                             </button>
                         </div>
+                    </div>
+                    <div>
+                        <select name="dept" data-placeholder="选课人数要求" style="width:200px;height:25px" id="dept3" class="dept_select">
 
+                            <option value="课程名称+老师">均满足</option>
+                            <option value="课程名称+老师">满足其一</option>
 
+                        </select>
                     </div>
 
 
@@ -139,6 +145,11 @@
         </div>
     </section>
 </section>
+<script>
+    function load() {
 
+    }
+</script>
 </body>
+</html>
 
