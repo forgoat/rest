@@ -8,7 +8,10 @@ import com.rest.dao.KlassTeamDao;
 import com.rest.dao.TeamDao;
 import com.rest.dao.TeamStudentDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
@@ -24,6 +27,8 @@ public class TeamService {
     @Autowired
     private TeamStudentDao teamStudentDao;
     @Autowired
+    private StudentDao studentDao;
+    @Autowired
     private KlassTeamDao klassTeamDao;
     @Autowired
     private ConflictCourseStrategyDao conflictCourseStrategyDao;
@@ -31,8 +36,6 @@ public class TeamService {
     private TeamValidApplicationDao teamValidApplicationDao;
     @Autowired
     private SeminarScoreDao seminarScoreDao;
-
-
     @Autowired
     private KlassDao klassDao;
 
@@ -289,4 +292,44 @@ public class TeamService {
         return klassTeamDao.deleteByTeamIdAndKlassId(teamId,klassId);
     }
 
+    /**
+     * 增加队员
+     * @param teamStudentList
+     * @return
+     */
+    public int batchInsertTeamStudent(List<TeamStudent> teamStudentList){
+
+        return teamStudentDao.batchInsertTeamStudent(teamStudentList);
+    }
+
+    /**
+     * 删除成员
+     * @param studentId
+     * @return
+     */
+    public int deleteByStudentId(Long studentId){
+        return teamStudentDao.deleteByStudentId(studentId);
+    }
+
+    @GetMapping(value = "{teamId}")
+    public ResponseEntity<TeamInfo> teamInfo(@PathVariable("teamId") Long teamId){
+        TeamInfo teamInfo=new TeamInfo();
+        Team team=teamDao.findById(teamId);
+        teamInfo.setTeamId(team.getId());
+        teamInfo.setClassId(team.getKlassId());
+        teamInfo.setCourseId(team.getCourseId());
+        teamInfo.setTeamName(team.getTeamName());
+        teamInfo.setTeamSerial(team.getTeamSerial());
+        teamInfo.setKlassSerial(team.getKlassSerial());
+        Student leader=studentDao.findById(team.getLeaderId());
+        teamInfo.setLeader(leader);
+        List<Long> memberIdList=new ArrayList<>();
+        memberIdList=teamStudentDao.queryByTeamId(teamId);
+        List<Student> memberList=new ArrayList<>();
+        for(Long id:memberIdList){
+            memberList.add(studentDao.findById(id));
+        }
+        teamInfo.setMember(memberList);
+        return new ResponseEntity<TeamInfo>(teamInfo, HttpStatus.OK);
+    }
 }

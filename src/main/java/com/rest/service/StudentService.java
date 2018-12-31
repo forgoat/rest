@@ -2,7 +2,9 @@ package com.rest.service;
 
 import com.rest.dao.KlassStudentDao;
 import com.rest.dao.StudentDao;
+import com.rest.dao.TeamStudentDao;
 import com.rest.entity.Student;
+import com.rest.entity.TeamStudent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,8 @@ public class StudentService {
     private StudentDao studentDao;
     @Autowired
     private KlassStudentDao klassStudentDao;
+    @Autowired
+    private TeamStudentDao teamStudentDao;
 
     public List<Student> findAllStudent(){
         return studentDao.findAllStudent();
@@ -62,4 +66,5 @@ public class StudentService {
         System.out.println(klassStudentDao.queryKlassByStudentIdCourseId(studentId,courseId));
         return klassStudentDao.queryKlassByStudentIdCourseId(studentId,courseId);
     }
-}
+
+   }

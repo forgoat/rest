@@ -14,5 +14,7 @@ public interface TeamStudentDao {
     public int deleteByTeamId(Long teamId);
     public List<TeamStudent> findByTeamId(Long teamId);
 
+    int batchInsertTeamStudent(@Param("teamStudentList") List<TeamStudent> teamStudentList);
+    int deleteByStudentId(@Param("studentId") Long studentId);
 
 }

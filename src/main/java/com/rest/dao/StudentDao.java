@@ -1,6 +1,7 @@
 package com.rest.dao;
 
 import com.rest.entity.Student;
+import com.rest.entity.TeamStudent;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,6 +14,7 @@ public interface StudentDao {
     Student findByAccountOrStudentName(@Param("account")String account,@Param("studentName") String studentName);
     int add(Student student);
     int batchSaveStudent(List<Student> studentList);
+
     public Student findByAccount(String account);
     public Student findById(Long id);
     public int updatePassword(@Param("id") Long id, @Param("password") String password);
