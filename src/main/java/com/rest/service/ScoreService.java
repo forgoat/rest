@@ -39,6 +39,8 @@ public class ScoreService {
     private QuestionDao questionDao;
     @Autowired
     private AttendanceDao attendanceDao;
+    @Autowired
+    private CourseDao courseDao;
 
     public int saveSeminarScore(SeminarScore seminarScore){
         return  seminarScoreDao.save(seminarScore);
@@ -410,8 +412,9 @@ public class ScoreService {
                     qScore/=questionScores.size();
                 }
             }
-            score=(pScore+rScore+qScore)/3;
-
+            Course course=courseDao.findById(courseId);
+            score=pScore*course.getPresentationPercentage()+rScore*course.getReportPercentage()+qScore*course.getQuestionPercentage();
+            score/=100;
         }
         return score;
     }
