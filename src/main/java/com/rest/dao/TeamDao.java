@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface TeamDao {
     List<Team> queryAllTeam(@Param("courseId") Long courseId);//获取所有队伍信息
-    List<Student> queryStudentNoTeam();//获取未组队学生列表
+    List<Student> queryStudentNoTeam(@Param("courseId") Long courseId);//获取未组队学生列表
 
     /**
      * 创建小组

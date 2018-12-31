@@ -44,8 +44,8 @@ public class TeamService {
         return teamDao.queryAllTeam(courseId);
     }
 
-    public List<Student> queryStudentNoTeam(){
-        return teamDao.queryStudentNoTeam();
+    public List<Student> queryStudentNoTeam(Long courseId){
+        return teamDao.queryStudentNoTeam(courseId);
     }
 
     public Team findTeamByTeamId(Long teamId){

@@ -231,20 +231,16 @@ public class TeamController {
     /**
      * 创建小组
      * @param team
-     * @param teamId
-     * @param courseId
-     * @param klassStudent
-     * @param teamValidApplication
      * @return
      */
     @PostMapping(value = "")
-    public HttpStatus saveTeam(Team team,Long teamId,Long courseId,KlassStudent klassStudent, TeamValidApplication teamValidApplication){
+    public HttpStatus saveTeam(Team team){
         HttpStatus httpStatus=(teamService.saveTeam(team)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
-        organizeTeamService.updateTeamTable(team,klassStudent,teamValidApplication);
-        organizeTeamService.isValid(teamId,courseId);
         return httpStatus;
     }
 
+
+     //organizeTeamService.updateTeamTable(team,klassStudent,teamValidApplication);
     /**
      * 判断是否为合法小组
      * @param teamId
@@ -341,7 +337,7 @@ public class TeamController {
      * @return
      */
     @PostMapping(value = "queryStudentNoTeam")
-    public List<Student> queryStudentNoTeam (){
-        return teamService.queryStudentNoTeam();
+    public List<Student> queryStudentNoTeam (Long courseId){
+        return teamService.queryStudentNoTeam(courseId);
     }
 }

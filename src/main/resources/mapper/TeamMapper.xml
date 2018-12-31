@@ -12,12 +12,14 @@
     </select>
 
     <select id="queryStudentNoTeam" resultType="com.rest.entity.Student">
-        SELECT *
-        FROM standard_seminar_system.student,klass_student
-        WHERE
-        klass_student.team_id IS NULL
-        AND
-        student.id=klass_student.student_id
+        SELECT * FROM student
+        WHERE id IN(
+        SELECT student_id FROM klass_student
+        WHERE course_id=#{courseId} AND student_id NOT IN(
+        SELECT student_id FROM team_student
+        WHERE team_id IN(
+        SELECT team_id FROM team
+        WHERE course_id=#{courseId})))
     </select>
 
     <select id="queryMemberLimit" resultType="com.rest.entity.MemberLimitStrategy">
