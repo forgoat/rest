@@ -13,9 +13,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.rest.entity.User;
-
-import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -39,13 +36,6 @@ public class UserController {
         Teacher teacher=teacherService.findByAccount(account);
         if(teacher!=null&&teacher.getPassword().equals(password)){
             User user=new User(teacher);
-//            HttpSession session=request.getSession();//这就是session的创建
-//            session.setAttribute("id",user.getId());
-//            session.setAttribute("account",user.getAccount());
-//            session.setAttribute("rolename",user.getRole());
-//            Object acc=session.getAttribute("account");
-//
-//            System.out.println(acc);
             HttpStatus httpStatus=HttpStatus.OK;
             return new ResponseEntity<User>(user,httpStatus);
         }
@@ -53,12 +43,6 @@ public class UserController {
             Student student=studentService.findByAccount(account);
             if(student!=null&&student.getPassword().equals(password)){
                 User user=new User(student);
-//                HttpSession session=request.getSession();//这就是session的创建
-//                session.setAttribute("id",user.getId());
-//                session.setAttribute("account",user.getAccount());
-//                session.setAttribute("rolename",user.getRole());
-//                Object acc=session.getAttribute("account");
-//                System.out.println(acc);
                 HttpStatus httpStatus=HttpStatus.OK;
                 return new ResponseEntity<User>(user,httpStatus);
             }
@@ -77,12 +61,6 @@ public class UserController {
      */
     @GetMapping(value = "information")
     public ResponseEntity<Object> information(Long id,String role){
-//        HttpSession session=request.getSession();//这就是session的创建
-//        Object sid=session.getAttribute("id");
-//        String strid=String.valueOf(sid);
-//        Long id=Long.valueOf(strid);
-//        Object orole=session.getAttribute("rolename");
-//        String role=String.valueOf(orole);
         if (role.equals("student")){
             Student student=studentService.findById(id);
             User user=new User(student);

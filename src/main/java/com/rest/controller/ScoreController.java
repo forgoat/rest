@@ -139,6 +139,15 @@ public class ScoreController {
         return score;
     }
 
+    /**
+     * 动态修改讨论课成绩
+     * @param klassSeminarId
+     * @param teamId
+     * @param presentationScore
+     * @param questionScore
+     * @param reportScore
+     * @return
+     */
     @PutMapping(value = "seminarScore")
     public HttpStatus updateSeminarScore(Long klassSeminarId,Long teamId,Double presentationScore,Double questionScore,Double reportScore){
         HttpStatus httpStatus=(scoreService.updateSeminarScore(klassSeminarId,teamId,presentationScore,questionScore,reportScore)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;

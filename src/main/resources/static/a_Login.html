@@ -7,22 +7,9 @@
     <title>管理员登录</title>
     <link rel="stylesheet" type="text/css" href="layui/css/layui.css" media="all" />
     <link rel="stylesheet" type="text/css" href="css/login.css" />
-    <!--<script type="text/javascript" src="js/jquery.min.js"></script>-->
-    <!--<script type="text/javascript" src="layui/layui.js"></script>-->
-    <!--<script type="text/javascript" src="js/login.js"></script>-->
+
 </head>
-<!--<script>-->
-    <!--function login() {-->
-        <!--var account = $("#account").val();-->
-        <!--var password = $("#password").val();-->
-        <!--if(account==''|| password == '')-->
-        <!--{-->
-            <!--$("#account").focus();-->
-            <!--alert("用户名或密码不能为空");-->
-            <!--return false;-->
-        <!--}-->
-    <!--}-->
-<!--</script>-->
+
 <body class="beg-login-bg">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
@@ -33,30 +20,59 @@
     <header>
         <h1>管理员登录</h1>
     </header>
+    <section>
     <div class="beg-login-main">
-
             <div class="layui-form-item">
-                <label class="beg-login-icon" for="username">
+                <label class="beg-login-icon">
                     <i class="layui-icon">&#xe612;</i>
                 </label>
-                <input id="username" type="text" lay-verify="required" name="username" autocomplete="off" placeholder="这里输入账号" class="layui-input" lay-verType="tips" >
+                <input type="text" lay-verify="required"  autocomplete="off" placeholder="这里输入账号" class="layui-input" lay-verType="tips" id="username">
             </div>
             <div class="layui-form-item">
-                <label class="beg-login-icon" for="password">
+                <label class="beg-login-icon">
                     <i class="layui-icon">&#xe642;</i>
                 </label>
-                <input id="password"type="password" lay-verify="required" name="password" autocomplete="off" placeholder="这里输入密码" class="layui-input" lay-verType="tips" >
+                <input type="password" lay-verify="required"  autocomplete="off" placeholder="这里输入密码" class="layui-input" lay-verType="tips" id="password">
             </div>
-
             <div class="layui-form-item">
                 <div class="beg-pull">
-                    <button type="submit" class="layui-btn layui-btn-normal" style="width:100%;" lay-submit lay-filter="formDemo" >
+                    <button type="submit" class="layui-btn layui-btn-normal" style="width:100%;" lay-submit lay-filter="formDemo" onclick="login()">
                         登　　录
                     </button>
                 </div>
             </div>
-
     </div>
+    </section>
 </div>
 </body>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script>
+    function login() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        if(username==''|| password == '')
+        {
+            $("#username").focus();
+            alert("用户名或密码不能为空");
+            return false;
+        }
+        $.ajax({
+            url: "/admin/login",
+            data:{account:username,password:password},
+            type: "POST",
+            dataType:'json',
+            success:function(data) {
+                alert(data);
+                if (data=='OK') {
+                    window.location.href="a_ConStu.html";
+                }
+                else{
+                    window.location.href="a_Login.html";
+                }
+            },error:function () {
+                alert("sorry");
+            }
+        });
+    }
+</script>
 </html>

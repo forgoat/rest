@@ -113,6 +113,8 @@
         var dat=msg.data-1
         if(msg.data>0&&msg.data<10)
         {
+            askmember=0;
+            $("#ssp2").html(askmember+"人准备回答");
             index=msg.data;
             $("#qul"+msg.data).css("color","red");
             $("#qul"+dat).css("color","black");

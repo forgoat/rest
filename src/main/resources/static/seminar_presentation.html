@@ -221,7 +221,7 @@
                     $(".mydiv").hide();
                     $("#div"+index).show();
                 }
-                sendmessage(index);
+               socket.send(index);
             })
             $("button.nextQuestion").click(function () {
                 //广播，同时抽取队列最顶层
@@ -245,7 +245,7 @@
                     });
                     shuaxinquestion(index);
                     var message="请"+teamModel.questionTeam[0].teamSerial+"组"+teamModel.questionTeam[0].studentName+"开始提问";
-                    sendmessage(message);
+                    socket.send(message);
 
                 }
 
@@ -344,7 +344,7 @@
         </script>
         <script src="js/jquery-1.7.1.js" type="text/javascript" charset="utf-8"></script>
         <script type="text/javascript">
-            var socket;
+            var socket=new WebSocket("ws://localhost:8080/websocket");;
             if(typeof(WebSocket) == "undefined") {
                 alert("您的浏览器不支持WebSocket");
             }
@@ -352,13 +352,10 @@
                 alert("support websocket")
             }
 
-            function loading() {
-                //实现化WebSocket对象，指定要连接的服务器地址与端口
-                socket = new WebSocket("ws://localhost:8080/websocket");
-            };
             loading();
 
             socket.onmessage = function(msg) {
+                alert(msg.data);
                 if(msg.data>0&&msg.data<10)
                 {
                     msg=0;
@@ -373,10 +370,6 @@
                     alert(msg.data);
             }
 
-            //发送消息
-            function sendmessage(msg) {
-                socket.send(msg);
-            };
         </script>
     </div>
 </div>
