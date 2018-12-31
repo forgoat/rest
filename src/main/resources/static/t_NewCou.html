@@ -30,11 +30,11 @@
 
                 <div class="col-md-12">
                     <p class="aui-code-line">
-                        <input  class="aui-code-line-input"  type="text" placeholder="课程名称" name="userid"/>
+                        <input  class="aui-code-line-input"  type="text" placeholder="课程名称" name="userid" id="name"/>
                     </p>
 
                     <p class="aui-code-line">
-                        <input  class="aui-code-line-input"  type="text" placeholder="课程要求" name="userid"/>
+                        <input  class="aui-code-line-input"  type="text" placeholder="课程要求" name="userid" id="require"/>
                     </p>
                     <br>
                     <div class="form-group" id="div1">
@@ -80,13 +80,13 @@
                             <input type="text" class="form-control" placeholder="下限">
                         </div>
                         <div class="aui-code-box">
-                            <button >
+                            <button onclick="add1()">
                                 新增
                             </button>
                         </div>
                     </div>
                     <div>
-                        <select name="dept" data-placeholder="选课人数要求" style="width:200px;height:25px" id="dept3" class="dept_select">
+                        <select name="dept" data-placeholder="选课人数要求" style="width:200px;height:25px" id="dept3" class="dept_select"style="display:none;" >
 
                             <option value="课程名称+老师">均满足</option>
                             <option value="课程名称+老师">满足其一</option>
@@ -96,7 +96,7 @@
 
 
                     <hr>
-                    <div>
+                    <div id="chongtu">
                         <label class="col-sm-2 control-label">冲突课程1：</label>
                         <select name="dept" data-placeholder="冲突课程" style="width:200px;height:25px" id="dept2" class="dept_select">
 
@@ -117,7 +117,7 @@
                         </select>
                     </div>
                     <div class="aui-code-box">
-                        <button >
+                        <button onclick="add2()" >
                             新增
                         </button>
                     </div>
@@ -129,10 +129,10 @@
 
                     <label class="col-sm-2 control-label">组队开始时间：</label>
 
-                    <input type="text" class="form-control" placeholder="年月日"><br>
+                    <input type="text" class="form-control" placeholder="年月日" id="start"/><br>
                     <label class="col-sm-2 control-label">组队截止时间：</label>
 
-                    <input type="text" class="form-control" placeholder="年月日">
+                    <input type="text" class="form-control" placeholder="年月日" id="end"/>
 
 
                 </div>
@@ -146,7 +146,21 @@
     </section>
 </section>
 <script>
+    function add1() {
+        $("#dept3").css("display","inline");
+
+    }
+    function add2() {
+        
+    }
     function load() {
+        var name=$("#name").val();
+        var require=$("#require").val();
+        var score1=$("#score1").val();
+        var score2=$("#score2").val();
+        var score3=$("#score3").val();
+        var member1=$("#member1").val();
+        var member2=$("#member2").val();
 
     }
 </script>
