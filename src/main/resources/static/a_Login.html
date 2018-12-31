@@ -59,7 +59,7 @@
         $.ajax({
             url: "/admin/login",
             data:{account:username,password:password},
-            type: "GET",
+            type: "POST",
             dataType:'json',
             success:function(data) {
                 alert(data);
