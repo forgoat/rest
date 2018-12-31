@@ -45,27 +45,10 @@ public class TeamController {
      * @param teamId
      * @return
      */
-//    @GetMapping(value = "{teamId}")
-//    public ResponseEntity<TeamInfo> teamInfo(@PathVariable("teamId") Long teamId){
-//        TeamInfo teamInfo=new TeamInfo();
-//        Team team=teamService.findTeamByTeamId(teamId);
-//        teamInfo.setTeamId(team.getId());
-//        teamInfo.setClassId(team.getKlassId());
-//        teamInfo.setCourseId(team.getCourseId());
-//        teamInfo.setTeamName(team.getTeamName());
-//        teamInfo.setTeamSerial(team.getTeamSerial());
-//        teamInfo.setKlassSerial(team.getKlassSerial());
-//        Student leader=studentService.findById(team.getLeaderId());
-//        teamInfo.setLeader(leader);
-//        List<Long> memberIdList=new ArrayList<>();
-//        memberIdList=teamStudentDao.queryByTeamId(teamId);
-//        List<Student> memberList=new ArrayList<>();
-//        for(Long id:memberIdList){
-//            memberList.add(studentService.findById(id));
-//        }
-//        teamInfo.setMember(memberList);
-//        return new ResponseEntity<TeamInfo>(teamInfo, HttpStatus.OK);
-//    }
+    @GetMapping(value = "{teamId}")
+    public ResponseEntity<TeamInfo> teamInfo(@PathVariable("teamId") Long teamId){
+       return teamService.teamInfo(teamId);
+    }
 
     /**
      * 通过小组认证
