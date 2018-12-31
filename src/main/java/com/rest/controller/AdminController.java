@@ -5,8 +5,7 @@ import com.rest.service.AdminService;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +15,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-//@AllArgsConstructor
-//@RequestMapping(value = "/")
+@RequestMapping(value = "admin")
 public class   AdminController {
     @Autowired
     private AdminService adminService;
@@ -25,38 +23,14 @@ public class   AdminController {
     public List<Admin> adminList(){
         return adminService.adminList();
     }
-//    @GetMapping(value = "findbyid")
-//    public Admin findAdminById(Long id){
-//        return adminService.findAdminById(id);
-//    }
-
-    @GetMapping(value = "/login" )
-    public String login()
-    {
-        return "a_Login.html";
+    @GetMapping(value = "findbyid")
+    public Admin findAdminById(Long id){
+        return adminService.findAdminById(id);
     }
 
-    @GetMapping("/studentListPage")
-    public String admin(){
-        return "a_ConStu.html";
+    @GetMapping(value = "/login")
+    public HttpStatus login(String account, String password){
+        System.out.print(account+password);
+        return adminService.adminLogin(account,password);
     }
-
-//
-//    @GetMapping("/admin")
-//    public String user(){
-//        return "a_ConStu.html";
-//    }
-
-//
-//    @GetMapping(value = "/findByAccount")
-//    public String login(String account,String password){
-//        System.out.print(account+password);
-//        Admin admin=adminService.findByName(account);
-//        if(admin.getPassword().equals(password)){
-//            return "success";
-//        }
-//        else {
-//            return "error";
-//        }
-//    }
 }
