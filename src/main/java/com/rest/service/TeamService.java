@@ -294,12 +294,13 @@ public class TeamService {
 
     /**
      * 增加队员
-     * @param teamStudentList
+     * @param studentIdList
+     * @param teamId
      * @return
      */
-    public int batchInsertTeamStudent(List<TeamStudent> teamStudentList){
+    public int batchInsertTeamStudent(List<Long> studentIdList,Long teamId){
 
-        return teamStudentDao.batchInsertTeamStudent(teamStudentList);
+        return teamStudentDao.batchInsertTeamStudent(studentIdList,teamId);
     }
 
     /**

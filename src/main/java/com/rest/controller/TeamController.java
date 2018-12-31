@@ -223,12 +223,13 @@ public class TeamController {
 
     /**
      * 增加小组成员
-     * @param teamStudentList
+     * @param studentIdList
+     * @param teamId
      * @return
      */
     @PostMapping(value = "insertTeammate")
-    public HttpStatus insertTeammate(List<TeamStudent> teamStudentList,Long teamId){
-        HttpStatus httpStatus=(teamService.batchInsertTeamStudent(teamStudentList)==1?HttpStatus.OK:HttpStatus.BAD_REQUEST);
+    public HttpStatus insertTeammate(List<Long> studentIdList,Long teamId){
+        HttpStatus httpStatus=(teamService.batchInsertTeamStudent(studentIdList,teamId)==1?HttpStatus.OK:HttpStatus.BAD_REQUEST);
         return httpStatus;
     }
 

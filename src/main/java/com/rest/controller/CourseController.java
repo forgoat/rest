@@ -120,13 +120,11 @@ public class CourseController {
     /**
      * 创建班级
      * @param courseId
-     * @Param klass
-     * @Param myFile
+     * @param klass
      * @return
      */
     @PostMapping(value = "{courseId}/class")
-    public ResponseEntity<Long> saveKlass(@PathVariable("courseId")Long courseId,
-                                          Klass klass){
+    public ResponseEntity<Long> saveKlass(@PathVariable("courseId")Long courseId, Klass klass){
 
         if(klassService.saveKlass(klass)==1){
             return new ResponseEntity<Long>(klass.getId(),HttpStatus.ACCEPTED);
@@ -137,10 +135,17 @@ public class CourseController {
         }
     }
 
-@PostMapping(value = "{courseId}/class/importStudentList")
-    public int importStudentList(@PathVariable("courseId")Long courseId, MultipartFile myFile){
+    /**
+     * 导入学生名单
+     * @param courseId
+     * @param myFile
+     * @param klassId
+     * @return
+     */
+    @PostMapping(value = "{courseId}/class/importStudentList")
+    public int importStudentList(@PathVariable("courseId")Long courseId, MultipartFile myFile,Long klassId){
             //  Excel导入数据到数据库
-           int num=importExcelService.importExcel(myFile);
+           int num=importExcelService.importExcel(myFile,klassId,courseId);
            return num;
     }
 
