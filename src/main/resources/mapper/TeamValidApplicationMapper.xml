@@ -18,4 +18,13 @@
         #{status}
         )
     </insert>
+    <insert id="insertTeamValidApplication" >
+        INSERT INTO standard_seminar_system.team_valid_application
+        (team_id,
+        status
+        )VALUE
+        ( #{teamId},
+        #{status}
+        )
+    </insert>
 </mapper>
