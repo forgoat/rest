@@ -50,28 +50,28 @@ public class TeamController {
        return teamService.teamInfo(teamId);
     }
 
-    /**
-     * 通过小组认证
-     * @param teamId
-     * @return
-     */
-    @PutMapping(value = "{teamId}/approve")
-    public HttpStatus setValid(@PathVariable("teamId") Long teamId){
-        Team team=teamService.findTeamByTeamId(teamId);
-        if(team==null){
-            return HttpStatus.NOT_FOUND;
-        }
-        else {
-            if (team.getStatus().equals(1)) {
-                return HttpStatus.CONFLICT;
-            } else {
-                if (teamService.setValid(teamId) == 1) {
-                    return HttpStatus.OK;
-                }
-                return HttpStatus.FORBIDDEN;
-            }
-        }
-    }
+//    /**
+//     * 通过小组认证
+//     * @param teamId
+//     * @return
+//     */
+//    @PutMapping(value = "{teamId}/approve")
+//    public HttpStatus setValid(@PathVariable("teamId") Long teamId){
+//        Team team=teamService.findTeamByTeamId(teamId);
+//        if(team==null){
+//            return HttpStatus.NOT_FOUND;
+//        }
+//        else {
+//            if (team.getStatus().equals(1)) {
+//                return HttpStatus.CONFLICT;
+//            } else
+//                if (teamService.setValid(teamId) == 1) {
+//                    return HttpStatus.OK;
+//                }
+//                return HttpStatus.FORBIDDEN;
+//            }
+//        }
+//    }
 
     /**
      *动态修改分组
