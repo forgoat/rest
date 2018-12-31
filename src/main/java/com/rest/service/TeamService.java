@@ -289,4 +289,23 @@ public class TeamService {
         return klassTeamDao.deleteByTeamIdAndKlassId(teamId,klassId);
     }
 
+    /**
+     * 增加队员
+     * @param teamStudentList
+     * @return
+     */
+    public int batchInsertTeamStudent(List<TeamStudent> teamStudentList){
+
+        return teamStudentDao.batchInsertTeamStudent(teamStudentList);
+    }
+
+    /**
+     * 删除成员
+     * @param studentId
+     * @return
+     */
+    public int deleteByStudentId(Long studentId){
+        return teamStudentDao.deleteByStudentId(studentId);
+    }
+
 }

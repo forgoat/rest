@@ -3,6 +3,7 @@ package com.rest.service;
 import com.rest.dao.CourseDao;
 import com.rest.dao.TeamDao;
 import com.rest.dao.TeamStudentDao;
+import com.rest.dao.TeamValidApplicationDao;
 import com.rest.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class OrganizeTeamService {
     CourseDao courseDao;
     @Autowired
     TeamStudentDao teamStudentDao;
+    @Autowired
+    TeamValidApplicationDao teamValidApplicationDao;
 
     /**
      * 更新小组关联表
@@ -374,4 +377,15 @@ public class OrganizeTeamService {
         return teamDao.queryCourseMemberLimitStrategy(id);
     }
 
+    /**
+     * 设置状态
+     * @param teamId
+     * @param courseId
+     * @return
+     */
+    public int setStatus(Long teamId,Long courseId){
+        if(isValid(teamId,courseId))
+            return teamValidApplicationDao.insertTeamValidApplication(teamId,1);
+        else return teamValidApplicationDao.insertTeamValidApplication(teamId,0);
+    }
 }

@@ -239,6 +239,36 @@ public class TeamController {
         return httpStatus;
     }
 
+    /**
+     * 增加小组成员
+     * @param teamStudentList
+     * @return
+     */
+    public HttpStatus insertTeammate(List<TeamStudent> teamStudentList,Long teamId){
+        HttpStatus httpStatus=(teamService.batchInsertTeamStudent(teamStudentList)==1?HttpStatus.OK:HttpStatus.BAD_REQUEST);
+        return httpStatus;
+    }
+
+    /**
+     * 删除小组成员
+     * @param studentId
+     * @return
+     */
+    public HttpStatus deleteByStudentId(Long studentId){
+        HttpStatus httpStatus=(teamService.deleteByStudentId(studentId)==1?HttpStatus.OK:HttpStatus.BAD_REQUEST);
+        return httpStatus;
+    }
+
+    /**
+     * 设置小组是否合格
+     * @param teamId
+     * @return
+     */
+    public HttpStatus setStatus(Long teamId){
+        HttpStatus httpStatus=(teamService.setValid(teamId)==1?HttpStatus.OK:HttpStatus.BAD_REQUEST);
+        return httpStatus;
+    }
+
 
      //organizeTeamService.updateTeamTable(team,klassStudent,teamValidApplication);
     /**
