@@ -76,36 +76,9 @@
 <body>
 <div class="list"id="myView">
 </div>
-<div class="list" >
-    <ul class="yiji">
-
-        <li><a href="#" class="inactive" >课程名+老师</a>
-            <ul style="display: none">
-                <li><a href="#">共享类型：</a></li>
-                <li class="last"><a href="#">共享情况：</a></li>
-                <div class="aui-code-box">
-                    <button >
-                        取消共享
-                    </button>
-                </div>
-            </ul>
-
-        </li>
-        <li><a href="#" class="inactive">课程名+老师</a>
-            <ul style="display: none">
-                <li><a href="#">共享类型：</a></li>
-                <li class="last"><a href="#">共享情况：</a></li>
-                <div class="aui-code-box">
-                    <button >
-                        取消共享
-                    </button>
-                </div>
-            </ul>
-
-        </li>
-    </ul>
-</div>
-
+<br>
+<br>
+<br>
 <div class="aui-code-box">
     <button onclick="newshare()" >
         新增共享
@@ -116,24 +89,6 @@
     function newshare() {
         window.location.href="t_NewShare.html";
     }
-    function quxiao(id)
-    {
-        alert("取消？");
-        $.ajax({
-            url: "/course/seminarshare",                //后端的API地址
-            type: 'POST',                                //http:POST/GET
-            async:false,
-            data:{shareSeminarId:id},     //指客户端提交给后台的参数
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function(res) {
-                alert("success");
-            },error:
-                function(){
-                alert("sorry");
-                }
-        });
-    }
     function getUrlParam(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
         var r = window.location.search.substr(1).match(reg);  //匹配目标参数
@@ -142,36 +97,38 @@
     var myModel = {courseList:[]};
     function getData(){
         var courseid=getUrlParam('courseid');
+        var studentid=sessionStorage.getItem('id')
         $.ajax({
-            url: "share",                //后端的API地址，待测试
+            url: "/course/"+courseid+"/shareList",                //后端的API地址，待测试
             type: 'GET',                                //http:POST/GET
             async:false,
-            data:{studentId:113},     //指客户端提交给后台的参数
+            data:{studentId:studentid},     //指客户端提交给后台的参数
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success: function(res){
                 myModel.courseList=res;
                 var htmlNav='';
                 $("#myView").empty();
-                alert();
                 if( myModel.courseList.length>0)
                 {
                     htmlNav+='<ul class="yiji">';
                     for(var i=0;i< myModel.courseList.length;i++)
                     {
-                        htmlNav+='<li><a href="#" class="inactive">课程名+老师</a>';
-                        if(myModel.courseList[i].shareStatus==0)
-                        htmlNav+='<li><a href="#">共享类型：组队分享</a></li>';
-                        else
-                            htmlNav+='<li><a href="#">共享类型：课程分享</a></li>';
+                        htmlNav+='<li><a href="#" class="inactive">'+myModel.courseList[i].shareCourseName+'('+myModel.courseList[i].shareTeacherName+')'+'</a></li>';
                         if(myModel.courseList[i].courseStatus==0)
-                        htmlNav+='<li class="last"><a href="#">共享情况：主课程</a></li>' ;
+                            htmlNav+='<li class="last"><a href="#">共享情况：主课程</a></li>' ;
                         else
-                            htmlNav+='<li class="last"><a href="#">共享情况：主课程</a></li>';
-                        htmlNav+='<div class="aui-code-box"><button onclick="quxiao('+myModel.courseList[i].id+')" >取消共享</button></div>';
-                        htmlNav+='</li>';
-                        htmlNav+='</ul>';
-                        htmlNav+='</li>';
+                            htmlNav+='<li class="last"><a href="#">共享情况：从课程</a></li>';
+                        if(myModel.courseList[i].shareStatus==0)
+                        {
+                            htmlNav+='<li><a href="#">共享类型：组队分享</a></li>';
+                            htmlNav+='<div class="aui-code-box"><button onclick="quxiao1('+myModel.courseList[i].id+')" >取消共享</button></div>';
+                        }
+                        else
+                        {
+                            htmlNav+='<li><a href="#">共享类型：课程分享</a></li>';
+                            htmlNav+='<div class="aui-code-box"><button onclick="quxiao2('+myModel.courseList[i].id+')" >取消共享</button></div>';
+                        }
                     }
                     htmlNav+='</ul>';
                     $("#myView").html(htmlNav);
@@ -180,6 +137,42 @@
             error: function(){
                 alert('服务器忙，请稍候');
             }
+        });
+    }
+    function quxiao2(id)
+    {
+        alert("取消？");
+        $.ajax({
+            url: "/course/seminarshare",                //后端的API地址
+            type: 'PUT',                                //http:POST/GET
+            async:false,
+            data:{shareSeminarId:id},     //指客户端提交给后台的参数
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res) {
+                alert("success");
+            },error:
+                function(){
+                    alert("sorry");
+                }
+        });
+    }
+    function quxiao1(id)
+    {
+        alert("取消？");
+        $.ajax({
+            url: "/course/teamShare/"+id,                //后端的API地址
+            type: 'PUT',                                //http:POST/GET
+            async:false,
+            data:{shareSeminarId:id},     //指客户端提交给后台的参数
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res) {
+                alert("success");
+            },error:
+                function(){
+                    alert("sorry");
+                }
         });
     }
     getData();
