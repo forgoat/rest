@@ -27,10 +27,13 @@ public class IndexController {
     public String websocket(){
         return "Client.html";
     }
-
     @RequestMapping(value = "/seminarPPT")
     public String seminarFile(){
         return "s_SemSubmit.html";
+    }
+    @RequestMapping(value = "/seminarInfo")
+    public String seminarInfo(){
+        return "s_SemInfoW.html";
     }
 
 }
