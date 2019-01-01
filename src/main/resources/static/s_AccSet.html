@@ -29,33 +29,10 @@
         </a>
     </header>
     <body >
-    <div class="div-auto1"  id="myView1">
-        姓名：
-    </div>
-    <div class="div-auto2"id="myView2" >
-        学号：
-    </div>
-    <div class="div-auto1" >
-        性别：
+    <div  id="myView">
 
     </div>
 
-    <div class="div-auto2" >
-        出生年月：
-
-    </div>
-
-    <div class="div-auto1" id="myView4">
-         联系方式（邮箱）：
-    </div>
-
-    <div class="div-auto2"id="myView3" >
-        账户密码：
-    </div>
-
-    <div class="div-auto1" >
-        管理员邮箱：
-    </div>
 
 
     <div class="aui-code-box">
@@ -71,17 +48,45 @@
 </html>
 <script type="text/javascript" src="js/vue.js"></script>
 <script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+
+    var htmlNav='';
+
+    id=sessionStorage.getItem('id');
+    var role='student';
     function emm() {
         $.ajax({
             url: "/user/information",
+
+            data: {id:id,role:role},
+
             type: "GET",
-            dataType:'text',
-            success:function(data) {
-                var json=eval("("+data+")");
-                $("#myView1").html("姓名： "+json.name);
-                $("#myView2").html("学号:"+json.id);
-                $("#myView3").html("密码:"+json.password);
-                $("#myView4").html("email:"+json.email);
+            dataType:'json',
+            success:function(res) {
+                // var json=eval("("+data+")");
+
+
+                htmlNav+='<div class="div-auto1"  id="myView1">姓名：'
+                   +res.name+'</div>';
+
+                htmlNav+='<div class="div-auto2"id="myView2" >学号：'
+                    +res.account+' </div>';
+
+                htmlNav+='<div class="div-auto1" id="myView4">联系方式（邮箱）:'
+                        +res.email+'</div>';
+
+
+                htmlNav+='<div class="div-auto2"id="myView3" >账户密码：'
+                        +res.password+'</div>';
+
+                htmlNav+='<div class="div-auto1" >'
+                    +'管理员邮箱：aaa@123.com</div>';
+
+                $("#myView").html(htmlNav);
             },error: function(){
                 alert('服务器忙，请稍候');
             }
