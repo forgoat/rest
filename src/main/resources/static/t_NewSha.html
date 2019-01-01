@@ -58,7 +58,6 @@
     function sele_Change(){
         var objS = document.getElementById("share");
         var get_map = objS.options[objS.selectedIndex].value;
-        alert(get_map);
         ht='';
         $("#dept").empty();
         if(get_map==0)
@@ -117,15 +116,18 @@
         }
     }
     function clickme() {
+       var sid= $("#dept").val()
         if($("#share").val()==1)
         {
             $.ajax({
                 url:"/course/"+courseid+"/seminarsharerequest",
                 type: "POST",
-                data:{subCourseId: $("#dept").val()},
+                data:{subCourseId: sid},
                 dataType:'text',
                 success:function() {
                     alert("success!");
+                },error:function () {
+                    alert("请稍后");
                 }
                 });
         }
@@ -133,10 +135,12 @@
         $.ajax({
             url:"/course/"+courseid+"/teamsharerequest;",
             type: "POST",
-            data:{subCourseId: $("#dept").val()},
+            data:{subCourseId: sid},
             dataType:'text',
             success:function() {
                 alert("success!");
+            },error:function () {
+                alert("请稍后");
             }
         });
         }

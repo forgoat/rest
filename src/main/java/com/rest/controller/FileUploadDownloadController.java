@@ -4,9 +4,7 @@ import com.rest.service.AttendanceService;
 import com.rest.service.ImportExcelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +14,7 @@ import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Random;
 
-@Controller
+@RestController
 public class FileUploadDownloadController {
     @Autowired
     ImportExcelService importExcelService;
@@ -45,13 +43,12 @@ public class FileUploadDownloadController {
     /**
      * 实现PPT上传
      * */
-    @RequestMapping("/PPTUpload")
-    //@ResponseBody
-    public String PPTUpload(@RequestParam("fileName1") MultipartFile file1,@RequestParam("attendanceId")Long attendanceId){
+    @PostMapping("/PPTUpload")
+    public void PPTUpload(@RequestParam("fileName1") MultipartFile file1,@RequestParam("attendanceId")Long attendanceId,HttpServletResponse response)throws IOException{
         System.out.println("hello");
         System.out.println(attendanceId);
         if(file1.isEmpty()){
-            return "false";
+            response.sendRedirect("s_SemSubmit.html");
         }
         String fileName1 = file1.getOriginalFilename();
         int size = (int) file1.getSize();
@@ -73,15 +70,15 @@ public class FileUploadDownloadController {
             //保存文件
             file1.transferTo(dest);
             attendanceService.savePPT(attendanceId,fileName,path);
-            return "true";
+            response.sendRedirect("s_SemSubmit.html");
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            return "false";
+            response.sendRedirect("s_SemSubmit.html");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            return "false";
+            response.sendRedirect("s_SemSubmit.html");
         }
     }
 
