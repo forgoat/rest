@@ -17,6 +17,7 @@ public interface KlassStudentDao {
     public int updateTeam(@Param("studentId") Long studentId,@Param("teamId") Long teamId);
     public Long findTeam(@Param("courseId")Long courseId,@Param("studentId")Long studentId);
     Long queryKlassByStudentIdCourseId(@Param("studentId")Long studentId,@Param("courseId")Long courseId);
+    List<Long> queryStudentIdListByKlassIdCourseId(@Param("klassId")Long klassId,@Param("courseId") Long courseId);
     public KlassStudent findByCourseIdAndStudentId(@Param("courseId") Long courseId,@Param("studentId") Long studentId);
     int insertStudent(@Param("klassId")Long klassId,@Param("studentId")Long studentId,@Param("courseId")Long courseId);
 }
