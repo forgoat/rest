@@ -46,8 +46,10 @@ public class FileUploadDownloadController {
      * 实现PPT上传
      * */
     @RequestMapping("/PPTUpload")
-    @ResponseBody
-    public String PPTUpload(@RequestParam("fileName1") MultipartFile file1,Long attendanceId){
+    //@ResponseBody
+    public String PPTUpload(@RequestParam("fileName1") MultipartFile file1,@RequestParam("attendanceId")Long attendanceId){
+        System.out.println("hello");
+        System.out.println(attendanceId);
         if(file1.isEmpty()){
             return "false";
         }
@@ -57,7 +59,7 @@ public class FileUploadDownloadController {
 
         Random ra =new Random();
         //之后换成服务器文件上传的目录
-        String path = "C:/Users/Yue/Desktop/sys" ;
+        String path = "C:/Users/74051/Desktop/sys" ;
         String fileName=ra.toString()+fileName1;
         System.out.println(path + "/" + fileName);
         File dest = new File(path + "/" + fileName);
@@ -67,7 +69,7 @@ public class FileUploadDownloadController {
         }
         try {
 
-            String a= "C:/Users/Yue/Desktop/sys";
+            String a= "C:/Users/74051/Desktop/sys";
             //保存文件
             file1.transferTo(dest);
             attendanceService.savePPT(attendanceId,fileName,path);
@@ -99,7 +101,7 @@ public class FileUploadDownloadController {
         System.out.println(fileName + "-->" + size);
 
         //之后换成服务器文件上传的目录
-        String path = "C:/Users/Yue/Desktop/sys";
+        String path = "C:/Users/74051/Desktop/sys";
         File dest = new File(path + "/" + fileName);
         //判断文件父目录是否存在
         if(!dest.getParentFile().exists()){
@@ -152,7 +154,7 @@ public class FileUploadDownloadController {
         // 如果文件名不为空，则进行下载
         if (fileName != null) {
             //设置文件路径（同上路径）
-            String realPath = "C:/Users/Yue/Desktop/sys";
+            String realPath = "C:/Users/74051/Desktop/sys";
             File file = new File(realPath, fileName);
 
             // 如果文件名存在，则进行下载
@@ -213,7 +215,7 @@ public class FileUploadDownloadController {
                                Long attendanceId) throws UnsupportedEncodingException {
 
         // 获取指定目录（服务器文件地址）
-        File scFileDir = new File("C:/Users/Yue/Desktop/sys");
+        File scFileDir = new File("C:/Users/74051/Desktop/sys");
         File TrxFiles[] = scFileDir.listFiles();
         // 指定目录下的第一个文件
         int xx;
@@ -226,7 +228,7 @@ public class FileUploadDownloadController {
         // 如果文件名不为空，则进行下载
         if (fileName != null) {
             //设置文件路径（同上路径）
-            String realPath = "C:/Users/Yue/Desktop/sys";
+            String realPath = "C:/Users/74051/Desktop/sys";
             File file = new File(realPath, fileName);
 
             // 如果文件名存在，则进行下载

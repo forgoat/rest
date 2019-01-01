@@ -113,8 +113,8 @@ public class AttendanceService {
      * @param pptName
      * @param pptUrl
      */
-    public void savePPT(Long id,String pptName,String pptUrl){
-        attendanceDao.updateAttendance(id,pptName,pptUrl);
+    public int savePPT(Long id,String pptName,String pptUrl){
+        return attendanceDao.savePPT(id,pptName,pptUrl);
     }
 
     /**
