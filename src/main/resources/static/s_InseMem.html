@@ -10,6 +10,7 @@
     <link href="css/custom.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="css/chosen.css">
     <script type="text/javascript" src="js/jquery.min.js"></script>
+
 </head>
 <body>
 <section class="aui-flexView">
@@ -20,30 +21,18 @@
         <div class="aui-center">
             <span class="aui-center-title">创建小组</span>
         </div>
+
     </header>
     <section class="aui-scrollView">
         <div class="aui-code-box">
 
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">小组名：</label>
 
-                    <input type="text" id="teamname" class="form-control" placeholder="填写组名">
 
-                </div>
-                <hr>
-                <div>
-                    <label class="col-sm-2 control-label">选择班级：</label>
-                    <select name="dept" data-placeholder="选择部门" style="width:200px;height:25px" id="dept" class="dept_select">
-                        <option value="1">班级1</option>
-                        <option value="2">班级2</option>
-                        <option value="3">班级3</option>
-                    </select>
-                </div>
-                <hr>
+
+
+
                 <div class="list" id="myView"></div>
 
-            </div>
 
         </div>
     </section>
@@ -64,7 +53,6 @@
     var id='';
     var htmlNav='';
 
-    var teamid;
 
     function create() {
         var courseid=getUrlParam("courseid");
@@ -81,60 +69,18 @@
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success: function (res) {
-                GetTeamId();
-            }, error: function () {
-                alert("create!");
-            }
-        });
-    }
-
-
-
-    function InseMem(studentId) {
-        var courseid=getUrlParam("courseid");
-        var studentid=getUrlParam("studentid");
-
-      alert(teamid);
-        $.ajax({
-            url: "/team/saveTeamStudent",                //创建小组
-            type: 'POST',                                //http:POST/GET
-            data: {studentId:studentId,teamId:teamid},                            //指客户端提交给后台的参数
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function (res) {
                 alert("success!");
 
             }, error: function () {
-                alert("InseMem!");
+                alert("sorry!");
             }
         });
     }
-
-
-    function GetTeamId() {
-        var courseid=getUrlParam("courseid");
-        var studentid=getUrlParam("studentid");
-
-        $.ajax({
-            url: "/tea  m",                //创建小组
-            type: 'GET',                                //http:POST/GET
-            data: {studentId:studentid},                            //指客户端提交给后台的参数
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function (res) {
-                teamid=res;
-
-                alert(teamid);
-            }, error: function () {
-                alert("GetTeamId!");
-            }
-        });
-    }
-
-
     function getNoTeamMem(){
         var courseid=getUrlParam('courseid');
+        var studentid=getUrlParam("studentid");
 
+        alert(courseid);
         $.ajax({
             url: "/team/NoTeamStudent",                //后端的API地址
             type: 'GET',                                //http:POST/GET
@@ -148,13 +94,12 @@
                 htmlNav+='<label class="col-sm-2 control-label">添加成员：</label>';
                 htmlNav+='<div class="col-sm-7">';
 
-
                 for(var i=0;i< myModel.memList.length;i++)
                 {
 
                     htmlNav+='<label class="radio-inline">';
                     htmlNav+='<br>';
-                    htmlNav+='<input onclick="InseMem('+myModel.memList[i].id+')" type="checkbox" >'+myModel.memList[i].studentName+'</label>';
+                    htmlNav+='<input type="checkbox" value="'+myModel.memList[i].id+'">'+myModel.memList[i].studentName+'</label>';
 
                 }
                 htmlNav+='</div>';
@@ -168,7 +113,7 @@
                 $("#myView").html(htmlNav);
             },
             error: function(){
-                alert('getNoTeamMem');
+                alert('wrong');
             }
         });
     }

@@ -216,9 +216,9 @@ public class TeamController {
      * @return
      */
     @PostMapping(value = "")
-    public HttpStatus saveTeam(Team team){
-        HttpStatus httpStatus=(teamService.saveTeam(team)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
-        return httpStatus;
+    public Long saveTeam(Team team){
+        System.out.print("saveTeam");
+        return teamService.saveTeam(team);
     }
 
     /**
@@ -372,7 +372,7 @@ public class TeamController {
         return httpStatus;
     }
     @PostMapping(value = "saveAllTeamStudent")
-    public HttpStatus saveAllTeamStudent(List<TeamStudent> teamStudentList){
+    public HttpStatus saveAllTeamStudent(@RequestBody List<TeamStudent> teamStudentList){
         HttpStatus httpStatus=HttpStatus.OK;
         for (TeamStudent teamStudent:teamStudentList){
             if (teamService.saveTeamStudent(teamStudent)==0){

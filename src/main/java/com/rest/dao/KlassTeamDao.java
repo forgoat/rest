@@ -10,7 +10,8 @@ import java.util.List;
 public interface KlassTeamDao {
     public List<Long> findByTeamId(Long teamId);
     public int deleteKlassTeamsByTeamId(Long teamId);
-    public int save(KlassTeam klassTeam);
+    public int saveKlassTeam(@Param("klassId")Long klassId,@Param("teamId")Long teamId);
+    int save(KlassTeam klassTeam);
     public List<KlassTeam> findByKlassId(Long klassId);
     public int deleteByTeamIdAndKlassId(@Param("teamId") Long teamId,@Param("klassId") Long klassId);
 }

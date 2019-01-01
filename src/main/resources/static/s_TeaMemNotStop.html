@@ -158,15 +158,20 @@
                 timeout: 3000,
                 success: function(res){
 
-                    getTeam(res);
-                    getMem(res);
-                    getNoTeamMem();
+
+
+                        getTeam(res);
+                        getMem(res);
+                        getNoTeamMem();
+
+
 
                         $("#myView").html(htmlNav);
 
                 },
                 error: function(){
-                    alert('服务器忙，请稍候');
+                    getNoTeamMem();
+                    $("#myView").html(htmlNav);
                 }
             });
         }
