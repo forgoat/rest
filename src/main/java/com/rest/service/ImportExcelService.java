@@ -1,5 +1,6 @@
 package com.rest.service;
 
+import com.rest.dao.KlassStudentDao;
 import com.rest.dao.StudentDao;
 import com.rest.entity.Student;
 import com.rest.exception.ImportExcelException;
@@ -30,16 +31,19 @@ import java.util.List;
 public class ImportExcelService {
     private final static String XLS = "xls";
     public static final String XLSX = "xlsx";
+    @Autowired
+    private StudentDao studentDao;
+    @Autowired
+    private KlassStudentDao klassStudentDao;
 
     private final static Logger logger = LoggerFactory.getLogger(ImportExcelService.class);
 
-    @Autowired
-    private StudentDao studentDao;
+
 
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 
-    public Integer importExcel(MultipartFile myFile) {
+    public Integer importExcel(MultipartFile myFile,Long klassId,Long courseId) {
         //1.  使用HSSFWorkbook 打开或者创建 “Excel对象”
         //2.  用HSSFWorkbook返回对象或者创建sheet对象
         //3.  用sheet返回行对象，用行对象得到Cell对象
@@ -100,7 +104,18 @@ public class ImportExcelService {
             }
 
         }
+        if(studentList.size()==0) return 0;
         studentDao.batchSaveStudent(studentList);  //  批量插入 五秒完成
+
+        List<Long> studentIdList=new ArrayList<>();//查出所有插入学生的ID
+        int num=studentList.size();
+        for(Student student:studentList){
+            studentIdList.add(studentDao.queryStudentIdByAccount(student.getAccount()));
+        }
+        for(Long studentId:studentIdList){//更新插入klass—student表
+            klassStudentDao.insertStudent(klassId,studentId,courseId);
+        }
+
         long endTime = System.currentTimeMillis();
         long totaltime = endTime - startTime;
         logger.info("【消耗时间为】{}",totaltime);  //  将近两万条数据 3秒解析完成
