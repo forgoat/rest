@@ -83,7 +83,7 @@
         $.ajax({
             url: "/course/" + id + "/class",
             data: {courseId:id,grade:grade, klassSerial:klass,klassTime:time,klassLocation:local},
-            type: "PUT" ,
+            type: "POST" ,
             dataType:'text',
            success:function(data) {
               alert("success");

@@ -73,19 +73,13 @@
                             htmlNav+='<div class="div-auto2" >'+myModel.courseList[i].grade+'-'+myModel.courseList[i].klassSerial+'&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;讨论课时间：'+myModel.courseList[i].klassTime+'</div>';
 
                             htmlNav+='<div class="div-auto1" > &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;讨论课地点：'+myModel.courseList[i].klassLocation+'</div>';
-                            htmlNav+='<div class="div-auto2" >&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;班级学生名单：<button>选择文件</button></div>';
-
-                            htmlNav+='<div class="aui-code-box"><div><div style="font-size:14px;height:35px;width:100px;float: left;margin-right: 30px;">' +
-                                '<button >提交</button> </div>';
                                 htmlNav+='<div style="font-size:14px;height:15px;width:100px;float: left;margin-right: 30px;">\n' +
                                     '<button >删除班级</button></div></div></div>';
-                                htmlNav+=' <form action="PPTUpload" method="post" enctype="multipart/form-data">\n' +
-                                    '            <p>上传PPT: <input type="file" name="fileName1" id="file1"/></p>\n' +
-                                    '            <p><input type="button" value="提交"/></p>\n' +
+                                htmlNav+=' <form action="importStudentList" method="post" enctype="multipart/form-data">\n' +
+                                    '            <p>班级名单<input type="file" name="fileName1" id="file1"/></p>\n' +
+                                    '<input type="text" name="classId" id="classId" style="display: none" value="'+myModel.courseList[i].id+'"/>'+
+                                    '            <p><input type="submit" value="提交"/></p>\n' +
                                     '        </form>'
-
-
-
                         }
 
 
