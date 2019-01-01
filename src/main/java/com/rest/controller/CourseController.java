@@ -144,7 +144,7 @@ public class CourseController {
      */
     @RequestMapping( "class/importStudentList")
     @ResponseBody
-    public int importStudentList( @RequestParam("courseId")Long courseId, @RequestParam("myFile") MultipartFile myFile,@RequestParam("klassId")Long klassId){
+    public int importStudentList( @RequestParam("myFile") MultipartFile myFile,@RequestParam("klassId")Long klassId,@RequestParam("courseId")Long courseId){
             //  Excel导入数据到数据库
            int num=importExcelService.importExcel(myFile,klassId,courseId);
            return num;
@@ -166,7 +166,7 @@ public class CourseController {
 
     /**
      *发出讨论课共享申请
-     * @param mainCourseId
+     * @param  mainCourseId
      * @param subCourseId
      * @return
      */
