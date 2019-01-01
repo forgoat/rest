@@ -30,4 +30,7 @@
         #{klassLocation}
         )
     </insert>
+    <select id="findKlassById" parameterType="long" resultType="com.rest.entity.Klass">
+        SELECT * FROM standard_seminar_system.klass WHERE id=#{id}
+    </select>
 </mapper>

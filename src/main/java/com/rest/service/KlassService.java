@@ -138,4 +138,7 @@ public class KlassService {
         }
         return teamList;
     }
+    public Klass findKlassById(Long klassId){
+        return klassDao.findKlassById(klassId);
+    }
 }

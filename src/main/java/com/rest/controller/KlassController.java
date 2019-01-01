@@ -204,6 +204,10 @@ public class KlassController {
         return klassService.findKlassIdByCourseIdAndStudentId(courseId,studentId);
     }
 
+    @GetMapping(value = "")
+    public Klass findKlassById(@RequestParam("klassId") Long klassId){
+        return klassService.findKlassById(klassId);
+    }
     /**
      * 查找班级下的队伍
      * @param klassId
