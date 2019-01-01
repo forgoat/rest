@@ -205,7 +205,7 @@ public class KlassController {
     }
 
     @GetMapping(value = "")
-    public Klass findKlassById(@RequestParam("klassId") Long klassId){
+    public Klass findKlassById(Long klassId){
         return klassService.findKlassById(klassId);
     }
     /**
