@@ -45,4 +45,7 @@
     <select id="findAttendanceByKlassSeminarIdAndTeamId" resultType="com.rest.entity.Attendance">
         SELECT * FROM standard_seminar_system.attendance WHERE klass_seminar_id=#{klassSeminarId} AND team_id=#{teamId}
     </select>
+    <select id="findAttendanceById" resultType="com.rest.entity.Attendance" parameterType="long">
+        SELECT * FROM standard_seminar_system.attendance WHERE id=#{attendanceId}
+    </select>
 </mapper>

@@ -5,6 +5,7 @@ import com.rest.service.AttendanceService;
 import com.rest.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -195,8 +196,9 @@ public class AttendanceController {
      * @return
      */
     @GetMapping(value = "whether")
-    public HttpStatus WhetherAttendance(Long klassSeminarId,Long teamId){
-        HttpStatus httpStatus=(attendanceService.findAttendanceByKlassSeminarAndTeamId(klassSeminarId,teamId)==null)?HttpStatus.NOT_FOUND:HttpStatus.OK;
-        return httpStatus;
+    public ResponseEntity<Attendance> WhetherAttendance(Long klassSeminarId, Long teamId){
+        Attendance attendance=attendanceService.findAttendanceByKlassSeminarAndTeamId(klassSeminarId,teamId);
+        HttpStatus httpStatus=(attendance==null)?HttpStatus.NOT_FOUND:HttpStatus.OK;
+        return new ResponseEntity<Attendance>(attendance,httpStatus);
     }
 }
