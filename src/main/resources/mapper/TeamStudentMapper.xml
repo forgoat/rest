@@ -35,4 +35,7 @@
     <select id="findByTeamId" parameterType="long" resultType="com.rest.entity.TeamStudent">
         SELECT * FROM standard_seminar_system.team_student WHERE team_id=#{teamId}
     </select>
+    <insert id="save" parameterType="com.rest.entity.TeamStudent">
+        INSERT INTO standard_seminar_system.team_student(team_id,student_id) VALUE (#{teamId},#{studentId})
+    </insert>
 </mapper>

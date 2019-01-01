@@ -5,6 +5,7 @@ import com.rest.service.AttendanceService;
 import com.rest.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -186,5 +187,29 @@ public class AttendanceController {
     public HttpStatus savePPTToAttendance(Long attendanceId,String fileName,String path){
         HttpStatus httpStatus=(attendanceService.savePPT(attendanceId,fileName,path)==0)?HttpStatus.BAD_REQUEST:HttpStatus.OK;
         return httpStatus;
+    }
+
+    /**
+     * 查看是否报名讨论课
+     * @param klassSeminarId
+     * @param teamId
+     * @return
+     */
+    @GetMapping(value = "whether")
+    public ResponseEntity<Attendance> WhetherAttendance(Long klassSeminarId, Long teamId){
+        System.out.print(klassSeminarId+" "+teamId);
+        Attendance attendance=attendanceService.findAttendanceByKlassSeminarAndTeamId(klassSeminarId,teamId);
+        HttpStatus httpStatus=(attendance==null)?HttpStatus.NOT_FOUND:HttpStatus.OK;
+        return new ResponseEntity<Attendance>(attendance,httpStatus);
+    }
+
+    /**
+     * 查找报名
+     * @param attendanceId
+     * @return
+     */
+    @GetMapping(value = "findAttendance")
+    public Attendance findAttendanceById(Long attendanceId){
+        return attendanceService.findAttendanceByAttendanceId(attendanceId);
     }
 }
