@@ -174,4 +174,7 @@ public class CourseService {
         return shareTeamApplicationDao.findByCourseId(courseId);
     }
 
+    public int saveTeamShareApplication(ShareTeamApplication shareTeamApplication){
+        return shareTeamApplicationDao.save(shareTeamApplication);
+    }
 }

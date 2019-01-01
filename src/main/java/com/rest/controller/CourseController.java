@@ -142,10 +142,11 @@ public class CourseController {
      * @param klassId
      * @return
      */
-    @RequestMapping( "class/importStudentList")
-    @ResponseBody
+    @RequestMapping( "importStudentList")
+    //@ResponseBody
     public int importStudentList( @RequestParam("myFile") MultipartFile myFile,@RequestParam("klassId")Long klassId,@RequestParam("courseId")Long courseId){
             //  Excel导入数据到数据库
+        System.out.println("myFile:"+myFile+" klassId:"+klassId+"  courseId:"+courseId);
            int num=importExcelService.importExcel(myFile,klassId,courseId);
            return num;
     }
@@ -597,7 +598,16 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
         return courseService.findShareListByCourseId(courseId);
     }
 
-
+    /**
+     * 发出共享分组邀请
+     * @param shareTeamApplication
+     * @return
+     */
+    @PostMapping(value = "saveShareTeamApplication")
+    public HttpStatus saveShareTeamApplication(ShareTeamApplication shareTeamApplication){
+        HttpStatus httpStatus=(courseService.saveTeamShareApplication(shareTeamApplication)==0)?HttpStatus.BAD_REQUEST:HttpStatus.OK;
+        return httpStatus;
+    }
     /**
      * 判断是否为从课程
      * @param courseId
