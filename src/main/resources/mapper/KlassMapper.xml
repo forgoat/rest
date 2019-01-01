@@ -11,7 +11,7 @@
     <delete id="deleteById" parameterType="long">
         DELETE FROM standard_seminar_system.klass WHERE id=#{id}
     </delete>
-    <select id="findByCourseId" resultType="com.rest.entity.Klass">
+    <select id="findByCourseId" resultType="com.rest.entity.Klass" parameterType="long">
         SELECT * FROM standard_seminar_system.klass WHERE course_id=#{courseId}
     </select>
     <insert id="saveKlass" parameterType="com.rest.entity.Klass">

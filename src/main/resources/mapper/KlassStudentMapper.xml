@@ -45,4 +45,13 @@
     <select id="findKlassStudentByCourseId" resultType="com.rest.entity.KlassStudent" parameterType="long">
         SELECT * FROM standard_seminar_system.klass_student WHERE course_id=#{courseId}
     </select>
+
+    <select id="queryStudentIdListByKlassIdCourseId" resultType="long">
+        SELECT student_id
+        FROM standard_seminar_system.klass_student
+        WHERE
+        klass_id=#{klassId}
+        AND
+        course_id=#{courseId}
+    </select>
 </mapper>
