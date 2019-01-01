@@ -350,6 +350,16 @@ public class TeamController {
     }
 
     /**
+     * 获取未组队学生
+     * @param courseId
+     * @return
+     */
+    @GetMapping(value = "NoTeamStudent")
+    public List<Student> findNoTeamStudentByCourseId(Long courseId){
+        List<Student> studentList=teamService.findNoTeamStudentByCourseId(courseId);
+        return studentList;
+    }
+    /**
      * 未组队学生
      * @return
      */

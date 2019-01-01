@@ -42,4 +42,7 @@
         )
     </insert>
 
+    <select id="findKlassStudentByCourseId" resultType="com.rest.entity.KlassStudent" parameterType="long">
+        SELECT * FROM standard_seminar_system.klass_student WHERE course_id=#{courseId}
+    </select>
 </mapper>

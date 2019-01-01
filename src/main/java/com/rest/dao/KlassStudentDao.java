@@ -1,6 +1,7 @@
 package com.rest.dao;
 
 import com.rest.entity.KlassStudent;
+import com.rest.entity.TeamStudent;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface KlassStudentDao {
+    public List<KlassStudent> findKlassStudentByCourseId(Long courseId);
     public Long findKlass(@Param("courseId") Long courseId,@Param("studentId") Long studentId);
     public List<KlassStudent> findByTeamId(Long teamId);
     public int quitTeam(Long studentId);
