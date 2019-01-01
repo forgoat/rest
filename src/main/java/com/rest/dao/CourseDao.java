@@ -21,5 +21,5 @@ public interface CourseDao {
     public List<Course> findByTeacherId(Long teacherId);
     public int acceptMainTeamCourseId(@Param("mainCourseId") Long mainCourseId, @Param("subCourseId") Long subCourseId);
 
-    Long queryTeamMainCourseIdByCourseId(@Param("courseId") Long courseId);
+    Long queryTeamMainCourseIdById(@Param("id") Long id);
 }

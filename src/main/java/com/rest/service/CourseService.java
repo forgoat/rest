@@ -152,8 +152,13 @@ public class CourseService {
      * @return
      */
     public Boolean isSubCourse(Long courseId){
-        if(courseDao.queryTeamMainCourseIdByCourseId(courseId)!=0&&courseDao.queryTeamMainCourseIdByCourseId(courseId)!=null)
+        System.out.println("courseId:"+courseId);
+        //System.out.println(courseDao.queryTeamMainCourseIdById(courseId));
+
+        if(courseDao.queryTeamMainCourseIdById(courseId)!=0&&courseDao.queryTeamMainCourseIdById(courseId)!=null){
+            System.out.println("courseDao.queryTeamMainCourseIdById(courseId)");
             return true;
+        }
         return false;
     }
 

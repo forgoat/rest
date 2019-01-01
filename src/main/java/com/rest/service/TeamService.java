@@ -50,11 +50,12 @@ public class TeamService {
     }
 
     public List<Student> queryStudentNoTeam(Long courseId){
+        System.out.println("CourseService courseService=new CourseService();");
         CourseService courseService=new CourseService();
-        if(!courseService.isSubCourse(courseId))
+        if(courseService.isSubCourse(courseId)==false)
             return teamDao.queryStudentNoTeam(courseId);
         else
-            return teamDao.queryStudentNoTeam(courseDao.queryTeamMainCourseIdByCourseId(courseId));
+            return teamDao.queryStudentNoTeam(courseDao.queryTeamMainCourseIdById(courseId));
     }
 
     public Team findTeamByTeamId(Long teamId){

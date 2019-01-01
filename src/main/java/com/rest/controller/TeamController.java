@@ -344,7 +344,8 @@ public class TeamController {
      * @return
      */
     @PostMapping(value = "{teamId}/saveTeamValidApplication")
-    public int saveTeamValidApplication(@PathVariable(value = "teamId")TeamValidApplication teamValidApplication,Long teamId,Long courseId){
+    public int saveTeamValidApplication(@PathVariable(value = "teamId")Long teamId,TeamValidApplication teamValidApplication){
+        System.out.println("saveTeamValidApplication");
         return teamService.saveTeamValidApplication(teamValidApplication);
     }
 
