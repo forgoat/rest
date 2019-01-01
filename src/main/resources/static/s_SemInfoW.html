@@ -155,8 +155,10 @@
     };
     var json='';
     function emm() {
+
         var seminarid=getUrlParam("seminarid");
         var klassseminarid=getUrlParam("klassseminarid");
+        sessionStorage.setItem("semminarid",seminarid)
         $.ajax({
             url: "/seminar/"+seminarid,
             type: "GET",

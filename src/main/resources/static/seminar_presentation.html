@@ -21,7 +21,7 @@
 <div class="container">
     <div class="div-auto1" id="ishead" >
         <h4 class="text-center">seminarname</h4>
-        <div class="text-right">0人准备回答&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger " >结 束</button></div>
+        <div class="text-right">0人准备回答&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger " onclick="end()">结 束</button></div>
     </div>
     <div class="row" >
         <div class="col-xs-3" id="myView">
@@ -369,6 +369,19 @@
                 }
                 else
                     alert(msg.data);
+            }
+            function end() {
+                $.ajax({
+                    url: "/seminar/"+klassseminarid+"/status",
+                    type: "GET",
+                    data: {status:2},
+                    async: false,
+                    dataType: 'json',
+                    success:function () {
+                        window.location.href="s_SemInfoY.html?klassseminarid="+klassseminarid+"&seminarid="+;
+                    }
+                    });
+
             }
 
         </script>

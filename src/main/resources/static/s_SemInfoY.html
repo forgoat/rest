@@ -31,7 +31,7 @@
     </div>
     <div class="div-auto1" id="myView5">
         课程情况：已完成
-        <a>查看情况</a>
+        <a href="s_SemTeam.html">查看情况</a>
     </div>
     <div class="div-auto2"style="height: auto" id="myView6">
 
@@ -47,30 +47,6 @@
             <span class="aui-center-title">我</span>
         </div>
     </div>
-
-    <script>
-        $(function(){
-            var z = true;
-            $(".menu-img").mousedown(function(event){
-                if(z == true){
-                    $(".menu-box").show(500);
-                    z = false;
-                }
-                else{
-                    $(".menu-box").hide(500);
-                    z = true;
-                }
-                event.stopPropagation();
-            });
-            $(".menu-box").mousedown(function(event){
-                $(".menu-box").show();
-                event.stopPropagation();
-            })
-            $("html").mousedown(function(){
-                $(".menu-box").hide(500);
-            });
-        })
-    </script>
 
     <div class="menu-box">
         <img class="arrow" src="img/jian-2.png">
