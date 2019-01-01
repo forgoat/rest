@@ -8,6 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface AttendanceDao {
+    public Attendance findAttendanceById(Long attendanceId);
     public List<Attendance> findAttendanceByKlassSeminarId(Long klassSeminarId);
     public int saveAttendance(Attendance attendance);
     int updateAttendance(@Param("id") Long id,@Param("pptName") String pptName,@Param("pptUrl") String pptUrl);
