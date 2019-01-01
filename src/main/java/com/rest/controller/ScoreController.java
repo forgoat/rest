@@ -1,13 +1,17 @@
 package com.rest.controller;
 
+import com.rest.entity.Round;
+import com.rest.entity.RoundScorePage;
 import com.rest.entity.ScorePage;
 import com.rest.entity.SeminarScore;
+import com.rest.service.RoundService;
 import com.rest.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,6 +19,8 @@ import java.util.List;
 public class ScoreController {
     @Autowired
     private ScoreService scoreService;
+    @Autowired
+    private RoundService roundService;
 
     /**
      * 保存成绩
@@ -173,5 +179,14 @@ public class ScoreController {
     @GetMapping(value = "klass")
     public Long findKlassForTeam(Long courseId,Long teamId){
         return scoreService.findKlassForTeam(courseId,teamId);
+    }
+
+    public List<RoundScorePage> teacherFindScore(Long courseId){
+        List<RoundScorePage> roundScorePageList=new ArrayList<>();
+        List<Round> roundList=roundService.findByCourseId(courseId);
+        if (roundList.isEmpty()){
+            System.out.println("No round");
+        }
+        return roundScorePageList;
     }
 }

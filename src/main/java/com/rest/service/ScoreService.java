@@ -443,4 +443,5 @@ public class ScoreService {
    public List<Double> findQuestionScore(Long klassSeminarId,Long teamId){
        return questionDao.questionScores(klassSeminarId,teamId);
    }
+
 }
