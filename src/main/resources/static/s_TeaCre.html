@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">小组名：</label>
 
-                            <input type="text" class="form-control" placeholder="填写组名">
+                            <input type="text" id="teamname" class="form-control" placeholder="填写组名">
 
                     </div>
                     <hr>
@@ -40,29 +40,17 @@
                     <label class="col-sm-2 control-label">选择班级：</label>
                     <select name="dept" data-placeholder="选择部门" style="width:200px;height:25px" id="dept" class="dept_select">
 
-                        <option value="班级1">班级1</option>
-                        <option value="班级2">班级2</option>
-                        <option value="班级3">班级3</option>
+                        <option value="1">班级1</option>
+                        <option value="2">班级2</option>
+                        <option value="3">班级3</option>
 
                     </select>
-                     </div>
+                 </div>
                      <hr>
-                    <div class="aui-code-box1">
-                        <label class="col-sm-2 control-label">添加成员：</label>
-                        <div class="col-sm-7">
-                            <label class="radio-inline">
-                                <input type="checkbox" name="名字1">名字1</label>
-                            <br/>
-                            <label class="radio-inline">
-                                <input type="checkbox" name="名字2">名字2</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">搜索成员：</label>
 
-                        <input type="text" class="form-control" placeholder="输入成员学号或姓名">
 
-                    </div>
+                    <div class="list" id="myView"></div>
+
                 </div>
                 <div class="aui-code-box">
                     <button >
@@ -74,5 +62,86 @@
     </section>
 </section>
 
+
+
+
+
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var myModel = {teamList:[]};
+    var sem = {smallList:[]};
+    var id='';
+
+    var htmlNav='';
+
+
+
+
+
+
+
+    function create() {
+        var courseid=getUrlParam("courseid");
+        var teamname=$("#teamname").val();
+        var classid=$("#dept").val();
+
+        $.ajax({
+            url: "/team",                //创建小组
+            type: 'POST',                                //http:POST/GET
+            data: {klassId:classid,courseId:courseid,leaderId:studentid,teamName:teamname},                            //指客户端提交给后台的参数
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function (res) {
+                alert("success!");
+
+            }, error: function () {
+                alert("sorry!");
+            }
+        });
+    }
+    function getNoTeamMem(){
+        var courseid=getUrlParam('courseid');
+
+        $.ajax({
+            url: "/team/queryStudentNoTeam",                //后端的API地址
+            type: 'POST',                                //http:POST/GET
+            async:false,
+            data:{courseId:courseid},
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.memList=res;
+
+                htmlNav+='<label class="col-sm-2 control-label">添加成员：</label>';
+                htmlNav+='<div class="col-sm-7">';
+
+                for(var i=0;i< myModel.memList.length;i++)
+                {
+
+                    htmlNav+='<label class="radio-inline">';
+                    htmlNav+='<br><br>';
+                    htmlNav+='<input type="checkbox" name="名字1"/>'+myModel.memList[i].studentName+'</label>';
+
+                }
+                htmlNav+='</div>';
+
+                $("#myView").html(htmlNav);
+            },
+            error: function(){
+                alert('cuo');
+            }
+        });
+    }
+
+
+    getNoTeamMem();
+</script>
+
+
 </body>
 
+</html>

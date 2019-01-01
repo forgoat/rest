@@ -35,4 +35,10 @@
     <update id="acceptMainSeminarId">
         UPDATE standard_seminar_system.course SET seminar_main_course_id=#{mainCourseId} WHERE id=#{subCourseId}
     </update>
+
+    <select id="queryTeamMainCourseIdByCourseId" resultType="long">
+        SELECT team_main_course_id
+        FROM standard_seminar_system.course
+        WHERE course_id=#{courseId}
+    </select>
 </mapper>

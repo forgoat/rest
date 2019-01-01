@@ -29,5 +29,17 @@
         AND
         course_id=#{courseId}
     </select>
+    <insert id="insertStudent" parameterType="long">
+        INSERT INTO standard_seminar_system.klass_student
+        (
+        klass_id,
+        student_id,
+        course_id
+        )VALUE (
+        #{klassId},
+        #{studentId},
+        #{courseId}
+        )
+    </insert>
 
 </mapper>

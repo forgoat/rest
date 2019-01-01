@@ -44,6 +44,28 @@
         var id='';
 
         var htmlNav='';
+
+
+        function DeleCou(){
+            var courseid=getUrlParam('courseid');
+            $.ajax({
+                url: "/course/"+courseid,                //后端的API地址
+                type: 'DELETE',                                //http:POST/GET
+                async:false,
+
+
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+
+
+                    alert('ok');
+                },
+
+            });
+        }
+
+
     function getData(){
     var courseid=getUrlParam('courseid');
     $.ajax({
@@ -81,12 +103,14 @@
 
 
     <div class="aui-code-box">
-        <button >
+        <button onclick="DeleCou()">
             删除该课程
         </button>
     </div>
 
     </section>
+
+
 
 
 

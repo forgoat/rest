@@ -91,4 +91,9 @@
         </set>
         WHERE id=#{param1}
     </update>
+    <select id="queryStudentIdByAccount" resultType="long">
+        SELECT id
+        FROM standard_seminar_system.student
+        WHERE account=#{account}
+    </select>
 </mapper>

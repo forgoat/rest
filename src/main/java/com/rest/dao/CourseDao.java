@@ -11,6 +11,7 @@ import java.util.List;
 @Mapper
 public interface CourseDao {
 
+
     List<Course> queryCourseByStudentId(Long id); //我的课程 所有课程
     List<Course> findAllCourse();
     int saveCourse(Course course);
@@ -19,4 +20,6 @@ public interface CourseDao {
     public int acceptMainSeminarId(@Param("mainCourseId") Long mainCourseId,@Param("subCourseId") Long subCourseId);
     public List<Course> findByTeacherId(Long teacherId);
     public int acceptMainTeamCourseId(@Param("mainCourseId") Long mainCourseId, @Param("subCourseId") Long subCourseId);
+
+    Long queryTeamMainCourseIdByCourseId(@Param("courseId") Long courseId);
 }

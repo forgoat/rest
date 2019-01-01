@@ -118,27 +118,35 @@ public class CourseController {
     }
 
     /**
-     * 创建班级 导入学生名单
+     * 创建班级
      * @param courseId
-     * @Param klass
-     * @Param myFile
+     * @param klass
      * @return
      */
     @PostMapping(value = "{courseId}/class")
-    public ResponseEntity<Long> saveKlass(@PathVariable("courseId")Long courseId,
-                                          Klass klass,
-                                          @RequestParam("myFile") MultipartFile myFile){
+    public ResponseEntity<Long> saveKlass(@PathVariable("courseId")Long courseId, Klass klass){
 
         if(klassService.saveKlass(klass)==1){
-            //  Excel导入数据到数据库
-            Integer nums = importExcelService.importExcel(myFile);
-
             return new ResponseEntity<Long>(klass.getId(),HttpStatus.ACCEPTED);
         }
         else {
             Long id=new Long(0);
             return new ResponseEntity<Long>(id,HttpStatus.FORBIDDEN);
         }
+    }
+
+    /**
+     * 导入学生名单
+     * @param courseId
+     * @param myFile
+     * @param klassId
+     * @return
+     */
+    @PostMapping(value = "{courseId}/class/importStudentList")
+    public int importStudentList(@PathVariable("courseId")Long courseId, MultipartFile myFile,Long klassId){
+            //  Excel导入数据到数据库
+           int num=importExcelService.importExcel(myFile,klassId,courseId);
+           return num;
     }
 
 
@@ -586,5 +594,14 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
     @GetMapping(value = "{courseId}/shareList")
     public List<ShareList> findShareListByCourseId(@PathVariable("courseId") Long courseId){
         return courseService.findShareListByCourseId(courseId);
+    }
+
+    /**
+     * 判断是否为从课程
+     * @param courseId
+     * @return
+     */
+    public Boolean isSubCourse(Long courseId){
+        return courseService.isSubCourse(courseId);
     }
 }

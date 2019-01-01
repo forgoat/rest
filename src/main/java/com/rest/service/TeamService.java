@@ -23,6 +23,8 @@ public class TeamService {
     @Autowired
     private TeamDao teamDao;
     @Autowired
+    private CourseDao courseDao;
+    @Autowired
     private KlassStudentDao klassStudentDao;
     @Autowired
     private TeamStudentDao teamStudentDao;
@@ -48,7 +50,11 @@ public class TeamService {
     }
 
     public List<Student> queryStudentNoTeam(Long courseId){
-        return teamDao.queryStudentNoTeam(courseId);
+        CourseService courseService=new CourseService();
+        if(!courseService.isSubCourse(courseId))
+            return teamDao.queryStudentNoTeam(courseId);
+        else
+            return teamDao.queryStudentNoTeam(courseDao.queryTeamMainCourseIdByCourseId(courseId));
     }
 
     public Team findTeamByTeamId(Long teamId){
@@ -294,12 +300,13 @@ public class TeamService {
 
     /**
      * 增加队员
-     * @param teamStudentList
+     * @param studentIdList
+     * @param teamId
      * @return
      */
-    public int batchInsertTeamStudent(List<TeamStudent> teamStudentList){
+    public int batchInsertTeamStudent(List<Long> studentIdList,Long teamId){
 
-        return teamStudentDao.batchInsertTeamStudent(teamStudentList);
+        return teamStudentDao.batchInsertTeamStudent(studentIdList,teamId);
     }
 
     /**
