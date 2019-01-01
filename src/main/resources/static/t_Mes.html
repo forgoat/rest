@@ -73,7 +73,7 @@
         <i class="icon icon-sys"></i>
     </a>
 </header>
-<body>
+<body>32
 <div class="list"id="myView">
 </div>
 
@@ -85,9 +85,10 @@
 
 <script>
     var myModel = {courseList:[]};
+    var courseid=16
     function getData(){
         $.ajax({
-            url: "/course/teamShare",                //后端的API地址,没连好
+            url: "/course/"+courseid+"/teamsharerequest",                //后端的API地址,没连好
             type: 'GET',                                //http:POST/GET
             async:false,
             //data:{},     //指客户端提交给后台的参数
