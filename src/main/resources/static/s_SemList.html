@@ -85,6 +85,21 @@
     var sem = {semList:[]};
     var id='';
     var semid=16;
+    function getteam() {
+        $.ajax({
+            url: "/team",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+            data:{studentId:113},     //指客户端提交给后台的参数
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res) {
+                var teamid=res;
+                sessionStorage.setItem("teamid",teamid);
+            }
+            });
+
+    }
     function getData(){
         var courseid=getUrlParam('courseid');
         $.ajax({
