@@ -29,13 +29,10 @@
         </a>
     </header>
     <body>
-    <div class="div-auto1" >
+    <div class="div-auto1"  id="div1">
         讨论课：
         业务流程分析
         领域模型设计
-        <button class="button-auto1" >
-            添加讨论课
-        </button>
     </div>
  <div class="div-auto1" >
 成绩设置：
@@ -45,23 +42,24 @@
 
     <div class="div-auto2" >
         
-       展示： <select>
-        <option value="最高分">最高分</option>
+       展示： <select id="show">
+        <option value="0">最高分</option>
+        <option value="1">平均分</option>
     </select>
     </div>
         <div class="div-auto2" >
-        提问： <select>
-        <option value="平均分">平均分</option>
+        提问： <select id="ask">
+            <option value="0">最高分</option>
+            <option value="1">平均分</option>
     </select>
         </div>
     <div class="div-auto2" >
-        报告：<select>
-        <option value="最高分">最高分</option>
+        报告：<select id="report">
+        <option value="0">最高分</option>
+        <option value="1">平均分</option>
     </select>
-
     </div>
-
-    <div class="div-auto1" >
+    <div class="div-auto1"  id="times">
         本轮讨论课报名次数：
         一班：<select>
         <option value="1（默认）">1（默认）</option>
@@ -77,16 +75,42 @@
         <option value="1（默认）">1（默认）</option>
     </select>
     </div>
-        <button class="button-auto1" >
-            <a style="font-family:times;color:green" href=" /teacher/main/coursemain">修改</a>
-
+        <button class="button-auto1" onclick="">
+            修改
         </button>
-
-
-
-
-
-
-
+</body>
+</section>
     </body>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var myModel = {courseList:[]};
+    function load() {
+        var roundid=getUrlParam("roundid");
+        var htmlvel='';
+        $.ajax({
+           url:"/round/"+roundid+"/seminar",
+            type: 'GET',                                //http:POST/GET
+            async:false,
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success:function (res) {
+               myModel.courseList=res;
+               if(myModel.courseList.length>0)
+               {
+                   htmlvel+="讨论课:\n";
+                   for(var i=0;i<myModel.courseList.length;i++)
+                   {
+                       htmlvel+=myModel.courseList[i].seminarName+'\n';
+                   }
+                   $("#div1").html(htmlvel);
+               }
+            }
+        });
+    }
+    load();
+</script>
 </html>
