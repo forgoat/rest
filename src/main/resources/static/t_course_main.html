@@ -74,7 +74,7 @@
     </a>
 </header>
 <body>
-<div class="list">
+<div class="list" id="list">
     <ul class="yiji">
 
         <li><a href="#" class="inactive">第一轮</a>
@@ -117,6 +117,67 @@
             </button>
         </div>
     </div>
-    <section>
+    </section>
 </body>
+<script>
+    var myModel = {courseList:[]};
+    var myModel1 = {courseList1:[]};
+    var myModel2 = {courseList2:[]};
+
+    var courseid=getUrlParam('courseid');
+    sessionStorage.setItem("courseid",courseid)
+    function getData() {
+        $.ajax({
+            url: "/round/course/" + courseid,                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async: false,
+            data: {},     //指客户端提交给后台的参数
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function (res) {
+                myModel.courseList = res;
+                var htmlNav = '';
+                $("#list").empty();
+                if (myModel.courseList.length > 0) {
+                    htmlNav += '<ul class="yiji">';
+                    for (var i = 0; i < myModel.courseList.length; i++) {
+                        htmlNav += '<li><a href="#" class="inactive">第'+myModel.courseList[i].roundSerial+'轮</a>';
+                        htmlNav += '<ul style="display: none">\n' +
+                            '                <li class="last"><a style="font-family:times;color:black" href="/teacher/semminar/lunci">该轮轮次设置</a></li>';
+                        myModel1.courseList1 = myModel.courseList[i].seminarLists;
+                        if (myModel1.courseList1.length > 0) {
+                            for (var j = 0; j < sem.semList.length; j++) {
+                                htmlNav += '<li><a href="#" class="inactive active">'+myModel1.courseList1[j].seminarName+'</a>';
+                                htmlNav += '<ul>';
+                                myModel2.courseList2 = myModel1.courseList1[j].klassSeminarList;
+                                if (myModel2.courseList2.length > 0) {
+                                    for (var k = 0; k < myModel2.courseList2.length; k++) {
+                                        $.ajax({
+                                            url: "class/findKlass",                //后端的API地址
+                                            type: 'GET',                                //http:POST/GET
+                                            async: false,
+                                            data: {klassId:myModel2.courseList2[k].klassId},     //指客户端提交给后台的参数
+                                            dataType: 'json',                            //服务端返回类型text，JSON
+                                            timeout: 3000,
+                                            success: function (adata) {
+                                                htmlNav += '<li class="last"><a style="font-family:times;color:black" href="/index/wei">'+adata.grade+'-'+adata.klassSerial+'</a></li>';
+                                            }
+                                        });
+                                    }
+                                }
+                                htmlNav += '</ul></li>';
+                            }
+                        }
+                        htmlNav += '</ul></li>';
+                    }
+                    htmlNav += '</ul>'
+                }
+                $("#list").html(htmlNav);
+            }, error: function () {
+                alert("surprise!!!");
+            }
+        });
+    }
+getData();
+</script>
 </html>

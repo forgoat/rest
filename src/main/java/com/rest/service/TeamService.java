@@ -421,4 +421,7 @@ public class TeamService {
 //        List<Student> studentList=new ArrayList<>();
 //        return studentList;
     }
+    public int saveTeamStudent(TeamStudent teamStudent){
+        return teamStudentDao.save(teamStudent);
+    }
 }

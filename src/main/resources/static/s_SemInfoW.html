@@ -118,35 +118,6 @@
     </ul>
 </div>
 
-
-<script>
-    $(function($) {
-        $("#gooey-v").gooeymenu({
-            bgColor: "#e1f1fc",
-            style: "vertical",
-            horizontal: {
-                menuItemPosition: "glue"
-            },
-            vertical: {
-                menuItemPosition: "spaced",
-                direction: "up"
-            },
-            /*circle: {
-                radius: 90
-            },*/
-            margin: "small",
-            bounce: true,
-            bounceLength: "small",
-            transitionStep: 100,
-        });
-
-        $("#gooey-v a").mousedown(
-            function(){
-                $(this).css("backgroundColor","#e1f1fc");
-            }
-        )
-    });
-</script>
 <script>
     function getUrlParam(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -154,11 +125,19 @@
         if (r != null) return unescape(r[2]); return null; //返回参数值
     };
     var json='';
+
     function emm() {
 
         var seminarid=getUrlParam("seminarid");
+        sessionStorage.setItem("seminarid",seminarid);
+        if(seminarid==null)
+            seminarid=sessionStorage.getItem("seminarid");
         var klassseminarid=getUrlParam("klassseminarid");
-        sessionStorage.setItem("semminarid",seminarid)
+        sessionStorage.setItem("klassseminarid",klassseminarid);
+        if(klassseminarid==null)
+            klassseminarid=sessionStorage.getItem("klassseminarid");
+        var teamid=sessionStorage.getItem("teamid");
+        sessionStorage.setItem("semminarid",seminarid);
         $.ajax({
             url: "/seminar/"+seminarid,
             type: "GET",
@@ -176,39 +155,36 @@
             }
         });
         $.ajax({
-            url: "/seminar/"+seminarid,//获取本组是否报名
+            url: "/attendance/whether",//获取本组是否报名
             type: "GET",
             async:false,
-            dataType:'text',
-            success:function() {
-                var res='';
-                if(res=='')
-                {
-                    $("#myView6").html("报名开始时间： "+json.enrollStartTime);
-                    $("#myView7").html("报名截止时间:"+json.enrollEndTime);
-                    var ht=''
-                    ht+='<button><a href="s_SemRegister.html?klassseminarid='+klassseminarid+'">报名</a></button>';
-                    $("#myView8").html(ht);
-                }
-                else
-                {
-                    var attendence=eval(res);
+            data:{klassSeminarId:klassseminarid,teamId:teamid},
+            dataType:'json',
+            success:function(appendance) {
+                    var attendence=eval(appendance);
                     $("#myView6").html("报名： 第"+attendence.teamOrder+"组");
                     var status='';
-                    if(attendence.pptName=='')
+                    alert(attendence.pptName);
+                    if(attendence.pptName==null)
                         status='未提交';
                     else
                         status='已提交';
                     $("#myView7").html("PPT:"+status);
                     var hy='';
                     hy+='<form action="PPTUpload" method="post" enctype="multipart/form-data">\n' +
-                        '        <p>PPT提交 <input type="file" name="fileName1"/></p>\n' +
-                        '        <p><input type="submit" value="提交"/></p>\n' +
-                        '    </form>\n'
+                        '        <p>上传PPT: <input type="file" name="fileName1" style="width: auto"  id="file1"/></p>\n' +
+                        '        <input type="text" name="attendanceId" id="attendanceId" style="display: none" value="'+attendence.id+'">\n' +
+                        '        <input type="text" name="url" id="url" style="display: none" value="s_SemInfoW.html">\n' +
+                        '        <input type="submit" style="background: #0D8BBD; font-size: 20px;width: 100%" value="提交" />\n' +
+                        '    </form>';
                     $("#myView8").html(hy);
-                }
+
             },error: function(){
-                alert('服务器忙，请稍候');
+                $("#myView6").html("报名开始时间： "+json.enrollStartTime);
+                $("#myView7").html("报名截止时间:"+json.enrollEndTime);
+                var ht=''
+                ht+='<button><a href="s_SemRegister.html?klassseminarid='+klassseminarid+'">报名</a></button>';
+                $("#myView8").html(ht);
             }
         });
     }

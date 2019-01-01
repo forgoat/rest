@@ -360,4 +360,25 @@ public class TeamController {
         List<Student> studentList=teamService.findNoTeamStudentByCourseId(courseId);
         return studentList;
     }
+
+    /**
+     * 单个添加学生入队
+     * @param teamStudent
+     * @return
+     */
+    @PostMapping(value = "saveTeamStudent")
+    public HttpStatus saveTeamStudent(TeamStudent teamStudent){
+        HttpStatus httpStatus=(teamService.saveTeamStudent(teamStudent)==0)?HttpStatus.BAD_REQUEST:HttpStatus.OK;
+        return httpStatus;
+    }
+    @PostMapping(value = "saveAllTeamStudent")
+    public HttpStatus saveAllTeamStudent(List<TeamStudent> teamStudentList){
+        HttpStatus httpStatus=HttpStatus.OK;
+        for (TeamStudent teamStudent:teamStudentList){
+            if (teamService.saveTeamStudent(teamStudent)==0){
+                httpStatus=HttpStatus.BAD_REQUEST;
+            }
+        }
+        return httpStatus;
+    }
 }
