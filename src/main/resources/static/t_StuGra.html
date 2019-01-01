@@ -94,7 +94,7 @@
 
 
 
-    //根据课程id查课程下所有的roundid 存在roundList.id里
+    //根据课程id查课程下所有的roundid (从3开始)存在roundList.id里
     function getRound(){
         var courseid=getUrlParam('courseid');
         $.ajax({
@@ -147,16 +147,14 @@
                     for(var i=0;i< myModel.teamList.length;i++)
                     {
 
+
                         htmlNav+='<li class="last"><a href="#" class="inactive active">'+myModel.teamList[i].klassSerial+'-'+myModel.teamList[i].teamSerial+'&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;';
                         getOnlyScore(roundid,myModel.teamList[i].id);
                         htmlNav+='分</a>';
                         htmlNav+='<ul>';
 
-                        getSemScore(myModel.teamList[i].leaderId,roundserial);
-
                         htmlNav+='</ul>';
                         htmlNav+='</li>';
-
                     }
 
                 }
@@ -180,13 +178,14 @@
             timeout: 3000,
             success: function(res){
 
-                alert(studentid);
+
                 if( res.seminarScoreList.length>0)
                 {
 
                     for(var i=0;i< res.seminarScoreList.length;i++)
                     {
 
+                        alert(res.seminarList[i].seminarName);
                         htmlNav+='<li><a href="#">'+res.seminarList[i].seminarName+'：<span>展示：'+res.seminarScoreList[i].presentationScore+'&nbsp;&nbsp;&nbsp;&nbsp;提问：'+res.seminarScoreList[i].questionScore+
                             '&nbsp;&nbsp;&nbsp;&nbsp;报告：'+res.seminarScoreList[i].reportScore+'</span></a></li>';
                     }

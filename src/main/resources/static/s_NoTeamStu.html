@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>我的组队</title>
+    <title>未组队学生</title>
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
@@ -22,7 +22,7 @@
             <i class="icon icon-return"></i>
         </a>
         <div class="aui-center">
-            <span class="aui-center-title">我的组队</span>
+            <span class="aui-center-title">未组队学生</span>
         </div>
         <a href="javascript:;" class="aui-navBar-item">
             <i class="icon icon-sys"></i>
@@ -63,66 +63,8 @@
         }
 
 
-        function getTeam(teamid){
-            var courseid=getUrlParam('courseid');
-            $.ajax({
-                url: "/team/"+teamid,                //后端的API地址
-                type: 'GET',                                //http:POST/GET
-                async:false,
-
-                dataType: 'json',                            //服务端返回类型text，JSON
-                timeout: 3000,
-                success: function(res){
-                    htmlNav+='<div class="div-auto1" >小组：'+res.klassSerial+'-'+res.teamSerial+' &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'+res.teamName+'</div>';
-
-
-                    htmlNav+='<div class="div-auto2" >组长：'+ res.leader.account+'&nbsp; &nbsp;&nbsp; &nbsp;'+res.leader.studentName+'</div>';
-
-                },
-
-            });
-        }
-
-
-        function getMem(teamid){
-
-            $.ajax({
-                url: "/team/"+teamid+"/student",                //后端的API地址
-                type: 'GET',                                //http:POST/GET
-                async:false,
-
-                dataType: 'json',                            //服务端返回类型text，JSON
-                timeout: 3000,
-                success: function(res){
-                    myModel.memList=res;
-
-                    for(var i=0;i< myModel.memList.length;i++)
-                    {
-                        if(i==0)
-                        {
-                            htmlNav+='<div class="div-auto2" >组员：';
-                            getStudent(myModel.memList[i].studentId);
-                            htmlNav+='</div>';
-                        }
-
-                        else
-                        {
-                            htmlNav+='<div class="div-auto2" >&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; ';
-                            getStudent(myModel.memList[i].studentId);
-                            htmlNav+='</div>';
-                        }
-
-                    }
-
-                },
-
-            });
-        }
-
-
         function getNoTeamMem(){
             var courseid=getUrlParam('courseid');
-            var studentid=getUrlParam('studentid');
 
             $.ajax({
                 url: "/team/NoTeamStudent",                //后端的API地址
@@ -133,15 +75,14 @@
                 timeout: 3000,
                 success: function(res){
                     myModel.memList=res;
-                    htmlNav+='<a href="s_NoTeamStu.html?studentid='+studentid+'&courseid='+courseid+'">';
-                            htmlNav+='<div class="div-auto1" >未组队学生：&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;' +
-                                '&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;>';
-                            htmlNav+='</div></a>';
 
-
-
+                    for(var i=0;i< myModel.memList.length;i++)
+                    {
+                            htmlNav+='<div class="div-auto2" >&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; ';
+                            htmlNav+=myModel.memList[i].account+'&nbsp; &nbsp;&nbsp; &nbsp;'+myModel.memList[i].studentName;
+                            htmlNav+='</div>';
+                    }
                 },
-
             });
         }
 
@@ -158,11 +99,18 @@
                 timeout: 3000,
                 success: function(res){
 
-                    getTeam(res);
-                    getMem(res);
+                    // getTeam(res);
+                    // getMem(res);
                     getNoTeamMem();
 
-                        $("#myView").html(htmlNav);
+
+
+                    htmlNav+='<div class="aui-code-box">';
+                    htmlNav+='<a href="s_TeaCre.html?studentid='+studentid+'&courseid='+courseid+'">';
+                    htmlNav+='<button >创建小组</button></a></div>';
+
+
+                    $("#myView").html(htmlNav);
 
                 },
                 error: function(){
@@ -182,6 +130,4 @@
 
 
     </body>
-</section>
-</body>>
 </html>

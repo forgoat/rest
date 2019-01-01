@@ -52,11 +52,11 @@
                     <div class="list" id="myView"></div>
 
                 </div>
-                <div class="aui-code-box">
-                    <button >
-                        确认提交
-                    </button>
-                </div>
+                <!--<div class="aui-code-box">-->
+                    <!--<button onclick="create()">-->
+                        <!--确认提交-->
+                    <!--</button>-->
+                <!--</div>-->
 
         </div>
     </section>
@@ -75,17 +75,14 @@
     var myModel = {teamList:[]};
     var sem = {smallList:[]};
     var id='';
-
     var htmlNav='';
-
-
-
-
-
 
 
     function create() {
         var courseid=getUrlParam("courseid");
+        var studentid=getUrlParam("studentid");
+
+
         var teamname=$("#teamname").val();
         var classid=$("#dept").val();
 
@@ -107,8 +104,8 @@
         var courseid=getUrlParam('courseid');
 
         $.ajax({
-            url: "/team/queryStudentNoTeam",                //后端的API地址
-            type: 'POST',                                //http:POST/GET
+            url: "/team/NoTeamStudent",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
             async:false,
             data:{courseId:courseid},
             dataType: 'json',                            //服务端返回类型text，JSON
@@ -123,10 +120,16 @@
                 {
 
                     htmlNav+='<label class="radio-inline">';
-                    htmlNav+='<br><br>';
-                    htmlNav+='<input type="checkbox" name="名字1"/>'+myModel.memList[i].studentName+'</label>';
+                    htmlNav+='<br>';
+                    htmlNav+='<input type="checkbox" value="'+myModel.memList[i].id+'">'+myModel.memList[i].studentName+'</label>';
 
                 }
+                htmlNav+='</div>';
+
+                htmlNav+='<div class="aui-code-box">';
+                htmlNav+='<button onclick="create()">';
+                htmlNav+='确认提交';
+                htmlNav+='</button>';
                 htmlNav+='</div>';
 
                 $("#myView").html(htmlNav);
