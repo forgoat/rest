@@ -7,7 +7,7 @@
         SELECT team_id FROM standard_seminar_system.team_student WHERE student_id=#{studentId}
     </select>
 
-    <insert id="batchInsertTeamStudent" parameterType="com.rest.entity.TeamStudent">
+    <insert id="batchInsertTeamStudent" >
         INSERT INTO standard_seminar_system.team_student(
         student_id,
         team_id
@@ -15,7 +15,7 @@
         <foreach collection="list" item="teamStudent"  separator=",">
             (
             #{teamStudent.studentId},
-            #{teamStudent.teamId}
+            #{teamId}
             )
         </foreach>
     </insert>

@@ -23,4 +23,5 @@ public interface StudentDao {
     public int delete(Long id);
     int deleteAll();
     public int updateInfo(@Param("id")Long id,@Param("account")String account,@Param("email")String email,@Param("studentName")String studentName);
+    Long queryStudentIdByAccount(@Param("account") String account);
 }
