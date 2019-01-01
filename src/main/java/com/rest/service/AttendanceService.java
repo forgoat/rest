@@ -149,4 +149,7 @@ public class AttendanceService {
     public int deleteQuestionList(Long klassSeminarId,Long attendanceId){
         return questionDao.deleteQuestionList(klassSeminarId,attendanceId);
     }
+    public Attendance findAttendanceByKlassSeminarIdAndTeamId(Long klassSeminarId,Long teamId){
+        return attendanceDao.findAttendanceByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
+    }
 }

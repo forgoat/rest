@@ -16,4 +16,5 @@ public interface AttendanceDao {
     public int updateAttendanceStatus(@Param("attendanceId") Long attendanceId,@Param("status") Integer status);
     Attendance queryAttendanceById(Long id);
     public int savePPT(@Param("attendanceId") Long attendanceId,@Param("fileName") String fileName,@Param("path") String path);
+    public Attendance findAttendanceByKlassSeminarIdAndTeamId(@Param("klassSeminarId") Long klassSeminarId,@Param("teamId") Long teamId);
 }
