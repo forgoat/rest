@@ -28,4 +28,9 @@ public class IndexController {
         return "Client.html";
     }
 
+    @RequestMapping(value = "/seminarPPT")
+    public String seminarFile(){
+        return "s_SemSubmit.html";
+    }
+
 }

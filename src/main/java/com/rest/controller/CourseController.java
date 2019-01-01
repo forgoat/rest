@@ -597,6 +597,7 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
         return courseService.findShareListByCourseId(courseId);
     }
 
+
     /**
      * 判断是否为从课程
      * @param courseId

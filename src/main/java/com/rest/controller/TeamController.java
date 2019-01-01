@@ -359,12 +359,4 @@ public class TeamController {
         List<Student> studentList=teamService.findNoTeamStudentByCourseId(courseId);
         return studentList;
     }
-    /**
-     * 未组队学生
-     * @return
-     */
-    @PostMapping(value = "queryStudentNoTeam")
-    public List<Student> queryStudentNoTeam (Long courseId){
-        return teamService.queryStudentNoTeam(courseId);
-    }
 }

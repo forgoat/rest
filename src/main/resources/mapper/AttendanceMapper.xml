@@ -16,7 +16,7 @@
     <update id="updateAttendanceStatus">
         UPDATE standard_seminar_system.attendance SET is_present=#{status} WHERE id=#{attendanceId}
     </update>
-    <update id="updateAttendance" parameterType="Long">
+    <update id="updateAttendance">
         UPDATE standard_seminar_system.attendance
         SET
         ppt_name=#{pptName},
@@ -39,4 +39,7 @@
         WHERE
         id=#{id}
     </select>
+    <update id="savePPT">
+        UPDATE standard_seminar_system.attendance SET ppt_name=#{fileName}, ppt_url=#{path} WHERE id=#{attendanceId}
+    </update>
 </mapper>

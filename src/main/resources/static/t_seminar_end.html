@@ -54,6 +54,28 @@
 </button>
   </body>
     <script>
+        function emm() {
+            var seminarid = getUrlParam("seminarid");
+            var klassseminarid = getUrlParam("klassseminarid");
+            $.ajax({
+                url: "/seminar/" + seminarid,
+                type: "GET",
+                async: false,
+                dataType: 'text',
+                success: function (data) {
+                    json = eval("(" + data + ")");
+                    $("#myView1").html("轮次： " + json.roundId);
+                    $("#myView2").html("主题:" + json.seminarName);
+                    $("#myView3").html("课次序号:" + json.seminarSerial);
+                    $("#myView4").html("要求:" + json.introduction);
+                    $("#myView5").html("课程情况：进行中" + '<a href="t_seminarPPT.html?klassseminarid=' + klassseminarid + '">查看情况</a>');
+                }, error: function () {
+                    alert('服务器忙，请稍候');
+                }
+            });
+            $("#myView6").html('<a href="seminar_presentation.html?klassklassseminarid='+klassseminarid+'">进入讨论课 </a>')
+        }
+        emm();
 
     </script>
 </section>

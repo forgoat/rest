@@ -181,4 +181,10 @@ public class AttendanceController {
     public int deleteQuestionList(Long klassSeminarId,Long attendanceId){
         return attendanceService.deleteQuestionList(klassSeminarId,attendanceId);
     }
+
+    @PutMapping(value = "savePPT")
+    public HttpStatus savePPTToAttendance(Long attendanceId,String fileName,String path){
+        HttpStatus httpStatus=(attendanceService.savePPT(attendanceId,fileName,path)==0)?HttpStatus.BAD_REQUEST:HttpStatus.OK;
+        return httpStatus;
+    }
 }
