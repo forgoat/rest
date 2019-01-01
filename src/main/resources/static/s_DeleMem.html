@@ -55,7 +55,6 @@
                 dataType: 'json',                            //服务端返回类型text，JSON
                 timeout: 3000,
                 success: function(res){
-
                     htmlNav+=res.account+'&nbsp; &nbsp;&nbsp; &nbsp;'+res.studentName;
                 },
 
@@ -74,8 +73,6 @@
                 timeout: 3000,
                 success: function(res){
                     htmlNav+='<div class="div-auto1" >小组：'+res.klassSerial+'-'+res.teamSerial+' &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'+res.teamName+'</div>';
-
-
                     htmlNav+='<div class="div-auto2" >组长：'+ res.leader.account+'&nbsp; &nbsp;&nbsp; &nbsp;'+res.leader.studentName+'</div>';
 
                 },
@@ -103,7 +100,7 @@
                             htmlNav+='<div class="div-auto2" >组员：';
                             getStudent(myModel.memList[i].studentId);
                             htmlNav+='</div>';
-                            htmlNav+='<p onclick="DeleMem(myModel.memList[i].studentId)"><input type="submit" value="删除"/></p>';
+                            htmlNav+='<button onclick="DeleMem('+myModel.memList[i].studentId+')"><input type="submit" value="删除"/></button>';
                         }
 
                         else
@@ -113,7 +110,7 @@
 
                             htmlNav+='</div>';
 
-                            htmlNav+='<p onclick="DeleMem(myModel.memList[i].studentId)"><input type="submit" value="删除"/></p>';
+                            htmlNav+='<button onclick="DeleMem('+myModel.memList[i].studentId+')"><input type="submit" value="删除"/></button>';
 
                         }
 
@@ -131,7 +128,7 @@
 
             $.ajax({
                 url: "/team/deleteByStudentId",                //后端的API地址
-                // type: 'GET',                                //http:POST/GET
+                type: 'POST',                                //http:POST/GET
                 async:false,
                 data:{studentId:studentid},
 
@@ -176,7 +173,7 @@
 
                 },
                 error: function(){
-                    alert('服务器忙，请稍候');
+
                 }
             });
         }
@@ -192,4 +189,7 @@
 
 
     </body>
+    </section>
+
+</body>
 </html>

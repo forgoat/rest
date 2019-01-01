@@ -4,7 +4,7 @@
     var doc = window.document
       , ydui = {};
 
-    $(window).on('load', function() {});
+
 
     var util = ydui.util = {
 
