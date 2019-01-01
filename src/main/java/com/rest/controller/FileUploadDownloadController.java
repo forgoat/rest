@@ -48,7 +48,7 @@ public class FileUploadDownloadController {
         System.out.println("hello");
         System.out.println(attendanceId);
         if(file1.isEmpty()){
-            response.sendRedirect("s_SemSubmit.html");
+            response.sendRedirect("s_SemInfo.html");
         }
         String fileName1 = file1.getOriginalFilename();
         int size = (int) file1.getSize();
@@ -70,15 +70,15 @@ public class FileUploadDownloadController {
             //保存文件
             file1.transferTo(dest);
             attendanceService.savePPT(attendanceId,fileName,path);
-            response.sendRedirect("s_SemSubmit.html");
+            response.sendRedirect("s_SemInfoW.html");
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            response.sendRedirect("s_SemSubmit.html");
+            response.sendRedirect("s_SemInfoW.html");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            response.sendRedirect("s_SemSubmit.html");
+            response.sendRedirect("s_SemInfoW.html");
         }
     }
 
