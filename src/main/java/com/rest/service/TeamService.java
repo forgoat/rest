@@ -23,6 +23,8 @@ public class TeamService {
     @Autowired
     private TeamDao teamDao;
     @Autowired
+    private CourseDao courseDao;
+    @Autowired
     private KlassStudentDao klassStudentDao;
     @Autowired
     private TeamStudentDao teamStudentDao;
@@ -48,7 +50,11 @@ public class TeamService {
     }
 
     public List<Student> queryStudentNoTeam(Long courseId){
-        return teamDao.queryStudentNoTeam(courseId);
+        CourseService courseService=new CourseService();
+        if(!courseService.isSubCourse(courseId))
+            return teamDao.queryStudentNoTeam(courseId);
+        else
+            return teamDao.queryStudentNoTeam(courseDao.queryTeamMainCourseIdByCourseId(courseId));
     }
 
     public Team findTeamByTeamId(Long teamId){
