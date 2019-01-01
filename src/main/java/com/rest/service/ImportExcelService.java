@@ -52,6 +52,8 @@ public class ImportExcelService {
         * 还未完成：（数据库未定）
         * 系统同时删除该班级与未出现在新名单的学生账户的所有关联
         * */
+
+        System.out.println("myFile:"+myFile+" klassId:"+klassId+"  courseId:"+courseId);
         studentDao.deleteAll();
 
         List<Student> studentList = new ArrayList<>();

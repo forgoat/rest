@@ -142,10 +142,11 @@ public class CourseController {
      * @param klassId
      * @return
      */
-    @RequestMapping( "class/importStudentList")
-    @ResponseBody
+    @RequestMapping( "importStudentList")
+    //@ResponseBody
     public int importStudentList( @RequestParam("myFile") MultipartFile myFile,@RequestParam("klassId")Long klassId,@RequestParam("courseId")Long courseId){
             //  Excel导入数据到数据库
+        System.out.println("myFile:"+myFile+" klassId:"+klassId+"  courseId:"+courseId);
            int num=importExcelService.importExcel(myFile,klassId,courseId);
            return num;
     }
