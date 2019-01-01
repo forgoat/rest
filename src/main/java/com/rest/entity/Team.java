@@ -4,10 +4,10 @@ package com.rest.entity;
 
 public class Team {
     private Long id;
-    private Long klassId;
+    private Long klassId;//
     private Long courseId;
     private Long leaderId;
-    private String teamName;
+    private String teamName;//
     private Integer teamSerial;
     private Integer klassSerial;
     private Integer status;

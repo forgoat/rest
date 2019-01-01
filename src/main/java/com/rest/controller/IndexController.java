@@ -23,5 +23,9 @@ public class IndexController {
     public String admin(){
         return "a_ConStu.html";
     }
+    @RequestMapping(value = "/client")
+    public String websocket(){
+        return "Client.html";
+    }
 
 }

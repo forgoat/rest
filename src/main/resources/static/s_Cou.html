@@ -85,6 +85,7 @@
     var myModel = {courseList:[]};
     var sem = {semList:[]};
     var id='';
+    studentid=sessionStorage.getItem('id');
     var studentid=103;
     function getData(){
 
@@ -112,7 +113,7 @@
 
                         htmlNav+='<li><a href="t_CouInf.html?courseid='+myModel.courseList[i].id+'" class="inactive active">课程信息</a>'+'</li>';
                         htmlNav+='<li><a href="s_Gra.html?courseid='+myModel.courseList[i].id+'&studentid='+studentid+'" class="inactive active">我的成绩</a>'+'</li>';
-                        htmlNav+='<li><a href="s_TeaMemNotStop.html?studentid='+studentid+'" class="inactive active">我的组队</a>'+'</li>';
+                        htmlNav+='<li><a href="s_TeaMemNotStop.html?courseid='+myModel.courseList[i].id+'&studentid='+studentid+'" class="inactive active">我的组队</a>'+'</li>';
 
                         htmlNav+='</ul>';
                         htmlNav+='</li>';

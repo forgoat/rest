@@ -18,8 +18,6 @@
 
     function storage(ls) {}
 
-    $.fn.emulateTransitionEnd = function(duration) {}
-    ;
 
     if (typeof define === 'function') {
         define(ydui);

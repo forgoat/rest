@@ -349,7 +349,7 @@ public class TeamController {
     }
 
     /**
-     * 未组队小组
+     * 未组队学生
      * @return
      */
     @PostMapping(value = "queryStudentNoTeam")
