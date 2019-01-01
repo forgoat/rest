@@ -152,4 +152,8 @@ public class AttendanceService {
     public Attendance findAttendanceByKlassSeminarIdAndTeamId(Long klassSeminarId,Long teamId){
         return attendanceDao.findAttendanceByKlassSeminarIdAndTeamId(klassSeminarId,teamId);
     }
+
+    public Attendance findAttendanceByAttendanceId(Long attendanceId){
+        return attendanceDao.findAttendanceById(attendanceId);
+    }
 }
