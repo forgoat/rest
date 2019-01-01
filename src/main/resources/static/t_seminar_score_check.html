@@ -28,7 +28,7 @@
 
     <body>
     <div class="div-auto1" >
-        展示     提问    书面报告 总分
+       展示  提问    书面报告 总分
     </div>
     <div class="div-auto1" >
        1-1：
@@ -48,7 +48,9 @@
     <div class="div-auto1" >
        1-5：
     </div>
+    <div id="qwq">
 
+    </div>
     <section class="aui-flexView">
         <div class="aui-code-box">
             <div class="aui-code-btn">
@@ -61,6 +63,54 @@
 `
             </div>
         </div>
-        <section>
+        </section>
     </body>
+</section>
+</body>
+<script>
+    $(function(){
+        ajaxT();
+    });
+    //ajax
+    var klassseminarid=21;
+    var myModel = {courseList:[]};
+    function ajaxT(){
+        $.ajax({
+            type:"GET",
+            dataType:"json",
+            url:"/score/"+klassseminarid,
+            success:function(data){
+                createShowingTable(data)
+            }
+        })
+    }
+    //动态创建一个table
+    function createShowingTable(data){
+        myModel.courseList=data;
+        var tableStr="<table class='tab_list' width='99%'>";
+        tableStr=tableStr
+            +"<tr class='list=header'>"
+            +"<td width='20%'>序号</td>"
+            +"<td width='30%'><input id='checkedAll' name='checkAll' type='checkbox'/></td>"
+            +"<td width='50%'>内容</td>"
+            +"</tr>";
+        var len=myModel.courseList.length;
+        for(var i=0;i<len;i++){
+            tableStr=tableStr+"<tr>"
+                +"<td>"+(i+1)+"</td>"
+                +"<td><input type='checkbox' class='check' value='"+myModel.courseList[i].klassSeminarId+"'/></td>"
+                +"<td>"+myModel.courseList[i].totalScore+"</td>"
+            +"</tr>";
+        }
+
+        if(len==0){
+            tableStr=tableStr+"<tr style='text-align:center'>"
+                +"<td colspan='3'>暂无记录</td>"
+                +"</tr>"
+        }
+        tableStr=tableStr+"</table>";
+//添加到div
+        $("#qwq").html(tableStr);
+    }
+</script>
 </html>
