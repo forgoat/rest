@@ -92,7 +92,11 @@ public class CourseService {
     public List<ShareList> findShareListByCourseId(Long courseId){
         List<ShareSeminarApplication> shareSeminarApplications=shareSeminarApplicationDao.findByCourseId(courseId);
         List<ShareList> shareLists=new ArrayList<ShareList>();
-        if(!shareSeminarApplications.isEmpty()) {
+        if (shareSeminarApplications.isEmpty()){
+            System.out.println("没有共享讨论课");
+        }
+        else  {
+            System.out.println("查到共享讨论课了");
             for (ShareSeminarApplication shareSeminarApplication : shareSeminarApplications) {
                 ShareList shareList = new ShareList(shareSeminarApplication);
                 if (shareSeminarApplication.getSubCourseId().equals(courseId)) {
@@ -118,8 +122,12 @@ public class CourseService {
                 shareLists.add(shareList);
             }
         }
-        List<ShareTeamApplication> shareTeamApplicationList=shareTeamApplicationDao.findByCourseId(courseId);
-        if(!shareTeamApplicationList.isEmpty()){
+        List<ShareTeamApplication> shareTeamApplicationList=findTeamShare(courseId);
+        if (shareTeamApplicationList.isEmpty()){
+            System.out.println("没有共享分组");
+        }
+        else {
+            System.out.println("查到共享分组了");
             for (ShareTeamApplication shareTeamApplication:shareTeamApplicationList){
                 ShareList shareList=new ShareList(shareTeamApplication);
                 if(shareTeamApplication.getSubCourseId().equals(courseId)){
@@ -137,7 +145,7 @@ public class CourseService {
                     Course course=courseDao.findById(shareTeamApplication.getSubCourseId());
                     shareList.setShareCourseName(course.getCourseName());
                     shareList.setShareTeacherId(shareTeamApplication.getSubCourseTeacherId());
-                    Teacher teacher=teacherDao.findById(shareTeamApplication.getSubCourseId());
+                    Teacher teacher=teacherDao.findById(shareTeamApplication.getSubCourseTeacherId());
                     shareList.setShareTeacherName(teacher.getTeacherName());
                 }
                 shareLists.add(shareList);
@@ -152,9 +160,18 @@ public class CourseService {
      * @return
      */
     public Boolean isSubCourse(Long courseId){
-        if(courseDao.queryTeamMainCourseIdByCourseId(courseId)!=0&&courseDao.queryTeamMainCourseIdByCourseId(courseId)!=null)
+        System.out.println("courseId:"+courseId);
+        //System.out.println(courseDao.queryTeamMainCourseIdById(courseId));
+
+        if(courseDao.queryTeamMainCourseIdById(courseId)!=0&&courseDao.queryTeamMainCourseIdById(courseId)!=null){
+            System.out.println("courseDao.queryTeamMainCourseIdById(courseId)");
             return true;
+        }
         return false;
+    }
+
+    public List<ShareTeamApplication> findTeamShareApplicationByMainCourseIdOrSubCourseId(Long courseId){
+        return shareTeamApplicationDao.findByCourseId(courseId);
     }
 
 }

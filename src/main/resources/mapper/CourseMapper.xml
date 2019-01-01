@@ -39,6 +39,6 @@
     <select id="queryTeamMainCourseIdByCourseId" resultType="long">
         SELECT team_main_course_id
         FROM standard_seminar_system.course
-        WHERE course_id=#{courseId}
+        WHERE id=#{id}
     </select>
 </mapper>

@@ -344,7 +344,8 @@ public class TeamController {
      * @return
      */
     @PostMapping(value = "{teamId}/saveTeamValidApplication")
-    public int saveTeamValidApplication(@PathVariable(value = "teamId")TeamValidApplication teamValidApplication,Long teamId,Long courseId){
+    public int saveTeamValidApplication(@PathVariable(value = "teamId")Long teamId,TeamValidApplication teamValidApplication){
+        System.out.println("saveTeamValidApplication");
         return teamService.saveTeamValidApplication(teamValidApplication);
     }
 
@@ -357,13 +358,5 @@ public class TeamController {
     public List<Student> findNoTeamStudentByCourseId(Long courseId){
         List<Student> studentList=teamService.findNoTeamStudentByCourseId(courseId);
         return studentList;
-    }
-    /**
-     * 未组队学生
-     * @return
-     */
-    @PostMapping(value = "queryStudentNoTeam")
-    public List<Student> queryStudentNoTeam (Long courseId){
-        return teamService.queryStudentNoTeam(courseId);
     }
 }
