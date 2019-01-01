@@ -91,10 +91,10 @@
             type: 'GET',                                //http:POST/GET
             async:false,
             //data:{},     //指客户端提交给后台的参数
-            dataType: 'text',                            //服务端返回类型text，JSON
+            dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success: function(res) {
-                myModel.courseList = eval("("+res+")");
+                myModel.courseList =res;
                 var htmlNav = '';
                 $("#myView").empty();
                 if (myModel.courseList.length > 0) {

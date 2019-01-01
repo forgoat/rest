@@ -75,11 +75,12 @@
                             htmlNav+='<div class="div-auto1" > &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;讨论课地点：'+myModel.courseList[i].klassLocation+'</div>';
                                 htmlNav+='<div style="font-size:14px;height:15px;width:100px;float: left;margin-right: 30px;">\n' +
                                     '<button >删除班级</button></div></div></div>';
-                                htmlNav+=' <form action="importStudentList" method="post" enctype="multipart/form-data">\n' +
-                                    '            <p>班级名单<input type="file" name="fileName1" id="file1"/></p>\n' +
+                                //htmlNav+=' <form action="importStudentList" method="post" enctype="multipart/form-data">\n' ;
+                                   htmlNav+= '            <p>班级名单<input type="file" name="myFile" id="myFile"/></p>\n' +
+                                    '<input type="text" name="courseId" id="courseId" style="display: none" value="'+courseid+'"/>'+
                                     '<input type="text" name="classId" id="classId" style="display: none" value="'+myModel.courseList[i].id+'"/>'+
-                                    '            <p><input type="submit" value="提交"/></p>\n' +
-                                    '        </form>'
+                                    '            <p><input type="button" value="提交"/></p>\n' ;
+                                    //'        </form>'
                         }
 
 
@@ -92,6 +93,35 @@
             });
         }
         getData();
+        function fileload() {
+            $.ajax({
+                url: "/course/class/importStudentList",
+                type: "POST",
+                data: {myFile:$("#myFile").val(),courseId:16,classId:},
+                /**
+                 *必须false才会自动加上正确的Content-Type
+                 */
+                contentType: false,
+                /**
+                 * 必须false才会避开jQuery对 formdata 的默认处理
+                 * XMLHttpRequest会对 formdata 进行正确的处理
+                 */
+                processData: false,
+                success: function (data) {
+                    if (data.status == "true") {
+                        alert("上传成功！");
+                    }
+                    if (data.status == "error") {
+                        alert(data.msg);
+                    }
+                    $("#imgWait").hide();
+                },
+                error: function () {
+                    alert("上传失败！");
+                    $("#imgWait").hide();
+                }
+            });
+        }
 
     </script>
     </body>

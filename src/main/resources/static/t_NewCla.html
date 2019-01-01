@@ -82,7 +82,7 @@
         var formData = new FormData($('#file1')[0]);
         $.ajax({
             url: "/course/" + id + "/class",
-            data: {courseId:id,grade:grade, klassSerial:klass,klassTime:time,klassLocation:local},
+            data: {grade:grade, klassSerial:klass,klassTime:time,klassLocation:local},
             type: "POST" ,
             dataType:'text',
            success:function(data) {
