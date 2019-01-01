@@ -598,7 +598,16 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
         return courseService.findShareListByCourseId(courseId);
     }
 
-
+    /**
+     * 发出共享分组邀请
+     * @param shareTeamApplication
+     * @return
+     */
+    @PostMapping(value = "saveShareTeamApplication")
+    public HttpStatus saveShareTeamApplication(ShareTeamApplication shareTeamApplication){
+        HttpStatus httpStatus=(courseService.saveTeamShareApplication(shareTeamApplication)==0)?HttpStatus.BAD_REQUEST:HttpStatus.OK;
+        return httpStatus;
+    }
     /**
      * 判断是否为从课程
      * @param courseId
