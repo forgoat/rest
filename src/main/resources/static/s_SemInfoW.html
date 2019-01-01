@@ -176,7 +176,7 @@
             }
         });
         $.ajax({
-            url: "/seminar/"+seminarid,//获取本组是否报名
+            url: "/attendance/whether",//获取本组是否报名
             type: "GET",
             async:false,
             dataType:'text',
@@ -202,9 +202,10 @@
                     $("#myView7").html("PPT:"+status);
                     var hy='';
                     hy+='<form action="PPTUpload" method="post" enctype="multipart/form-data">\n' +
-                        '        <p>PPT提交 <input type="file" name="fileName1"/></p>\n' +
-                        '        <p><input type="submit" value="提交"/></p>\n' +
-                        '    </form>\n'
+                        '        <p>上传PPT: <input type="file" name="fileName1" id="file1"/></p>\n' +
+                        '        <input type="text" name="attendanceId" id="attendanceId" value="'+attendence.id+'">\n' +
+                        '        <p><input type="submit" value="提交" /></p>\n' +
+                        '    </form>'
                     $("#myView8").html(hy);
                 }
             },error: function(){
