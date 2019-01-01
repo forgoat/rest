@@ -69,20 +69,21 @@
         </a>
     </header>
     <body>
-    <div class="div-auto1" >
-        轮次：第二轮
+    <div class="div-auto1" id="myView1">
+        轮次：
     </div>
-    <div class="div-auto2" >
-        主题：概要设计
+    <div class="div-auto2" id="myView2">
+        主题：
     </div>
-    <div class="div-auto1" >
-        课次序号：1
+    <div class="div-auto1" id="myView3">
+        课次序号：
     </div>
-    <div class="div-auto2" >
-        要求：这是一些要求
+    <div class="div-auto2"style="height: auto" id="myView4">
+        要求：
     </div>
-    <div class="div-auto1" >
-        报名情况：1-8
+    <div class="div-auto1" id="myView5">
+        课程情况：未开始
+        <a href="s_SemRegister.html">查看情况</a>
     </div>
     <div class="div-auto2" >
         PPT：未提交
@@ -124,6 +125,50 @@
 </section>
 </body>
 <script>
+    function ppt() {
+    <script>
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        };
+        var json='';
+        function emm() {
+
+            var seminarid=getUrlParam("seminarid");
+            var klassseminarid=getUrlParam("klassseminarid");
+            sessionStorage.setItem("semminarid",seminarid)
+            $.ajax({
+                url: "/seminar/"+seminarid,
+                type: "GET",
+                async:false,
+                dataType:'text',
+                success:function(data) {
+                    json=eval("("+data+")");
+                    $("#myView1").html("轮次： "+json.roundId);
+                    $("#myView2").html("主题:"+json.seminarName);
+                    $("#myView3").html("课次序号:"+json.seminarSerial);
+                    $("#myView4").html("要求:"+json.introduction);
+                    $("#myView5").html("报名情况");
+                },error: function(){
+                    alert('服务器忙，请稍候');
+                }
+            });
+            $.ajax({
+                url: "/attendance/"+klassseminarid,//获取本组是否报名
+                type: "GET",
+                async:false,
+                dataType:'text',
+                success:function(res) {
+                    if(res!=null)
+                    {
+
+                    }
+                }
+
+                }
+                });
+    }
     // function fileload() {
     //     var filename=$("#file1").val();
     //     $.ajax({
