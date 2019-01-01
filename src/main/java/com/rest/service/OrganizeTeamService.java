@@ -377,6 +377,13 @@ public class OrganizeTeamService {
         return teamDao.queryCourseMemberLimitStrategy(id);
     }
 
+
+
+
+
+
+
+
     /**
      * 设置状态
      * @param teamId
