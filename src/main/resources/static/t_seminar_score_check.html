@@ -7,10 +7,7 @@
     <link type="text/css" rel="stylesheet" href=" css/base.css">
     <link type="text/css" rel="stylesheet" href=" css/home.css">
     <link href=" css/custom.css" rel="stylesheet" type="text/css"/>
-    <script>
-        var offWidth = window.screen.width / 30; //这里用宽度/30表示1rem取得的px
-        document.getElementsByTagName("html")[0].style.fontSize = offWidth + 'px'; //把rem的值复制给顶级标签html的font-size
-    </script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
 </head>
 <header class="aui-navBar aui-navBar-fixed b-line">
     <a href="javascript:history.back(-1)" class="aui-navBar-item">
@@ -68,13 +65,13 @@
 </section>
 </body>
 <script>
-    $(function(){
+
         ajaxT();
-    });
     //ajax
-    var klassseminarid=21;
+
     var myModel = {courseList:[]};
     function ajaxT(){
+        var klassseminarid=21;
         $.ajax({
             type:"GET",
             dataType:"json",
@@ -90,15 +87,22 @@
         var tableStr="<table class='tab_list' width='99%'>";
         tableStr=tableStr
             +"<tr class='list=header'>"
-            +"<td width='20%'>序号</td>"
-            +"<td width='30%'><input id='checkedAll' name='checkAll' type='checkbox'/></td>"
-            +"<td width='50%'>内容</td>"
+            +"<td width='15%'>序号</td>"
+            +"<td width='5%'><input id='checkedAll' name='checkAll' type='checkbox'/></td>"
+            +"<td width='20%'>提问</td>"
+            +"<td width='20%'>书面报告</td>"
+            +"<td width='20%'>展示</td>"
+            +"<td width='20%'>总分</td>"
             +"</tr>";
         var len=myModel.courseList.length;
+        alert(len);
         for(var i=0;i<len;i++){
             tableStr=tableStr+"<tr>"
                 +"<td>"+(i+1)+"</td>"
                 +"<td><input type='checkbox' class='check' value='"+myModel.courseList[i].klassSeminarId+"'/></td>"
+                +"<td>"+myModel.courseList[i].questionScore+"</td>"
+                +"<td>"+myModel.courseList[i].reportScore+"</td>"
+                +"<td>"+myModel.courseList[i].presentationScore+"</td>"
                 +"<td>"+myModel.courseList[i].totalScore+"</td>"
             +"</tr>";
         }
