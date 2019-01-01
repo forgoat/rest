@@ -54,8 +54,13 @@ public class ImportExcelService {
         * */
 
         System.out.println("myFile:"+myFile+" klassId:"+klassId+"  courseId:"+courseId);
-        studentDao.deleteAll();
 
+       List<Long> idList=new ArrayList<>();
+       idList=klassStudentDao.queryStudentIdListByKlassIdCourseId(klassId,courseId);
+        for(Long id:idList){
+            System.out.println("delete id:"+id);
+            studentDao.delete(id);
+        }
         List<Student> studentList = new ArrayList<>();
         Workbook workbook = null;
         String fileName = myFile.getOriginalFilename();//  获取文件名
