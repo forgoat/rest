@@ -114,7 +114,7 @@
     function emm() {
         var seminarid=getUrlParam("seminarid");
         var klassseminarid=getUrlParam("klassseminarid");
-        var teamid=sessionStorage.getItem("teamid")
+        var teamid=sessionStorage.getItem("teamid");
         $.ajax({
             url: "/seminar/"+seminarid,
             type: "GET",

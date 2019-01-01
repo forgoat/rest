@@ -117,6 +117,27 @@
             </button>
         </div>
     </div>
-    <section>
+    </section>
 </body>
+<script>
+    var myModel = {courseList:[]};
+
+    var courseid=getUrlParam('courseid');
+    sessionStorage.setItem("courseid",courseid)
+    function getData(){
+        $.ajax({
+            url: "/round/course/{courseId}",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+            data:{studentId:id},     //指客户端提交给后台的参数
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.courseList=res;
+                var htmlNav='';
+                $("#myView").empty();
+            }
+            });
+
+</script>
 </html>

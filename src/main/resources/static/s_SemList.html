@@ -84,7 +84,7 @@
     var myModel = {courseList:[]};
     var sem = {semList:[]};
     var semid=16;
-    var id=sessionStorage("id");
+    var id=sessionStorage.getItem("id");
     function getteam() {
         $.ajax({
             url: "/team",                //后端的API地址
