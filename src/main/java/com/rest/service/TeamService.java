@@ -339,4 +339,81 @@ public class TeamService {
         teamInfo.setMember(memberList);
         return new ResponseEntity<TeamInfo>(teamInfo, HttpStatus.OK);
     }
+
+    public List<Student> findNoTeamStudentByCourseId(Long courseId){
+        Course course=courseDao.findById(courseId);
+        System.out.println(course.toString());
+        Long mainCourseId=new Long(0);
+        if (course.getTeamMainCourseId()==null){
+            System.out.println("主课程");
+            mainCourseId=courseId;
+        }
+        else {
+            System.out.println("从课程");
+            mainCourseId=course.getTeamMainCourseId();
+        }
+        List<KlassStudent> klassStudents=klassStudentDao.findKlassStudentByCourseId(mainCourseId);
+        if (klassStudents.isEmpty()){
+            System.out.println("No student");
+            List<Student> studentList=new ArrayList<>();
+            return studentList;
+        }
+        else {
+            List<Team> teamList=teamDao.findByCourseId(mainCourseId);
+            if (teamList.isEmpty()){
+                System.out.println("No Team");
+                List<Student> studentList=new ArrayList<>();
+                return studentList;
+            }
+            else {
+                List<Long> studentHaveTeamList=new ArrayList<>();
+                for (Team team:teamList){
+                    List<TeamStudent> teamStudents=teamStudentDao.findByTeamId(team.getId());
+                    if (teamStudents.isEmpty()){
+                        System.out.println("No student in this team "+team.getId());
+                    }
+                    else {
+                        for (TeamStudent teamStudent:teamStudents){
+                            studentHaveTeamList.add(teamStudent.getStudentId());
+                        }
+                    }
+                }
+                if (studentHaveTeamList.isEmpty()){
+                    System.out.println("There is no student have team");
+                    List<Student> studentList=new ArrayList<>();
+                    for (KlassStudent klassStudent:klassStudents){
+                        Student student=studentDao.findById(klassStudent.getStudentId());
+                        studentList.add(student);
+                    }
+                    return studentList;
+                }
+                else {
+                    List<Student> studentList=new ArrayList<>();
+                    for (KlassStudent klassStudent:klassStudents){
+                        boolean flag=false;//判断有无队伍
+                        for (Long sId:studentHaveTeamList){
+                            if (sId.equals(klassStudent.getStudentId())){
+                                flag=true;
+                                break;
+                            }
+                        }
+                        if (!flag){
+                            System.out.println(klassStudent.getStudentId()+" this id has no team");
+                            Student student=studentDao.findById(klassStudent.getStudentId());
+                            if (student==null){
+                                System.out.println("There is no such student who has id "+klassStudent.getStudentId());
+                            }
+                            else {
+                                studentList.add(student);
+                            }
+                        }
+                    }
+                    return studentList;
+                }
+            }
+
+        }
+//        List<Student> studentList=new ArrayList<>();
+//        return studentList;
+    }
 }
