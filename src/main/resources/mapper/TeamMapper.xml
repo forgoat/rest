@@ -21,49 +21,6 @@
         SELECT team_id FROM team
         WHERE course_id=#{courseId})))
     </select>
-
-    <select id="queryMemberLimit" resultType="com.rest.entity.MemberLimitStrategy">
-        SELECT *
-        FROM standard_seminar_system.member_limit_strategy
-        WHERE id=#{id}
-    </select>
-
-    <select id="queryCourseMemberLimitStrategy" resultType="com.rest.entity.CourseMemberLimitStrategy" parameterType="Long">
-        SELECT *
-        FROM standard_seminar_system.course_member_limit_strategy
-        WHERE id=#{id}
-
-    </select>
-
-    <select id="queryTeamOrStrategy" resultType="com.rest.entity.TeamOrStrategy" parameterType="Long">
-        SELECT *
-        FROM standard_seminar_system.team_or_strategy
-        WHERE  id=#{id}
-
-
-    </select>
-
-    <select id="queryTeamAndStrategy" resultType="com.rest.entity.TeamAndStrategy" parameterType="Long">
-        SELECT *
-        FROM standard_seminar_system.team_and_strategy
-        WHERE id=#{id}
-
-    </select>
-
-    <select id="queryTeamStrategy" resultType="com.rest.entity.TeamStrategy" parameterType="Long">
-        SELECT *
-        FROM standard_seminar_system.team_strategy
-        WHERE course_id=#{courseId}
-
-    </select>
-
-    <select id="queryConflictCourseStrategy" resultType="com.rest.entity.ConflictCourseStrategy" parameterType="Long">
-        SELECT *
-        FROM standard_seminar_system.conflict_course_strategy
-        WHERE  id=#{id}
-
-
-    </select>
     <insert id="createTeam" parameterType="com.rest.entity.Team">
         INSERT INTO standard_seminar_system.team(
         klass_id,
@@ -157,9 +114,4 @@
         DELETE FROM standard_seminar_system.team WHERE course_id=#{courseId}
     </delete>
 
-    <select id="queryMemberLimitStrategyById" resultType="com.rest.entity.MemberLimitStrategy" parameterType="Long">
-        SELECT *
-        FROM standard_seminar_system.course_member_limit_strategy
-        WHERE id=#{id}
-    </select>
 </mapper>

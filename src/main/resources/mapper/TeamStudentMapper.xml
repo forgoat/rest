@@ -19,6 +19,16 @@
             )
         </foreach>
     </insert>
+    <insert id="insertTeamStudent">
+        INSERT INTO standard_seminar_system.team_student(
+        student_id,
+        team_id
+        )VALUE
+        (
+        #{studentId},
+        #{teamId}
+        )
+    </insert>
 
     <select id="queryByTeamId" resultType="Long">
         SELECT student_id

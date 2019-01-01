@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.TeamStrategyDao">
+    <select id="queryTeamStrategy" resultType="com.rest.entity.TeamStrategy" parameterType="Long">
+        SELECT *
+        FROM standard_seminar_system.team_strategy
+        WHERE course_id=#{courseId}
+    </select>
+    <insert id="insertTeamStrategy" >
+        INSERT INTO standard_seminar_system.team_strategy(
+        course_id,
+        strategy_serial,
+        strategy_name,
+        strategy_id
+        )VALUE (
+        #{courseId},
+        #{strategySerial},
+        #{strategyName},
+        #{strategyId}
+        )
+    </insert>
+</mapper>

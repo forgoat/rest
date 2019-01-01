@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.TeamAndStrategyDao">
+
+    <select id="queryTeamAndStrategy" resultType="com.rest.entity.TeamAndStrategy" parameterType="Long">
+        SELECT *
+        FROM standard_seminar_system.team_and_strategy
+        WHERE id=#{id}
+
+    </select>
+
+    <insert id="insertTeamAndStrategy">
+        INSERT INTO standard_seminar_system.team_and_strategy
+        (
+        id,
+        strategy_name,
+        strategy_id
+        )VALUE (
+        #{id},
+        #{strategyName},
+        #{strategyId}
+        )
+    </insert>
+    <select id="queryAllTeamAndStrategy" resultType="com.rest.entity.TeamAndStrategy">
+        SELECT *
+        FROM standard_seminar_system.team_and_strategy
+    </select>
+</mapper>

@@ -33,6 +33,8 @@ public class CourseController {
     private RoundService roundService;
     @Autowired
     private SeminarService seminarService;
+    @Autowired
+    private OrganizeTeamService organizeTeamService;
 
 
     /**
@@ -613,7 +615,110 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
      * @param courseId
      * @return
      */
+    @GetMapping(value = "isSubCourse")
     public Boolean isSubCourse(Long courseId){
         return courseService.isSubCourse(courseId);
     }
+
+    /**
+     * 设置小组总人数
+     * @param minMember
+     * @param maxMember
+     * @return
+     */
+    @PostMapping(value = "setMemberLimitStrategy")
+    public int setMemberLimitStrategy(Integer minMember,Integer maxMember){
+        return organizeTeamService.setMemberLimitStrategy(minMember,maxMember);
+    }
+
+    /**
+     * 设置组内选修课程人数
+     * @param courseId
+     * @param minMember
+     * @param maxMember
+     * @return
+     */
+    @PostMapping(value = "setCourseMemberLimitStrategy")
+    public int setCourseMemberLimitStrategy(Long courseId,Integer minMember,Integer maxMember){
+        return organizeTeamService.setCourseMemberLimitStrategy(courseId,minMember,maxMember);
+    }
+
+    /**
+     * 设置冲突课程
+     * @param courseIdList
+     * @return
+     */
+    @PostMapping(value = "setConflictCourseStrategy")
+    public int setConflictCourseStrategy(@RequestParam(value = "courseIdList")List<Long> courseIdList){
+        return organizeTeamService.setConflictCourseStrategy(courseIdList);
+    }
+
+    /**
+     * 设置TeamAndStrategy表
+     * @param strategyNameList
+     * @param strategyIdList
+     * @return
+     */
+    @PostMapping(value = "setTeamAndStrategy")
+    public int setTeamAndStrategy(@RequestParam(value = "strategyNameList") List<String> strategyNameList,@RequestParam("strategyIdList") List<Long>strategyIdList){
+        return organizeTeamService.setTeamAndStrategy(strategyNameList,strategyIdList);
+    }
+
+    /**
+     * 设置TeamOrStrategy表
+     * @param strategyNameList
+     * @param strategyIdList
+     * @return
+     */
+    @PostMapping(value = "setTeamOrStrategy")
+    public int setTeamOrStrategy(@RequestParam(value = "strategyNameList") List<String> strategyNameList,@RequestParam("strategyIdList") List<Long>strategyIdList){
+        return organizeTeamService.setTeamOrStrategy(strategyNameList,strategyIdList);
+    }
+
+    /**
+     *设置均满足或满足其一 => 设置组内选修课程人数
+     * @param option
+     * @param courseIdList
+     * @param minMemberList
+     * @param maxMemberList
+     * @return
+     */
+    @PostMapping(value = "setCourseMemberLimit")
+    public int setCourseMemberLimit(@RequestParam(value = "option")int option,@RequestParam(value = "courseIdList")List<Long> courseIdList,@RequestParam(value = "minMemberList")List<Integer> minMemberList,@RequestParam(value = "maxMemberList")List<Integer> maxMemberList){
+        System.out.println("CourseController -> setCourseMemberLimit");
+        return organizeTeamService.setCourseMemberLimit(option,courseIdList,minMemberList,maxMemberList);
+    }
+
+    /**
+     * 新建课程 -> 设置组队规则总表
+     * @param minMember_MemberLimitStrategy
+     * @param maxMember_MemberLimitStrategy
+     * @param option_CourseMemberLimitStrategy
+     * @param courseIdList_CourseMemberLimitStrategy
+     * @param minMemberList_CourseMemberLimitStrategy
+     * @param maxMemberList_CourseMemberLimitStrategy
+     * @param courseIdList_ConflictCourseStrategy
+     * @param courseId_TeamStrategy
+     * @return
+     */
+    @PostMapping(value = "setTeamStrategy")
+    public int setTeamStrategy(@RequestParam(value = "minMember_MemberLimitStrategy") Integer minMember_MemberLimitStrategy,
+                               @RequestParam(value = "maxMember_MemberLimitStrategy") Integer maxMember_MemberLimitStrategy,
+                               @RequestParam(value = "option_CourseMemberLimitStrategy") int option_CourseMemberLimitStrategy,
+                               @RequestParam(value = "courseIdList_CourseMemberLimitStrategy") List<Long> courseIdList_CourseMemberLimitStrategy,
+                               @RequestParam(value = "minMemberList_CourseMemberLimitStrategy") List<Integer> minMemberList_CourseMemberLimitStrategy,
+                               @RequestParam(value = "maxMemberList_CourseMemberLimitStrategy") List<Integer> maxMemberList_CourseMemberLimitStrategy,
+                               @RequestParam(value = "courseIdList_ConflictCourseStrategy") List<Long> courseIdList_ConflictCourseStrategy,
+                               @RequestParam(value = "courseId_TeamStrategy") Long courseId_TeamStrategy)
+    {
+        return organizeTeamService.setTeamStrategy(minMember_MemberLimitStrategy,
+                maxMember_MemberLimitStrategy,
+                option_CourseMemberLimitStrategy,
+                courseIdList_CourseMemberLimitStrategy,
+                minMemberList_CourseMemberLimitStrategy,
+                maxMemberList_CourseMemberLimitStrategy,
+                courseIdList_ConflictCourseStrategy,
+                courseId_TeamStrategy);
+    }
+
 }

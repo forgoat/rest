@@ -54,4 +54,5 @@
         AND
         course_id=#{courseId}
     </select>
+
 </mapper>
