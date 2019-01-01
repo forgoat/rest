@@ -187,4 +187,16 @@ public class AttendanceController {
         HttpStatus httpStatus=(attendanceService.savePPT(attendanceId,fileName,path)==0)?HttpStatus.BAD_REQUEST:HttpStatus.OK;
         return httpStatus;
     }
+
+    /**
+     * 查看是否报名讨论课
+     * @param klassSeminarId
+     * @param teamId
+     * @return
+     */
+    @GetMapping(value = "whether")
+    public HttpStatus WhetherAttendance(Long klassSeminarId,Long teamId){
+        HttpStatus httpStatus=(attendanceService.findAttendanceByKlassSeminarAndTeamId(klassSeminarId,teamId)==null)?HttpStatus.NOT_FOUND:HttpStatus.OK;
+        return httpStatus;
+    }
 }
