@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.CourseMemberLimitStrategyDao">
+    <select id="queryCourseMemberLimitStrategy" resultType="com.rest.entity.CourseMemberLimitStrategy" parameterType="Long">
+        SELECT *
+        FROM standard_seminar_system.course_member_limit_strategy
+        WHERE id=#{id}
+    </select>
+    <insert id="insertCourseMemberLimitStrategy" >
+        INSERT INTO standard_seminar_system.course_member_limit_strategy
+        (
+        course_id,
+        min_member,
+        max_member
+        )VALUE (
+        #{courseId},
+        #{minMember},
+        #{maxMember}
+        )
+    </insert>
+
+    <select id="queryAllCourseMemberLimitStrategy" resultType="com.rest.entity.CourseMemberLimitStrategy">
+        SELECT *
+        FROM standard_seminar_system.course_member_limit_strategy
+    </select>
+
+</mapper>
