@@ -197,6 +197,7 @@ public class AttendanceController {
      */
     @GetMapping(value = "whether")
     public ResponseEntity<Attendance> WhetherAttendance(Long klassSeminarId, Long teamId){
+        System.out.print(klassSeminarId+" "+teamId);
         Attendance attendance=attendanceService.findAttendanceByKlassSeminarAndTeamId(klassSeminarId,teamId);
         HttpStatus httpStatus=(attendance==null)?HttpStatus.NOT_FOUND:HttpStatus.OK;
         return new ResponseEntity<Attendance>(attendance,httpStatus);
