@@ -202,4 +202,14 @@ public class AttendanceController {
         HttpStatus httpStatus=(attendance==null)?HttpStatus.NOT_FOUND:HttpStatus.OK;
         return new ResponseEntity<Attendance>(attendance,httpStatus);
     }
+
+    /**
+     * 查找报名
+     * @param attendanceId
+     * @return
+     */
+    @GetMapping(value = "findAttendance")
+    public Attendance findAttendanceById(Long attendanceId){
+        return attendanceService.findAttendanceByAttendanceId(attendanceId);
+    }
 }
