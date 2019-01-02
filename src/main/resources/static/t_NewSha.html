@@ -54,7 +54,7 @@
     var myModel = {courseList:[]};
     var youModel={teacherList:[]};
     var ht='';
-    var courseid=16;
+    var courseid=sessionStorage.getItem("courseid");
     function sele_Change(){
         var objS = document.getElementById("share");
         var get_map = objS.options[objS.selectedIndex].value;
