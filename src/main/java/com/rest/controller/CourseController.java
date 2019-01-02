@@ -494,18 +494,18 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
         if (courseService.acceptTeamShareRequest(teamShareId)==1){
             if(courseService.acceptTeamMainCourseId(mainCourseId,subCourseId)==1){
                 System.out.println("修改从课程表成功");
-                teamService.deleteTeamByCourseId(subCourseId);
-                List<Team> teamList=teamService.findTeamByCourseId(mainCourseId);
-                for (Team team:teamList){
-                    Long teamId=team.getId();
-                    Long classId=teamService.findSubCourseTeamKlassId(subCourseId,teamId);
-                    if (classId!=0) {
-                        KlassTeam klassTeam = new KlassTeam();
-                        klassTeam.setKlassId(classId);
-                        klassTeam.setTeamId(teamId);
-                        teamService.saveKlassTeam(klassTeam);
-                    }
-                }
+//                teamService.deleteTeamByCourseId(subCourseId);
+//                List<Team> teamList=teamService.findTeamByCourseId(mainCourseId);
+//                for (Team team:teamList){
+//                    Long teamId=team.getId();
+//                    Long classId=teamService.findSubCourseTeamKlassId(subCourseId,teamId);
+//                    if (classId!=0) {
+//                        KlassTeam klassTeam = new KlassTeam();
+//                        klassTeam.setKlassId(classId);
+//                        klassTeam.setTeamId(teamId);
+//                        teamService.saveKlassTeam(klassTeam);
+//                    }
+//                }
                 return HttpStatus.OK;
             }
             else {
@@ -533,14 +533,14 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
         if (status==1){
             if (courseService.rejectTeamShareRequest(teamShareId)==1){
                 courseService.acceptTeamMainCourseId(new Long(0),subCourseId);
-                List<Team> teamList=teamService.findTeamByCourseId(mainCourseId);
-                for(Team team:teamList){
-                    Long teamId=team.getId();
-                    Long classId=teamService.findSubCourseTeamKlassId(subCourseId,teamId);
-                    if (classId!=0){
-                        teamService.deleteByTeamIdAndKlassId(teamId,classId);
-                    }
-                }
+//                List<Team> teamList=teamService.findTeamByCourseId(mainCourseId);
+//                for(Team team:teamList){
+//                    Long teamId=team.getId();
+//                    Long classId=teamService.findSubCourseTeamKlassId(subCourseId,teamId);
+//                    if (classId!=0){
+//                        teamService.deleteByTeamIdAndKlassId(teamId,classId);
+//                    }
+//                }
                 return HttpStatus.OK;
             }
             else {
@@ -723,4 +723,8 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
                 courseId_TeamStrategy);
     }
 
+    @PutMapping(value ="acceptTeamShare" )
+    public HttpStatus acceptShareTeam(Long teamShareId){
+        return courseService.acceptTeamShareApplication(teamShareId);
+    }
 }

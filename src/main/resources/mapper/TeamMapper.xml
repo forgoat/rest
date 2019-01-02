@@ -7,8 +7,7 @@
         SELECT *
         FROM team
         WHERE
-        course_id=#{course_id}
-        GROUP BY klass_id
+        course_id=#{courseId}
     </select>
     <select id="queryStudentNoTeam" resultType="com.rest.entity.Student">
         SELECT * FROM student

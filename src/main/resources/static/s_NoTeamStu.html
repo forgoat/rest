@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>未组队学生</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link type="text/css" rel="stylesheet" href="css/base.css">
+    <link type="text/css" rel="stylesheet" href="css/home.css">
+    <link href="css/custom.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/tab.js"></script>
+    <script type="text/javascript" src="js/slider.js"></script>
+</head>
+<body>
+
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="javascript:history.back(-1)" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <span class="aui-center-title">未组队学生</span>
+        </div>
+        <a href="javascript:;" class="aui-navBar-item">
+            <i class="icon icon-sys"></i>
+        </a>
+    </header>
+    <body>
+
+
+    <div class="list" id="myView"></div>
+
+    <script>
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        };
+        var myModel = {teamList:[]};
+        var sem = {smallList:[]};
+        var id='';
+
+        var htmlNav='';
+        function getStudent(studentid){
+            var courseid=getUrlParam('courseid');
+
+            $.ajax({
+                url: "/student/"+studentid,                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                async:false,
+
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+
+                    htmlNav+=res.account+'&nbsp; &nbsp;&nbsp; &nbsp;'+res.studentName;
+                },
+
+            });
+        }
+
+
+        function getNoTeamMem(){
+            var courseid=getUrlParam('courseid');
+
+            $.ajax({
+                url: "/team/NoTeamStudent",                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                async:false,
+                data:{courseId:courseid},
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+                    myModel.memList=res;
+
+                    for(var i=0;i< myModel.memList.length;i++)
+                    {
+                            htmlNav+='<div class="div-auto2" >&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; ';
+                            htmlNav+=myModel.memList[i].account+'&nbsp; &nbsp;&nbsp; &nbsp;'+myModel.memList[i].studentName;
+                            htmlNav+='</div>';
+                    }
+                },
+            });
+        }
+
+
+        function getTeam(){
+            var studentid=getUrlParam('studentid');
+            var courseid=getUrlParam('courseid');
+
+            $.ajax({
+                url: "/team",                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                async:false,
+                data:{studentId:studentid,courseId:courseid},
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+
+                    $("#myView").html(htmlNav);
+
+                },
+                error: function(){
+                    getNoTeamMem();
+                    $("#myView").html(htmlNav);
+                }
+            });
+        }
+
+
+
+        function getData(){
+            var studentid=getUrlParam('studentid');
+            var courseid=getUrlParam('courseid');
+
+            $.ajax({
+                url: "/team",                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                async:false,
+                data:{studentId:studentid,courseId:courseid},
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+
+                    getNoTeamMem();
+
+                    if(res===0)
+                    {
+                        htmlNav+='<div class="aui-code-box">';
+                        htmlNav+='<a href="s_TeaCre.html?studentid='+studentid+'&courseid='+courseid+'">';
+                        htmlNav+='<button >创建小组</button></a></div>';
+                    }
+                    else
+                    {
+
+                    }
+
+                    $("#myView").html(htmlNav);
+
+                },
+                error: function(){
+                    getNoTeamMem();
+
+                    htmlNav+='<div class="aui-code-box">';
+                    htmlNav+='<a href="s_TeaCre.html?studentid='+studentid+'&courseid='+courseid+'">';
+                    htmlNav+='<button >创建小组</button></a></div>';
+
+
+                    $("#myView").html(htmlNav);
+                }
+            });
+        }
+
+
+
+        getData();
+
+    </script>
+
+
+
+
+
+    </body>
+</html>

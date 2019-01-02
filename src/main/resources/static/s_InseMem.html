@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>创建小组</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="css/custom.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="css/chosen.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
+</head>
+<body>
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="javascript:;" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <span class="aui-center-title">创建小组</span>
+        </div>
+
+    </header>
+    <section class="aui-scrollView">
+        <div class="aui-code-box">
+
+
+
+
+
+
+                <div class="list" id="myView"></div>
+
+
+        </div>
+    </section>
+</section>
+
+
+
+
+
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var myModel = {teamList:[]};
+    var sem = {smallList:[]};
+    var id='';
+    var htmlNav='';
+
+
+    function create() {
+        var courseid=getUrlParam("courseid");
+        var studentid=getUrlParam("studentid");
+
+
+        var teamname=$("#teamname").val();
+        var classid=$("#dept").val();
+
+        $.ajax({
+            url: "/team",                //创建小组
+            type: 'POST',                                //http:POST/GET
+            data: {klassId:classid,courseId:courseid,leaderId:studentid,teamName:teamname},                            //指客户端提交给后台的参数
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function (res) {
+                alert("success!");
+
+            }, error: function () {
+                alert("sorry!");
+            }
+        });
+    }
+    function getNoTeamMem(){
+        var courseid=getUrlParam('courseid');
+        var studentid=getUrlParam("studentid");
+
+        alert(courseid);
+        $.ajax({
+            url: "/team/NoTeamStudent",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+            data:{courseId:courseid},
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+                myModel.memList=res;
+
+                htmlNav+='<label class="col-sm-2 control-label">添加成员：</label>';
+                htmlNav+='<div class="col-sm-7">';
+
+                for(var i=0;i< myModel.memList.length;i++)
+                {
+
+                    htmlNav+='<label class="radio-inline">';
+                    htmlNav+='<br>';
+                    htmlNav+='<input type="checkbox" value="'+myModel.memList[i].id+'">'+myModel.memList[i].studentName+'</label>';
+
+                }
+                htmlNav+='</div>';
+
+                htmlNav+='<div class="aui-code-box">';
+                htmlNav+='<button onclick="create()">';
+                htmlNav+='确认提交';
+                htmlNav+='</button>';
+                htmlNav+='</div>';
+
+                $("#myView").html(htmlNav);
+            },
+            error: function(){
+                alert('wrong');
+            }
+        });
+    }
+
+
+    getNoTeamMem();
+</script>
+
+
+</body>
+
+</html>
