@@ -64,24 +64,28 @@
     var id='';
     var htmlNav='';
 
+    var classidd;
     var teamid;
 
-    function create() {
+    function create(classid) {
         var courseid=getUrlParam("courseid");
         var studentid=getUrlParam("studentid");
 
 
         var teamname=$("#teamname").val();
-        var classid=$("#dept").val();
+        var classserial=$("#dept").val();
 
         $.ajax({
             url: "/team",                //创建小组
             type: 'POST',                                //http:POST/GET
-            data: {klassId:classid,courseId:courseid,leaderId:studentid,teamName:teamname},                            //指客户端提交给后台的参数
+            //缺少classid
+            data: {klassId:classid,courseId:courseid,leaderId:studentid,teamName:teamname,klassSerial:classserial},                            //指客户端提交给后台的参数
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success: function (res) {
-                GetTeamId();
+                teamid=res;
+                setStatus();
+
             }, error: function () {
                 alert("create!");
             }
@@ -94,7 +98,7 @@
         var courseid=getUrlParam("courseid");
         var studentid=getUrlParam("studentid");
 
-      alert(teamid);
+        alert(teamid);
         $.ajax({
             url: "/team/saveTeamStudent",                //创建小组
             type: 'POST',                                //http:POST/GET
@@ -102,31 +106,55 @@
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success: function (res) {
-                alert("success!");
+                setStatus();
+
 
             }, error: function () {
-                alert("InseMem!");
+
+            }
+        });
+    }
+
+    function GetClassId() {
+        var courseid=getUrlParam("courseid");
+        var studentid=getUrlParam("studentid");
+
+
+        $.ajax({
+            url: "/class/klassTeam",                //创建小组
+            type: 'GET',                                //http:POST/GET
+            data: {studentId:studentid,courseId:courseid},                            //指客户端提交给后台的参数
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function (res) {
+                classidd=res;
+                create(res);
+
+
+            }, error: function () {
+                alert("GetClassId");
             }
         });
     }
 
 
-    function GetTeamId() {
+    function setStatus() {
         var courseid=getUrlParam("courseid");
         var studentid=getUrlParam("studentid");
 
+
         $.ajax({
-            url: "/tea  m",                //创建小组
-            type: 'GET',                                //http:POST/GET
-            data: {studentId:studentid},                            //指客户端提交给后台的参数
+            url: "/team/setStatus",                //创建小组
+            type: 'POST',                                //http:POST/GET
+            data: {courseId:courseid,teamId:teamid},                            //指客户端提交给后台的参数
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success: function (res) {
-                teamid=res;
 
-                alert(teamid);
+
+
             }, error: function () {
-                alert("GetTeamId!");
+                alert("setStatus");
             }
         });
     }
@@ -145,7 +173,13 @@
             success: function(res){
                 myModel.memList=res;
 
-                htmlNav+='<label class="col-sm-2 control-label">添加成员：</label>';
+                htmlNav+='<div class="aui-code-box">';
+                htmlNav+='<button onclick="GetClassId() ">';
+                htmlNav+='开始创建';
+                htmlNav+='</button>';
+                htmlNav+='</div>';
+
+                htmlNav+='<label class="col-sm-2 control-label">请添加成员：</label>';
                 htmlNav+='<div class="col-sm-7">';
 
 
@@ -159,11 +193,11 @@
                 }
                 htmlNav+='</div>';
 
-                htmlNav+='<div class="aui-code-box">';
-                htmlNav+='<button onclick="create()">';
-                htmlNav+='确认提交';
-                htmlNav+='</button>';
-                htmlNav+='</div>';
+
+
+
+
+
 
                 $("#myView").html(htmlNav);
             },

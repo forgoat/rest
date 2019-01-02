@@ -144,7 +144,8 @@
                         for(var j=0;j< myModel.scoreList[i].seminarScoreInfos.length;j++)
                         {
                             htmlNav+='<li><a href="#">'+myModel.scoreList[i].seminarScoreInfos[j].seminarName
-                                +'：<span>展示：'+myModel.scoreList[i].seminarScoreInfos[j].presentationScore
+                                +'：</a></li>';
+                            htmlNav+='<li><a href="#"><span>展示：'+myModel.scoreList[i].seminarScoreInfos[j].presentationScore
                                 +';&nbsp;&nbsp;提问：'+myModel.scoreList[i].seminarScoreInfos[j].questionScore
                                 +';&nbsp;&nbsp;报告：'+myModel.scoreList[i].seminarScoreInfos[j].reportScore
                                 +'</span></a></li>';

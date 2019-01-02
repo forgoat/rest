@@ -153,7 +153,7 @@
                 url: "/team",                //后端的API地址
                 type: 'GET',                                //http:POST/GET
                 async:false,
-                data:{studentId:studentid},
+                data:{studentId:studentid,courseId:courseid},
                 dataType: 'json',                            //服务端返回类型text，JSON
                 timeout: 3000,
                 success: function(res){
@@ -164,6 +164,9 @@
                         getMem(res);
                         getNoTeamMem();
 
+                    htmlNav+='<div class="aui-code-box">';
+                    htmlNav+='<a href="s_DeleMem.html?studentid='+studentid+'&courseid='+courseid+'">';
+                    htmlNav+='<button >删除/添加成员</button></a></div>';
 
 
                         $("#myView").html(htmlNav);

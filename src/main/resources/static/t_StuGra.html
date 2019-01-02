@@ -78,11 +78,6 @@
 
 </div>
 
-<div class="aui-code-box">
-    <button >
-        导出成绩
-    </button>
-</div>
 
 
 
@@ -110,7 +105,9 @@
 
                 myModel.scoreList=res;
 
-
+                alert(myModel.scoreList.length);
+                alert(myModel.scoreList[0].teamRoundScores.length);
+                alert(myModel.scoreList[0].teamRoundScores[0].seminarScoreInfos.length);
                 htmlNav+='<ul class="yiji">';
 
                 for(var i=0;i< myModel.scoreList.length;i++)
@@ -118,24 +115,37 @@
                     htmlNav+='<li><a href="#" class="inactive">第'+myModel.scoreList[i].roundSerial+'轮</a>'
                     htmlNav+='<ul style="display: none">';
                     //组号加分数
-                    for(var k=0;k< myModel.scoreList[i].teamRoundScores.length;k++)
+                    if(myModel.scoreList[i].teamRoundScores.length>0)
                     {
-                        htmlNav+='<li><a href="#" class="inactive active">'+myModel.scoreList[i].teamRoundScores[k].klassSerial
-                            +'-'+myModel.scoreList[i].teamRoundScores[k].teamSerial+'</a>' ;
-                        htmlNav+='<ul>';
-
-                        //每个seminar分数
-                        for(var j=0;j< myModel.scoreList[i].teamRoundScores[k].seminarScoreInfos.length;j++)
+                        for(var k=0;k< myModel.scoreList[i].teamRoundScores.length;k++)
                         {
-                            htmlNav+='<li><a href="#">'+myModel.scoreList[i].teamRoundScores[k].seminarScoreInfos[j].seminarName
-                                +'：<span>展示：'+myModel.scoreList[i].teamRoundScores[k].seminarScoreInfos[j].presentationScore
-                                +';&nbsp;&nbsp;提问：'+myModel.scoreList[i].teamRoundScores[k].seminarScoreInfos[j].questionScore
-                                +';&nbsp;&nbsp;报告：'+myModel.scoreList[i].teamRoundScores[k].seminarScoreInfos[j].reportScore
-                                +'</span></a></li>';
+                            htmlNav+='<li><a href="#" class="inactive active">'+myModel.scoreList[i].teamRoundScores[k].klassSerial
+                                +'-'+myModel.scoreList[i].teamRoundScores[k].teamSerial+'</a>' ;
+                            htmlNav+='<ul>';
 
+                            //每个seminar分数
+
+                            if(myModel.scoreList[i].teamRoundScores[k].seminarScoreInfos===null)
+                            {
+
+                            }
+                            else
+                            {
+                                for(var j=0;j< myModel.scoreList[i].teamRoundScores[k].seminarScoreInfos.length;j++)
+                                {
+                                    htmlNav+='<li><a href="#">'+myModel.scoreList[i].teamRoundScores[k].seminarScoreInfos[j].seminarName
+                                        +'：</a></li>';
+                                    htmlNav+='<li><a href="#"><span>展示：'+myModel.scoreList[i].teamRoundScores[k].seminarScoreInfos[j].presentationScore
+                                        +';&nbsp;&nbsp;提问：'+myModel.scoreList[i].teamRoundScores[k].seminarScoreInfos[j].questionScore
+                                        +';&nbsp;&nbsp;报告：'+myModel.scoreList[i].teamRoundScores[k].seminarScoreInfos[j].reportScore
+                                        +'</span></a></li>';
+                                }
+                            }
+
+                            htmlNav+='</ul></li>';
                         }
-                        htmlNav+='</ul></li>';
                     }
+
                     htmlNav+='</ul></li>';
                 }
                 htmlNav+='</ul>';
