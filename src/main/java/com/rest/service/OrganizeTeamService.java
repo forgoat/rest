@@ -395,9 +395,14 @@ public class OrganizeTeamService {
      * @return
      */
     public int setStatus(Long teamId,Long courseId){
-        if(isValid(teamId,courseId))
-            return teamValidApplicationDao.insertTeamValidApplication(teamId,1);
-        else return teamValidApplicationDao.insertTeamValidApplication(teamId,0);
+        Course course=courseDao.findById(courseId);
+        if(isValid(teamId,courseId)){
+            return teamValidApplicationDao.insertTeamValidApplication(teamId,course.getTeacherId(),1);
+        }
+        else {
+            teamDao.updateStatus(teamId);
+            return teamValidApplicationDao.insertTeamValidApplication(teamId,course.getTeacherId(),0);
+        }
     }
 
     /**
@@ -645,6 +650,7 @@ public class OrganizeTeamService {
         strategySerial++;
         teamStrategyDao.insertTeamStrategy(courseId_TeamStrategy,strategySerial,"TeamAndStrategy",getMaxIdOfTeamAndStrategy());
         return strategySerial;
+
     }
 
 }

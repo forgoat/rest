@@ -1,13 +1,16 @@
 package com.rest.controller;
 
-import com.rest.entity.ScorePage;
-import com.rest.entity.SeminarScore;
+import com.rest.entity.*;
+import com.rest.service.CourseService;
+import com.rest.service.RoundService;
 import com.rest.service.ScoreService;
+import com.rest.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,6 +18,12 @@ import java.util.List;
 public class ScoreController {
     @Autowired
     private ScoreService scoreService;
+    @Autowired
+    private RoundService roundService;
+    @Autowired
+    private CourseService courseService;
+    @Autowired
+    private TeamService teamService;
 
     /**
      * 保存成绩
@@ -173,5 +182,55 @@ public class ScoreController {
     @GetMapping(value = "klass")
     public Long findKlassForTeam(Long courseId,Long teamId){
         return scoreService.findKlassForTeam(courseId,teamId);
+    }
+
+//    @GetMapping(value = "teacher")
+//    public List<RoundScorePage> teacherFindScore(Long courseId){
+//        return scoreService.teacherFindScore(courseId);
+//    }
+
+    @GetMapping(value = "seminarScoreInfo")
+    public SeminarScoreInfo findSeminarScoreInfo(Long teamId,Long klassSeminarId){
+        return scoreService.findSeminarScoreInfo(teamId,klassSeminarId);
+    }
+
+
+    @GetMapping(value = "courseScore")
+    public RoundScoreInfo findRoundScoreInfo(Long courseId){
+        return scoreService.findRoundScoreInfo(courseId);
+    }
+
+    @GetMapping(value = "test")
+    public TeamRoundScore findTeamRoundScore(Long courseId,Team team,Round round,List<Klass> klassList){
+        return scoreService.findTeamRoundScore(courseId,team,round,klassList);
+    }
+
+    @GetMapping(value = "Teacher")
+    public List<List<TeamRoundScore>> teamRoundScores(Long courseId){
+        List<List<TeamRoundScore>> listList=new ArrayList<List<TeamRoundScore>>();
+        RoundScoreInfo roundScoreInfo=scoreService.findRoundScoreInfo(courseId);
+        List<Round> roundList=roundScoreInfo.getRoundList();
+        if (roundList.isEmpty()){
+            return listList;
+        }
+        List<Team> teamList=roundScoreInfo.getTeamList();
+        if (teamList.isEmpty()){
+            return listList;
+        }
+        List<Klass> klassList=roundScoreInfo.getKlassList();
+        if (klassList.isEmpty()){
+            return listList;
+        }
+        for (Round round:roundList){
+            List<TeamRoundScore> teamRoundScores=new ArrayList<TeamRoundScore>();
+            for (Team team:teamList){
+                TeamRoundScore teamRoundScore=scoreService.findTeamRoundScore(courseId,team,round,klassList);
+                if (teamRoundScore!=null){
+                    teamRoundScores.add(teamRoundScore);
+                }
+            }
+            listList.add(teamRoundScores);
+        }
+        return listList;
     }
 }
