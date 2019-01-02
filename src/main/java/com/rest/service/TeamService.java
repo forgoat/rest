@@ -464,6 +464,10 @@ public class TeamService {
         return teamStudentDao.findTeamByStudent(studentId);
     }
 
+    public  List<TeamValidApplication> checkTeamValidApplication(){
+        return teamValidApplicationDao.queryAllTeamValidApplication();
+    }
+
     public List<TeamValidApplication> findTeamValidApplicationBy(Long teacherId){
         return teamValidApplicationDao.findTeamValidApplicationByTeacherIdAndStatus(teacherId);
     }

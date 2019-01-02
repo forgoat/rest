@@ -350,6 +350,7 @@ public class TeamController {
         return teamService.saveTeamValidApplication(teamValidApplication);
     }
 
+
     /**
      * 获取未组队学生
      * @param courseId

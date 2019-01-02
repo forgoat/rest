@@ -11,4 +11,5 @@ public interface TeamValidApplicationDao {
     public List<TeamValidApplication> findTeamValidApplicationByTeacherIdAndStatus(Long teacherId);
     int saveTeamValidApplication(TeamValidApplication teamValidApplication);
     int insertTeamValidApplication(@Param("teamId")Long teamId,@Param("teacherId")Long teacherId,@Param("status")Integer status);
+    List<TeamValidApplication> queryAllTeamValidApplication();
 }
