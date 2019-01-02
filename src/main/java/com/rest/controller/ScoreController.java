@@ -252,7 +252,6 @@ public class ScoreController {
         }
         for (Round round:roundList){
             TeamRoundScoreList teamRoundScoreList=new TeamRoundScoreList();
-            teamRoundScoreList.setRoundId(round.getId());
             teamRoundScoreList.setRoundSerial(round.getRoundSerial());
             List<TeamRoundScore> teamRoundScores=new ArrayList<TeamRoundScore>();
             for (Team team:teamList){

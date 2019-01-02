@@ -642,8 +642,8 @@ public class ScoreService {
                            }
                        }
                    }
-                   teamRoundScore.setTeamId(teamId);
                    Team team=teamDao.findById(teamId);
+                   //teamRoundScore.setTeamId(teamId);
                    teamRoundScore.setTeamSerial(team.getTeamSerial());
                    teamRoundScore.setKlassSerial(team.getKlassSerial());
                    teamRoundScore.setSeminarScoreInfos(seminarScoreInfos);
