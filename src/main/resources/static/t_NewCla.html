@@ -77,7 +77,7 @@
         var klass=$("#klass").val();
         var time=$("#time").val();
         var local=$("#local").val();
-        var id=getUrlParam("course");
+        var id=getUrlParam("courseid");
         var formData = new FormData($('#file1')[0]);
         $.ajax({
             url: "/course/" + id + "/class",
@@ -86,7 +86,7 @@
             dataType:'text',
            success:function(data) {
               alert("success");
-              window.location.href="a_Inf.html";
+              window.location.href="t_ClaInf.html?courseid="+id;
            },error:function () {
                 alert("sorry");
             }

@@ -35,7 +35,6 @@
     </div>
 
 
-
     <script>
         function getUrlParam(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -72,6 +71,8 @@ alert("删除成功！");
 
 
 
+
+
         function getData(){
             var courseid=getUrlParam('courseid');
             $.ajax({
@@ -84,7 +85,7 @@ alert("删除成功！");
                 success: function(res){
                     myModel.courseList=res;
                     var htmlNav='';
-                    $("#myView").empty();
+
 
                     if( myModel.courseList.length>0)
                     {
@@ -110,9 +111,16 @@ alert("删除成功！");
                                     '        </form>'
                         }
 
-
-                        $("#myView").html(htmlNav);
                     }
+                    htmlNav+='<a href="t_NewCla.html?courseid='+courseid+'">';
+                    htmlNav+='<div class="aui-code-box">';
+                    htmlNav+='<button >';
+                    htmlNav+='新建班级';
+                    htmlNav+='</button>';
+                    htmlNav+='</div>';
+                    htmlNav+='</a>';
+
+                    $("#myView").html(htmlNav);
                 },
                 error: function(){
 
