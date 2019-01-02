@@ -141,7 +141,7 @@
                         success: function (res) {
                             youModel.questList=[];
                             youModel.questList=res;
-                            //alert(youModel.questList.length)
+
                             if(youModel.questList.length>0)
                             {
                                 htmlNav+='<ul class="nav nav-pills  text-center">';
@@ -152,7 +152,7 @@
                                 htmlNav+='</ul>'
                             }
                         },error:function () {
-                            alert("服务超时，请重试");
+
                         }
                     });
                     htmlNav+='                    </div>';
@@ -185,14 +185,14 @@
                             htmlNav+='<ul class="nav nav-pills nav-stacked text-center">';
                             for(var i=0;i<myModel.courseList.length;i++)
                             {
-                                // alert(myModel.courseList[i].teamName);
+
                                 htmlNav+='<li role="presentation" class="myL" id="L'+i+'"><a href="#"  >NO'+myModel.courseList[i].teamOrder+myModel.courseList[i].teamName+'</a></li>';
                             }
                             htmlNav+='</ul>';
                             $("#myView").html(htmlNav);
                         }
                     },error:function () {
-                        alert("服务超时，请重试");
+
                     }
                 });
 

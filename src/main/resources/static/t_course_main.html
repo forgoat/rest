@@ -131,7 +131,7 @@
     var courseid=getUrlParam('courseid');
     sessionStorage.setItem("courseid",courseid)
     function getData() {
-        alert();
+
         $.ajax({
             url: "/round/course/" + courseid,                //后端的API地址
             type: 'GET',                                //http:POST/GET
