@@ -184,7 +184,7 @@
     }
     var myModel = {courseList:[]};
     var youModel={teacherList:[]};
-    var courseid=16;
+    var courseid=0;
     function loadpage() {
         for(var i=0;i<numb1;i++)
             loadstudentlimit("studentlimit"+i);
@@ -209,6 +209,7 @@
                         ht+=youModel.teacherList[i].courseName;
                         ht+='</option>';
                     }
+                    courseid=youModel.teacherList[youModel.teacherList.length-1].id+1;
                 }
                 $("#"+urlid).html(ht);
 
@@ -218,7 +219,6 @@
             }
         });
         }
-        var courseid='';
     function create() {
         var teacherid=3;
         var name=$("#name").val();
@@ -261,6 +261,7 @@
                     data:{teacherId:teacherid,courseName:name,introduction:require,presentationPercentage:score1,questionPercentage:score2,reportPercentage:score3,teamStartTime:start,teamEndTime:end},
                     success:function(em) {
                         courseid=em;
+                        alert(courseid);
                     },error:function () {
                         alert("create course failed");
                     }
@@ -269,7 +270,7 @@
                     url:"/course/setTeamStrategy",
                     type: "POST",
                     dataType:'json',
-                    data:{minMember_MemberLimitStrategy:member1,maxMember_MemberLimitStrategy:member2,option_CourseMemberLimitStrategy:diss,courseIdList_CourseMemberLimitStrategy:courseIdList_CourseMemberLimitStrategy[0],minMemberList_CourseMemberLimitStrategy:minMemberList_CourseMemberLimitStrategy[0],maxMemberList_CourseMemberLimitStrategy:maxMemberList_CourseMemberLimitStrategy[0],courseIdList_ConflictCourseStrategy:course[0],courseId_TeamStrategy:courseid},
+                    data:{minMember_MemberLimitStrategy:member2,maxMember_MemberLimitStrategy:member1,option_CourseMemberLimitStrategy:diss,courseIdList_CourseMemberLimitStrategy:courseIdList_CourseMemberLimitStrategy[0],minMemberList_CourseMemberLimitStrategy:minMemberList_CourseMemberLimitStrategy[0],maxMemberList_CourseMemberLimitStrategy:maxMemberList_CourseMemberLimitStrategy[0],courseIdList_ConflictCourseStrategy:course[0],courseId_TeamStrategy:courseid},
                     success:function(em) {
                         alert("success");
                         window.location.href="t_CouMana.html";

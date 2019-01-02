@@ -57,7 +57,11 @@
 
 
  <div class="div-auto1" >
-    <p>所属Round    <input type="text" id="round" class="form-control"style="width: 50px" value="1"/>
+    <p>所属Round
+        <select id="roundId">
+            <option value="0">round</option>
+
+        </select>
     </p>
     </div>
     <button class="button-auto1" onclick="set()">
@@ -83,16 +87,22 @@
         var start=$("#start").val();
         var end=$("#end").val();
         var member=$("#member").val();
-        var round=$("#round").val();
-        // courseId;
-        // private Long roundId;
-        // private String seminarName;
-        // private String  introduction;
-        // private Integer maxTeam;
-        // private Integer isVisible;
-        // private Integer seminarSerial;
-        // private Date enrollStartTime;
-        // private Date enrollEndTime;
+        var round=$("#roundId").val();
+        var roundId=round;
+        if(round==0)
+        {
+            $.ajax({
+                url:"/round",
+                type: 'POST',                                //http:POST/GET
+                async:false,
+                dataType: 'json',
+                data:{courseId:courseid,roundSerial:youModel.teacherList.length+1,presentationScoreMethod:0,reportScoreMethod:0,questionScoreMethod:0},//服务端返回类型text，JSON
+                timeout: 3000,
+                success:function (res) {
+                    roundId=res;
+                }
+
+        }
         $.ajax({
             url:"/seminar",
             type: 'POST',                                //http:POST/GET
@@ -108,5 +118,35 @@
         });
 
     }
+    function loadstudentlimit(urlid){
+        var ht='';
+        $("#roundId").empty();
+        $.ajax({
+            url:"/round/findByCourseId",
+            type: "GET",
+            dataType:'json',
+            data:{courseId:courseid},
+            success:function(em) {
+                youModel.teacherList=em;
+                if( youModel.teacherList.length>0)
+                {
+                    ht+='<option value="0">新建</option>';
+                    for(var i=0;i< youModel.teacherList.length;i++)
+                    {
+                        ht+='<option value="'+youModel.teacherList[i].id+'">第';
+                        ht+=youModel.teacherList[i].roundSerial;
+                        ht+='轮</option>';
+                    }
+                }
+                $("#roundId").html(ht);
+
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+    }
+    loadstudentlimit();
 </script>
 </html>
