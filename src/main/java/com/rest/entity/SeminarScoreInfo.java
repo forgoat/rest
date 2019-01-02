@@ -55,4 +55,15 @@ public class SeminarScoreInfo {
     public void setQuestionScore(Double questionScore) {
         this.questionScore = questionScore;
     }
+
+    @Override
+    public String toString() {
+        return "SeminarScoreInfo{" +
+                "klassSeminarId=" + klassSeminarId +
+                ", SeminarName='" + SeminarName + '\'' +
+                ", presentationScore=" + presentationScore +
+                ", reportScore=" + reportScore +
+                ", questionScore=" + questionScore +
+                '}';
+    }
 }
