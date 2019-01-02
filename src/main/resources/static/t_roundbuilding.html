@@ -11,8 +11,6 @@
     <link type="text/css" rel="stylesheet" href=" css/home.css">
     <link href=" css/custom.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src=" js/jquery.min.js"></script>
-    <script type="text/javascript" src=" js/tab.js"></script>
-    <script type="text/javascript" src=" js/slider.js"></script>
 </head>
 <body>
 
@@ -43,37 +41,25 @@
     <div class="div-auto2" >
         
        展示： <select id="show">
-        <option value="0">最高分</option>
-        <option value="1">平均分</option>
+        <option value="1">最高分</option>
+        <option value="0">平均分</option>
     </select>
     </div>
         <div class="div-auto2" >
         提问： <select id="ask">
-            <option value="0">最高分</option>
-            <option value="1">平均分</option>
+            <option value="1">最高分</option>
+            <option value="0">平均分</option>
     </select>
         </div>
     <div class="div-auto2" >
         报告：<select id="report">
-        <option value="0">最高分</option>
-        <option value="1">平均分</option>
+        <option value="1">最高分</option>
+        <option value="0">平均分</option>
     </select>
     </div>
     <div class="div-auto1"  id="times">
         本轮讨论课报名次数：
-        一班：<select>
-        <option value="1（默认）">1（默认）</option>
-    </select>
-    </div>
-        <div class="div-auto1" >
-        二班：<select>
-        <option value="1（默认）">1（默认）</option>
-    </select>
-        </div>
-    <div class="div-auto1" >
-        三班：<select>
-        <option value="1（默认）">1（默认）</option>
-    </select>
+        <input type="text" id="member" class="form-control"style="width: 50px" value="1"/>
     </div>
         <button class="button-auto1" onclick="">
             修改
@@ -88,8 +74,10 @@
         if (r != null) return unescape(r[2]); return null; //返回参数值
     };
     var myModel = {courseList:[]};
+    var myModel1 = {courseList1:[]};
+    var roundid=getUrlParam("roundid");
+    var courseid=getUrlParam("courseid");
     function load() {
-        var roundid=getUrlParam("roundid");
         var htmlvel='';
         $.ajax({
            url:"/round/"+roundid+"/seminar",
@@ -112,5 +100,40 @@
         });
     }
     load();
+    function set() {
+        var show=$("#show").val();
+        var ask=$("#ask").val();
+        var report=$("#report").val();
+        var member=$("#member").val();
+        $.ajax({
+            url:"/round/"+roundid,
+            type: 'PUT',                                //http:POST/GET
+            async:false,
+            dataType: 'json',
+            data:{presentationScoreMethod:show,reportScoreMethod:report,questionScoreMethod:ask},//服务端返回类型text，JSON
+            timeout: 3000,
+            success:function (res) {
+                alert("success round");
+            },error:function () {
+                alert("fail round");
+            }
+            });
+        for(var j=0;j<myModel.courseList.length;j++)
+        $.ajax({
+            url:"/seminar/"+myModel.courseList[j].id,
+            type: 'PUT',                                //http:POST/GET
+            async:false,
+            dataType: 'json',
+            data:{maxTeam:member},
+            timeout:3000,
+            success:function () {
+                alert("success"+myModel.courseList.seminarName);
+            }
+
+            });
+        window.location.href="t_course_main.html?courseid="+courseid;
+
+
+    }
 </script>
 </html>

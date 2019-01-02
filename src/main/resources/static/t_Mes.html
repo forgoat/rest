@@ -77,49 +77,61 @@
 <div class="list"id="myView">
 </div>
 
-<div class="aui-code-box">
-    <button >
-        新增共享
-    </button>
-</div>
 
 <script>
     var myModel = {courseList:[]};
-    var courseid=16;
-    function getData(){
+    var teacher=sessionStorage.getItem("id");
+    function getcourse() {
         $.ajax({
-            url: "/course/"+courseid+"/teamsharerequest",                //后端的API地址,没连好
+            url: "/course/teacher"+teacher,                //后端的API地址,没连好
             type: 'GET',                                //http:POST/GET
             async:false,
-            //data:{},     //指客户端提交给后台的参数
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success: function(res) {
-                myModel.courseList =res;
-                var htmlNav = '';
-                $("#myView").empty();
-                if (myModel.courseList.length > 0) {
-                    htmlNav += '<ul class="yiji">';
-                    for (var i = 0; i < myModel.courseList.length; i++) {
-                        htmlNav += '<li><a href="#" class="inactive">' + myModel.courseList[i].mainCourseName + '-' + myModel.courseList[i].mainTeacherName + '的共享分组请求' + '</a>';
-                        htmlNav += '<ul style="display: none">';
-                        htmlNav += '<li><a href="#">' + myModel.courseList[i].mainTeacherName + '</a></li>';
-                        htmlNav += '<li class="last"><a href="#">共享分组</a></li>"';
-                        htmlNav += '<div class="div-auto1"style="height: 80px">\n' +
-                            '               <button class="button-auto3"style="float: left">接受</button>\n' +
-                            '               <button class="button-auto3"style="float: right">拒绝</button>\n' +
-                            '       </div>'
-                        htmlNav += '</ul>';
-                        htmlNav += '</li>';
-                    }
-                    htmlNav += '</ul>';
-                }
-                $("#myView").html(htmlNav);
-            },error: function(){
-                alert('服务器忙，请稍候');
+                myModel.courseList=res;
             }
             });
-            }
+    }
+    function getData(){
+        var htmlNav = '';
+        for(var i=0;i<myModel.courseList.length;i++)
+        {
+            $.ajax({
+                url: "/course/"+myModel.courseList[i]+"/teamsharerequest",                //后端的API地址,没连好
+                type: 'GET',                                //http:POST/GET
+                async:false,
+                //data:{},     //指客户端提交给后台的参数
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res) {
+                    myModel.courseList =res;
+                    $("#myView").empty();
+                    if (myModel.courseList.length > 0) {
+                        htmlNav += '<ul class="yiji">';
+                        for (var i = 0; i < myModel.courseList.length; i++) {
+                            if(myModel.courseList[i].status==null)
+                            htmlNav += '<li><a href="#" class="inactive">' + myModel.courseList[i].mainCourseName + '-' + myModel.courseList[i].mainTeacherName + '的共享分组请求' + '</a>';
+                            htmlNav += '<ul style="display: none">';
+                            htmlNav += '<li><a href="#">' + myModel.courseList[i].mainTeacherName + '</a></li>';
+                            htmlNav += '<li class="last"><a href="#">共享分组</a></li>"';
+                            htmlNav += '<div class="div-auto1"style="height: 80px">\n' +
+                                '               <button class="button-auto3"style="float: left">接受</button>\n' +
+                                '               <button class="button-auto3"style="float: right">拒绝</button>\n' +
+                                '       </div>'
+                            htmlNav += '</ul>';
+                            htmlNav += '</li>';
+                        }
+                        htmlNav += '</ul>';
+                    }
+                },error: function(){
+                    htmlNav+="无数据";
+                }
+            });
+            $("#myView").html(htmlNav);
+        }
+        }
+
             getData();
 </script>
 </body>

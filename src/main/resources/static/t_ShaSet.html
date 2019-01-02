@@ -95,14 +95,13 @@
         if (r != null) return unescape(r[2]); return null; //返回参数值
     };
     var myModel = {courseList:[]};
+    var courseid=getUrlParam('courseid');
+    var teacherid=sessionStorage.getItem('id')
     function getData(){
-        var courseid=getUrlParam('courseid');
-        var studentid=sessionStorage.getItem('id')
         $.ajax({
             url: "/course/"+courseid+"/shareList",                //后端的API地址，待测试
             type: 'GET',                                //http:POST/GET
             async:false,
-            data:{studentId:studentid},     //指客户端提交给后台的参数
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success: function(res){
@@ -122,12 +121,12 @@
                         if(myModel.courseList[i].shareStatus==0)
                         {
                             htmlNav+='<li><a href="#">共享类型：组队分享</a></li>';
-                            htmlNav+='<div class="aui-code-box"><button onclick="quxiao1('+myModel.courseList[i].id+')" >取消共享</button></div>';
+                            htmlNav+='<div class="aui-code-box"><button onclick="quxiao1('+myModel.courseList[i].shareId+')" >取消共享</button></div>';
                         }
                         else
                         {
                             htmlNav+='<li><a href="#">共享类型：课程分享</a></li>';
-                            htmlNav+='<div class="aui-code-box"><button onclick="quxiao2('+myModel.courseList[i].id+')" >取消共享</button></div>';
+                            htmlNav+='<div class="aui-code-box"><button onclick="quxiao2('+myModel.courseList[i].shareId+')" >取消共享</button></div>';
                         }
                     }
                     htmlNav+='</ul>';
@@ -169,6 +168,7 @@
             timeout: 3000,
             success: function(res) {
                 alert("success");
+                window.location.href="t_ShaSet.html?courseid="+courseid;
             },error:
                 function(){
                     alert("sorry");

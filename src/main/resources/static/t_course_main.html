@@ -147,7 +147,7 @@
                     for (var i = 0; i < myModel.courseList.length; i++) {
                         htmlNav += '<li><a href="#" class="inactive">第'+myModel.courseList[i].roundSerial+'轮</a>';
                         htmlNav += '<ul style="display: none">\n' +
-                            '                <li class="last"><a style="font-family:times;color:black" href="t_roundbuilding.html?roundid='+myModel.courseList[i].roundId+'">该轮轮次设置</a></li>';
+                            '                <li class="last"><a style="font-family:times;color:black" href="t_roundbuilding.html?roundid='+myModel.courseList[i].roundId+'&courseid='+courseid+'">该轮轮次设置</a></li>';
                         myModel1.courseList1 = myModel.courseList[i].seminarLists;
                         if (myModel1.courseList1.length > 0) {
                             for (var j = 0; j < myModel1.courseList1.length; j++) {

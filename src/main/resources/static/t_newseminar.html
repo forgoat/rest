@@ -11,8 +11,6 @@
     <link type="text/css" rel="stylesheet" href=" css/home.css">
     <link href=" css/custom.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src=" js/jquery.min.js"></script>
-    <script type="text/javascript" src=" js/tab.js"></script>
-    <script type="text/javascript" src=" js/slider.js"></script>
 </head>
 <body>
 
@@ -30,45 +28,85 @@
     </header>
     <body>
     <div class="div-auto1" >
-        主题 讨论课大纲
+        主题： <input  class="aui-code-line-input"  type="text" placeholder="主题" id="theme">
     </div>
     <div class="div-auto2" >
-        讨论课主要内容
+        讨论课主要内容：<input  class="aui-code-line-input"  type="text" placeholder="内容" id="intro">
     </div>
-   
 
     <div class="div-auto2" >
         <p>讨论课可见：
-            <label><input name="讨论课" type="radio" value="" />可见 </label>
+            <label><input name="讨论课" type="radio" id="islook"/>可见 </label>
         </p>
     </div>
 
     <div class="div-auto1" >
-        展示报告开始时间：   /年/月/日
+        展示报告开始时间：   <input type="date" id="start" class="form-control"style="width:50%" />
     </div>
 
  <div class="div-auto1" >
-        展示报告截止时间：   /年/月/日
+        展示报告截止时间：  <input type="date" id="end" class="form-control"style="width: 50%" />
     </div>
 
 <div class="div-auto1" >
-      报名小组数：
+      报名小组数：<input type="text" id="member" class="form-control"style="width: 50px" value="1"/>
+    </div>
+    <div class="div-auto1" >
+        讨论课序号：<input type="text" id="serial" class="form-control"style="width: 50px" value="1"/>
     </div>
 
 
  <div class="div-auto1" >
-    <p>所属Round    <select>
-
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-    </select>
+    <p>所属Round    <input type="text" id="round" class="form-control"style="width: 50px" value="1"/>
     </p>
     </div>
-        <a herf="/teacher/main/coursemain" class="button-auto1" >
-           发布
-        </a>
+    <button class="button-auto1" onclick="set()">
+            发布
+    </button>
+
 
 </body>
+</section>
+</body>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var courseid=getUrlParam("courseid");
+    function set() {
+        var theme=$("#theme").val();
+        var intro=$("#intro").val();
+        var islook=$("#islook").attr("checked")?0:1;
+        var serial=$("#serial").val();
+        var start=$("#start").val();
+        var end=$("#end").val();
+        var member=$("#member").val();
+        var round=$("#round").val();
+        // courseId;
+        // private Long roundId;
+        // private String seminarName;
+        // private String  introduction;
+        // private Integer maxTeam;
+        // private Integer isVisible;
+        // private Integer seminarSerial;
+        // private Date enrollStartTime;
+        // private Date enrollEndTime;
+        $.ajax({
+            url:"/seminar",
+            type: 'POST',                                //http:POST/GET
+            async:false,
+            data:{courseId:courseid,roundId:roundId,seminarName:theme,introduction:intro,maxTeam:member,isVisible:islook,seminarSerial:serial,enrollStartTime:start,enrollEndTime:end},
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success:function (res) {
+                alert("success");
+                window.location.href="t_course_main.html?courseid="+courseid;
+
+            }
+        });
+
+    }
+</script>
 </html>

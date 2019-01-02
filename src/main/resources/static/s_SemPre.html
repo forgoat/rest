@@ -119,17 +119,17 @@
             index=msg.data;
             $("#qul"+msg.data).css("color","red");
             $("#qul"+dat).css("color","black");
-        }else if(msg.data=true)
+        }else if(msg.data=="tiwen")
         {
             askmember++;
             $("#ssp2").html(askmember+"人准备回答");
-        }else if(msg.data=false)
-        {
-            askmember=0;
-            $("#ssp2").html(askmember+"人准备回答");
         }
         else
+        {
             alert(msg.data);
+            askmember--;
+            $("#ssp2").html(askmember+"人准备回答");
+        }
     };
     function clickme() {
         $.ajax({
@@ -140,7 +140,7 @@
             dataType: 'json',
             success: function (res) {
                 alert("提问成功");
-                socket.send(true);
+                socket.send("tiwen");
             },error:function () {
                 alert("服务器繁忙，请稍后")
             }
