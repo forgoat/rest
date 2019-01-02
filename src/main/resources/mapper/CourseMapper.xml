@@ -5,7 +5,7 @@
 <mapper namespace="com.rest.dao.CourseDao">
     <select id="queryCourseByStudentId" resultType="com.rest.entity.Course">
         SELECT *
-        FROM standard_seminar_system.course
+        FROM course
         WHERE
         course.id IN(
         SELECT course_id
@@ -15,30 +15,30 @@
         )
     </select>
     <select id="findAllCourse" resultType="com.rest.entity.Course">
-        SELECT * FROM standard_seminar_system.course
+        SELECT * FROM course
     </select>
     <insert id="saveCourse" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO standard_seminar_system.course(teacher_id,course_name,introduction,presentation_percentage,question_percentage,report_percentage,team_start_time,team_end_time,team_main_course_id,seminar_main_course_id) VALUE(#{teacherId},#{courseName},#{introduction},#{presentationPercentage},#{questionPercentage},#{reportPercentage},#{teamStartTime},#{teamEndTime},#{teamMainCourseId},#{seminarMainCourseId})
+        INSERT INTO course(teacher_id,course_name,introduction,presentation_percentage,question_percentage,report_percentage,team_start_time,team_end_time,team_main_course_id,seminar_main_course_id) VALUE(#{teacherId},#{courseName},#{introduction},#{presentationPercentage},#{questionPercentage},#{reportPercentage},#{teamStartTime},#{teamEndTime},#{teamMainCourseId},#{seminarMainCourseId})
     </insert>
     <select id="findById" parameterType="long" resultType="com.rest.entity.Course">
-        SELECT * FROM standard_seminar_system.course WHERE id=#{id}
+        SELECT * FROM course WHERE id=#{id}
     </select>
     <delete id="deleteById" parameterType="long">
-        DELETE FROM standard_seminar_system.course WHERE id=#{id}
+        DELETE FROM course WHERE id=#{id}
     </delete>
     <select id="findByTeacherId" parameterType="long" resultType="com.rest.entity.Course">
-        SELECT * FROM standard_seminar_system.course WHERE teacher_id=#{teacherId}
+        SELECT * FROM course WHERE teacher_id=#{teacherId}
     </select>
     <update id="acceptMainTeamCourseId">
-        UPDATE standard_seminar_system.course SET team_main_course_id=#{param1} WHERE id=#{param2}
+        UPDATE course SET team_main_course_id=#{param1} WHERE id=#{param2}
     </update>
     <update id="acceptMainSeminarId">
-        UPDATE standard_seminar_system.course SET seminar_main_course_id=#{mainCourseId} WHERE id=#{subCourseId}
+        UPDATE course SET seminar_main_course_id=#{mainCourseId} WHERE id=#{subCourseId}
     </update>
 
     <select id="queryTeamMainCourseIdByCourseId" resultType="long">
         SELECT team_main_course_id
-        FROM standard_seminar_system.course
+        FROM course
         WHERE id=#{id}
     </select>
 </mapper>

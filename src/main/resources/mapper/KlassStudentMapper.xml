@@ -4,33 +4,33 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.KlassStudentDao">
     <select id="findByTeamId" parameterType="long" resultType="com.rest.entity.KlassStudent">
-        SELECT * FROM standard_seminar_system.klass_student WHERE team_id=#{teamId}
+        SELECT * FROM klass_student WHERE team_id=#{teamId}
     </select>
     <update id="quitTeam" parameterType="long">
-        UPDATE standard_seminar_system.klass_student SET team_id=0 WHERE student_id=#{studentId}
+        UPDATE klass_student SET team_id=0 WHERE student_id=#{studentId}
     </update>
     <select id="findByStudentId" resultType="com.rest.entity.KlassStudent">
-        SELECT * FROM standard_seminar_system.klass_student WHERE student_id=#{studentId}
+        SELECT * FROM klass_student WHERE student_id=#{studentId}
     </select>
     <update id="updateTeam">
-        UPDATE standard_seminar_system.klass_student SET team_id=#{param2} WHERE student_id=#{param1}
+        UPDATE klass_student SET team_id=#{param2} WHERE student_id=#{param1}
     </update>
     <select id="findTeam" resultType="long">
-        SELECT team_id FROM standard_seminar_system.klass_student WHERE student_id=#{param2} AND course_id=#{param1}
+        SELECT team_id FROM klass_student WHERE student_id=#{param2} AND course_id=#{param1}
     </select>
     <select id="findKlass" resultType="long">
-        SELECT klass_id FROM standard_seminar_system.klass_student WHERE student_id=#{param1} AND course_id=#{param2}
+        SELECT klass_id FROM klass_student WHERE student_id=#{param1} AND course_id=#{param2}
     </select>
     <select id="queryKlassByStudentIdCourseId" resultType="long">
         SELECT klass_id
-        FROM standard_seminar_system.klass_student
+        FROM klass_student
         WHERE
         student_id=#{studentId}
         AND
         course_id=#{courseId}
     </select>
     <insert id="insertStudent" parameterType="long">
-        INSERT INTO standard_seminar_system.klass_student
+        INSERT INTO klass_student
         (
         klass_id,
         student_id,
@@ -43,12 +43,12 @@
     </insert>
 
     <select id="findKlassStudentByCourseId" resultType="com.rest.entity.KlassStudent" parameterType="long">
-        SELECT * FROM standard_seminar_system.klass_student WHERE course_id=#{courseId}
+        SELECT * FROM klass_student WHERE course_id=#{courseId}
     </select>
 
     <select id="queryStudentIdListByKlassIdCourseId" resultType="long">
         SELECT student_id
-        FROM standard_seminar_system.klass_student
+        FROM klass_student
         WHERE
         klass_id=#{klassId}
         AND

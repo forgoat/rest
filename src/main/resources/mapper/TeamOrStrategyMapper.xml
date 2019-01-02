@@ -5,11 +5,11 @@
 <mapper namespace="com.rest.dao.TeamOrStrategyDao">
     <select id="queryTeamOrStrategy" resultType="com.rest.entity.TeamOrStrategy" parameterType="Long">
         SELECT *
-        FROM standard_seminar_system.team_or_strategy
+        FROM team_or_strategy
         WHERE  id=#{id}
     </select>
     <insert id="insertTeamOrStrategy">
-        INSERT INTO  standard_seminar_system.team_or_strategy
+        INSERT INTO  team_or_strategy
          (
         id,
         strategy_name,
@@ -23,6 +23,6 @@
 
     <select id="queryAllTeamOrStrategy" resultType="com.rest.entity.TeamOrStrategy">
         SELECT *
-        FROM standard_seminar_system.team_or_strategy
+        FROM team_or_strategy
     </select>
 </mapper>

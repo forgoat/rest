@@ -4,32 +4,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.TeacherDao">
     <select id="teacherlist" resultType="com.rest.entity.Teacher">
-        SELECT * FROM standard_seminar_system.teacher;
+        SELECT * FROM teacher;
     </select>
     <insert id="save" parameterType="com.rest.entity.Teacher" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO standard_seminar_system.teacher(account,password,is_active,teacher_name,email) VALUE
+        INSERT INTO teacher(account,password,is_active,teacher_name,email) VALUE
         (#{account},#{password},#{isActive},#{teacherName},#{email})
     </insert>
     <select id="findByAccount" parameterType="string" resultType="com.rest.entity.Teacher">
-        SELECT * FROM standard_seminar_system.teacher WHERE account=#{account}
+        SELECT * FROM teacher WHERE account=#{account}
     </select>
     <select id="findById" parameterType="long" resultType="com.rest.entity.Teacher">
-        SELECT * FROM standard_seminar_system.teacher WHERE id=#{id}
+        SELECT * FROM teacher WHERE id=#{id}
     </select>
     <update id="updatePassword">
-        UPDATE standard_seminar_system.teacher SET password=#{param2} WHERE id=#{param1}
+        UPDATE teacher SET password=#{param2} WHERE id=#{param1}
     </update>
     <update id="updateEmail">
-        UPDATE standard_seminar_system.teacher SET email=#{param2} WHERE id=#{param1}
+        UPDATE teacher SET email=#{param2} WHERE id=#{param1}
     </update>
     <update id="actival">
-        UPDATE standard_seminar_system.teacher SET is_active=1 WHERE id=#{id}
+        UPDATE teacher SET is_active=1 WHERE id=#{id}
     </update>
     <delete id="delete" parameterType="long">
-        DELETE FROM standard_seminar_system.teacher WHERE id=#{id}
+        DELETE FROM teacher WHERE id=#{id}
     </delete>
     <select id="search" resultType="com.rest.entity.Teacher">
-        SELECT * FROM standard_seminar_system.teacher
+        SELECT * FROM teacher
         <where>
             <if test="param1!=null ">
                 account=#{param1}
@@ -40,7 +40,7 @@
         </where>
     </select>
     <update id="updateInfo">
-        UPDATE standard_seminar_system.teacher
+        UPDATE teacher
         <set>
         <if test="param2!=null">
             account=#{param2},
