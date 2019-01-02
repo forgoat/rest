@@ -58,8 +58,6 @@
     };
     var seminarid=getUrlParam("seminarid");
     var klassseminarid=getUrlParam("klassseminarid");
-    seminarid=5;
-    klassseminarid=10;
 
     function loadpage() {
         $.ajax({
@@ -81,11 +79,8 @@
                 var h=0;
                 var ht='';
                 $("#alist").empty();
-                alert(mydata.alist.length);
                 for(var i=1;i<=limit;i++)
                 {
-
-                    alert();
                     if(mydata.alist.length>h)
                     {
                         if(mydata.alist[h].teamOrder==i) {

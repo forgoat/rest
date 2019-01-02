@@ -42,16 +42,16 @@
                         <br>
                         <label class="col-sm-2 control-label">课堂展示：</label>
 
-                        <input type="text" class="form-control" placeholder="50%" id="score1">
+                        <input type="text" class="form-control" placeholder="50" id="score1">
 
                         <br>
                         <label class="col-sm-2 control-label">课堂提问：</label>
 
-                        <input type="text" class="form-control" placeholder="20%" id="score2">
+                        <input type="text" class="form-control" placeholder="20" id="score2">
                         <br>
                         <label class="col-sm-2 control-label">书面报告：</label>
 
-                        <input type="text" class="form-control" placeholder="30%" id="score3">
+                        <input type="text" class="form-control" placeholder="30" id="score3">
                     </div>
                     <hr>
                     <br>
@@ -245,31 +245,41 @@
                 maxMemberList_CourseMemberLimitStrategy.push($("#limit0"+i).val());
                 minMemberList_CourseMemberLimitStrategy.push($("#limit1"+i).val());
             }
-       if(numb1>1)
-            diss=$("#diss").val();
-        $.ajax({
-            url:"/course",
-            type: "POST",
-            dataType:'json',
-            data:{teacherId:teacherid,courseName:name,introduction:require,presentationPercentage:score1,questionPercentage:score2,reportPercentage:score3,teamStartTime:start,teamEndTime:end},
-            success:function(em) {
-                courseid=em;
-            },error:function () {
-                alert("create course failed");
+            if(course.length>1&&course[0]==course[1])
+            {
+                    alert("不能重复限制");
+            }else if(courseIdList_CourseMemberLimitStrategy.length>0&&courseIdList_CourseMemberLimitStrategy[0]==courseIdList_CourseMemberLimitStrategy[1])
+                alert("不能重复限制");
+            else{
+
+                if(numb1>1)
+                    diss=$("#diss").val();
+                $.ajax({
+                    url:"/course",
+                    type: "POST",
+                    dataType:'json',
+                    data:{teacherId:teacherid,courseName:name,introduction:require,presentationPercentage:score1,questionPercentage:score2,reportPercentage:score3,teamStartTime:start,teamEndTime:end},
+                    success:function(em) {
+                        courseid=em;
+                    },error:function () {
+                        alert("create course failed");
+                    }
+                });
+                $.ajax({
+                    url:"/course/setTeamStrategy",
+                    type: "POST",
+                    dataType:'json',
+                    data:{minMember_MemberLimitStrategy:member1,maxMember_MemberLimitStrategy:member2,option_CourseMemberLimitStrategy:diss,courseIdList_CourseMemberLimitStrategy:courseIdList_CourseMemberLimitStrategy[0],minMemberList_CourseMemberLimitStrategy:minMemberList_CourseMemberLimitStrategy[0],maxMemberList_CourseMemberLimitStrategy:maxMemberList_CourseMemberLimitStrategy[0],courseIdList_ConflictCourseStrategy:course[0],courseId_TeamStrategy:courseid},
+                    success:function(em) {
+                        alert("success");
+                        window.location.href="t_CouMana.html";
+                    },error:function () {
+                        alert("set course failed");
+                    }
+                });
             }
-            });
-        $.ajax({
-            url:"/course/setTeamStrategy",
-            type: "POST",
-            dataType:'json',
-            data:{minMember_MemberLimitStrategy:member1,maxMember_MemberLimitStrategy:member2,option_CourseMemberLimitStrategy:diss,courseIdList_CourseMemberLimitStrategy:courseIdList_CourseMemberLimitStrategy[0],minMemberList_CourseMemberLimitStrategy:minMemberList_CourseMemberLimitStrategy[0],maxMemberList_CourseMemberLimitStrategy:maxMemberList_CourseMemberLimitStrategy[0],courseIdList_ConflictCourseStrategy:course[0],courseId_TeamStrategy:courseid},
-            success:function(em) {
-                alert("success");
-            },error:function () {
-                alert("set course failed");
             }
-        });
-    }
+
 </script>
 </body>
 </html>

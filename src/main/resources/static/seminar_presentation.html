@@ -226,7 +226,7 @@
             $("button.nextQuestion").click(function () {
                 //广播，同时抽取队列最顶层
                 getquestion(myModel.courseList[index].attendanceId);
-                if (thisquestion=={})
+                if (thisquestion==null)
                     alter("已无提问，请开始下一个展示！");
                 else
                 {
@@ -303,7 +303,7 @@
                         if(teamModel.questionTeam.length>0)
                             thisquestion=teamModel.questionTeam[0];
                         else
-                            thisquestion={};
+                            thisquestion=null;
                         alert(teamModel.questionTeam[0]);
                     },error:function () {
                         alert("sorry!");
@@ -315,7 +315,7 @@
                 $("#questionlist" + j).empty();
                 var aModel = {aList: []};
                 var htmls = '';
-                alert("shuaxin"+j);
+                // alert("shuaxin"+j);
                 $.ajax({
                     url: "/attendance/questions",
                     type: "GET",
@@ -337,7 +337,7 @@
                         alert("服务超时，请重试");
                     }
                 });
-                alert(htmls);
+                //alert(htmls);
                 $("#questionlist" + j).html(htmls);
             }
 
@@ -354,7 +354,7 @@
 
             //loading();
 
-            var askmember=0;
+            var askmember=1;
             socket.onmessage = function(msg) {
                 alert(msg.data);
                 if(msg.data>0&&msg.data<10)

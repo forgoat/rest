@@ -74,7 +74,7 @@
     var klassseminarid = getUrlParam("klassseminarid");
     var myModel = {courseList:[]};
     var youModel={questList:[]};
-    var askmember=0;
+    var askmember=1;
     function loading() {
         $.ajax({
             url: "/attendance/" + klassseminarid+"/info",

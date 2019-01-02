@@ -50,7 +50,7 @@
     <section class="aui-scrollView">
         <div class="aui-code-box">
                 <div class="aui-code-btn">
-                    <button>
+                    <button id="myView6">
                         <a href="s_SemPre.html">进入讨论课</a>
                     </button>
                 </div>
@@ -80,7 +80,8 @@
                 $("#myView2").html("主题:" + json.seminarName);
                 $("#myView3").html("课次序号:" + json.seminarSerial);
                 $("#myView4").html("要求:" + json.introduction);
-                $("#myView5").html("课程情况：未开始" + '<a href="s_SemTeam.html?klassseminarid=' + klassseminarid + '">查看情况</a>');
+                $("#myView5").html("课程情况：已经开始" + '<a href="s_SemTeam.html?klassseminarid=' + klassseminarid + '">查看情况</a>');
+                $("#myView6").html('<a href="s_SemPre.html?klassseminarid=' + klassseminarid + '">进入讨论课</a>');
             }, error: function () {
                 alert('服务器忙，请稍候');
             }

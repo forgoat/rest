@@ -81,6 +81,8 @@
         var r = window.location.search.substr(1).match(reg);  //匹配目标参数
         if (r != null) return unescape(r[2]); return null; //返回参数值
     };
+    var courseid=getUrlParam('courseid');
+    sessionStorage.setItem("courseid",courseid)
     var myModel = {courseList:[]};
     var sem = {semList:[]};
     var semid=16;
@@ -90,7 +92,7 @@
             url: "/team",                //后端的API地址
             type: 'GET',                                //http:POST/GET
             async:false,
-            data:{studentId:id},     //指客户端提交给后台的参数
+            data:{studentId:id,courseId:courseid},     //指客户端提交给后台的参数
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success: function(res) {
@@ -101,8 +103,6 @@
     }
     getteam();
     function getData(){
-        var courseid=getUrlParam('courseid');
-        sessionStorage.setItem("courseid",courseid)
         $.ajax({
             url: "/course/"+courseid+"/seminar",                //后端的API地址
             type: 'GET',                                //http:POST/GET
@@ -114,7 +114,6 @@
                 myModel.courseList=res;
                 var htmlNav='';
                 $("#myView").empty();
-                alert();
                 if( myModel.courseList.length>0)
                 {
                     htmlNav+='<ul class="yiji">';
