@@ -92,15 +92,22 @@
         if(round==0)
         {
             $.ajax({
-                url:"/round",
+                url: "/round",
                 type: 'POST',                                //http:POST/GET
-                async:false,
+                async: false,
                 dataType: 'json',
-                data:{courseId:courseid,roundSerial:youModel.teacherList.length+1,presentationScoreMethod:0,reportScoreMethod:0,questionScoreMethod:0},//服务端返回类型text，JSON
+                data: {
+                    courseId: courseid,
+                    roundSerial: youModel.teacherList.length + 1,
+                    presentationScoreMethod: 0,
+                    reportScoreMethod: 0,
+                    questionScoreMethod: 0
+                },//服务端返回类型text，JSON
                 timeout: 3000,
-                success:function (res) {
-                    roundId=res;
+                success: function (res) {
+                    roundId = res;
                 }
+            });
 
         }
         $.ajax({
@@ -118,6 +125,7 @@
         });
 
     }
+    var youModel={teacherList:[]};
     function loadstudentlimit(urlid){
         var ht='';
         $("#roundId").empty();
@@ -145,7 +153,6 @@
                 alert('服务器忙，请稍候');
             }
         });
-    }
     }
     loadstudentlimit();
 </script>
