@@ -287,11 +287,11 @@ a {
 }
 
 .aui-code-box button {
-    background: #0c85b9a3;
+    background: rgba(8, 107, 185, 0.64);
     height: 45px;
     line-height: 45px;
     border: none;
-    color: #fff;
+    color: #010502;
     border-radius: 4px;
     width: 100%;
     font-size: 16px;
