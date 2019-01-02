@@ -129,13 +129,14 @@
     function emm() {
 
         var seminarid=getUrlParam("seminarid");
-        sessionStorage.setItem("seminarid",seminarid);
         if(seminarid==null)
             seminarid=sessionStorage.getItem("seminarid");
+        else
+            sessionStorage.setItem("seminarid",seminarid);
         var klassseminarid=getUrlParam("klassseminarid");
-        sessionStorage.setItem("klassseminarid",klassseminarid);
         if(klassseminarid==null)
             klassseminarid=sessionStorage.getItem("klassseminarid");
+        sessionStorage.setItem("klassseminarid",klassseminarid);
         var teamid=sessionStorage.getItem("teamid");
         sessionStorage.setItem("semminarid",seminarid);
         $.ajax({
