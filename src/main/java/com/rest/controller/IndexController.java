@@ -35,5 +35,14 @@ public class IndexController {
     public String seminarInfo(){
         return "s_SemInfoW.html";
     }
+    @RequestMapping("/file")
+    public String file(){
+        return "s_SemSubmit.html";
+    }
+    @RequestMapping("/downloadPage")
+    public String downloadPage(){
+        return "t_pc_download.html";
+    }
+
 
 }
