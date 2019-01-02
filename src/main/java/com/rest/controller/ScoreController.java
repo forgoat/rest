@@ -233,4 +233,9 @@ public class ScoreController {
         }
         return listList;
     }
+
+    @GetMapping(value = "student")
+    public List<TeamRoundScore> findStudent(Long courseId,Long teamId){
+        return scoreService.findStudentScore(courseId,teamId);
+    }
 }
