@@ -11,8 +11,7 @@
     <link type="text/css" rel="stylesheet" href="css/home.css">
     <link href="css/custom.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/tab.js"></script>
-    <script type="text/javascript" src="js/slider.js"></script>
+
 </head>
 <body>
 
@@ -138,7 +137,7 @@
                 success: function(res){
                     setStatus();
 
-                    alert('ok');
+                    alert('删除成功');
                 },
 
             });
@@ -178,7 +177,7 @@
                 dataType: 'json',                            //服务端返回类型text，JSON
                 timeout: 3000,
                 success: function (res) {
-                    alert(teamid);
+
                 }, error: function () {
                     alert("setStatus");
                 }
