@@ -562,7 +562,7 @@ public class ScoreService {
                }
            }
        }
-       System.out.println(klassId);
+       //System.out.println(klassId);
        if (klassId==0){
            return teamRoundScore;
        }
