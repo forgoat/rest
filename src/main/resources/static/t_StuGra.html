@@ -105,9 +105,6 @@
 
                 myModel.scoreList=res;
 
-                alert(myModel.scoreList.length);
-                alert(myModel.scoreList[0].teamRoundScores.length);
-                alert(myModel.scoreList[0].teamRoundScores[0].seminarScoreInfos.length);
                 htmlNav+='<ul class="yiji">';
 
                 for(var i=0;i< myModel.scoreList.length;i++)
@@ -154,7 +151,7 @@
 
             },
             error: function(){
-                alert('服务器忙，请稍候');
+
             }
         });
     }

@@ -11,8 +11,7 @@
     <link type="text/css" rel="stylesheet" href="css/home.css">
     <link href="css/custom.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/tab.js"></script>
-    <script type="text/javascript" src="js/slider.js"></script>
+
 </head>
 <body>
 
@@ -126,6 +125,8 @@
 
 
         function DeleMem(studentid){
+            var courseid=getUrlParam('courseid');
+            var studentidd=getUrlParam("studentid");
 
             $.ajax({
                 url: "/team/deleteByStudentId",                //后端的API地址
@@ -138,7 +139,8 @@
                 success: function(res){
                     setStatus();
 
-                    alert('ok');
+                    window.location.href="s_DeleMem.html?studentid="+studentidd+"&courseid="+courseid;
+                    alert('删除成功');
                 },
 
             });
@@ -147,7 +149,7 @@
 
         function InseMem(studentId) {
             var courseid=getUrlParam("courseid");
-            var studentid=getUrlParam("studentid");
+            var studentidd=getUrlParam("studentid");
 
             alert("添加成功！");
             $.ajax({
@@ -158,6 +160,7 @@
                 timeout: 3000,
                 success: function (res) {
                     setStatus();
+                    window.location.href="s_DeleMem.html?studentid="+studentidd+"&courseid="+courseid;
 
 
                 }, error: function () {
@@ -178,9 +181,8 @@
                 dataType: 'json',                            //服务端返回类型text，JSON
                 timeout: 3000,
                 success: function (res) {
-                    alert(teamid);
+
                 }, error: function () {
-                    alert("setStatus");
                 }
             });
         }
@@ -199,8 +201,6 @@
                 success: function(res){
                     myModel.memList=res;
 
-
-
                     htmlNav+='<br><br><label class="col-sm-2 control-label">请添加成员：</label>';
                     htmlNav+='<div class="col-sm-7">';
 
@@ -215,16 +215,10 @@
                     }
                     htmlNav+='</div>';
 
-
-
-
-
-
-
                     $("#myView").html(htmlNav);
                 },
                 error: function(){
-                    alert('getNoTeamMem');
+
                 }
             });
         }
