@@ -14,7 +14,7 @@ public interface TeamDao {
     /**
      * 创建小组
      */
-    int createTeam(@Param("team") Team team); //insert team表
+    int createTeam(@Param("klassId")Long klassId,@Param("courseId")Long courseId,@Param("leaderId")Long leaderId,@Param("teamName")String teamName,@Param("teamSerial")Integer teamSerial,@Param("klassSerial")Integer klassSerial); //insert team表
     int addTeammate(@Param("teamId")Long teamId,@Param("studentId")Long studentId);//添加成员 team_student表
     int updateTeamValidApplication(@Param("teamValidApplication") TeamValidApplication teamValidApplication);//小组更新表
     int updateKlassStudent(@Param("klassStudent") KlassStudent klassStudent);//小组更新表

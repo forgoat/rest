@@ -204,4 +204,69 @@ public class ScoreController {
     public TeamRoundScore findTeamRoundScore(Long courseId,Team team,Round round,List<Klass> klassList){
         return scoreService.findTeamRoundScore(courseId,team,round,klassList);
     }
+
+    @GetMapping(value = "Teacher")
+    public List<List<TeamRoundScore>> teamRoundScores(Long courseId){
+        List<List<TeamRoundScore>> listList=new ArrayList<List<TeamRoundScore>>();
+        RoundScoreInfo roundScoreInfo=scoreService.findRoundScoreInfo(courseId);
+        List<Round> roundList=roundScoreInfo.getRoundList();
+        if (roundList.isEmpty()){
+            return listList;
+        }
+        List<Team> teamList=roundScoreInfo.getTeamList();
+        if (teamList.isEmpty()){
+            return listList;
+        }
+        List<Klass> klassList=roundScoreInfo.getKlassList();
+        if (klassList.isEmpty()){
+            return listList;
+        }
+        for (Round round:roundList){
+            List<TeamRoundScore> teamRoundScores=new ArrayList<TeamRoundScore>();
+            for (Team team:teamList){
+                TeamRoundScore teamRoundScore=scoreService.findTeamRoundScore(courseId,team,round,klassList);
+                if (teamRoundScore!=null){
+                    teamRoundScores.add(teamRoundScore);
+                }
+            }
+            listList.add(teamRoundScores);
+        }
+        return listList;
+    }
+
+    @GetMapping(value = "teacherScore")
+    public List<TeamRoundScoreList> findTeacherScore(Long courseId){
+        List<TeamRoundScoreList> teamRoundScoreListList=new ArrayList<TeamRoundScoreList>();
+        RoundScoreInfo roundScoreInfo=scoreService.findRoundScoreInfo(courseId);
+        List<Round> roundList=roundScoreInfo.getRoundList();
+        if (roundList.isEmpty()){
+            return teamRoundScoreListList;
+        }
+        List<Team> teamList=roundScoreInfo.getTeamList();
+        if (teamList.isEmpty()){
+            return teamRoundScoreListList;
+        }
+        List<Klass> klassList=roundScoreInfo.getKlassList();
+        if (klassList.isEmpty()){
+            return teamRoundScoreListList;
+        }
+        for (Round round:roundList){
+            TeamRoundScoreList teamRoundScoreList=new TeamRoundScoreList();
+            teamRoundScoreList.setRoundSerial(round.getRoundSerial());
+            List<TeamRoundScore> teamRoundScores=new ArrayList<TeamRoundScore>();
+            for (Team team:teamList){
+                TeamRoundScore teamRoundScore=scoreService.findTeamRoundScore(courseId,team,round,klassList);
+                if (teamRoundScore!=null){
+                    teamRoundScores.add(teamRoundScore);
+                }
+            }
+            teamRoundScoreList.setTeamRoundScores(teamRoundScores);
+            teamRoundScoreListList.add(teamRoundScoreList);
+        }
+        return teamRoundScoreListList;
+    }
+    @GetMapping(value = "student")
+    public List<TeamRoundScore> findStudent(Long courseId,Long teamId){
+        return scoreService.findStudentScore(courseId,teamId);
+    }
 }

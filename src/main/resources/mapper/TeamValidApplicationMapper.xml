@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.TeamValidApplicationDao">
     <insert id="saveTeamValidApplication" parameterType="com.rest.entity.TeamValidApplication">
-        INSERT INTO standard_seminar_system.team_valid_application
+        INSERT INTO team_valid_application
         (
         team_id,
         teacher_id,
@@ -19,7 +19,7 @@
         )
     </insert>
     <insert id="insertTeamValidApplication" >
-        INSERT INTO standard_seminar_system.team_valid_application
+        INSERT INTO team_valid_application
         (team_id,
         teacher_id,
         status

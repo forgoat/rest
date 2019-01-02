@@ -5,12 +5,10 @@
 <mapper namespace="com.rest.dao.TeamDao">
     <select id="queryAllTeam" resultType="com.rest.entity.Team">
         SELECT *
-        FROM standard_seminar_system.team
+        FROM team
         WHERE
-        course_id=#{course_id}
-        GROUP BY klass_id
+        course_id=#{courseId}
     </select>
-
     <select id="queryStudentNoTeam" resultType="com.rest.entity.Student">
         SELECT * FROM student
         WHERE id IN(
@@ -22,7 +20,7 @@
         WHERE course_id=#{courseId})))
     </select>
     <insert id="createTeam" parameterType="com.rest.entity.Team">
-        INSERT INTO standard_seminar_system.team(
+        INSERT INTO team(
         klass_id,
         course_id,
         leader_id,
@@ -42,9 +40,8 @@
         )
 
     </insert>
-
-    <insert id="addTeammate" parameterType="Long">
-        INSERT INTO standard_seminar_system.team_student(
+    <insert id="addTeammate" parameterType="long">
+        INSERT INTO team_student(
         team_id,
         student_id
         )VALUE
@@ -53,9 +50,8 @@
         #{studentId}
         )
     </insert>
-
     <insert id="updateTeamValidApplication" parameterType="com.rest.entity.TeamValidApplication">
-        INSERT INTO standard_seminar_system.team_valid_application(
+        INSERT INTO team_valid_application(
         team_id,
         teacher_id,
         status
@@ -67,9 +63,8 @@
         )ON DULPLICATE KEY UPDATE
         status=values(status)
     </insert>
-
     <insert id="updateKlassStudent" parameterType="com.rest.entity.KlassStudent">
-         INSERT INTO standard_seminar_system.klass_student(
+         INSERT INTO klass_student(
         klass_id,
         student_id,
         course_id,
@@ -84,18 +79,18 @@
         team_id=values(teamId)
     </insert>
     <update id="updateStatus">
-        UPDATE standard_seminar_system.team
+        UPDATE team
         SET status=0
         WHERE id=#{id}
     </update>
     <select id="findById" parameterType="long" resultType="com.rest.entity.Team">
-        SELECT * FROM standard_seminar_system.team WHERE id=#{id}
+        SELECT * FROM team WHERE id=#{id}
     </select>
     <update id="setValid" parameterType="long">
-        UPDATE standard_seminar_system.team SET status=1 WHERE id=#{teamId}
+        UPDATE team SET status=1 WHERE id=#{teamId}
     </update>
     <update id="updateInfo">
-        UPDATE standard_seminar_system.team
+        UPDATE team
         <set>
             <if test="param2!=null ">
                 team_name=#{param2},
@@ -107,16 +102,15 @@
         WHERE id=#{param1}
     </update>
     <delete id="deleteTeam" parameterType="long">
-        DELETE FROM standard_seminar_system.team WHERE id=#{id}
+        DELETE FROM team WHERE id=#{id}
     </delete>
     <insert id="save" parameterType="com.rest.entity.Team" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO standard_seminar_system.team(klass_id,course_id,leader_id,team_name,team_serial,status) VALUE (#{klassId},#{courseId},#{leaderId},#{teamName},#{teamSerial},1)
+        INSERT INTO team(klass_id,course_id,leader_id,team_name,team_serial,status) VALUE (#{klassId},#{courseId},#{leaderId},#{teamName},#{teamSerial},1)
     </insert>
     <select id="findByCourseId" resultType="com.rest.entity.Team" parameterType="long">
-        SELECT * FROM standard_seminar_system.team WHERE course_id=#{CourseId}
+        SELECT * FROM team WHERE course_id=#{CourseId}
     </select>
     <delete id="deleteTeamByCourseId" parameterType="long">
-        DELETE FROM standard_seminar_system.team WHERE course_id=#{courseId}
+        DELETE FROM team WHERE course_id=#{courseId}
     </delete>
-
 </mapper>

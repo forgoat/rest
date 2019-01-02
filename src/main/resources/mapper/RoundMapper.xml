@@ -4,13 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.RoundDao">
     <insert id="saveRound" parameterType="com.rest.entity.Round" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO standard_seminar_system.round(course_id,round_serial,presentation_score_method,report_score_method,question_score_method) VALUE(#{courseId},#{roundSerial},#{presentationScoreMethod},#{reportScoreMethod},#{questionScoreMethod})
+        INSERT INTO round(course_id,round_serial,presentation_score_method,report_score_method,question_score_method) VALUE(#{courseId},#{roundSerial},#{presentationScoreMethod},#{reportScoreMethod},#{questionScoreMethod})
     </insert>
     <select id="find" parameterType="long" resultType="com.rest.entity.Round">
-        SELECT * FROM standard_seminar_system.round WHERE id=#{id}
+        SELECT * FROM round WHERE id=#{id}
     </select>
     <update id="updateRoundSelective">
-        UPDATE standard_seminar_system.round
+        UPDATE round
         <set>
             <if test="param2!=null ">
                 presentation_score_method=#{param2},
@@ -25,17 +25,17 @@
         WHERE id=#{param1}
     </update>
     <delete id="deleteById" parameterType="long">
-        DELETE FROM standard_seminar_system.round WHERE id=#{id}
+        DELETE FROM round WHERE id=#{id}
     </delete>
     <update id="updateSerial">
-        UPDATE standard_seminar_system.round SET round_serial=#{param2} where id=#{param1}
+        UPDATE round SET round_serial=#{param2} where id=#{param1}
     </update>
     <select id="findByCourseId" parameterType="long" resultType="com.rest.entity.Round">
-        SELECT * FROM standard_seminar_system.round WHERE course_id=#{courseId}
+        SELECT * FROM round WHERE course_id=#{courseId}
     </select>
-    <select id="queryRoundIdByCourseIdAndRoundSerial" resultType="Long">
+    <select id="queryRoundIdByCourseIdAndRoundSerial" resultType="long">
         SELECT id
-        FROM standard_seminar_system.round
+        FROM round
         WHERE
         course_id=#{courseId}
         AND
@@ -43,7 +43,7 @@
     </select>
     <select id="queryAllRoundSerialByCourseId" resultType="Integer">
         SELECT round_serial
-        FROM standard_seminar_system.round
+        FROM round
         WHERE
         course_id=#{courseId}
     </select>

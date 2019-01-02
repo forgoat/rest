@@ -5,13 +5,13 @@
 <mapper namespace="com.rest.dao.RoundScoreDao">
     <select id="queryByRoundIdTeamId" resultType="com.rest.entity.RoundScore">
         SELECT *
-        FROM standard_seminar_system.round_score
+        FROM round_score
         WHERE
         round_id=#{roundId}
         AND
         team_id=#{teamId}
     </select>
     <select id="findRoundByRoundIdAndTeamId" parameterType="long" resultType="com.rest.entity.RoundScore">
-        SELECT * FROM standard_seminar_system.round_score WHERE round_id=#{roundId} AND team_id=#{teamId}
+        SELECT * FROM round_score WHERE round_id=#{roundId} AND team_id=#{teamId}
     </select>
 </mapper>

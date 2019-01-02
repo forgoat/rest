@@ -1,12 +1,11 @@
 package com.rest.service;
 
-import com.rest.dao.CourseDao;
-import com.rest.dao.ShareSeminarApplicationDao;
-import com.rest.dao.ShareTeamApplicationDao;
-import com.rest.dao.TeacherDao;
+import com.rest.dao.*;
 import com.rest.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -22,6 +21,10 @@ public class CourseService {
     private ShareTeamApplicationDao shareTeamApplicationDao;
     @Autowired
     private TeacherDao teacherDao;
+    @Autowired
+    private TeamDao teamDao;
+    @Autowired
+    private TeamService teamService;
 
     public List<Course> queryCourseByStudentId(Long id){
         return courseDao.queryCourseByStudentId(id);
@@ -177,6 +180,44 @@ public class CourseService {
 
     public int saveTeamShareApplication(ShareTeamApplication shareTeamApplication){
         return shareTeamApplicationDao.save(shareTeamApplication);
+    }
+
+    /**
+     * 同意分组共享请求
+     * @param teamShareId
+     * @return
+     */
+    public HttpStatus acceptTeamShareApplication(@PathVariable("teamShareId") Long teamShareId){
+        ShareTeamApplication shareTeamApplication=shareTeamApplicationDao.findShareTeamApplication(teamShareId);
+        //System.out.println(shareTeamApplication.toString());
+        Long mainCourseId=shareTeamApplication.getMainCourseId();
+        Long subCourseId=shareTeamApplication.getSubCourseId();
+        if (shareTeamApplicationDao.acceptTeamShare(teamShareId)==1){
+            if(courseDao.acceptMainTeamCourseId(mainCourseId,subCourseId)==1){
+                //System.out.println("修改从课程表成功");
+                teamDao.deleteTeamByCourseId(subCourseId);
+                List<Team> teamList=teamDao.findByCourseId(mainCourseId);
+                for (Team team:teamList){
+                    Long teamId=team.getId();
+                    Long classId=teamService.findSubCourseTeamKlassId(subCourseId,teamId);
+                    if (classId!=0) {
+                        KlassTeam klassTeam = new KlassTeam();
+                        klassTeam.setKlassId(classId);
+                        klassTeam.setTeamId(teamId);
+                        teamService.saveKlassTeam(klassTeam);
+                    }
+                }
+                return HttpStatus.OK;
+            }
+            else {
+                shareTeamApplicationDao.rejectTeamShare(teamShareId);
+                //rejectTeamShareRequest(teamShareId);
+                return HttpStatus.BAD_REQUEST;
+            }
+        }
+        else {
+            return HttpStatus.BAD_REQUEST;
+        }
     }
 
 }

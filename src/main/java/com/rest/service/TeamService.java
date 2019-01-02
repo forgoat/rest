@@ -87,8 +87,30 @@ public class TeamService {
     {
         return klassStudentDao.updateTeam(studentId,teamId);
     }
-    public Long findTeamByStudentId(Long studentId){
-        return teamStudentDao.findByStudentId(studentId);
+    public Long findTeamByStudentId(Long studentId,Long courseId){
+        Course course=courseDao.findById(courseId);
+        if (course==null){
+            return new Long(0);
+        }
+        Long mainCourseId=new Long(0);
+        if (course.getTeamMainCourseId()==null){
+            mainCourseId=courseId;
+        }
+        else {
+            mainCourseId=course.getTeamMainCourseId();
+        }
+        List<Team> teamList=teamDao.findByCourseId(mainCourseId);
+        List<TeamStudent> teamStudents=teamStudentDao.findTeamByStudent(studentId);
+        Long teamId=new Long(0);
+        for(Team team:teamList){
+            for (TeamStudent teamStudent:teamStudents){
+                if (team.getId().equals(teamStudent.getTeamId())){
+                    teamId=team.getId();
+                    break;
+                }
+            }
+        }
+        return teamId;
     }
     public List<Long> findAllKlass(Long teamId){
         return klassTeamDao.findByTeamId(teamId);
@@ -110,28 +132,42 @@ public class TeamService {
     public int deleteKlassTeamByTeamId(Long teamId){
         return klassTeamDao.deleteKlassTeamsByTeamId(teamId);
     }
-    public int saveTeam(Team team){
+
+    /**
+     * 创建小组
+     * @param team
+     * @return
+     */
+    public Long saveTeam(Team team){
+        System.out.println("team:"+team);
         Integer teamSerial=new Integer(0);
         List<Team> teamList=teamDao.findByCourseId(team.getCourseId());
         if(!teamList.isEmpty()){
             for(Team team1:teamList){
                 if(team1.getTeamSerial()>teamSerial){
                     teamSerial=team1.getTeamSerial();
+                    System.out.println("teamSerial:"+teamSerial);
                 }
             }
         }
         team.setTeamSerial(teamSerial+1);
-        if(teamDao.save(team)==1){
-            KlassTeam klassTeam=new KlassTeam();
-            klassTeam.setKlassId(team.getKlassId());
-            klassTeam.setTeamId(team.getId());
-            klassTeamDao.save(klassTeam);
-            return 1;
+        List<Team> teamList1=new ArrayList<>();
+        Long maxId=Long.valueOf(0);
+        teamList1=teamDao.queryAllTeam(team.getCourseId());
+        for(Team team1:teamList1){
+            if(team1.getId()>maxId) maxId=team1.getId();
+        }
+        System.out.println("maxId:"+maxId);
+
+        if(teamDao.createTeam(team.getKlassId(),team.getCourseId(),team.getLeaderId(),team.getTeamName(),teamSerial,team.getKlassSerial())==1){
+            klassTeamDao.saveKlassTeam(team.getKlassId(),maxId+1);
+            return maxId+1;
         }
         else {
-            return 0;
+            return Long.valueOf(0);
         }
     }
+
     public int saveKlassTeam(KlassTeam klassTeam){
         return klassTeamDao.save(klassTeam);
     }
@@ -423,6 +459,9 @@ public class TeamService {
     }
     public int saveTeamStudent(TeamStudent teamStudent){
         return teamStudentDao.save(teamStudent);
+    }
+    public List<TeamStudent> findTeamByStudent(Long studentId){
+        return teamStudentDao.findTeamByStudent(studentId);
     }
 
     public  List<TeamValidApplication> checkTeamValidApplication(){

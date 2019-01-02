@@ -67,7 +67,7 @@
         <i class="icon icon-return"></i>
     </a>
     <div class="aui-center">
-        <span class="aui-center-title">课程名</span>
+        <span class="aui-center-title">我的成绩</span>
     </div>
     <a href="javascript:;" class="aui-navBar-item">
         <i class="icon icon-sys"></i>
@@ -91,129 +91,84 @@
     var id='';
     var semid=16;
     var htmlNav='';
-    var courseid=getUrlParam('courseid');
-    var studentid=getUrlParam('studentid');
+    studentid=sessionStorage.getItem('id');
+    var teamid;
 
-    function getRound(){
+    function getTeam(){
         var courseid=getUrlParam('courseid');
-        var studentid=getUrlParam('studentid');
         $.ajax({
-            url: "/score/queryAllRoundSerialByCourseId",                //后端的API地址
+            url: "/team",                //后端的API地址
             type: 'GET',                                //http:POST/GET
             async:false,
-            data:{courseId:courseid},
+            data:{courseId:courseid,studentId:studentid},
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success: function(res){
-                myModel.roundList=res;
+
+                teamid=res;
+
+
+            },
+            error: function(){
+                alert('服务器忙，请稍候');
+            }
+        });
+    }
+
+
+
+
+    function getData(){
+        var courseid=getUrlParam('courseid');
+        $.ajax({
+            url: "/score/student",                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async:false,
+            data:{courseId:courseid,teamId:teamid},
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function(res){
+
+                myModel.scoreList=res;
+
 
                 htmlNav+='<ul class="yiji">';
-                for(var i=0;i< myModel.roundList.length;i++)
+
+                for(var i=0;i< myModel.scoreList.length;i++)
                 {
-                    alert(myModel.roundList[i]);
-
-                    htmlNav+='<li><a href="#" class="inactive">第'+myModel.roundList[i]+'轮</a>';
+                    htmlNav+='<li><a href="#" class="inactive">第'+(i+1)+'轮</a>'
                     htmlNav+='<ul style="display: none">';
-                    getTeam(myModel.roundList[i]);
 
+
+                        //每个seminar分数
+                        for(var j=0;j< myModel.scoreList[i].seminarScoreInfos.length;j++)
+                        {
+                            htmlNav+='<li><a href="#">'+myModel.scoreList[i].seminarScoreInfos[j].seminarName
+                                +'：</a></li>';
+                            htmlNav+='<li><a href="#"><span>展示：'+myModel.scoreList[i].seminarScoreInfos[j].presentationScore
+                                +';&nbsp;&nbsp;提问：'+myModel.scoreList[i].seminarScoreInfos[j].questionScore
+                                +';&nbsp;&nbsp;报告：'+myModel.scoreList[i].seminarScoreInfos[j].reportScore
+                                +'</span></a></li>';
+
+                        }
+
+
+                    htmlNav+='</ul></li>';
                 }
                 htmlNav+='</ul>';
-            },
 
-        });
-    }
+                $("#myView").html(htmlNav);
 
-
-    function getTeam(roundserial){
-        var courseid=getUrlParam('courseid');
-        var studentid=getUrlParam('studentid');
-        $.ajax({
-            url: "/course/"+courseid+"/team",                //后端的API地址
-            type: 'GET',                                //http:POST/GET
-            async:false,
-
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function(res){
-                myModel.teamList=res;
-
-
-
-                if( myModel.teamList.length>0)
-                {
-
-                    for(var i=0;i< myModel.teamList.length;i++)
-                    {
-                        htmlNav+='<li><a href="#" class="inactive active">'+myModel.teamList[i].klassSerial+'-'+myModel.teamList[i].teamSerial+'&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;';
-                        getScore(courseid,studentid,roundserial);
-                        htmlNav+='</a><ul>';
-                        getScoreList(courseid,studentid,roundserial);
-                        htmlNav+='</ul></li>';
-
-                    }
-
-                }
             },
             error: function(){
-                alert('getTeam');
+                alert('服务器忙，请稍候');
             }
         });
     }
 
 
-    function getScore(courseid,studentid,roundserial){
-        var courseid=getUrlParam('courseid');
-        var studentid=getUrlParam('studentid');
-        $.ajax({
-            url: "/score/queryScorePage",                //后端的API地址
-            type: 'GET',                                //http:POST/GET
-            async:false,
-            data:{courseId:courseid,studentId:studentid,roundSerial:roundserial},
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function(res){
-
-
-                htmlNav+=res.roundScore.totalScore;
-
-            },
-            error: function(){
-                alert('getScore');
-            }
-        });
-    }
-
-    function getScoreList(courseid,studentid,roundserial){
-        var courseid=getUrlParam('courseid');
-        var studentid=getUrlParam('studentid');
-        $.ajax({
-            url: "/score/queryScorePage",                //后端的API地址
-            type: 'GET',                                //http:POST/GET
-            async:false,
-            data:{courseId:courseid,studentId:studentid,roundSerial:roundserial},
-            dataType: 'json',                            //服务端返回类型text，JSON
-            timeout: 3000,
-            success: function(res){
-                myModel.scoreList=res.seminarList;
-
-                for(var i=0;i< myModel.scoreList.length;i++) {
-
-                    htmlNav+='<li><a href="#">'+myModel.scoreList[i].seminarName+'<span>' +
-                        '展示：'+myModel.scoreList[i].presentationScore+'&nbsp;&nbsp;&nbsp;&nbsp;提问：'
-                    +myModel.scoreList[i].questionScore+'&nbsp;&nbsp;&nbsp;&nbsp;报告：'+
-                        myModel.scoreList[i].reportScore+'</span></a></li>';
-                }
-
-            },
-            error: function(){
-                alert('getScoreList');
-            }
-
-        });
-    }
-
-
-    getRound();
+    getTeam();
+    getData();
 
 </script>
 

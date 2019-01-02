@@ -4,18 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.KlassTeamDao">
     <select id="findByTeamId" parameterType="long" resultType="long">
-        SELECT klass_id FROM standard_seminar_system.klass_team WHERE team_id=#{teamId}
+        SELECT klass_id FROM klass_team WHERE team_id=#{teamId}
     </select>
     <delete id="deleteKlassTeamsByTeamId" parameterType="long">
-        DELETE FROM standard_seminar_system.klass_team WHERE team_id=#{teamId}
+        DELETE FROM klass_team WHERE team_id=#{teamId}
     </delete>
     <insert id="save" parameterType="com.rest.entity.KlassTeam">
+        INSERT INTO klass_team(klass_id,team_id) VALUE (#{klassId},#{teamId})
+    </insert>
+
+    <insert id="saveKlassTeam" parameterType="com.rest.entity.KlassTeam">
         INSERT INTO standard_seminar_system.klass_team(klass_id,team_id) VALUE (#{klassId},#{teamId})
     </insert>
     <select id="findByKlassId" resultType="com.rest.entity.KlassTeam" parameterType="long">
-        SELECT * FROM standard_seminar_system.klass_team WHERE klass_id=#{klassId}
+        SELECT * FROM klass_team WHERE klass_id=#{klassId}
     </select>
     <delete id="deleteByTeamIdAndKlassId">
-        DELETE FROM standard_seminar_system.klass_team WHERE team_id=#{teamId} AND klass_id=#{klassId}
+        DELETE FROM klass_team WHERE team_id=#{teamId} AND klass_id=#{klassId}
     </delete>
 </mapper>

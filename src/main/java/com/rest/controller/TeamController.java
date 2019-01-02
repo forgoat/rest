@@ -170,9 +170,9 @@ public class TeamController {
      * @return
      */
     @GetMapping(value = "")
-    public Long findTeamIdByStudentId(Long studentId)
+    public Long findTeamIdByStudentId(Long studentId,Long courseId)
     {
-        return teamService.findTeamByStudentId(studentId);
+        return teamService.findTeamByStudentId(studentId,courseId);
     }
 //    @GetMapping(value = "findSId")
 //    public Long findId(Long courseId){
@@ -216,9 +216,9 @@ public class TeamController {
      * @return
      */
     @PostMapping(value = "")
-    public HttpStatus saveTeam(Team team){
-        HttpStatus httpStatus=(teamService.saveTeam(team)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
-        return httpStatus;
+    public Long saveTeam(Team team){
+        System.out.print("saveTeam");
+        return teamService.saveTeam(team);
     }
 
     /**
@@ -373,7 +373,7 @@ public class TeamController {
         return httpStatus;
     }
     @PostMapping(value = "saveAllTeamStudent")
-    public HttpStatus saveAllTeamStudent(List<TeamStudent> teamStudentList){
+    public HttpStatus saveAllTeamStudent(@RequestBody List<TeamStudent> teamStudentList){
         HttpStatus httpStatus=HttpStatus.OK;
         for (TeamStudent teamStudent:teamStudentList){
             if (teamService.saveTeamStudent(teamStudent)==0){
@@ -381,5 +381,10 @@ public class TeamController {
             }
         }
         return httpStatus;
+    }
+
+    @GetMapping(value = "student")
+    public List<TeamStudent> findTeam(Long studentId){
+        return teamService.findTeamByStudent(studentId);
     }
 }
