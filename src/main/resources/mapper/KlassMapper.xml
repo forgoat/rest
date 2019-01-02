@@ -5,14 +5,14 @@
 <mapper namespace="com.rest.dao.KlassDao">
     <select id="queryByCourseId" resultType="com.rest.entity.Klass">
         SELECT *
-        FROM standard_seminar_system.klass
+        FROM klass
         WHERE course_id=#{courseId}
     </select>
     <delete id="deleteById" parameterType="long">
-        DELETE FROM standard_seminar_system.klass WHERE id=#{id}
+        DELETE FROM klass WHERE id=#{id}
     </delete>
     <select id="findByCourseId" resultType="com.rest.entity.Klass" parameterType="long">
-        SELECT * FROM standard_seminar_system.klass WHERE course_id=#{courseId}
+        SELECT * FROM klass WHERE course_id=#{courseId}
     </select>
     <insert id="saveKlass" parameterType="com.rest.entity.Klass">
         INSERT INTO klass(
@@ -31,6 +31,6 @@
         )
     </insert>
     <select id="findKlassById" parameterType="long" resultType="com.rest.entity.Klass">
-        SELECT * FROM standard_seminar_system.klass WHERE id=#{id}
+        SELECT * FROM klass WHERE id=#{id}
     </select>
 </mapper>

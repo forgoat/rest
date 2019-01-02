@@ -5,11 +5,11 @@
 <mapper namespace="com.rest.dao.CourseMemberLimitStrategyDao">
     <select id="queryCourseMemberLimitStrategy" resultType="com.rest.entity.CourseMemberLimitStrategy" parameterType="Long">
         SELECT *
-        FROM standard_seminar_system.course_member_limit_strategy
+        FROM course_member_limit_strategy
         WHERE id=#{id}
     </select>
     <insert id="insertCourseMemberLimitStrategy" >
-        INSERT INTO standard_seminar_system.course_member_limit_strategy
+        INSERT INTO course_member_limit_strategy
         (
         course_id,
         min_member,
@@ -23,7 +23,7 @@
 
     <select id="queryAllCourseMemberLimitStrategy" resultType="com.rest.entity.CourseMemberLimitStrategy">
         SELECT *
-        FROM standard_seminar_system.course_member_limit_strategy
+        FROM course_member_limit_strategy
     </select>
 
 </mapper>

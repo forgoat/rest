@@ -446,7 +446,7 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
     @GetMapping(value = "{courseId}/seminar")
     public List<SeminarInfo> findKlassTeam(@PathVariable("courseId") Long courseId,Long studentId){
         List<Klass> classlist=klassService.findByCourseId(courseId);
-        Long teamId=teamService.findTeamByStudentId(studentId);
+        Long teamId=teamService.findTeamByStudentId(studentId,courseId);
         System.out.println("teamId is "+teamId);
         List<Long> klassId=teamService.findAllKlass(teamId);
         Long classId=new Long(0);

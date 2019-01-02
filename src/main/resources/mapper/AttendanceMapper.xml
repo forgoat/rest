@@ -4,20 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.AttendanceDao">
     <select id="findAttendanceByKlassSeminarId" parameterType="long" resultType="com.rest.entity.Attendance">
-        SELECT * FROM standard_seminar_system.attendance WHERE klass_seminar_id=#{klassSeminarId}
+        SELECT * FROM attendance WHERE klass_seminar_id=#{klassSeminarId}
     </select>
     <insert id="saveAttendance" parameterType="com.rest.entity.Attendance" useGeneratedKeys="true" keyProperty="id">
-         INSERT INTO standard_seminar_system.attendance(klass_seminar_id,team_id,team_order,is_present)VALUE(#{klassSeminarId},#{teamId},#{teamOrder},0)
+         INSERT INTO attendance(klass_seminar_id,team_id,team_order,is_present)VALUE(#{klassSeminarId},#{teamId},#{teamOrder},0)
     </insert>
 
     <delete id="deleteById" parameterType="long">
-        DELETE FROM standard_seminar_system.attendance WHERE id=#{attendanceId}
+        DELETE FROM attendance WHERE id=#{attendanceId}
     </delete>
     <update id="updateAttendanceStatus">
-        UPDATE standard_seminar_system.attendance SET is_present=#{status} WHERE id=#{attendanceId}
+        UPDATE attendance SET is_present=#{status} WHERE id=#{attendanceId}
     </update>
     <update id="updateAttendance">
-        UPDATE standard_seminar_system.attendance
+        UPDATE attendance
         SET
         ppt_name=#{pptName},
         ppt_url=#{pptUrl}
@@ -26,7 +26,7 @@
     </update>
     <select id="queryByKlassSeminarIdAndTeamId" resultType="com.rest.entity.Attendance">
         SELECT *
-        FROM standard_seminar_system.attendance
+        FROM attendance
         WHERE
         klass_seminar_id=#{klassSeminarId}
         AND
@@ -35,17 +35,17 @@
 
     <select id="queryAttendanceById" resultType="com.rest.entity.Attendance">
         SELECT *
-        FROM standard_seminar_system.attendance
+        FROM attendance
         WHERE
         id=#{id}
     </select>
     <update id="savePPT">
-        UPDATE standard_seminar_system.attendance SET ppt_name=#{fileName}, ppt_url=#{path} WHERE id=#{attendanceId}
+        UPDATE attendance SET ppt_name=#{fileName}, ppt_url=#{path} WHERE id=#{attendanceId}
     </update>
     <select id="findAttendanceByKlassSeminarIdAndTeamId" resultType="com.rest.entity.Attendance">
-        SELECT * FROM standard_seminar_system.attendance WHERE klass_seminar_id=#{klassSeminarId} AND team_id=#{teamId}
+        SELECT * FROM attendance WHERE klass_seminar_id=#{klassSeminarId} AND team_id=#{teamId}
     </select>
     <select id="findAttendanceById" resultType="com.rest.entity.Attendance" parameterType="long">
-        SELECT * FROM standard_seminar_system.attendance WHERE id=#{attendanceId}
+        SELECT * FROM attendance WHERE id=#{attendanceId}
     </select>
 </mapper>
