@@ -1,8 +1,11 @@
 spring:
   datasource:
-    username: user1_2
-    url: jdbc:mysql://47.52.88.176:3306/DB1_2?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
-    password: ooad2
+    username: root
+    password: 12345678
+    url: jdbc:mysql://47.107.54.231:3306/standard_seminar_system?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
+  #    username: user1_2
+#    url: jdbc:mysql://47.52.88.176:3306/DB1_2?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
+#    password: ooad2
   mail:
     username: 1010410164@qq.com
     password: shibfaeqmqkrbfgg
