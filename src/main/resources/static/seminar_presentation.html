@@ -344,7 +344,7 @@
         </script>
         <script src="js/jquery-1.7.1.js" type="text/javascript" charset="utf-8"></script>
         <script type="text/javascript">
-            var socket=new WebSocket("ws://localhost:8080/websocket");;
+            var socket=new WebSocket("ws://112.74.57.133:8080/websocket");
             if(typeof(WebSocket) == "undefined") {
                 alert("您的浏览器不支持WebSocket");
             }
@@ -356,6 +356,7 @@
 
             var askmember=1;
             socket.onmessage = function(msg) {
+                alert(msg.data);
                 if(msg.data>0&&msg.data<10)
                 {
                     askmember=0;

@@ -101,11 +101,11 @@
     }
     loading();
     $("#qul0").css("color","red");
-    socket = new WebSocket("ws://localhost:8080/websocket");
+    socket = new WebSocket("ws://112.74.57.133:8080/websocket");
     //打开事件
     var index=0;
     socket.onmessage = function(msg) {
-        var dat=msg.data-1
+        alert(msg.data)
         if(msg.data>0&&msg.data<10)
         {
             askmember=0;
