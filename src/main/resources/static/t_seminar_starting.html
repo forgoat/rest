@@ -45,10 +45,8 @@
         课程情况：进行中
         <a href="t_seminarPPT.html">查看情况</a>
     </div>
-    <button class="button-auto1" id="myView6" onclick="clickme()">
-        <a href="t_seminarzhong.html">
+    <button class="button-auto1" id="myView6" >
             进入讨论课
-        </a>
     </button>
 
     </body>
@@ -80,22 +78,9 @@
                 alert('服务器忙，请稍候');
             }
         });
-        $("#myView6").html('<a href="seminar_presentation.html?klassklassseminarid='+klassseminarid+'">进入讨论课 </a>')
+        $("#myView6").html('<a href="seminar_presentation.html?klassseminarid='+klassseminarid+'">进入讨论课 </a>')
     }
     emm();
-    function clickme() {
-        $.ajax({
-            url: "/seminar/" + klassseminarid+"/status",
-            type: "PUT",
-            data:{status:1},
-            async: false,
-            dataType: 'text',
-            success: function () {
-                alert("success!");
-            },error:function () {
-                alert("sorry!");
-            }
-            });
-    }
+
 </script>
 </html>

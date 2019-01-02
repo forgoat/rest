@@ -79,7 +79,7 @@
                 $("#myView2").html("主题:" + json.seminarName);
                 $("#myView3").html("课次序号:" + json.seminarSerial);
                 $("#myView4").html("要求:" + json.introduction);
-                $("#myView5").html("课程情况：未开始" + '<a href="t.html?klassseminarid=' + klassseminarid + '">查看情况</a>');
+                $("#myView5").html("课程情况：未开始" + '<a href="t_seminarPPT.html?klassseminarid=' + klassseminarid + '">查看情况</a>');
             }, error: function () {
                 alert('服务器忙，请稍候');
             }
@@ -87,6 +87,18 @@
     }
     function click1()
     {
+        $.ajax({
+            url:"/seminar/"+klassseminarid+"/status",
+            type: "PUT",
+            async: false,
+            data:{status:1},
+            dataType: 'json',
+            success:function () {
+                window.location.href="seminar_presentation.html?klassseminarid="+klassseminarid;
+            },error:function () {
+                alert("服务器忙，请稍等")
+            }
+        })
 
     }
     function click2()

@@ -112,7 +112,7 @@
         <div class="aui-code-btn">
 
             <button class="button-auto1" >
-                <a style="font-family:times;color:black"  href="/teacher/semminar/submit">新建讨论课</a>
+                <a style="font-family:times;color:black"  href="t_newseminar.html">新建讨论课</a>
 
             </button>
         </div>
@@ -147,7 +147,7 @@
                     for (var i = 0; i < myModel.courseList.length; i++) {
                         htmlNav += '<li><a href="#" class="inactive">第'+myModel.courseList[i].roundSerial+'轮</a>';
                         htmlNav += '<ul style="display: none">\n' +
-                            '                <li class="last"><a style="font-family:times;color:black" href="/teacher/semminar/lunci">该轮轮次设置</a></li>';
+                            '                <li class="last"><a style="font-family:times;color:black" href="t_roundbuilding.html?roundid='+myModel.courseList[i].roundId+'">该轮轮次设置</a></li>';
                         myModel1.courseList1 = myModel.courseList[i].seminarLists;
                         if (myModel1.courseList1.length > 0) {
                             for (var j = 0; j < myModel1.courseList1.length; j++) {
@@ -164,7 +164,16 @@
                                             dataType: 'json',                            //服务端返回类型text，JSON
                                             timeout: 3000,
                                             success: function (adata) {
-                                                htmlNav += '<li class="last"><a style="font-family:times;color:black" href="/index/wei">'+adata.grade+'-'+adata.klassSerial+'</a></li>';
+                                                htmlNav += '<li class="last"><a style="font-family:times;color:black" href="';
+                                                alert(myModel2.courseList2[k].status);
+                                                if(myModel2.courseList2[k].status==0)
+                                                    htmlNav+='t_seminar_notbegining.html';
+                                                else if(myModel2.courseList2[k].status==1)
+                                                    htmlNav+='t_seminar_starting.html';
+                                                else
+                                                    htmlNav+='t_seminar_end.html';
+
+                                                htmlNav += '?klassseminarid='+myModel2.courseList2[k].id+'&seminarid='+myModel1.courseList1[j].seminarId+'">'+adata.grade+'-'+adata.klassSerial+'</a></li>';
                                             }
                                         });
                                     }
