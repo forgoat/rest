@@ -113,9 +113,7 @@
             data:{presentationScoreMethod:show,reportScoreMethod:report,questionScoreMethod:ask},//服务端返回类型text，JSON
             timeout: 3000,
             success:function (res) {
-                alert("success round");
             },error:function () {
-                alert("fail round");
             }
             });
         for(var j=0;j<myModel.courseList.length;j++)
@@ -127,7 +125,6 @@
             data:{maxTeam:member},
             timeout:3000,
             success:function () {
-                alert("success");
             }
 
             });
