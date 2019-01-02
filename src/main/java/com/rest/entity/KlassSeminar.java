@@ -52,4 +52,14 @@ public class KlassSeminar {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "KlassSeminar{" +
+                "id=" + id +
+                ", klassId=" + klassId +
+                ", seminarId=" + seminarId +
+                ", reportDdl=" + reportDdl +
+                ", status=" + status +
+                '}';
+    }
 }
