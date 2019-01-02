@@ -170,9 +170,9 @@ public class TeamController {
      * @return
      */
     @GetMapping(value = "")
-    public Long findTeamIdByStudentId(Long studentId)
+    public Long findTeamIdByStudentId(Long studentId,Long courseId)
     {
-        return teamService.findTeamByStudentId(studentId);
+        return teamService.findTeamByStudentId(studentId,courseId);
     }
 //    @GetMapping(value = "findSId")
 //    public Long findId(Long courseId){
@@ -380,5 +380,10 @@ public class TeamController {
             }
         }
         return httpStatus;
+    }
+
+    @GetMapping(value = "student")
+    public List<TeamStudent> findTeam(Long studentId){
+        return teamService.findTeamByStudent(studentId);
     }
 }

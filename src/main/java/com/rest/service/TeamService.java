@@ -87,8 +87,30 @@ public class TeamService {
     {
         return klassStudentDao.updateTeam(studentId,teamId);
     }
-    public Long findTeamByStudentId(Long studentId){
-        return teamStudentDao.findByStudentId(studentId);
+    public Long findTeamByStudentId(Long studentId,Long courseId){
+        Course course=courseDao.findById(courseId);
+        if (course==null){
+            return new Long(0);
+        }
+        Long mainCourseId=new Long(0);
+        if (course.getTeamMainCourseId()==null){
+            mainCourseId=courseId;
+        }
+        else {
+            mainCourseId=course.getTeamMainCourseId();
+        }
+        List<Team> teamList=teamDao.findByCourseId(mainCourseId);
+        List<TeamStudent> teamStudents=teamStudentDao.findTeamByStudent(studentId);
+        Long teamId=new Long(0);
+        for(Team team:teamList){
+            for (TeamStudent teamStudent:teamStudents){
+                if (team.getId().equals(teamStudent.getTeamId())){
+                    teamId=team.getId();
+                    break;
+                }
+            }
+        }
+        return teamId;
     }
     public List<Long> findAllKlass(Long teamId){
         return klassTeamDao.findByTeamId(teamId);
@@ -437,5 +459,8 @@ public class TeamService {
     }
     public int saveTeamStudent(TeamStudent teamStudent){
         return teamStudentDao.save(teamStudent);
+    }
+    public List<TeamStudent> findTeamByStudent(Long studentId){
+        return teamStudentDao.findTeamByStudent(studentId);
     }
 }
