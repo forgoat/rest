@@ -136,7 +136,8 @@
         var klassseminarid=getUrlParam("klassseminarid");
         if(klassseminarid==null)
             klassseminarid=sessionStorage.getItem("klassseminarid");
-        sessionStorage.setItem("klassseminarid",klassseminarid);
+        else
+            sessionStorage.setItem("klassseminarid",klassseminarid);
         var teamid=sessionStorage.getItem("teamid");
         sessionStorage.setItem("semminarid",seminarid);
         $.ajax({

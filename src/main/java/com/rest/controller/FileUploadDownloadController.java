@@ -32,13 +32,7 @@ public class FileUploadDownloadController {
 //    }
 
 
-    /*
-     * 获取s_SemSubmit.html页面
-     */
-    @RequestMapping("/file")
-    public String file(){
-        return "s_SemSubmit.html";
-    }
+
 
     /**
      * 实现PPT上传
@@ -56,7 +50,8 @@ public class FileUploadDownloadController {
 
         Random ra =new Random();
         //之后换成服务器文件上传的目录
-        String path = "/root/sysFile" ;
+       // String path = "/root/sysFile" ;
+        String path="C:/Users/74051/Desktop/sys";
         String fileName=ra.toString()+fileName1;
         System.out.println(path + "/" + fileName);
         File dest = new File(path + "/" + fileName);
@@ -66,7 +61,8 @@ public class FileUploadDownloadController {
         }
         try {
 
-            String a= "/root/sysFile";
+            String a="C:/Users/74051/Desktop/sys";
+            //String a= "/root/sysFile";
             //保存文件
             file1.transferTo(dest);
             attendanceService.savePPT(attendanceId,fileName,path);
@@ -98,7 +94,8 @@ public class FileUploadDownloadController {
         System.out.println(fileName + "-->" + size);
 
         //之后换成服务器文件上传的目录
-        String path = "/root/sysFile";
+        String path="C:/Users/74051/Desktop/sys";
+        // String path = "/root/sysFile";
         File dest = new File(path + "/" + fileName);
         //判断文件父目录是否存在
         if(!dest.getParentFile().exists()){
@@ -121,13 +118,6 @@ public class FileUploadDownloadController {
     }
 
 
-    /*
-     * 获取t_pc_download_main.html页面
-     */
-    @RequestMapping("/downloadPage")
-    public String downloadPage(){
-        return "t_pc_download.html";
-    }
 
     /**
      * 实现Spring Boot 的PPT下载功能，映射网址为/downloadPPT
