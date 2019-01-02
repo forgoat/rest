@@ -21,9 +21,11 @@
     <insert id="insertTeamValidApplication" >
         INSERT INTO standard_seminar_system.team_valid_application
         (team_id,
+        teacher_id,
         status
         )VALUE
         ( #{teamId},
+        #{teacherId},
         #{status}
         )
     </insert>

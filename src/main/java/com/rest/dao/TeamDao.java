@@ -19,9 +19,9 @@ public interface TeamDao {
     int updateTeamValidApplication(@Param("teamValidApplication") TeamValidApplication teamValidApplication);//小组更新表
     int updateKlassStudent(@Param("klassStudent") KlassStudent klassStudent);//小组更新表
 
-
+    int updateStatus(@Param("id") Long id);
     public Team findById(Long id);
-    public int setValid(Long teamId);
+    public int setValid(@Param("teamId") Long teamId);
     public int updateInfo(@Param("teamId") Long teamId,@Param("teamName") String teamName,@Param("teamSerial") Integer teamSerial);
     public int deleteTeam(Long id);
     public int save(Team team);
