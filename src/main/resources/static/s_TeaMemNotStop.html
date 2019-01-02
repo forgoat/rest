@@ -11,8 +11,7 @@
     <link type="text/css" rel="stylesheet" href="css/home.css">
     <link href="css/custom.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/tab.js"></script>
-    <script type="text/javascript" src="js/slider.js"></script>
+
 </head>
 <body>
 
@@ -33,6 +32,7 @@
 
     <div class="list" id="myView"></div>
 
+
     <script>
         function getUrlParam(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -43,6 +43,8 @@
         var sem = {smallList:[]};
         var id='';
 
+        var teacherid;
+        var teamid;
         var htmlNav='';
         function getStudent(studentid){
             var courseid=getUrlParam('courseid');
@@ -61,6 +63,47 @@
 
             });
         }
+
+
+        function getTeamId(){
+            var studentid=getUrlParam('studentid');
+            var courseid=getUrlParam('courseid');
+
+            $.ajax({
+                url: "/team",                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                async:false,
+                data:{studentId:studentid,courseId:courseid},
+
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+                    Appli(res);
+                    teamid=res;
+                },
+
+            });
+        }
+
+        function getTeacId(){
+            var courseid=getUrlParam('courseid');
+
+            $.ajax({
+                url: "/course/"+courseid,                //后端的API地址
+                type: 'GET',                                //http:POST/GET
+                async:false,
+
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+
+                    teacherid=res.teacherId;
+
+                },
+
+            });
+        }
+
 
 
         function getTeam(teamid){
@@ -145,6 +188,30 @@
             });
         }
 
+
+        function Appli(teamid){
+            var courseid=getUrlParam('courseid');
+            var studentid=getUrlParam('studentid');
+            var reason=$("#reason").val();
+
+            $.ajax({
+                url: "/team/"+teamid+"/saveTeamValidApplication",                //后端的API地址
+                type: 'POST',                                //http:POST/GET
+                async:false,
+                data:{teamId:teamid,teacherId:teacherid,reason:reason},
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+
+
+
+
+                },
+
+            });
+        }
+
+
         function getData(){
             var studentid=getUrlParam('studentid');
             var courseid=getUrlParam('courseid');
@@ -169,6 +236,18 @@
                     htmlNav+='<button >删除/添加成员</button></a></div>';
 
 
+                    htmlNav+='<div class="form-group">';
+                    htmlNav+='<label class="col-sm-2 control-label">审核理由：</label>';
+
+                    htmlNav+='<input type="text" id="reason" class="form-control" placeholder="理由">';
+
+                    htmlNav+='</div>';
+                    htmlNav+='<div class="aui-code-box">';
+
+                    htmlNav+='<button onclick="getTeamId()">提交审核</button>';
+                    htmlNav+='</div>';
+
+
                         $("#myView").html(htmlNav);
 
                 },
@@ -180,7 +259,7 @@
         }
 
 
-
+        getTeacId();
         getData();
 
     </script>
