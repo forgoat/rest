@@ -251,8 +251,8 @@ public class TeamController {
      * @return
      */
     @PostMapping(value = "setStatus")
-    public HttpStatus setStatus(Long teamId){
-        HttpStatus httpStatus=(teamService.setValid(teamId)==1?HttpStatus.OK:HttpStatus.BAD_REQUEST);
+    public HttpStatus setStatus(Long teamId,Long courseId){
+        HttpStatus httpStatus=(organizeTeamService.setStatus(teamId,courseId)==1?HttpStatus.OK:HttpStatus.BAD_REQUEST);
         return httpStatus;
     }
 
