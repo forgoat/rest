@@ -9,4 +9,24 @@
     <select id="findConflict" parameterType="long" resultType="long">
         SELECT course_id FROM standard_seminar_system.conflict_course_strategy WHERE id=#{id}
     </select>
+    <select id="queryConflictCourseStrategy" resultType="com.rest.entity.ConflictCourseStrategy" parameterType="Long">
+        SELECT *
+        FROM standard_seminar_system.conflict_course_strategy
+        WHERE  id=#{id}
+    </select>
+
+    <select id="queryAllConflictCourseStrategy" resultType="com.rest.entity.ConflictCourseStrategy">
+        SELECT *
+        FROM standard_seminar_system.conflict_course_strategy
+    </select>
+    <insert id="insertConflictCourseStrategy" parameterType="long">
+        INSERT INTO standard_seminar_system.conflict_course_strategy
+        (id,
+        course_id
+        )
+        VALUE (
+        #{id},
+        #{courseId}
+        )
+    </insert>
 </mapper>

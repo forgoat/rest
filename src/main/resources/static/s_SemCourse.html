@@ -145,7 +145,7 @@
 
     //写成函数的目的，为了【复用】
     function getData(){
-        var studentid=113;
+        var studentid=sessionStorage.getItem("id");
         $.ajax({
             url: "/course/student/"+studentid,                //后端的API地址
             type: 'GET',                                //http:POST/GET

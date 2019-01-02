@@ -229,7 +229,7 @@ public class TeamController {
      */
     @PostMapping(value = "insertTeammate")
     public HttpStatus insertTeammate(List<Long> studentIdList,Long teamId){
-        System.out.println("studentIdList:"+studentIdList.toArray()+"  teamId:"+teamId);
+        System.out.println("studentIdList:"+studentIdList+"  teamId:"+teamId);
         HttpStatus httpStatus=(teamService.batchInsertTeamStudent(studentIdList,teamId)==1?HttpStatus.OK:HttpStatus.BAD_REQUEST);
         return httpStatus;
     }

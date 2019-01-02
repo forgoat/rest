@@ -320,8 +320,12 @@ public class TeamService {
      * @return
      */
     public int batchInsertTeamStudent(List<Long> studentIdList,Long teamId){
-
-        return teamStudentDao.batchInsertTeamStudent(studentIdList,teamId);
+        for(Long studentId:studentIdList){
+            teamStudentDao.insertTeamStudent(studentId,teamId);
+        }
+        if(studentIdList!=null&&studentIdList.size()!=0)
+            return 1;
+        return 0;
     }
 
     /**

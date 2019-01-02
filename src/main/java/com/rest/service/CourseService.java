@@ -96,7 +96,6 @@ public class CourseService {
             System.out.println("没有共享讨论课");
         }
         else  {
-            System.out.println("查到共享讨论课了");
             for (ShareSeminarApplication shareSeminarApplication : shareSeminarApplications) {
                 ShareList shareList = new ShareList(shareSeminarApplication);
                 if (shareSeminarApplication.getSubCourseId().equals(courseId)) {
@@ -127,12 +126,12 @@ public class CourseService {
             System.out.println("没有共享分组");
         }
         else {
-            System.out.println("查到共享分组了");
             for (ShareTeamApplication shareTeamApplication:shareTeamApplicationList){
                 ShareList shareList=new ShareList(shareTeamApplication);
                 if(shareTeamApplication.getSubCourseId().equals(courseId)){
                     //从课程
                     shareList.setCourseStatus(1);
+
                     shareList.setCourseId(shareTeamApplication.getMainCourseId());
                     Course course=courseDao.findById(shareTeamApplication.getMainCourseId());
                     shareList.setShareTeacherId(course.getTeacherId());
@@ -143,9 +142,11 @@ public class CourseService {
                     shareList.setCourseStatus(0);
                     shareList.setCourseId(shareTeamApplication.getSubCourseId());
                     Course course=courseDao.findById(shareTeamApplication.getSubCourseId());
+                    System.out.print(course.toString());
                     shareList.setShareCourseName(course.getCourseName());
                     shareList.setShareTeacherId(shareTeamApplication.getSubCourseTeacherId());
                     Teacher teacher=teacherDao.findById(shareTeamApplication.getSubCourseTeacherId());
+                    System.out.print(teacher.toString());
                     shareList.setShareTeacherName(teacher.getTeacherName());
                 }
                 shareLists.add(shareList);

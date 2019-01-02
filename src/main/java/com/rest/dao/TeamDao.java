@@ -18,16 +18,6 @@ public interface TeamDao {
     int addTeammate(@Param("teamId")Long teamId,@Param("studentId")Long studentId);//添加成员 team_student表
     int updateTeamValidApplication(@Param("teamValidApplication") TeamValidApplication teamValidApplication);//小组更新表
     int updateKlassStudent(@Param("klassStudent") KlassStudent klassStudent);//小组更新表
-    /**
-     * 查询组队规则
-     */
-    MemberLimitStrategy queryMemberLimit(@Param("id")Long id);
-    CourseMemberLimitStrategy queryCourseMemberLimitStrategy(@Param("id")Long id);
-    List<TeamOrStrategy> queryTeamOrStrategy(@Param("id")Long id);
-    List<TeamAndStrategy> queryTeamAndStrategy(@Param("id")Long id);
-    List<TeamStrategy> queryTeamStrategy(@Param("courseId")Long courseId);
-    List<ConflictCourseStrategy> queryConflictCourseStrategy(@Param("id")Long id);
-    MemberLimitStrategy queryMemberLimitStrategyById(@Param("id")Long id);
 
 
     public Team findById(Long id);

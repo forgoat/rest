@@ -114,6 +114,7 @@
     function emm() {
         var seminarid=getUrlParam("seminarid");
         var klassseminarid=getUrlParam("klassseminarid");
+        var teamid=sessionStorage.getItem("teamid");
         $.ajax({
             url: "/seminar/"+seminarid,
             type: "GET",
@@ -130,23 +131,25 @@
                 alert('服务器忙，请稍候');
             }
         });
+        var teamid=sessionStorage.getItem("teamid");
         $.ajax({
-            url: "/seminar/"+seminarid,//获取本组是否报名
+            url: "/attendance/whether",//获取本组是否报名
             type: "GET",
             async:false,
-            dataType:'text',
+            data:{klassSeminarId:klassseminarid,teamId:teamid},
+            dataType:'json',
             success:function(res) {
-                var attendence=eval("("+res+")");//本组报名数据
+                var attendence=res;//本组报名数据
                 var ht='';
                 var istime=0;//报告提交时间0,1截止
-                if(res!='')
+                if(res!=null)
                 {
                     ht+='<div class="div-auto1">报名： 第'+attendence.teamOrder+'组</div>';
-                    if(attendence.pptName=='')
+                    if(attendence.pptName==null)
                         ht+='<div class="div-auto2">PPT： 未提交</div>';
                     else
                         ht+='<div class="div-auto2">PPT： 已提交</div>';
-                    if(attendence.reportName=='')
+                    if(attendence.reportName==null)
                         ht+='<div class="div-auto2">书面报告： 未提交</div>';
                     else
                         ht+='<div class="div-auto2">书面报告： 已提交</div>';

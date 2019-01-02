@@ -18,17 +18,17 @@
         ul,li{list-style: none;}
         a:link,a:visited{text-decoration: none;color: #fff;}
         .list{width: 30rem;border-bottom:solid 1px #fff;margin:40px auto 0 auto;}
-        .list ul li{background-color:#0c85b9a3
+        .list ul li{background-color:darkslategrey;
         ; border:solid 1px #fff; border-bottom:0;}
         .list ul li a{padding-left: 10px;color: black; font-size:14px; display: block;  height:36px;line-height: 36px;position: relative;
         }
         .list ul li .inactive{ background:url( img/off.png) no-repeat 28rem center;}
         .list ul li .inactives{ background:url( img/on.png) no-repeat 28rem center;}
         .list ul li ul{display: none;}
-        .list ul li ul li { border-left:0; border-right:0; background-color:#e1f1fc; border-color:#fff;}
+        .list ul li ul li { border-left:0; border-right:0; background-color:#b9def0; border-color:#fff;}
         .list ul li ul li ul{display: none;}
         .list ul li ul li a{ padding-left:20px;}
-        .list ul li ul li ul li { background-color:#0c85b9a3; border-color:#fff; }
+        .list ul li ul li ul li { background-color:white; border-color:#fff; }
         .last{ background-color:#e2e2e2; border-color:#fff; }
         .list ul li ul li ul li a{ color:#e1f1fc; padding-left:30px;}
     </style>
@@ -74,7 +74,7 @@
     </a>
 </header>
 <body>
-<div class="list">
+<div class="list" id="list">
     <ul class="yiji">
 
         <li><a href="#" class="inactive">第一轮</a>
@@ -110,13 +110,78 @@
 <section class="aui-flexView">
     <div class="aui-code-box">
         <div class="aui-code-btn">
-            
+
             <button class="button-auto1" >
                 <a style="font-family:times;color:black"  href="/teacher/semminar/submit">新建讨论课</a>
 
             </button>
         </div>
     </div>
-    <section>
+    </section>
 </body>
+<script>
+    var myModel = {courseList:[]};
+    var myModel1 = {courseList1:[]};
+    var myModel2 = {courseList2:[]};
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var courseid=getUrlParam('courseid');
+    sessionStorage.setItem("courseid",courseid)
+    function getData() {
+        alert();
+        $.ajax({
+            url: "/round/course/" + courseid,                //后端的API地址
+            type: 'GET',                                //http:POST/GET
+            async: false,
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+            success: function (res) {
+                myModel.courseList = res;
+                var htmlNav = '';
+                $("#list").empty();
+                if (myModel.courseList.length > 0) {
+                    htmlNav += '<ul class="yiji">';
+                    for (var i = 0; i < myModel.courseList.length; i++) {
+                        htmlNav += '<li><a href="#" class="inactive">第'+myModel.courseList[i].roundSerial+'轮</a>';
+                        htmlNav += '<ul style="display: none">\n' +
+                            '                <li class="last"><a style="font-family:times;color:black" href="/teacher/semminar/lunci">该轮轮次设置</a></li>';
+                        myModel1.courseList1 = myModel.courseList[i].seminarLists;
+                        if (myModel1.courseList1.length > 0) {
+                            for (var j = 0; j < myModel1.courseList1.length; j++) {
+                                htmlNav += '<li><a href="#" class="inactive active">'+myModel1.courseList1[j].seminarName+'</a>';
+                                htmlNav += '<ul>';
+                                myModel2.courseList2 = myModel1.courseList1[j].klassSeminarList;
+                                if (myModel2.courseList2.length > 0) {
+                                    for (var k = 0; k < myModel2.courseList2.length; k++) {
+                                        $.ajax({
+                                            url: "/class",                //后端的API地址
+                                            type: 'GET',                                //http:POST/GET
+                                            async: false,
+                                            data: {klassId:myModel2.courseList2[k].klassId},     //指客户端提交给后台的参数
+                                            dataType: 'json',                            //服务端返回类型text，JSON
+                                            timeout: 3000,
+                                            success: function (adata) {
+                                                htmlNav += '<li class="last"><a style="font-family:times;color:black" href="/index/wei">'+adata.grade+'-'+adata.klassSerial+'</a></li>';
+                                            }
+                                        });
+                                    }
+                                }
+                                htmlNav += '</ul></li>';
+                            }
+                        }
+                        htmlNav += '</ul></li>';
+                    }
+                    htmlNav += '</ul>'
+                }
+                $("#list").html(htmlNav);
+            }, error: function () {
+                alert("surprise!!!");
+            }
+        });
+    }
+getData();
+</script>
 </html>

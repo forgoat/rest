@@ -67,6 +67,7 @@
 
         var seminarid = getUrlParam("seminarid");
         var klassseminarid = getUrlParam("klassseminarid");
+        var teamid=sessionStorage.getItem("teamid");
         sessionStorage.setItem("semminarid", seminarid)
         $.ajax({
             url: "/seminar/" + seminarid,
