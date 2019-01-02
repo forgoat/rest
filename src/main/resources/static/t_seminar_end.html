@@ -45,15 +45,21 @@
         课程情况：已完成
         <a>查看情况</a>
     </div>
-   <button class="button-auto1" >
+   <button class="button-auto1" id="myView6">
        <a style="font-family:times;color:black" href=" #">书面报告</a>
    </button>
-    <button class="button-auto1" >
+    <button class="button-auto1" id="myView7">
         <a style="font-family:times;color:black" href=" #">查看成绩</a>
 
 </button>
   </body>
     <script>
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        };
+        var json='';
         function emm() {
             var seminarid = getUrlParam("seminarid");
             var klassseminarid = getUrlParam("klassseminarid");
@@ -68,12 +74,13 @@
                     $("#myView2").html("主题:" + json.seminarName);
                     $("#myView3").html("课次序号:" + json.seminarSerial);
                     $("#myView4").html("要求:" + json.introduction);
-                    $("#myView5").html("课程情况：进行中" + '<a href="t_seminarPPT.html?klassseminarid=' + klassseminarid + '">查看情况</a>');
+                    $("#myView5").html("课程情况：已结束" + '<a href="t_seminarPPT.html?klassseminarid=' + klassseminarid + '">查看情况</a>');
                 }, error: function () {
                     alert('服务器忙，请稍候');
                 }
             });
-            $("#myView6").html('<a href="seminar_presentation.html?klassklassseminarid='+klassseminarid+'">进入讨论课 </a>')
+            $("#myView6").html('<a href="t_seminar_baogao_score.html?klassklassseminarid='+klassseminarid+'">查看报告 </a>')
+            $("#myView7").html('<a href="t_seminar_score_check.html?klassklassseminarid='+klassseminarid+'">查看成绩 </a>')
         }
         emm();
 

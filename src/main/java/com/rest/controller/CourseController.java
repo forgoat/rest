@@ -711,6 +711,8 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
                                @RequestParam(value = "courseIdList_ConflictCourseStrategy") List<Long> courseIdList_ConflictCourseStrategy,
                                @RequestParam(value = "courseId_TeamStrategy") Long courseId_TeamStrategy)
     {
+        System.out.print("???");
+        System.out.print("THISIS"+courseIdList_CourseMemberLimitStrategy+minMember_MemberLimitStrategy);
         return organizeTeamService.setTeamStrategy(minMember_MemberLimitStrategy,
                 maxMember_MemberLimitStrategy,
                 option_CourseMemberLimitStrategy,

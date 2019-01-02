@@ -39,21 +39,6 @@
         <span class="aui-center-title">我</span>
     </div>
 </div>
-<script type="text/javascript">
-    $(function(){
-
-        $("input[type=file]").change(function(){
-            $(this).parents(".uploader").find(".filename").val($(this).val());
-        });
-
-        $("input[type=file]").each(function(){
-            if($(this).val()==""){
-                $(this).parents(".uploader").find(".filename").val("请选择文件...");
-            }
-        });
-
-    });
-</script>
 <script>
     $(function(){
         var z = true;
@@ -104,34 +89,6 @@
 
     </ul>
 </div>
-<script>
-    $(function($) {
-        $("#gooey-v").gooeymenu({
-            bgColor: "#e1f1fc",
-            style: "vertical",
-            horizontal: {
-                menuItemPosition: "glue"
-            },
-            vertical: {
-                menuItemPosition: "spaced",
-                direction: "up"
-            },
-            /*circle: {
-                radius: 90
-            },*/
-            margin: "small",
-            bounce: true,
-            bounceLength: "small",
-            transitionStep: 100,
-        });
-
-        $("#gooey-v a").mousedown(
-            function(){
-                $(this).css("backgroundColor","#e1f1fc");
-            }
-        )
-    });
-</script>
 <script>
     function jump(courseid) {
         window.location.href="s_SemList.html?course="+courseid;
