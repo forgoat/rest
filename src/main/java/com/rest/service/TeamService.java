@@ -424,4 +424,8 @@ public class TeamService {
     public int saveTeamStudent(TeamStudent teamStudent){
         return teamStudentDao.save(teamStudent);
     }
+
+    public  List<TeamValidApplication> checkTeamValidApplication(){
+        return teamValidApplicationDao.queryAllTeamValidApplication();
+    }
 }

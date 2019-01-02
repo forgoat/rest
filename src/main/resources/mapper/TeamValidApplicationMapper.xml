@@ -29,4 +29,9 @@
         #{status}
         )
     </insert>
+
+    <select id="queryAllTeamValidApplication" resultType="com.rest.entity.TeamValidApplication">
+        SELECT *
+        FROM team_valid_application
+    </select>
 </mapper>
