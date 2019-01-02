@@ -67,7 +67,7 @@
                             <label class="col-sm-2 control-label">组内选修课程人数：</label>
                             <br>
                             <div >
-                            <select name="dept" data-placeholder="选修课程" style="width:200px;height:25px" id="studentlimit0" class="dept_select">
+                            <select name="dept" data-placeholder="选修课程" style="width:200px;height:25px" id="studentlimit0" class="limit_select">
                                 <option value="0">课程名称+老师</option>
                                 <option value="1">课程名称+老师</option>
                                 <option value="2">课程名称+老师</option>
@@ -99,7 +99,7 @@
                     <div id="chongtu">
                     <div>
                         <label class="col-sm-2 control-label">冲突课程：</label>
-                        <select name="dept" data-placeholder="冲突课程" style="width:200px;height:25px" id="course0" class="dept_select">
+                        <select name="dept" data-placeholder="冲突课程" style="width:200px;height:25px" id="course0" class="limit_select">
 
                             <option value="0">课程名称+老师</option>
                             <option value="1">课程名称+老师</option>
@@ -134,7 +134,7 @@
 
                 </div>
                 <div class="aui-code-box">
-                    <button >
+                    <button onclick="create()">
                         发布
                     </button>
                 </div>
@@ -145,6 +145,14 @@
 <script>
     var num=2;
     var numb1=1;
+    var ischongtu=0;
+    var islimit=0;
+    $("select.dept_select").click(function () {
+        ischongtu=1;
+    });
+    $("select.limit_select").click(function () {
+        islimit=1;
+    });
     function add1() {
         $("#diss").css("display","inline");
         var tmp = document.createElement('div');
@@ -195,7 +203,6 @@
                 youModel.teacherList=em;
                 if( youModel.teacherList.length>0)
                 {
-                    alert(youModel.teacherList.length);
                     for(var i=0;i< youModel.teacherList.length;i++)
                     {
                         ht+='<option value="'+youModel.teacherList[i].id+'">';
@@ -211,17 +218,8 @@
             }
         });
         }
-    function load() {
-        // private Long teacherId;
-        // private String courseName;
-        // private String introduction;
-        // private Integer presentationPercentage;
-        // private Integer questionPercentage;
-        // private Integer reportPercentage;
-        // private Date teamStartTime;
-        // private Date teamEndTime;
-        // private Long teamMainCourseId;
-        // private Long seminarMainCourseId;
+        var courseid='';
+    function create() {
         var teacherid=3;
         var name=$("#name").val();
         var require=$("#require").val();
@@ -232,14 +230,54 @@
         var member2=$("#member2").val();
         var start=$("#start").val();
         var end=$("#end").val();
+        var diss=-1;
+        var course=[];
+        var courseIdList_CourseMemberLimitStrategy=new Array();
+        var minMemberList_CourseMemberLimitStrategy=new Array();
+        var maxMemberList_CourseMemberLimitStrategy=new Array();
+        if(ischongtu==1)
+        {
+            for(var i=0;i<num;i++)
+            {
+                course.push($("#course"+i).val());
+            }
+
+        }
+        if(islimit==1)
+       {
+            for(var i=0;i<numb1;i++)
+            {
+                courseIdList_CourseMemberLimitStrategy.push($("#studentlimit"+i).val());
+                maxMemberList_CourseMemberLimitStrategy.push($("#limit0"+i).val());
+                minMemberList_CourseMemberLimitStrategy.push($("#limit1"+i).val());
+            }
+       }
+            alert('courseIdlist:'+courseIdList_CourseMemberLimitStrategy);
+        alert('minmember:'+minMemberList_CourseMemberLimitStrategy);
+       if(numb1>1)
+            diss=$("#diss").val();
         $.ajax({
             url:"/course",
             type: "POST",
             dataType:'json',
             data:{teacherId:teacherid,courseName:name,introduction:require,presentationPercentage:score1,questionPercentage:score2,reportPercentage:score3,teamStartTime:start,teamEndTime:end},
             success:function(em) {
+                courseid=em;
+            },error:function () {
+                alert("create course failed");
             }
             });
+        $.ajax({
+            url:"/course/setTeamStrategy",
+            type: "POST",
+            dataType:'json',
+            data:{minMember_MemberLimitStrategy:member1,maxMember_MemberLimitStrategy:member2,option_CourseMemberLimitStrategy:diss,courseIdList_CourseMemberLimitStrategy:courseIdList_CourseMemberLimitStrategy[0],minMemberList_CourseMemberLimitStrategy:minMemberList_CourseMemberLimitStrategy[0],maxMemberList_CourseMemberLimitStrategy:maxMemberList_CourseMemberLimitStrategy[0],courseIdList_ConflictCourseStrategy:course[0],courseId_TeamStrategy:courseid},
+            success:function(em) {
+                alert("success");
+            },error:function () {
+                alert("set course failed");
+            }
+        });
     }
 </script>
 </body>
