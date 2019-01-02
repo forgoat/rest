@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>OOAD-书面报告</title>
+    <title>讨论课-分数</title>
     <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0">
     <link type="text/css" rel="stylesheet" href=" css/base.css">
     <link type="text/css" rel="stylesheet" href=" css/home.css">
@@ -24,28 +24,7 @@
 <section class="aui-flexView">
 
     <body>
-    <div class="div-auto1" >
-       展示  提问    书面报告 总分
-    </div>
-    <div class="div-auto1" >
-       1-1：
-    </div>
-    <div class="div-auto1" >
-      1-2：
-    </div>
-
-    <div class="div-auto1" >
-       1-3：
-    </div>
-
-    <div class="div-auto1" >
-        1-4：
-    </div>
-
-    <div class="div-auto1" >
-       1-5：
-    </div>
-    <div id="qwq">
+    <div id="qwq" class="div-auto1" style="height: auto">
 
     </div>
     <section class="aui-flexView">
@@ -87,15 +66,13 @@
         var tableStr="<table class='tab_list' width='99%'>";
         tableStr=tableStr
             +"<tr class='list=header'>"
-            +"<td width='15%'>序号</td>"
+            +"<td width='5%'>序号</td>"
             +"<td width='5%'><input id='checkedAll' name='checkAll' type='checkbox'/></td>"
             +"<td width='20%'>提问</td>"
-            +"<td width='20%'>书面报告</td>"
+            +"<td width='40%'>书面报告</td>"
             +"<td width='20%'>展示</td>"
-            +"<td width='20%'>总分</td>"
             +"</tr>";
         var len=myModel.courseList.length;
-        alert(len);
         for(var i=0;i<len;i++){
             tableStr=tableStr+"<tr>"
                 +"<td>"+(i+1)+"</td>"
@@ -103,7 +80,6 @@
                 +"<td>"+myModel.courseList[i].questionScore+"</td>"
                 +"<td>"+myModel.courseList[i].reportScore+"</td>"
                 +"<td>"+myModel.courseList[i].presentationScore+"</td>"
-                +"<td>"+myModel.courseList[i].totalScore+"</td>"
             +"</tr>";
         }
 

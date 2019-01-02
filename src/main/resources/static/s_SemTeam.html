@@ -30,25 +30,50 @@
     <div class="div-auto3">
         时间yy-mm-dd 00:00
     </div>
-    <div class="div-auto1" >
-        第一组：${team1}
+    <div id="alist" class="div-auto1" style="height: auto">
+
     </div>
-    <div class="div-auto2" >
-        第二组：${team2}
-    </div>
-    <div class="div-auto1" >
-        第三组：${team3}
-    </div>
-    <div class="div-auto2" >
-        第四组：${team4}
-    </div>
-    <div class="div-auto1" >
-        第五组：${team5}
-    </div>
-    <div class="div-auto2" >
-        第六组：${team6}
-    </div>
+
     </body>
 </section>
 </body>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var klassseminarid=getUrlParam("klassseminarid");
+    function load()
+    {
+        $.ajax({
+            url: "/attendance/"+klassseminarid+"/info",
+            type: "GET",
+            async: false,
+            dataType:'json',
+            success:function (daata) {
+                mydata.alist=daata;
+                var h=0;
+                var ht='';
+                $("#alist").empty();
+                alert(mydata.alist.length);
+                for(var i=1;i<=limit;i++)
+                {
+                    if(mydata.alist.length>h)
+                    {
+                        if(mydata.alist[h].teamOrder==i) {
+                            ht += '<div class="div-auto1" >第'+i+'组：'+mydata.alist[h].teamName+'</div>';
+                            h++;
+                        }
+                        else
+                            ht+='<div class="div-auto1" >未报名</div>';
+                    } else
+                        ht+='<div class="div-auto1" >未报名</div>';
+                }
+                $("#alist").html(ht);
+            }
+        });
+    }
+    load()
+</script>
 </html>

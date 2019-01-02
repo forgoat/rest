@@ -126,10 +126,10 @@
 
                     <label class="col-sm-2 control-label">组队开始时间：</label>
 
-                    <input type="text" class="form-control" placeholder="年月日" id="start"/><br>
+                    <input type="date" class="form-control" placeholder="年月日" id="start"/><br>
                     <label class="col-sm-2 control-label">组队截止时间：</label>
 
-                    <input type="text" class="form-control" placeholder="年月日" id="end"/>
+                    <input type="date" class="form-control" placeholder="年月日" id="end"/>
 
 
                 </div>
@@ -235,25 +235,16 @@
         var courseIdList_CourseMemberLimitStrategy=new Array();
         var minMemberList_CourseMemberLimitStrategy=new Array();
         var maxMemberList_CourseMemberLimitStrategy=new Array();
-        if(ischongtu==1)
-        {
             for(var i=0;i<num;i++)
             {
                 course.push($("#course"+i).val());
             }
-
-        }
-        if(islimit==1)
-       {
             for(var i=0;i<numb1;i++)
             {
                 courseIdList_CourseMemberLimitStrategy.push($("#studentlimit"+i).val());
                 maxMemberList_CourseMemberLimitStrategy.push($("#limit0"+i).val());
                 minMemberList_CourseMemberLimitStrategy.push($("#limit1"+i).val());
             }
-       }
-            alert('courseIdlist:'+courseIdList_CourseMemberLimitStrategy);
-        alert('minmember:'+minMemberList_CourseMemberLimitStrategy);
        if(numb1>1)
             diss=$("#diss").val();
         $.ajax({
