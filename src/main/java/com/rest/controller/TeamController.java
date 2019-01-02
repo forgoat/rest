@@ -386,4 +386,14 @@ public class TeamController {
     public List<TeamStudent> findTeam(Long studentId){
         return teamService.findTeamByStudent(studentId);
     }
+
+    @GetMapping(value = "teamValidApplication")
+    public List<TeamValidApplication> findTeamValidApplicationByTeacherId(Long teacherId){
+        return teamService.findTeamValidApplicationBy(teacherId);
+    }
+
+    @GetMapping(value = "teamValidApplicationInfo")
+    public List<TeamValidApplicationInfo> findInfo(Long teacherId){
+        return teamService.findTeamValidByTeacherId(teacherId);
+    }
 }

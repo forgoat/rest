@@ -29,4 +29,7 @@
         #{status}
         )
     </insert>
+    <select id="findTeamValidApplicationByTeacherIdAndStatus" parameterType="long" resultType="com.rest.entity.TeamValidApplication">
+        SELECT * FROM team_valid_application WHERE teacher_id=#{teacherId} AND status is null
+    </select>
 </mapper>
