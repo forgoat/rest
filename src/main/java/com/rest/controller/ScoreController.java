@@ -1,11 +1,10 @@
 package com.rest.controller;
 
-import com.rest.entity.Round;
-import com.rest.entity.RoundScorePage;
-import com.rest.entity.ScorePage;
-import com.rest.entity.SeminarScore;
+import com.rest.entity.*;
+import com.rest.service.CourseService;
 import com.rest.service.RoundService;
 import com.rest.service.ScoreService;
+import com.rest.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +20,10 @@ public class ScoreController {
     private ScoreService scoreService;
     @Autowired
     private RoundService roundService;
+    @Autowired
+    private CourseService courseService;
+    @Autowired
+    private TeamService teamService;
 
     /**
      * 保存成绩
@@ -181,12 +184,24 @@ public class ScoreController {
         return scoreService.findKlassForTeam(courseId,teamId);
     }
 
-    public List<RoundScorePage> teacherFindScore(Long courseId){
-        List<RoundScorePage> roundScorePageList=new ArrayList<>();
-        List<Round> roundList=roundService.findByCourseId(courseId);
-        if (roundList.isEmpty()){
-            System.out.println("No round");
-        }
-        return roundScorePageList;
+//    @GetMapping(value = "teacher")
+//    public List<RoundScorePage> teacherFindScore(Long courseId){
+//        return scoreService.teacherFindScore(courseId);
+//    }
+
+    @GetMapping(value = "seminarScoreInfo")
+    public SeminarScoreInfo findSeminarScoreInfo(Long teamId,Long klassSeminarId){
+        return scoreService.findSeminarScoreInfo(teamId,klassSeminarId);
+    }
+
+
+    @GetMapping(value = "courseScore")
+    public RoundScoreInfo findRoundScoreInfo(Long courseId){
+        return scoreService.findRoundScoreInfo(courseId);
+    }
+
+    @GetMapping(value = "test")
+    public TeamRoundScore findTeamRoundScore(Long courseId,Team team,Round round,List<Klass> klassList){
+        return scoreService.findTeamRoundScore(courseId,team,round,klassList);
     }
 }
