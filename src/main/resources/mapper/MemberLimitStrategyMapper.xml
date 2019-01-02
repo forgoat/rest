@@ -5,23 +5,23 @@
 <mapper namespace="com.rest.dao.MemberLimitStrategyDao">
     <select id="queryMemberLimit" resultType="com.rest.entity.MemberLimitStrategy">
         SELECT *
-        FROM standard_seminar_system.member_limit_strategy
+        FROM member_limit_strategy
         WHERE id=#{id}
     </select>
 
     <select id="queryMemberLimitStrategyById" resultType="com.rest.entity.MemberLimitStrategy" parameterType="Long">
         SELECT *
-        FROM standard_seminar_system.member_limit_strategy
+        FROM member_limit_strategy
         WHERE id=#{id}
     </select>
 
     <select id="queryAllMemberLimitStrategy" resultType="com.rest.entity.MemberLimitStrategy">
         SELECT *
-        FROM standard_seminar_system.member_limit_strategy
+        FROM member_limit_strategy
     </select>
 
     <insert id="insertMemberLimitStrategy" parameterType="Integer">
-        INSERT INTO standard_seminar_system.member_limit_strategy
+        INSERT INTO member_limit_strategy
         (min_member,
         max_member
         )VALUE

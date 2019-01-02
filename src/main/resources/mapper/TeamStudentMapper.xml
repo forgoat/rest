@@ -3,12 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.TeamStudentDao">
-    <select id="findByStudentId" resultType="Long" parameterType="Long">
-        SELECT team_id FROM standard_seminar_system.team_student WHERE student_id=#{studentId}
+    <select id="findByStudentId" resultType="long" parameterType="long">
+        SELECT team_id FROM team_student WHERE student_id=#{studentId}
     </select>
 
     <insert id="batchInsertTeamStudent" >
-        INSERT INTO standard_seminar_system.team_student(
+        INSERT INTO team_student(
         student_id,
         team_id
         )VALUE
@@ -20,7 +20,7 @@
         </foreach>
     </insert>
     <insert id="insertTeamStudent">
-        INSERT INTO standard_seminar_system.team_student(
+        INSERT INTO team_student(
         student_id,
         team_id
         )VALUE
@@ -30,25 +30,25 @@
         )
     </insert>
 
-    <select id="queryByTeamId" resultType="Long">
+    <select id="queryByTeamId" resultType="long">
         SELECT student_id
-        FROM standard_seminar_system.team_student
+        FROM team_student
         WHERE team_id=#{teamId}
     </select>
     <delete id="deleteByTeamId" parameterType="long">
-        DELETE FROM standard_seminar_system.team_student WHERE team_id=#{teamId}
+        DELETE FROM team_student WHERE team_id=#{teamId}
     </delete>
 
     <delete id="deleteByStudentId" parameterType="long">
-        DELETE FROM standard_seminar_system.team_student WHERE student_id=#{studentId}
+        DELETE FROM team_student WHERE student_id=#{studentId}
     </delete>
     <select id="findByTeamId" parameterType="long" resultType="com.rest.entity.TeamStudent">
-        SELECT * FROM standard_seminar_system.team_student WHERE team_id=#{teamId}
+        SELECT * FROM team_student WHERE team_id=#{teamId}
     </select>
     <insert id="save" parameterType="com.rest.entity.TeamStudent">
-        INSERT INTO standard_seminar_system.team_student(team_id,student_id) VALUE (#{teamId},#{studentId})
+        INSERT INTO team_student(team_id,student_id) VALUE (#{teamId},#{studentId})
     </insert>
     <select id="findTeamByStudent" resultType="com.rest.entity.TeamStudent" parameterType="long">
-        SELECT * FROM standard_seminar_system.team_student WHERE student_id=#{studentId}
+        SELECT * FROM team_student WHERE student_id=#{studentId}
     </select>
 </mapper>

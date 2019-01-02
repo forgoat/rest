@@ -4,21 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.ShareSeminarApplicationDao">
     <insert id="save" parameterType="com.rest.entity.ShareSeminarApplication" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO standard_seminar_system.share_seminar_application(main_course_id,sub_course_id,sub_course_teacher_id) VALUE (#{mainCourseId},#{subCourseId},#{subCourseTeacherId})
+        INSERT INTO share_seminar_application(main_course_id,sub_course_id,sub_course_teacher_id) VALUE (#{mainCourseId},#{subCourseId},#{subCourseTeacherId})
     </insert>
     <select id="findByMainCourseIdOrSubCourseId" parameterType="long" resultType="com.rest.entity.ShareSeminarApplication">
-        SELECT * FROM standard_seminar_system.share_seminar_application WHERE sub_course_id=#{courseId}
+        SELECT * FROM share_seminar_application WHERE sub_course_id=#{courseId}
     </select>
     <update id="acceptSeminarShare" parameterType="long">
-        UPDATE standard_seminar_system.share_seminar_application SET status=1 WHERE id=#{shareSeminarId}
+        UPDATE share_seminar_application SET status=1 WHERE id=#{shareSeminarId}
     </update>
     <select id="findById" parameterType="long" resultType="com.rest.entity.ShareSeminarApplication">
-        SELECT * FROM standard_seminar_system.share_seminar_application WHERE id=#{id}
+        SELECT * FROM share_seminar_application WHERE id=#{id}
     </select>
     <update id="reject" parameterType="long">
-        UPDATE standard_seminar_system.share_seminar_application SET status=0 WHERE id=#{shareSeminarId}
+        UPDATE share_seminar_application SET status=0 WHERE id=#{shareSeminarId}
     </update>
     <select id="findByCourseId" resultType="com.rest.entity.ShareTeamApplication" parameterType="long">
-        SELECT * FROM standard_seminar_system.share_seminar_application WHERE status=1 AND (sub_course_id=#{courseId} OR main_course_id=#{courseId})
+        SELECT * FROM share_seminar_application WHERE status=1 AND (sub_course_id=#{courseId} OR main_course_id=#{courseId})
     </select>
 </mapper>

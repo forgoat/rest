@@ -4,10 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.StudentDao">
     <select id="findAllStudent" resultType="com.rest.entity.Student">
-        SELECT * FROM standard_seminar_system.student
+        SELECT * FROM student
     </select>
     <select id="findByAccountOrStudentName" resultType="com.rest.entity.Student">
-        SELECT * FROM standard_seminar_system.student
+        SELECT * FROM student
         WHERE
         <if test="param1!=null and param2==null ">
             account=#{param1}
@@ -20,7 +20,7 @@
         </if>
     </select>
     <insert id="add" parameterType="com.rest.entity.Student" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO standard_seminar_system.student(
+        INSERT INTO student(
         account,
         password,
         is_active,
@@ -38,7 +38,7 @@
         )
     </insert>
     <insert id="batchSaveStudent" parameterType="com.rest.entity.Student">
-         INSERT INTO standard_seminar_system.student(
+         INSERT INTO student(
         account,
         password,
         is_active,
@@ -56,28 +56,28 @@
 
 
     <select id="findByAccount" parameterType="string" resultType="com.rest.entity.Student">
-        SELECT * FROM standard_seminar_system.student WHERE account=#{account}
+        SELECT * FROM student WHERE account=#{account}
     </select>
     <select id="findById" parameterType="long" resultType="com.rest.entity.Student">
-        SELECT * FROM standard_seminar_system.student WHERE id=#{id}
+        SELECT * FROM student WHERE id=#{id}
     </select>
     <update id="updatePassword">
-        UPDATE standard_seminar_system.student SET password=#{param2} WHERE id=#{param1}
+        UPDATE student SET password=#{param2} WHERE id=#{param1}
     </update>
     <update id="updateEmail">
-        UPDATE standard_seminar_system.student SET email=#{param2} where id=#{param1}
+        UPDATE student SET email=#{param2} where id=#{param1}
     </update>
     <update id="actival" parameterType="long">
-        UPDATE standard_seminar_system.student SET is_active=1 WHERE id=#{id}
+        UPDATE student SET is_active=1 WHERE id=#{id}
     </update>
     <delete id="delete" parameterType="long">
-        DELETE FROM standard_seminar_system.student WHERE id=#{id}
+        DELETE FROM student WHERE id=#{id}
     </delete>
     <update  id="deleteAll">
-        TRUNCATE TABLE standard_seminar_system.student;
+        TRUNCATE TABLE student;
     </update >
     <update id="updateInfo">
-        UPDATE standard_seminar_system.student
+        UPDATE student
         <set>
             <if test="param2!=null ">
                 account=#{param2},
@@ -93,7 +93,7 @@
     </update>
     <select id="queryStudentIdByAccount" resultType="long">
         SELECT id
-        FROM standard_seminar_system.student
+        FROM student
         WHERE account=#{account}
     </select>
 </mapper>
