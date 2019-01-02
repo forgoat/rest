@@ -510,18 +510,18 @@ public class ScoreService {
        RoundScoreInfo roundScoreInfo=new RoundScoreInfo();
        Course course=courseDao.findById(courseId);
        if (course==null){
-           System.out.println("No Course");
+         //  System.out.println("No Course");
            return roundScoreInfo;
        }
        List<Round> roundList=roundDao.findByCourseId(courseId);
        if (roundList.isEmpty()){
-           System.out.println("No Round");
+          // System.out.println("No Round");
            return roundScoreInfo;
        }
        roundScoreInfo.setRoundList(roundList);
        List<Klass> klassList=klassDao.findByCourseId(courseId);
        if (klassList.isEmpty()){
-           System.out.println("No class");
+          // System.out.println("No class");
            return roundScoreInfo;
        }
        roundScoreInfo.setKlassList(klassList);
@@ -534,7 +534,7 @@ public class ScoreService {
        }
        List<Team> teamList=teamDao.findByCourseId(mainCourseId);
        if (teamList.isEmpty()){
-           System.out.println("No Team");
+          // System.out.println("No Team");
            return roundScoreInfo;
        }
        roundScoreInfo.setTeamList(teamList);
@@ -547,7 +547,7 @@ public class ScoreService {
        teamRoundScore.setTeamSerial(team.getTeamSerial());
        List<Seminar> seminarList=seminarDao.findByRoundId(round.getId());
        if (seminarList.isEmpty()){
-           System.out.println("No seminar");
+           //System.out.println("No seminar");
            return teamRoundScore;
        }
        Long klassId=new Long(0);
@@ -561,13 +561,28 @@ public class ScoreService {
            }
        }
        System.out.println(klassId);
+       if (klassId==0){
+           return teamRoundScore;
+       }
        List<SeminarScoreInfo> seminarScoreInfos=new ArrayList<SeminarScoreInfo>();
        for(Seminar seminar:seminarList){
            KlassSeminar klassSeminar=klassSeminarDao.findByKlassIdAndSeminarId(klassId,seminar.getId());
-           SeminarScoreInfo seminarScoreInfo=findSeminarScoreInfo(team.getId(),klassSeminar.getId());
-           seminarScoreInfos.add(seminarScoreInfo);
+           if (klassSeminar==null){
+
+           }
+           else {
+               SeminarScoreInfo seminarScoreInfo = findSeminarScoreInfo(team.getId(), klassSeminar.getId());
+               if (seminarScoreInfo.getKlassSeminarId()==null){
+                   //System.out.println(seminarScoreInfo.toString());
+               }
+               else {
+                   //System.out.println(seminarScoreInfo.toString());
+                   seminarScoreInfos.add(seminarScoreInfo);
+               }
+           }
        }
        teamRoundScore.setSeminarScoreInfos(seminarScoreInfos);
+       teamRoundScore.setRoundScore(findRoundScore(courseId,round.getId(),team.getId()));
        return teamRoundScore;
     }
 }
