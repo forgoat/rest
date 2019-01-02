@@ -82,6 +82,11 @@
         )ON DULPLICATE KEY UPDATE
         team_id=values(teamId)
     </insert>
+    <update id="updateStatus">
+        UPDATE standard_seminar_system.team
+        SET status=0
+        WHERE id=#{id}
+    </update>
     <select id="findById" parameterType="long" resultType="com.rest.entity.Team">
         SELECT * FROM standard_seminar_system.team WHERE id=#{id}
     </select>

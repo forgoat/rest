@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface TeamValidApplicationDao {
     int saveTeamValidApplication(TeamValidApplication teamValidApplication);
-    int insertTeamValidApplication(@Param("id")Long id,@Param("status")Integer status);
+    int insertTeamValidApplication(@Param("teamId")Long teamId,@Param("teacherId")Long teacherId,@Param("status")Integer status);
 }
