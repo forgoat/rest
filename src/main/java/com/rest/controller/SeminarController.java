@@ -31,6 +31,7 @@ public class SeminarController {
      */
     @PostMapping(value = "")
     public ResponseEntity<Long> saveSeminar(Seminar seminar){
+
         List<Seminar> seminarList=seminarService.findByCourseIdAndRoundId(seminar.getCourseId(),seminar.getRoundId());
         int serial=0;
         if (seminarList.isEmpty()){
