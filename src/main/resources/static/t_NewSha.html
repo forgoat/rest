@@ -54,6 +54,7 @@
     var myModel = {courseList:[]};
     var youModel={teacherList:[]};
     var ht='';
+    var teacherid=7;
     var courseid=sessionStorage.getItem("courseid");
     function sele_Change(){
         var objS = document.getElementById("share");
@@ -74,7 +75,7 @@
                     for(var i=0;i< youModel.teacherList.length;i++)
                     {
                         alert(youModel.teacherList[i].courseName);
-                        ht+='<option value="'+youModel.teacherList[i].courseId+'">';
+                        ht+='<option value="'+i+'">';
                         ht+='('+youModel.teacherList[i].teacherName+')'+youModel.teacherList[i].courseName;
                         ht+='</option>';
                     }
@@ -132,10 +133,19 @@
                 });
         }
         else {
+            $.ajax({
+                url: "/"+courseid,
+                type: "GET",
+                dataType: 'json',
+                success: function (res) {
+
+                }
+            });
+                }
         $.ajax({
-            url:"/course/"+courseid+"/teamsharerequest;",
+            url:"/course/saveTeamShare",
             type: "POST",
-            data:{subCourseId: sid},
+            data:{mainCourseId:16,subCourseId: 21,subCourseTeacherId:7},
             dataType:'text',
             success:function() {
                 alert("success!");
@@ -143,7 +153,6 @@
                 alert("请稍后");
             }
         });
-        }
     }
 </script>
 </body>
