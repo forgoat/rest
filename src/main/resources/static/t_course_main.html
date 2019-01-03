@@ -111,7 +111,7 @@
     <div class="aui-code-box">
         <div class="aui-code-btn">
 
-            <button class="button-auto1" >
+            <button class="button-auto1" id="auto1">
                 <a style="font-family:times;color:black"  href="t_newseminar.html">新建讨论课</a>
 
             </button>
@@ -131,6 +131,8 @@
     var courseid=getUrlParam('courseid');
     sessionStorage.setItem("courseid",courseid)
     function getData() {
+        $("#auto1").empty();
+        $("#auto1").html('<a style="font-family:times;color:black"  href="t_newseminar.html?courseid='+courseid+'">新建讨论课</a>');
         $.ajax({
             url: "/round/course/" + courseid,                //后端的API地址
             type: 'GET',                                //http:POST/GET
