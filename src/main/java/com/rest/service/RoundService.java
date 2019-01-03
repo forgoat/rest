@@ -113,7 +113,19 @@ public class RoundService {
         return roundDao.saveRound(round);
     }
     public Round findRoundByCourseIdAndSerial(Long courseId,Integer roundSerial){
-        return roundDao.roundFindByRoundSerialAndCourseId(courseId,roundSerial);
+        Round round=roundDao.roundFindByRoundSerialAndCourseId(courseId,roundSerial);
+        if (round==null){
+            Round round1=new Round();
+            round1.setRoundSerial(roundSerial);
+            round1.setCourseId(courseId);
+            round1.setPresentationScoreMethod(0);
+            round1.setQuestionScoreMethod(0);
+            round1.setReportScoreMethod(0);
+            if (roundDao.saveRound(round1)==1){
+                return round1;
+            }
+        }
+        return round;
     }
 
 }
