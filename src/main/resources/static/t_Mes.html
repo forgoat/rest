@@ -80,52 +80,144 @@
 
 <script>
     var myModel = {courseList:[]};
-    var teacher=sessionStorage.getItem("id");
+    var teacherid=sessionStorage.getItem("id");
+    var htmlNav = '';
 
 
-    function getMes(courseId,shareTeamId){
-        var htmlNav = '';
-
+    function getCou(){
         $.ajax({
-            url: "/course/"+courseId+"/teamsharerequest/"+shareTeamId,                //后端的API地址,没连好
+            url: "/course/teacher/"+teacherid,                //后端的API地址
             type: 'GET',                                //http:POST/GET
             async:false,
-            data:{teacherId:teacher},     //指客户端提交给后台的参数
+            // data:{teacherId:teacherid},     //指客户端提交给后台的参数
+
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+
+            success: function(res) {
+                myModel.courList=res;
+
+                if( myModel.courList.length>0)
+                {
+                    for(var i=0;i< myModel.courList.length;i++)
+                    {
+                        getTeamSha(myModel.courList[i].id);
+                    }
+                }
+            },error: function(){
+
+            }
+        });
+
+    }
+
+
+//得到分组共享请求
+    function getTeamSha(courseid){
+
+        $.ajax({
+            url: "/course/"+courseid+"/teamsharerequest",                //后端的API地址,没连好
+            type: 'GET',                                //http:POST/GET
+            async:false,
 
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
 
             success: function(res) {
 
-                alert("已处理！");
-                window.location.href="t_Mes.html";
+                myModel.courseList =res;
+
+
+                if (myModel.courseList.length > 0) {
+                    htmlNav += '<ul class="yiji">';
+                    for (var i = 0; i < myModel.courseList.length; i++) {
+                        if(myModel.courseList[i].status==null)
+                        {
+                            htmlNav += '<li><a href="#" class="inactive">课程号为' + myModel.courseList[i].subCourseId + '的共享分组申请' + '</a>';
+                            htmlNav += '<ul style="display: none">';
+                            htmlNav += '<li><a href="#">'  + '</a></li>';
+
+                            htmlNav += '<div class="div-auto1"style="height: 80px">\n' +
+                                '               <button class="button-auto3"style="float: left"  onclick="Agree('+myModel.courseList[i].subCourseId+','+myModel.courseList[i].id+')">接受</button>\n' +
+                                '               <button class="button-auto3"style="float: right"  onclick="DisAgree(myModel.courseList[i].id)">拒绝</button>\n' +
+                                '       </div>'
+                            htmlNav += '</ul>';
+                            htmlNav += '</li>';
+
+
+                        }
+                    }
+                    htmlNav += '</ul>';
+
+                }
+
+
 
             },error: function(){
-
 
             }
         });
 
+    }
+
+    //同意分组共享
+    function Agree(courseid,shareTeamId){
+
+        $.ajax({
+            url: courseid+"/teamsharerequest/"+shareTeamId,                //后端的API地址,没连好
+            type: 'PUT',                                //http:POST/GET
+            async:false,
+
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+
+            success: function(res)
+            {
+
+            },error: function(){
+            }
+        });
 
     }
-    getData();
 
+    //拒绝分组共享
+    function DisAgree(shareTeamId){
+
+        $.ajax({
+            url: "/course/teamShare/"+shareTeamId,                //后端的API地址,没连好
+            type: 'PUT',                                //http:POST/GET
+            async:false,
+
+            dataType: 'json',                            //服务端返回类型text，JSON
+            timeout: 3000,
+
+            success: function(res)
+            {
+
+            },error: function(){
+            }
+        });
+
+    }
+
+//特殊小组申请
     function getData(){
-        var htmlNav = '';
 
             $.ajax({
                 url: "/team/teamValidApplicationInfo",                //后端的API地址,没连好
                 type: 'GET',                                //http:POST/GET
                 async:false,
-                data:{teacherId:teacher},     //指客户端提交给后台的参数
+                data:{teacherId:teacherid},     //指客户端提交给后台的参数
 
                 dataType: 'json',                            //服务端返回类型text，JSON
                 timeout: 3000,
 
                 success: function(res) {
                     myModel.courseList =res;
+
+                    htmlNav += '<ul class="yiji">';
                     if (myModel.courseList.length > 0) {
-                        htmlNav += '<ul class="yiji">';
+
                         for (var i = 0; i < myModel.courseList.length; i++) {
                             if(myModel.courseList[i].status==null)
                             htmlNav += '<li><a href="#" class="inactive">' + myModel.courseList[i].courseName + '的'
@@ -135,13 +227,15 @@
 
                             htmlNav += '<div class="div-auto1"style="height: 80px">\n' +
                                 '               <button class="button-auto3"style="float: left"  onclick="getMes()">接受</button>\n' +
-                                '               <button class="button-auto3"style="float: right"  >拒绝</button>\n' +
+                                '               <button class="button-auto3"style="float: right"  onclick="getMes()">拒绝</button>\n' +
                                 '       </div>'
                             htmlNav += '</ul>';
                             htmlNav += '</li>';
                         }
-                        htmlNav += '</ul>';
+
                     }
+
+                    htmlNav += '</ul>';
                 },error: function(){
 
 
@@ -150,8 +244,7 @@
             $("#myView").html(htmlNav);
 
         }
-        function
-
+    getCou();
    getData();
 </script>
 </body>
