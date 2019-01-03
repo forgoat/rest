@@ -58,10 +58,7 @@
 
  <div class="div-auto1" >
     <p>所属Round
-        <select id="roundId">
-            <option value="0">round</option>
-
-        </select>
+        <input style="width: 50%" type="text" id="roundId"/>
     </p>
     </div>
     <button class="button-auto1" onclick="set()">
@@ -89,32 +86,25 @@
         var member=$("#member").val();
         var round=$("#roundId").val();
         var roundId=round;
-        if(round==0)
-        {
             $.ajax({
-                url: "/round",
-                type: 'POST',                                //http:POST/GET
+                url: "/round/findRound",
+                type: 'GET',                                //http:POST/GET
                 async: false,
                 dataType: 'json',
                 data: {
                     courseId: courseid,
-                    roundSerial: youModel.teacherList.length + 1,
-                    presentationScoreMethod: 0,
-                    reportScoreMethod: 0,
-                    questionScoreMethod: 0
+                    roundSerial: round
                 },//服务端返回类型text，JSON
                 timeout: 3000,
                 success: function (res) {
                     roundId = res;
                 }
             });
-
-        }
         $.ajax({
             url:"/seminar",
             type: 'POST',                                //http:POST/GET
             async:false,
-            data:{courseId:courseid,roundId:roundId,seminarName:theme,introduction:intro,maxTeam:member,isVisible:islook,seminarSerial:serial,enrollStartTime:start,enrollEndTime:end},
+            data:{courseId:courseid,roundId:roundId,seminarName:theme,introduction:intro,maxTeam:member,isVisible:islook,enrollStartTime:start,enrollEndTime:end},
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
             success:function (res) {
@@ -123,37 +113,7 @@
 
             }
         });
-
     }
-    var youModel={teacherList:[]};
-    function loadstudentlimit(urlid){
-        var ht='';
-        $("#roundId").empty();
-        $.ajax({
-            url:"/round/findByCourseId",
-            type: "GET",
-            dataType:'json',
-            data:{courseId:courseid},
-            success:function(em) {
-                youModel.teacherList=em;
-                if( youModel.teacherList.length>0)
-                {
-                    ht+='<option value="0">新建</option>';
-                    for(var i=0;i< youModel.teacherList.length;i++)
-                    {
-                        ht+='<option value="'+youModel.teacherList[i].id+'">第';
-                        ht+=youModel.teacherList[i].roundSerial;
-                        ht+='轮</option>';
-                    }
-                }
-                $("#roundId").html(ht);
 
-            },
-            error: function(){
-                alert('服务器忙，请稍候');
-            }
-        });
-    }
-    loadstudentlimit();
 </script>
 </html>

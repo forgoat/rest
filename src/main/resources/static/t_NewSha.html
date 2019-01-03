@@ -51,11 +51,16 @@
     </section>
 </section>
 <script type="text/javascript">
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    };
+    var courseid=getUrlParam('courseid');
     var myModel = {courseList:[]};
     var youModel={teacherList:[]};
     var ht='';
     var teacherid=7;
-    var courseid=sessionStorage.getItem("courseid");
     function sele_Change(){
         var objS = document.getElementById("share");
         var get_map = objS.options[objS.selectedIndex].value;
@@ -74,7 +79,6 @@
                     alert(youModel.teacherList.length);
                     for(var i=0;i< youModel.teacherList.length;i++)
                     {
-                        alert(youModel.teacherList[i].courseName);
                         ht+='<option value="'+i+'">';
                         ht+='('+youModel.teacherList[i].teacherName+')'+youModel.teacherList[i].courseName;
                         ht+='</option>';
@@ -134,25 +138,17 @@
         }
         else {
             $.ajax({
-                url: "/"+courseid,
-                type: "GET",
-                dataType: 'json',
-                success: function (res) {
-
+                url:"/course/saveTeamShare",
+                type: "POST",
+                data:{mainCourseId:courseid,subCourseId: youModel.teacherList[sid].courseId,subCourseTeacherId:youModel.teacherList[sid].subTeacherId},
+                dataType:'json',
+                success:function() {
+                    alert("success!");
+                },error:function () {
+                    alert("请稍后");
                 }
             });
                 }
-        $.ajax({
-            url:"/course/saveTeamShare",
-            type: "POST",
-            data:{mainCourseId:courseid,subCourseId: ,subCourseTeacherId:},
-            dataType:'json',
-            success:function() {
-                alert("success!");
-            },error:function () {
-                alert("请稍后");
-            }
-        });
     }
 </script>
 </body>
