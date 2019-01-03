@@ -136,4 +136,9 @@ public class RoundController {
     public int saveRounds(Round round){
         return roundService.saveRounds(round);
     }
+
+    @GetMapping(value = "findRound")
+    public Round findRoundByCourseIdAndRoundSerial(Long courseId,Integer roundSerial){
+        return roundService.findRoundByCourseIdAndSerial(courseId,roundSerial);
+    }
 }

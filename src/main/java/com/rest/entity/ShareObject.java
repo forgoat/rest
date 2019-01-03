@@ -4,13 +4,14 @@ public class ShareObject {
     private Long courseId;
     private String courseName;
     private String teacherName;
-
+    private Long subTeacherId;
     public ShareObject() {
     }
 
     public ShareObject(Course course){
         courseId=course.getId();
         courseName=course.getCourseName();
+        subTeacherId=course.getTeacherId();
     }
     public Long getCourseId() {
         return courseId;
@@ -34,5 +35,13 @@ public class ShareObject {
 
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;
+    }
+
+    public Long getSubTeacherId() {
+        return subTeacherId;
+    }
+
+    public void setSubTeacherId(Long subTeacherId) {
+        this.subTeacherId = subTeacherId;
     }
 }
