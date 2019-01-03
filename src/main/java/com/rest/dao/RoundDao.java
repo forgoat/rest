@@ -10,6 +10,7 @@ import java.util.List;
 public interface RoundDao {
     public int saveRound(Round round);
     public Round find(Long id);
+    public int saveRounds(Round round);
     public List<Round> findByCourseId(Long courseId);
     public int deleteById(Long id);
     public int updateSerial(@Param("id") Long id,@Param("serial") Integer serial);

@@ -47,7 +47,10 @@
         WHERE
         course_id=#{courseId}
     </select>
-    <select id="roundFindByRoundSerialAndCourseId">
-        SELECT * FROM round WHERE course_id=#{courseId} AND roundSerial=#{roundSerial}
+    <select id="roundFindByRoundSerialAndCourseId" resultType="com.rest.entity.Round">
+        SELECT * FROM round WHERE course_id=#{courseId} AND round_serial=#{roundSerial}
     </select>
+    <insert id="saveRounds" parameterType="com.rest.entity.Round">
+        INSERT INTO round(course_id,round_serial,presentation_score_method,report_score_method,question_score_method) VALUE(#{courseId},#{roundSerial},0,0,0)
+    </insert>
 </mapper>

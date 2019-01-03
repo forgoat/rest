@@ -397,8 +397,8 @@ public class CourseController {
      * @param shareTeamId
      * @return
      */
-    @PutMapping(value = "{courseId}/teamsharerequest/{shareTeamId}")
-    public HttpStatus acceptTeamShare(@PathVariable("shareTeamId") Long shareTeamId) {
+    @PutMapping(value = "teamsharerequest")
+    public HttpStatus acceptTeamShare(Long shareTeamId) {
         HttpStatus httpStatus;
         if(courseService.acceptTeamShareRequest(shareTeamId)==1){
 
