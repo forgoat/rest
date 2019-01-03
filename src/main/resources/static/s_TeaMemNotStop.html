@@ -213,6 +213,29 @@
         }
 
 
+
+        function DeleTeam(teamid){
+            var courseid=getUrlParam('courseid');
+            var studentid=getUrlParam('studentid');
+            var reason=$("#reason").val();
+
+            $.ajax({
+                url: "/team/"+teamid,                //后端的API地址
+                type: 'DELETE',                                //http:POST/GET
+                async:false,
+
+                dataType: 'json',                            //服务端返回类型text，JSON
+                timeout: 3000,
+                success: function(res){
+
+                },
+
+            });
+        }
+
+
+
+
         function getData(){
             var studentid=getUrlParam('studentid');
             var courseid=getUrlParam('courseid');
@@ -246,6 +269,11 @@
                     htmlNav+='<div class="aui-code-box">';
 
                     htmlNav+='<button onclick="getTeamId()">提交审核</button>';
+                    htmlNav+='</div>';
+
+                    htmlNav+='<div class="aui-code-box">';
+
+                    htmlNav+='<button onclick="DeleTeam('+res+')">解散小组</button>';
                     htmlNav+='</div>';
 
 
