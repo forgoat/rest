@@ -112,4 +112,8 @@ public class RoundService {
     public int saveRounds(Round round){
         return roundDao.saveRound(round);
     }
+    public Round findRoundByCourseIdAndSerial(Long courseId,Integer roundSerial){
+        return roundDao.roundFindByRoundSerialAndCourseId(courseId,roundSerial);
+    }
+
 }

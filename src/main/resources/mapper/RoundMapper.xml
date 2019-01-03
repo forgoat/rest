@@ -47,4 +47,7 @@
         WHERE
         course_id=#{courseId}
     </select>
+    <select id="roundFindByRoundSerialAndCourseId">
+        SELECT * FROM round WHERE course_id=#{courseId} AND roundSerial=#{roundSerial}
+    </select>
 </mapper>

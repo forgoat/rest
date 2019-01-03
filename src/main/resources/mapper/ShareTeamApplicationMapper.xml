@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rest.dao.ShareTeamApplicationDao">
     <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.rest.entity.ShareTeamApplication">
-        INSERT INTO share_team_application(main_course_id,sub_course_id,sub_course_teacher_id,status) VALUE (#{mainCourseId},#{subCourseId},#{subCourseTeacherId},1)
+        INSERT INTO share_team_application(main_course_id,sub_course_id,sub_course_teacher_id) VALUE (#{mainCourseId},#{subCourseId},#{subCourseTeacherId})
     </insert>
     <select id="findBySubCourseId" parameterType="long" resultType="com.rest.entity.ShareTeamApplication">
         SELECT * FROM share_team_application WHERE sub_course_id=#{courseId}
