@@ -164,10 +164,10 @@
     function Agree(shareteamid){
 
         $.ajax({
-            url: "/course/teamsharerequest",                //后端的API地址,没连好
+            url: "/teamShareRequest/shareteamid",                //后端的API地址,没连好
             type: 'PUT',                                //http:POST/GET
             async:false,
-            data:{shareTeamId: shareteamid},
+
 
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,

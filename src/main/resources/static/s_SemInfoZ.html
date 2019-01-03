@@ -80,7 +80,7 @@
                 $("#myView3").html("课次序号:" + json.seminarSerial);
                 $("#myView4").html("要求:" + json.introduction);
                 $("#myView5").html("课程情况：已经开始" + '<a href="s_SemTeam.html?klassseminarid='+klassseminarid+'&seminarid='+seminarid+'">查看情况</a>');
-                $("#myView6").html('<a href="s_SemTeam.html?klassseminarid='+klassseminarid+'&seminarid='+seminarid+'">进入讨论课</a>');
+                $("#myView6").html('<a href="s_SemPre.html?klassseminarid='+klassseminarid+'&seminarid='+seminarid+'">进入讨论课</a>');
             }, error: function () {
                 alert('服务器忙，请稍候');
             }
