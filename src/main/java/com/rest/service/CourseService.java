@@ -178,6 +178,11 @@ public class CourseService {
         return shareTeamApplicationDao.findByCourseId(courseId);
     }
 
+    /**
+     * 新建共享
+     * @param shareTeamApplication
+     * @return
+     */
     public int saveTeamShareApplication(ShareTeamApplication shareTeamApplication){
         return shareTeamApplicationDao.save(shareTeamApplication);
     }

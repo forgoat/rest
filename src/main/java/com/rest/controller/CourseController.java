@@ -727,4 +727,10 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
     public HttpStatus acceptShareTeam(Long teamShareId){
         return courseService.acceptTeamShareApplication(teamShareId);
     }
+
+    @PostMapping(value = "saveTeamShare")
+    public HttpStatus saveTeamShare(ShareTeamApplication shareTeamApplication){
+        HttpStatus httpStatus=(courseService.saveTeamShareApplication(shareTeamApplication)==1)?HttpStatus.OK:HttpStatus.BAD_REQUEST;
+        return httpStatus;
+    }
 }

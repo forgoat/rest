@@ -24,4 +24,5 @@
     <select id="findAll" resultType="com.rest.entity.ShareTeamApplication">
         SELECT * FROM share_team_application
     </select>
+
 </mapper>

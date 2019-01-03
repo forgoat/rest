@@ -87,7 +87,7 @@
         var htmlNav = '';
 
         $.ajax({
-            url: "/course/{courseId}/teamsharerequest/{shareTeamId}",                //后端的API地址,没连好
+            url: "/course/"+courseId+"/teamsharerequest/"+shareTeamId,                //后端的API地址,没连好
             type: 'GET',                                //http:POST/GET
             async:false,
             data:{teacherId:teacher},     //指客户端提交给后台的参数
