@@ -397,18 +397,18 @@ public class CourseController {
      * @param shareTeamId
      * @return
      */
-    @PutMapping(value = "teamsharerequest")
-    public HttpStatus acceptTeamShare(Long shareTeamId) {
-        HttpStatus httpStatus;
-        if(courseService.acceptTeamShareRequest(shareTeamId)==1){
-
-            httpStatus = HttpStatus.OK;
-        }
-        else {
-            httpStatus=HttpStatus.MULTI_STATUS;
-        }
-        return httpStatus;
-    }
+//    @PutMapping(value = "teamsharerequest")
+//    public HttpStatus acceptTeamShare(Long shareTeamId) {
+//        HttpStatus httpStatus;
+//        if(courseService.acceptTeamShareRequest(shareTeamId)==1){
+//
+//            httpStatus = HttpStatus.OK;
+//        }
+//        else {
+//            httpStatus=HttpStatus.MULTI_STATUS;
+//        }
+//        return httpStatus;
+//    }
 //    @PutMapping(value = "{courseId}/teamshare/{shareTeamId}")
 //    public HttpStatus rejectTeamShare(@PathVariable("shareTeamId") Long shareTeamId){
 //        ShareTeamApplication shareTeamApplication=courseService.findTeamShareById(shareTeamId);
@@ -497,14 +497,15 @@ public List<Team> findTeamByCourse(@PathVariable("courseId") Long courseId){
                 teamService.deleteTeamByCourseId(subCourseId);
                 List<Team> teamList=teamService.findTeamByCourseId(mainCourseId);
                 for (Team team:teamList){
+                    Long classId=new Long(29);
+                    List<Klass> klassList=klassService.findByCourseId(subCourseId);
+                    classId=klassList.get(0).getId();
                     Long teamId=team.getId();
-                    Long classId=teamService.findSubCourseTeamKlassId(subCourseId,teamId);
-                    if (classId!=0) {
-                        KlassTeam klassTeam = new KlassTeam();
-                        klassTeam.setKlassId(classId);
-                        klassTeam.setTeamId(teamId);
-                        teamService.saveKlassTeam(klassTeam);
-                    }
+                    KlassTeam klassTeam = new KlassTeam();
+                    klassTeam.setKlassId(classId);
+                    klassTeam.setTeamId(teamId);
+                    teamService.saveKlassTeam(klassTeam);
+
                 }
                 return HttpStatus.OK;
             }
