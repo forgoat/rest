@@ -109,4 +109,7 @@ public class RoundService {
     public int save(KlassRound klassRound){
         return klassRoundDao.save(klassRound);
     }
+    public int saveRounds(Round round){
+        return roundDao.saveRound(round);
+    }
 }

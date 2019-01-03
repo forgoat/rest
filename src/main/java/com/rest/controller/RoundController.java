@@ -132,4 +132,8 @@ public class RoundController {
     public List<RoundList> roundListList(@PathVariable("courseId") Long courseId){
         return roundService.findListByCourseId(courseId);
     }
+    @PostMapping(value = "rounds")
+    public int saveRounds(Round round){
+        return roundService.saveRounds(round);
+    }
 }
