@@ -138,8 +138,8 @@
                             htmlNav += '<li><a href="#">'  + '</a></li>';
 
                             htmlNav += '<div class="div-auto1"style="height: 80px">\n' +
-                                '               <button class="button-auto3"style="float: left"  onclick="Agree('+myModel.courseList[i].subCourseId+','+myModel.courseList[i].id+')">接受</button>\n' +
-                                '               <button class="button-auto3"style="float: right"  onclick="DisAgree(myModel.courseList[i].id)">拒绝</button>\n' +
+                                '               <button class="button-auto3"style="float: left"  onclick="Agree('+myModel.courseList[i].id+')">接受</button>\n' +
+                                '               <button class="button-auto3"style="float: right"  onclick="DisAgree('+myModel.courseList[i].id+')">拒绝</button>\n' +
                                 '       </div>'
                             htmlNav += '</ul>';
                             htmlNav += '</li>';
@@ -161,12 +161,13 @@
     }
 
     //同意分组共享
-    function Agree(courseid,shareTeamId){
+    function Agree(shareteamid){
 
         $.ajax({
-            url: courseid+"/teamsharerequest/"+shareTeamId,                //后端的API地址,没连好
+            url: "/course/teamsharerequest",                //后端的API地址,没连好
             type: 'PUT',                                //http:POST/GET
             async:false,
+            data:{shareTeamId: shareteamid},
 
             dataType: 'json',                            //服务端返回类型text，JSON
             timeout: 3000,
