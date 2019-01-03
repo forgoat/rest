@@ -11,6 +11,7 @@
         var offWidth = window.screen.width / 30; //这里用宽度/30表示1rem取得的px
         document.getElementsByTagName("html")[0].style.fontSize = offWidth + 'px'; //把rem的值复制给顶级标签html的font-size
     </script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
     <style type="text/css">
         *{margin: 0;padding: 0}
         body{font-size: 14px
@@ -57,9 +58,6 @@
 </div>
 
 <script>
-    function newshare() {
-        window.location.href="t_NewSha.html";
-    }
     function getUrlParam(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
         var r = window.location.search.substr(1).match(reg);  //匹配目标参数
@@ -67,7 +65,7 @@
     };
     var myModel = {courseList:[]};
     var courseid=getUrlParam('courseid');
-    sessionStorage.setItem("courseid",id);
+    sessionStorage.setItem("courseid",courseid);
     var teacherid=sessionStorage.getItem('id')
     function getData(){
         $.ajax({
@@ -148,6 +146,9 @@
         });
     }
     getData();
+    function newshare() {
+        window.location.href="t_NewSha.html?courseid="+courseid;
+    }
 </script>
 </body>
 </html>
