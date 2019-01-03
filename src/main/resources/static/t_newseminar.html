@@ -51,11 +51,6 @@
 <div class="div-auto1" >
       报名小组数：<input type="text" id="member" class="form-control"style="width: 50px" value="1"/>
     </div>
-    <div class="div-auto1" >
-        讨论课序号：<input type="text" id="serial" class="form-control"style="width: 50px" value="1"/>
-    </div>
-
-
  <div class="div-auto1" >
     <p>所属Round
         <input style="width: 50%" type="text" id="roundId"/>
@@ -80,7 +75,6 @@
         var theme=$("#theme").val();
         var intro=$("#intro").val();
         var islook=$("#islook").attr("checked")?0:1;
-        var serial=$("#serial").val();
         var start=$("#start").val();
         var end=$("#end").val();
         var member=$("#member").val();
@@ -97,7 +91,7 @@
                 },//服务端返回类型text，JSON
                 timeout: 3000,
                 success: function (res) {
-                    roundId = res;
+                    roundId = res.id;
                 }
             });
         $.ajax({
