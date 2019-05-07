@@ -19,9 +19,13 @@ public class TeacherService {
 
     public int createTeacher(Teacher teacher)
     {
-        teacher.setIsActive(0);
-        teacher.setPassword("123456");
-        return teacherDao.save(teacher);
+        if (teacher!=null) {
+            teacher.setIsActive(0);
+            teacher.setPassword("123456");
+            teacherDao.save(teacher);
+            return 1;
+        }
+        else return 0;
     }
     public Teacher findByAccount(String account)
     {

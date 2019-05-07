@@ -394,7 +394,7 @@ public class CourseController {
 
     /**
      *同意分组共享
-     * @param shareTeamId
+     * @param courseId
      * @return
      */
 //    @PutMapping(value = "teamsharerequest")
